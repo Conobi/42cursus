@@ -7,6 +7,13 @@ SRCS += ./srcs/ft_atoi.c
 SRCS += ./srcs/ft_split.c
 SRCS += ./srcs/ft_strjoin.c
 SRCS += ./srcs/ft_itoa.c
+SRCS += ./srcs/ft_isalpha.c
+SRCS += ./srcs/ft_isdigit.c
+SRCS += ./srcs/ft_isalnum.c
+SRCS += ./srcs/ft_isascii.c
+SRCS += ./srcs/ft_isprint.c
+SRCS += ./srcs/ft_toupper.c
+SRCS += ./srcs/ft_tolower.c
 OBJECTS=${SRCS:.c=.o}
 CC=gcc
 CFLAGS=-I includes -Wall -Wextra -Werror
@@ -15,6 +22,8 @@ NAME=libft.a
 all: $(NAME)
 
 re: fclean all
+
+rclean: all clean
 
 $(NAME): $(OBJECTS)
 	ar -crs $(NAME) $(OBJECTS)
@@ -28,5 +37,5 @@ fclean:
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-.PHONY: clean fclean re all
+.PHONY: clean fclean rclean re all
 

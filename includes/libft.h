@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 10:18:30 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 15:37:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 16:57:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ int		ft_atoi(const char *str);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_itoa(int n);
+int		ft_isalpha(int c);
+int		ft_isdigit(int c);
+int		ft_isalnum(int c);
+int		ft_isascii(int c);
+int		ft_isprint(int c);
+int		ft_toupper(int c);
+int		ft_tolower(int c);
 
 /* STILL NOT DONE */
-
-int		isalpha(int c);
-int		isalpha(int c);
-int		isalnum(int c);
-int		isascii(int c);
-int		isprint(int c);
-int		toupper(int c);
-
 char	*strchr(const char *s, int c);
 char	*strrchr(const char *s, int c);
 void	*memchr(const void *s, int c, size_t n);
