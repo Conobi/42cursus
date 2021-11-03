@@ -6,15 +6,15 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:14:04 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 16:19:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 19:41:37 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int	ft_isalnum(int c)
 {
-	if (!((c >= 'a' && c <= 'z')
-			|| (c >= 'A' && c <= 'Z')
-			|| (c >= '0' && c <= '9')))
+	if (!(ft_isalpha(c) || ft_isdigit(c)))
 		return (0);
 	return (1);
 }

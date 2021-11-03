@@ -6,11 +6,10 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 12:29:28 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 12:05:47 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 19:36:38 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)

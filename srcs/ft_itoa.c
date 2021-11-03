@@ -6,11 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:14:52 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 15:37:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 19:36:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 static int	dec_count(int n)
 {

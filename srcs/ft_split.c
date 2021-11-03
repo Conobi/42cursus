@@ -6,11 +6,10 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:52:48 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 10:57:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 19:36:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 static int	len_arr(char const *s, char c)

@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:03:50 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/02 18:05:19 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 19:39:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-char	*ft_strdup(char *src)
+char	*ft_strdup(const char *s1)
 {
 	int		len;
 	int		i;
@@ -20,13 +20,13 @@ char	*ft_strdup(char *src)
 
 	len = -1;
 	i = -1;
-	while (src[++len])
+	while (s1[++len])
 		;
 	ptr = malloc(sizeof(ptr) * (len + 1));
 	if (ptr == 0)
 		return (NULL);
-	while (src[++i])
-		ptr[i] = src[i];
+	while (s1[++i])
+		ptr[i] = s1[i];
 	ptr[i] = '\0';
 	return (ptr);
 }
