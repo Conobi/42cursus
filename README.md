@@ -7,8 +7,8 @@
 - [x] `strncmp`
 - [x] `strdup`
 - [x] `atoi`
-- [ ] `ft_split`
-- [ ] `ft_strjoin`
+- [x] `ft_split`
+- [x] `ft_strjoin`
 - [ ] `ft_itoa` (base à normal)
 
 ## IZI PIZI:

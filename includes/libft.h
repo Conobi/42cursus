@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 10:18:30 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/02 18:17:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/03 11:57:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s1);
 int		ft_atoi(const char *str);
-
-/* STILL NOT DONE */
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+
+/* STILL NOT DONE */
 char	*ft_itoa(int n);
 
 int		isalpha(int c);
