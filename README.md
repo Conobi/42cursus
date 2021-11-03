@@ -9,7 +9,7 @@
 - [x] `atoi`
 - [x] `ft_split`
 - [x] `ft_strjoin`
-- [ ] `ft_itoa` (base à normal)
+- [x] `ft_itoa` (base à normal)
 
 ## IZI PIZI:
 - [ ] `isalpha`
@@ -31,6 +31,11 @@
 - [ ] `ft_strtrim`
 - [ ] `ft_strmapi`
 - [ ] `ft_striteri`
+- [ ] `memset`
+- [ ] `bzero`
+- [ ] `memcpy`
+- [ ] `memmove`
+
 
 ## File Descriptors :
 - [ ] `ft_putchar_fd`

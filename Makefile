@@ -6,6 +6,7 @@ SRCS += ./srcs/ft_strdup.c
 SRCS += ./srcs/ft_atoi.c
 SRCS += ./srcs/ft_split.c
 SRCS += ./srcs/ft_strjoin.c
+SRCS += ./srcs/ft_itoa.c
 OBJECTS=${SRCS:.c=.o}
 CC=gcc
 CFLAGS=-I includes -Wall -Wextra -Werror

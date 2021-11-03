@@ -1,7 +1,6 @@
 exec*
 a.out
 .*.c.swp
-test.c
 *.code-workspace
 *.a
 *.o
