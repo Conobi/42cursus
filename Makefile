@@ -14,6 +14,8 @@ SRCS += ./srcs/ft_isascii.c
 SRCS += ./srcs/ft_isprint.c
 SRCS += ./srcs/ft_toupper.c
 SRCS += ./srcs/ft_tolower.c
+SRCS += ./srcs/ft_strchr.c
+SRCS += ./srcs/ft_strrchr.c
 OBJECTS=${SRCS:.c=.o}
 CC=gcc
 CFLAGS=-I includes -Wall -Wextra -Werror
