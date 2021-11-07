@@ -22,7 +22,11 @@ SRCS = \
 ./srcs/ft_memset.c \
 ./srcs/ft_bzero.c \
 ./srcs/ft_memcpy.c \
-./srcs/ft_memmove.c
+./srcs/ft_memmove.c \
+./srcs/ft_strnstr.c \
+./srcs/ft_calloc.c \
+./srcs/ft_substr.c \
+./srcs/ft_strtrim.c
 OBJECTS=${SRCS:.c=.o}
 CC=gcc
 CFLAGS=-I includes -Wall -Wextra -Werror
