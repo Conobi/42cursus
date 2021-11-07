@@ -5,25 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 16:50:13 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/06 13:42:56 by conobi           ###   ########lyon.fr   */
+/*   Created: 2021/11/07 17:39:46 by conobi            #+#    #+#             */
+/*   Utdstated: 2021/11/07 17:42:42 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 // size_t	ft_strlcat(char *dst, const char *src, size_t n)
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
+	unsigned char	*tdst;
+	unsigned char	*tsrc;
 
-	i = -1;
-	if (((unsigned char *)src) < ((unsigned char *)dst))
-		while (++i < len)
-			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+	if (!dst && !src)
+		return (NULL);
+	tdst = (unsigned char *)dst;
+	tsrc = (unsigned char *)src;
+	if (tsrc < tdst)
+	{
+		tdst += len;
+		tsrc += len;
+		while (len--)
+			*--tdst = *--tsrc;
+	}
 	else
 		while (len--)
-			((unsigned char *)dst)[len] = ((unsigned char *)src)[len];
+			*tdst++ = *tsrc++;
 	return (dst);
 }
