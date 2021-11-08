@@ -6,13 +6,29 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 19:06:41 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/07 12:42:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/07 17:22:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <libc.h>
 #include "includes/libft.h"
+
+char	f_tobob_mapi(unsigned int index, char c)
+{
+	if (index % 2)
+	{
+		if (c >= 'a' && c <= 'z')
+			return (c - 32);
+	}
+	return (c);
+}
+
+void	f_tobob_iteri(unsigned int index, char *c)
+{
+	if (index % 2 && c[index] >= 'a' && c[index] <= 'z')
+		c[index] -= 32;
+}
 
 int	main(int argc, char **argv)
 {
@@ -25,6 +41,8 @@ int	main(int argc, char **argv)
 	int		strnstr_i;
 	char	*ft_substr_s;
 	char	*ft_strtrim_s;
+	char	*ft_strmapi_s;
+	char	*ft_striteri_s;
 
 	if (argc == 3)
 	{
@@ -59,6 +77,16 @@ int	main(int argc, char **argv)
 		ft_strtrim_s = ft_strtrim(argv[1], argv[2]);
 		printf("Apres ft_strtrim: \"%s\"\n", ft_strtrim_s);
 		free(ft_strtrim_s);
+		printf("------------------------------------\n");
+		printf("Avant ft_strmapi: %s\n", argv[1]);
+		ft_strmapi_s = ft_strmapi(argv[1], f_tobob_mapi);
+		printf("Apres ft_strmapi: %s\n", ft_strmapi_s);
+		free(ft_strmapi_s);
+		printf("------------------------------------\n");
+		ft_striteri_s = argv[1];
+		printf("Avant ft_striteri: %s\n", ft_striteri_s);
+		ft_striteri(ft_striteri_s, f_tobob_iteri);
+		printf("Apres ft_striteri: %s\n", ft_striteri_s);
 		printf("------------------------------------\n");
 	}
 	else

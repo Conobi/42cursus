@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:52:48 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 19:36:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/08 16:26:57 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ static int	len_arr(char const *s, char c)
 	return (len);
 }
 
+static void	init_it(int *i, int *j, int *k)
+{
+	*i = 0;
+	*j = -1;
+	*k = -1;
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**splited;
@@ -38,9 +45,9 @@ char	**ft_split(char const *s, char c)
 	int		j;
 	int		k;
 
-	i = 0;
-	j = -1;
-	k = -1;
+	init_it(&i, &j, &k);
+	if (!s)
+		return (NULL);
 	splited = malloc(sizeof(*splited) * (len_arr(s, c) + 1));
 	if (!splited)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:23:55 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 20:00:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/08 15:52:19 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 
 	i = -1;
-	while (s[++i] || s[i] == 0)
+	while (s[++i] && s[i])
 		if (c == s[i])
 			return ((char *)s + i);
+	if (c == s[i])
+		return ((char *)s + i);
 	return (NULL);
 }
