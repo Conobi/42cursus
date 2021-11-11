@@ -33,7 +33,18 @@ SRCS = \
 ./srcs/ft_putnbr_fd.c \
 ./srcs/ft_strmapi.c \
 ./srcs/ft_striteri.c
+SRCS_BONUS= \
+./srcs/ft_lstnew.c \
+./srcs/ft_lstadd_front.c \
+./srcs/ft_lstsize.c \
+./srcs/ft_lstlast.c \
+./srcs/ft_lstadd_back.c \
+./srcs/ft_lstdelone.c \
+./srcs/ft_lstiter.c \
+./srcs/ft_lstclear.c \
+./srcs/ft_lstmap.c
 OBJECTS=${SRCS:.c=.o}
+OBJECTS_BONUS=${SRCS:.c=.o} ${SRCS_BONUS:.c=.o}
 CC=gcc
 CFLAGS=-I includes -Wall -Wextra -Werror
 NAME=libft.a
@@ -45,14 +56,20 @@ re: fclean all
 $(NAME): $(OBJECTS)
 	ar -crs $(NAME) $(OBJECTS)
 
+bonus: $(OBJECTS_BONUS)
+	ar -crs $(NAME) $(OBJECTS_BONUS)
+
 clean:
 	rm -rf $(OBJECTS)
+
+bclean:
+	rm -rf $(OBJECTS_BONUS)
 
 fclean:
 	rm -rf $(NAME) $(OBJECTS)
 
-%.o: %.c
+%.o: %.c $(HDRS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-.PHONY: clean fclean rclean re all
+.PHONY: clean fclean rclean bclean re all bonus
 
