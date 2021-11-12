@@ -1,53 +1,54 @@
 SRCS = \
-./srcs/ft_strlen.c \
-./srcs/ft_strlcpy.c \
-./srcs/ft_strlcat.c \
-./srcs/ft_strncmp.c \
-./srcs/ft_strdup.c \
-./srcs/ft_atoi.c \
-./srcs/ft_split.c \
-./srcs/ft_strjoin.c \
-./srcs/ft_itoa.c \
-./srcs/ft_isalpha.c \
-./srcs/ft_isdigit.c \
-./srcs/ft_isalnum.c \
-./srcs/ft_isascii.c \
-./srcs/ft_isprint.c \
-./srcs/ft_toupper.c \
-./srcs/ft_tolower.c \
-./srcs/ft_strchr.c \
-./srcs/ft_strrchr.c \
-./srcs/ft_memchr.c \
-./srcs/ft_memcmp.c \
-./srcs/ft_memset.c \
-./srcs/ft_bzero.c \
-./srcs/ft_memcpy.c \
-./srcs/ft_memmove.c \
-./srcs/ft_strnstr.c \
-./srcs/ft_calloc.c \
-./srcs/ft_substr.c \
-./srcs/ft_strtrim.c \
-./srcs/ft_putchar_fd.c \
-./srcs/ft_putstr_fd.c \
-./srcs/ft_putendl_fd.c \
-./srcs/ft_putnbr_fd.c \
-./srcs/ft_strmapi.c \
-./srcs/ft_striteri.c
+./ft_strlen.c \
+./ft_strlcpy.c \
+./ft_strlcat.c \
+./ft_strncmp.c \
+./ft_strdup.c \
+./ft_atoi.c \
+./ft_split.c \
+./ft_strjoin.c \
+./ft_itoa.c \
+./ft_isalpha.c \
+./ft_isdigit.c \
+./ft_isalnum.c \
+./ft_isascii.c \
+./ft_isprint.c \
+./ft_toupper.c \
+./ft_tolower.c \
+./ft_strchr.c \
+./ft_strrchr.c \
+./ft_memchr.c \
+./ft_memcmp.c \
+./ft_memset.c \
+./ft_bzero.c \
+./ft_memcpy.c \
+./ft_memmove.c \
+./ft_strnstr.c \
+./ft_calloc.c \
+./ft_substr.c \
+./ft_strtrim.c \
+./ft_putchar_fd.c \
+./ft_putstr_fd.c \
+./ft_putendl_fd.c \
+./ft_putnbr_fd.c \
+./ft_strmapi.c \
+./ft_striteri.c
 SRCS_BONUS= \
-./srcs/ft_lstnew.c \
-./srcs/ft_lstadd_front.c \
-./srcs/ft_lstsize.c \
-./srcs/ft_lstlast.c \
-./srcs/ft_lstadd_back.c \
-./srcs/ft_lstdelone.c \
-./srcs/ft_lstiter.c \
-./srcs/ft_lstclear.c \
-./srcs/ft_lstmap.c
+./ft_lstnew.c \
+./ft_lstadd_front.c \
+./ft_lstsize.c \
+./ft_lstlast.c \
+./ft_lstadd_back.c \
+./ft_lstdelone.c \
+./ft_lstiter.c \
+./ft_lstclear.c \
+./ft_lstmap.c
 OBJECTS=${SRCS:.c=.o}
-OBJECTS_BONUS=${SRCS:.c=.o} ${SRCS_BONUS:.c=.o}
+OBJECTS_BONUS=${SRCS_BONUS:.c=.o}
 CC=gcc
-CFLAGS=-I includes -Wall -Wextra -Werror
+CFLAGS=-Wall -Wextra -Werror -I $(HDRS)
 NAME=libft.a
+HDRS=libft.h
 
 all: $(NAME)
 
@@ -56,14 +57,11 @@ re: fclean all
 $(NAME): $(OBJECTS)
 	ar -crs $(NAME) $(OBJECTS)
 
-bonus: $(OBJECTS_BONUS)
-	ar -crs $(NAME) $(OBJECTS_BONUS)
+bonus: $(OBJECTS) $(OBJECTS_BONUS)
+	ar -crs $(NAME) $(OBJECTS) $(OBJECTS_BONUS)
 
 clean:
-	rm -rf $(OBJECTS)
-
-bclean:
-	rm -rf $(OBJECTS_BONUS)
+	rm -rf $(OBJECTS) $(OBJECTS_BONUS)
 
 fclean:
 	rm -rf $(NAME) $(OBJECTS)
@@ -71,5 +69,5 @@ fclean:
 %.o: %.c $(HDRS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-.PHONY: clean fclean rclean bclean re all bonus
+.PHONY: clean fclean rclean re all bonus
 
