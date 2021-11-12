@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:52:48 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/12 15:40:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/12 15:50:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	len_arr(char const *s, char c)
+static int	f_len_arr(char const *s, char c)
 {
 	int	i;
 	int	len;
@@ -31,7 +31,7 @@ static int	len_arr(char const *s, char c)
 	return (len);
 }
 
-static int	len_str(char const *s, char c)
+static int	f_len_str(char const *s, char c)
 {
 	int	len;
 
@@ -46,7 +46,7 @@ static int	len_str(char const *s, char c)
 	return (len);
 }
 
-static void	init_it(int *i, int *j, int *k)
+static void	f_init_it(int *i, int *j, int *k)
 {
 	*i = 0;
 	*j = -1;
@@ -67,15 +67,15 @@ char	**ft_split(char const *s, char c)
 	int		j;
 	int		k;
 
-	init_it(&i, &j, &k);
+	f_init_it(&i, &j, &k);
 	if (!s)
 		return (NULL);
-	splited = malloc(sizeof(*splited) * (len_arr(s, c) + 1));
+	splited = malloc(sizeof(*splited) * (f_len_arr(s, c) + 1));
 	if (!splited)
 		return (NULL);
-	while (++j < len_arr(s, c))
+	while (++j < f_len_arr(s, c))
 	{
-		splited[j] = malloc(sizeof(**splited) * (len_str(s + i, c) + 1));
+		splited[j] = malloc(sizeof(**splited) * (f_len_str(s + i, c) + 1));
 		if (!splited[j])
 			return (f_freeloop(&splited, c));
 		while (s[i] && s[i] == c)

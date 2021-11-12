@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:16:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/08 16:20:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/12 15:51:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_checkflow(long nb, short sign)
+static int	f_checkflow(long nb, short sign)
 {
 	if (nb > 2147483648 || nb < -2147483649)
 	{
@@ -44,7 +44,7 @@ int	ft_atoi(const char *str)
 		r = r * 10 + *str - '0';
 		str++;
 	}
-	return (ft_checkflow(r, sign));
+	return (f_checkflow(r, sign));
 }
 
 /*

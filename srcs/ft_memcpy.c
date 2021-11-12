@@ -6,12 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 16:50:13 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/07 18:58:38 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/12 15:54:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
