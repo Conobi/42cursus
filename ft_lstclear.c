@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 13:02:02 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/11 19:23:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/12 18:41:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	t_list	*prev;
 	t_list	*curr;
 
-	if (!*lst)
+	if (!lst || !*lst)
 		return ;
 	curr = *lst;
 	while (curr)
