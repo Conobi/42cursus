@@ -6,21 +6,27 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 16:22:56 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/08 12:33:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/12 15:02:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*ret;
+	size_t	strlen;
 
-	ret = ft_calloc((len + 1), sizeof(*ret));
-	if (!ret || !s)
+	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s) || start >= len)
+	strlen = ft_strlen(s);
+	if (len <= strlen)
+		ret = ft_calloc((len + 1), sizeof(char));
+	else
+		ret = ft_calloc((strlen + 1), sizeof(char));
+	if (!ret)
+		return (NULL);
+	if (start > strlen)
 		return (ret);
 	ft_strlcpy(ret, s + start, len + 1);
 	return (ret);

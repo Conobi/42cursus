@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:52:48 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/08 16:26:57 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/12 15:40:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,33 @@ static int	len_arr(char const *s, char c)
 	return (len);
 }
 
+static int	len_str(char const *s, char c)
+{
+	int	len;
+
+	len = 0;
+	while (*s == c)
+		s++;
+	while (*s != c && *s)
+	{
+		len++;
+		s++;
+	}
+	return (len);
+}
+
 static void	init_it(int *i, int *j, int *k)
 {
 	*i = 0;
 	*j = -1;
 	*k = -1;
+}
+
+static char	**f_freeloop(char ***splited, int j)
+{
+	while (--j || j == 0)
+		free(*splited[j]);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
@@ -53,9 +75,9 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	while (++j < len_arr(s, c))
 	{
-		splited[j] = malloc(sizeof(**splited) * (ft_strlen(s) + 1));
+		splited[j] = malloc(sizeof(**splited) * (len_str(s + i, c) + 1));
 		if (!splited[j])
-			return (NULL);
+			return (f_freeloop(&splited, c));
 		while (s[i] && s[i] == c)
 			i++;
 		k = -1;

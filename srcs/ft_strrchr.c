@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 17:23:55 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/11 19:42:36 by conobi           ###   ########lyon.fr   */
+/*   Created: 2021/11/12 14:58:43 by conobi            #+#    #+#             */
+/*   Updated: 2021/11/12 14:58:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	long int	i;
-	size_t		len;
+	int	len;
 
 	len = ft_strlen(s);
-	i = len;
-	while (s[--i] && i >= 0)
-		if ((char)c == s[i])
-			return ((char *)s + i);
-	if ((char)c == 0)
-		return ((char *)s + len);
+	while (len >= 0)
+	{
+		if (s[len] == (char)c)
+			return ((char *)s + len);
+		len--;
+	}
 	return (NULL);
 }

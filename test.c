@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:57:24 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/03 19:05:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/12 15:46:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,27 @@
 #include <libc.h>
 #include "includes/libft.h"
 
-int	main(int argc, char **argv)
+char	f_tobob_mapi(unsigned int index, char c)
 {
-	char	*strchr_s;
-	char	*ft_strchr_s;
-
-	if (argc == 3)
+	if (index % 2)
 	{
-		printf("------------------------------------\n");
-		printf("Botte de foin : %s, aiguille : \"%c\"\n", argv[1], argv[2][0]);
-		strchr_s = strchr(argv[1], argv[2][0]);
-		printf("Pointeur strchr    : (%p) %s\n", strchr_s, strchr_s);
-		ft_strchr_s = ft_strchr(argv[1], argv[2][0]);
-		printf("Pointeur ft_strchr : (%p) %s\n", ft_strchr_s, ft_strchr_s);
-		printf("------------------------------------\n");
+		if (c >= 'a' && c <= 'z')
+			return (c - 32);
 	}
-	else
-		printf("File deux arguments chien\n");
+	return (c);
+}
+
+int	main(void)
+{
+	char	*s;
+
+	printf("------------------------------------\n");
+	printf("A1\n");
+	s = ft_strmapi("", f_tobob_mapi);
+	printf("A2\n");
+	printf("A8\n");
+	free(s);
+	printf("------------------------------------\n");
 	return (0);
 }
 /* 	Pour tester :
