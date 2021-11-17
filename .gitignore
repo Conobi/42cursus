@@ -1,0 +1,14 @@
+exec*
+test
+*.dSYM
+a.out
+.*.c.swp
+*.code-workspace
+*.a
+*.o
+tests
+README.md
+.vscode
+printfTester
+objs/*
+test.sh
