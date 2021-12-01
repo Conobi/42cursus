@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:51:21 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/19 18:52:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/11/29 18:54:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_next_line(int fd);
 /* get_next_line_utils.c */
 size_t	f_strlen(const char *s);
 void	*f_memcpy(void *dst, const void *src, size_t n);
-char	*f_strjoin(char const *s1, char const *s2);
+void	f_strjoin(char **ret, char const *s1, char const *s2, int max);
 char	*f_substr(char const *s, unsigned int start, size_t len);
 char	*f_strchr(const char *s, int c);
 

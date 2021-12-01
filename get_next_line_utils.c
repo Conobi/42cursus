@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:51:46 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/19 18:54:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/01 17:13:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ size_t	f_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
-		i++;
+	if (s)
+		while (s[i])
+			i++;
 	return (i);
 }
 
@@ -32,33 +33,38 @@ void	*f_memcpy(void *dst, const void *src, size_t n)
 		return (NULL);
 	while (++i < n)
 	{
-		// printf("<%c>", ((unsigned char *)src)[i]);
 		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
 	}
 	((unsigned char *)dst)[++i] = 0;
 	return (dst);
 }
 
-char	*f_strjoin(char const *s1, char const *s2)
+void	f_strjoin(char **ret, char const *s1, char const *s2, int max)
 {
-	char	*ret;
 	int		i;
 	int		j;
+	char	*tmp;
 
 	i = -1;
 	j = -1;
-	if (!s1 || !s2)
-		return (NULL);
-	ret = malloc((f_strlen(s1) + f_strlen(s2) + 1) * sizeof(*ret));
-	if (!ret)
-		return (NULL);
-	while (s1[++j])
-		ret[++i] = s1[j];
+	if (s1 && *s1)
+		tmp = malloc((f_strlen(s1) + f_strlen(s2) + 1) * sizeof(*ret));
+	else if (s2 && *s2)
+		tmp = malloc((f_strlen(s2) + 1) * sizeof(*ret));
+	else
+		return ;
+	if (!tmp)
+		return ;
+	while (s1 && s1[++j])
+		tmp[++i] = s1[j];
 	j = -1;
-	while (s2[++j])
-		ret[++i] = s2[j];
-	ret[++i] = 0;
-	return (ret);
+	while (s2 && s2[++j] && j < max)
+		tmp[++i] = s2[j];
+	tmp[++i] = 0;
+	if (s1 && s1[0])
+		free((*ret));
+	*ret = f_substr(tmp, 0, f_strlen(tmp));
+	free(tmp);
 }
 
 char	*f_substr(char const *s, unsigned int start, size_t len)
@@ -88,7 +94,7 @@ char	*f_strchr(const char *s, int c)
 
 	i = -1;
 	len = f_strlen(s);
-	while (++i <= len)
+	while (++i <= len && len != 0)
 		if ((char)c == s[i])
 			return ((char *)s + i);
 	return (NULL);
