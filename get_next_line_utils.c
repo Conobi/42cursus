@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:51:46 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/01 17:13:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/02 20:13:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	*f_memcpy(void *dst, const void *src, size_t n)
 	if (!dst && !src)
 		return (NULL);
 	while (++i < n)
-	{
 		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-	}
 	((unsigned char *)dst)[++i] = 0;
 	return (dst);
 }
@@ -80,9 +78,7 @@ char	*f_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	s += start;
 	while (++i < len && s[i])
-	{
 		ret[i] = s[i];
-	}
 	ret[i] = '\0';
 	return (ret);
 }

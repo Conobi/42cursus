@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:54:41 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/01 19:28:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/02 19:30:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,24 @@ int	main(int argc, char *argv[])
 
 	argc = 0;
 	argv = 0;
-	fd = open("test", O_RDONLY);
+	fd = open("gnlTester/files/multiple_nlx5", O_RDONLY);
 	while ((gnl = get_next_line(fd)))
 	{
 		if (gnl)
 			printf("%s", gnl);
 		free(gnl);
 	}
+	gnl = get_next_line(fd);
+	printf("%s", gnl);
+	free(gnl);
+	// while (gnl)
+	// {
+	// 	gnl = get_next_line(fd);
+	// 	if (gnl)
+	// 		printf("%s", gnl);
+	// 	free(gnl);
+	// }
+	// free(gnl);
 	// printf("%s", get_next_line(fd));
 	// printf("%s", get_next_line(fd));
 	// printf("%s", get_next_line(fd));
