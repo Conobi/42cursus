@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:51:22 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/02 20:31:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/03 16:12:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,16 @@ void	remainds_getter(char **old, char **ret)
 		*ret = f_substr(tmp, 0, f_strlen(tmp));
 		free(tmp);
 		tmp = f_substr(*old, i + 1, f_strlen((*old)) - i - 1);
+		// printf("B%pB\n", *old);
+		free((*old));
 		*old = f_substr(tmp, 0, f_strlen(tmp));
+		// printf("A%pA\n", *old);
 		free(tmp);
 		return ;
 	}
 	else if ((*old) && (*old)[0])
 		*ret = f_substr((*old), 0, f_strlen((*old)));
+	// printf("B%pB\n", *old);
 	free((*old));
 	*old = 0;
 }
@@ -48,8 +52,14 @@ void	remainds_adder(char **old, char **ret)
 		/* Ici, on coupe la partie après le \n */
 		while ((*ret)[i] != '\n' && (*ret)[i])
 			i++;
-		tmp = f_substr((*ret), i + 1, f_strlen((*ret)) - i - 1);
+		// if (i != 0)
+		// 	tmp = f_substr((*ret), i + 1, f_strlen((*ret)) - i - 1);
+		// else
+		tmp = f_substr((*ret), i, f_strlen((*ret)) - i);
+		// printf("B%pB\n", (*old));
+		free((*old));
 		*old = f_substr(tmp, 0, f_strlen(tmp));
+		// printf("A%pA\n", *old);
 		free(tmp);
 		/* Ici en bas c'est pour couper ret */
 		tmp = f_substr((*ret), 0, i);
@@ -69,6 +79,7 @@ char	*get_next_line(int fd)
 	ret = 0;
 	// printf("A%sA", old);
 	remainds_getter(&old, &ret);
+	// printf("<%s>", old);
 	if (BUFFER_SIZE && fd >= 0 && !f_strchr(ret, '\n'))
 	{
 		nread = 0;
@@ -82,15 +93,9 @@ char	*get_next_line(int fd)
 			curr[BUFFER_SIZE] = 0;
 			f_strjoin(&ret, ret, curr, nread);
 		}
-		if (ret != NULL)
-		{
-			printf("A");
-			remainds_adder(&old, &ret);
-		}
+		remainds_adder(&old, &ret);
 	}
 	else if (BUFFER_SIZE && f_strchr(ret, '\n'))
 		return (ret);
-	if (!old || f_strlen(old) < 1)
-		free(old);
 	return (ret);
 }
