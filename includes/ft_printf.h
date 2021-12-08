@@ -13,21 +13,22 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <stdarg.h>
-# include "../libft/libft.h"
+# include <unistd.h>
 
-/* write_utils.c */
+/* ft_printf_utils.c */
 int		counter(int n);
 size_t	n_write(int fd, const void *buf, size_t n);
+void	f_puthexa(unsigned long long nb, short upper);
 
 /* ft_printf.c */
 int		ft_printf(const char *format, ...);
 
-/* printer_utils.c */
+/* custom_libft.c */
+size_t	f_strlen(const char *s);
 void	f_putchar(char n);
 void	f_putstr(char *s);
 void	f_putnbr(long n, short un);
 void	f_putnbr_u(unsigned int n);
 void	f_putnbr_base(unsigned long long nb, char *base);
-void	f_puthexa(unsigned long long nb, short upper);
 
 #endif

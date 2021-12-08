@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printer_utils.c                                    :+:      :+:    :+:   */
+/*   custom_libft.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 15:11:31 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/17 15:52:59 by conobi           ###   ########lyon.fr   */
+/*   Created: 2021/12/08 17:28:42 by conobi            #+#    #+#             */
+/*   Updated: 2021/12/08 17:32:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+size_t	f_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
 void	f_putchar(char n)
 {
@@ -24,7 +34,7 @@ void	f_putstr(char *s)
 		f_putstr("(null)");
 		return ;
 	}
-	n_write(1, s, ft_strlen(s));
+	n_write(1, s, f_strlen(s));
 }
 
 void	f_putnbr(long n, short un)
@@ -61,7 +71,7 @@ void	f_putnbr_base(unsigned long long nb, char *base)
 	char			r;
 	unsigned int	base_len;
 
-	base_len = ft_strlen(base);
+	base_len = f_strlen(base);
 	if (base_len == 0)
 		return ;
 	if (nb == 0)
@@ -83,14 +93,4 @@ void	f_putnbr_base(unsigned long long nb, char *base)
 		}
 		n_write(1, &r, 1);
 	}
-}
-
-void	f_puthexa(unsigned long long nb, short upper)
-{
-	if (upper == 2)
-		f_putstr("0x");
-	if (upper)
-		f_putnbr_base(nb, "0123456789abcdef");
-	else
-		f_putnbr_base(nb, "0123456789ABCDEF");
 }
