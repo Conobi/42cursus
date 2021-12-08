@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:54:41 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/03 18:44:39 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/08 15:24:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,22 @@
 
 int	main(void)
 {
-	int		fd;
-	char	*gnl;
+	int		fda;
+	char	*gnl[2];
+	int		fdb;
 
-	fd = open("gnlTester/files/multiple_nlx5", O_RDONLY);
-	while ((gnl = get_next_line(fd)))
+	fda = open("a", O_RDONLY);
+	fdb = open("b", O_RDONLY);
+	gnl[0] = get_next_line(fda);
+	gnl[1] = get_next_line(fdb);
+	while (gnl[0] && gnl[1])
 	{
-		printf("%s", gnl);
-		free(gnl);
+		printf("%s", gnl[0]);
+		free(gnl[0]);
+		printf("%s", gnl[1]);
+		free(gnl[1]);
+		gnl[0] = get_next_line(fda);
+		gnl[1] = get_next_line(fdb);
 	}
-	// gnl = get_next_line(fd);
-	// printf("%s", gnl);
-	// free(gnl);
-	// gnl = get_next_line(fd);
-	// printf("%s", gnl);
-	// free(gnl);
-	// gnl = get_next_line(fd);
-	// printf("%s", gnl);
-	// free(gnl);
-	// gnl = get_next_line(fd);
-	// printf("%s", gnl);
-	// free(gnl);
-	// gnl = get_next_line(fd);
-	// printf("%s", gnl);
-	// free(gnl);
-	// gnl = get_next_line(fd);
-	// printf("%s", gnl);
-	// free(gnl);
 	return (0);
 }
