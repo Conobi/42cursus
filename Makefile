@@ -17,6 +17,8 @@ re: fclean all
 $(NAME): $(OBJS)
 	ar -rcs $(NAME) $(OBJS)
 
+bonus: all
+
 clean:
 	rm -rf $(OBJS)
 
@@ -26,4 +28,4 @@ fclean:
 $(SDIR)/%.o: $(SDIR)/%.c $(HDRS)/ft_printf.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-.PHONY: all re clean fclean
+.PHONY: all re bonus clean fclean
