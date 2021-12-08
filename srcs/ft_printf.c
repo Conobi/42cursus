@@ -6,23 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:10:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/17 15:50:08 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/08 17:19:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-// int	ft_printf(const char *format, ...)
-// {
-// 	return (counter(0));
-// }
-
-// static void	dumb_joker(char joker)
-// {
-// 	f_putstr("<JOKER: ");
-// 	f_putchar(joker);
-// 	f_putstr(">");
-// }
 
 static void	f_joker(char jk, va_list args)
 {
