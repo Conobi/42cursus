@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:52:48 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/12 15:50:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/10 19:32:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static char	**f_freeloop(char ***splited, int j)
 {
 	while (--j || j == 0)
 		free(*splited[j]);
+	free(*splited);
 	return (NULL);
 }
 

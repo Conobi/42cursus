@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 15:04:43 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/13 18:11:25 by conobi           ###   ########lyon.fr   */
+/*   Created: 2021/12/13 19:27:11 by conobi            #+#    #+#             */
+/*   Updated: 2021/12/13 19:32:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
+#include "libft.h"
 
-typedef struct s_stack
+void	ft_swap(int *a, int *b)
 {
-	int	*stack;
-	int	size;
-}	t_stack;
+	int	c;
 
-/* push_swap_utils.c */
-t_stack	nulled_stack(void);
-
-/* parser.c */
-t_stack	parser(int cnt, char **arrstr);
-t_stack	split_parser(char **argv);
-
-#endif
+	c = *a;
+	*a = *b;
+	*b = c;
+}

@@ -6,8 +6,17 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 14:50:25 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/10 14:52:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/13 14:15:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+t_stack	nulled_stack(void)
+{
+	t_stack	ret;
+
+	ret.stack = 0;
+	ret.size = 0;
+	return (ret);
+}

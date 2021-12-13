@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/12 19:53:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/13 19:29:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -504,5 +504,13 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
  * @return t_list* The new list. NULL if the allocation fails.
  */
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+/**
+ * @brief A simple void function to swap two int.
+ *
+ * @param a Your first int
+ * @param b The second int to swap
+ */
+void	ft_swap(int *a, int *b);
 
 #endif
