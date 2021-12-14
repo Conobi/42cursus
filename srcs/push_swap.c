@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 14:50:27 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/13 18:07:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/14 16:46:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	main(int argc, char **argv)
 {
 	t_stack	parsed;
+	t_stack	indexed;
 	int		i;
 
 	printf("Input: \n");
@@ -25,11 +26,12 @@ int	main(int argc, char **argv)
 		parsed = parser(argc - 1, argv + 1);
 	printf("Size: %d\n", parsed.size);
 	i = -1;
-	if (parsed.size)
+	if (parsed.size && is_arr_unique(parsed.stack, parsed.size))
 	{
-		while (++i < parsed.size)
+		indexed = stack_index(parsed);
+		while (++i < indexed.size)
 		{
-			printf("%d\n", parsed.stack[i]);
+			printf("(%d) %d\n", i, indexed.stack[i]);
 		}
 		return (0);
 	}

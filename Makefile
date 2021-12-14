@@ -9,36 +9,35 @@ INCS	=	$(addprefix $(INCDIR)/,$(INC))
 SRC		=	push_swap.c \
 			push_swap_utils.c \
 			operations.c \
-			parser.c
+			parser.c \
+			indexer.c
 SDIR	=	srcs
 SRCS	=	$(addprefix $(SDIR)/,$(SRC))
 
-OBJS = ${SRCS:.c=.o}
+OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I ${INCDIR}
+CFLAGS = -Wall -Wextra -Werror -g3 -I $(INCDIR)
 
-RM = rm -f
-
-all : libft ${NAME}
+all : libft $(NAME)
 
 libft:
 	make -C ./libft
 
-%.o: %.c ${INCS}
-	${CC} ${CFLAGS} -c $< -o $@
+%.o: %.c $(INCS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-${NAME}: ${OBJS} ${LIBFT_AR}
-	${CC} ${OBJS} ${LIBFT_AR} -o ${NAME}
+$(NAME): $(OBJS) $(LIBFT_AR)
+	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME)
 
 clean:
-	${RM} ${OBJS}
+	rm -rf $(OBJS)
 	make clean -C ./libft
 
 fclean: clean
-	${RM} ${LIBFT_AR}
-	${RM} ${NAME}
+	rm -rf $(LIBFT_AR)
+	rm -rf $(NAME)
 
 
 re: fclean all

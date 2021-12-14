@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 14:50:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/13 18:07:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/14 13:29:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ t_stack	parser(int cnt, char **arrstr)
 
 	ret.stack = ft_calloc(cnt, sizeof(int));
 	if (!ret.stack)
-		return (nulled_stack());
+		return (stack_nulled());
 	ret.size = cnt;
 	while (--cnt >= 0)
 	{
 		ret.stack[cnt] = ft_atoi(arrstr[cnt]);
-		if (((ret.stack[cnt] == 0 || ret.stack[cnt] == 1)
+		if (((ret.stack[cnt] == 0 || ret.stack[cnt] == -1)
 				&& ft_strlen(arrstr[cnt]) > 2)
 			|| !is_strdigitsign(arrstr[cnt]))
 		{
 			free(ret.stack);
-			return (nulled_stack());
+			return (stack_nulled());
 		}
 	}
 	return (ret);
@@ -64,4 +64,20 @@ t_stack	split_parser(char **argv)
 	ret = parser(cnt, splitted);
 	free(splitted);
 	return (ret);
+}
+
+short	is_arr_unique(int *arr, int size)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < size)
+	{
+		j = i;
+		while (++j < size)
+			if (arr[i] == arr[j])
+				return (0);
+	}
+	return (1);
 }

@@ -6,46 +6,45 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:12:25 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/13 20:00:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/14 16:50:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	heapify(int **arr, int n, int i)
+void	bubble_sort(int *tab, int size)
 {
-	int	largest;
-	int	l;
-	int	r;
+	int	i;
+	int	j;
 
-	largest = i;
-	l = 2 * i + 1;
-	r = 2 * i + 2;
-	if (l < n && *arr[largest] < *arr[l])
-		largest = l;
-	if (r < n && *arr[largest] < *arr[r])
-		largest = r;
-	if (largest != i)
+	i = 0;
+	while (i < size - 1)
 	{
-		ft_swap(arr[i], arr[largest]);
-		heapify(arr, i, 0);
+		j = -1;
+		while (++j < size - i - 1)
+			if (tab[j] > tab[j + 1])
+				ft_swap(&tab[j], &tab[j + 1]);
+		i++;
 	}
 }
 
-void	heap_sort(int **arr, int n)
+t_stack	stack_index(t_stack src)
 {
-	int	i;
+	t_stack	bubbled;
+	t_stack	ret;
+	int		i;
+	int		j;
 
-	i = 0;
-	while ((i <= n / 2 - 1) && i != -1)
+	bubbled = stack_cpy(src);
+	ret = stack_cpy(src);
+	bubble_sort(bubbled.stack, src.size);
+	i = -1;
+	while (++i < src.size)
 	{
-		heapify(arr, n, i);
-		i--;
+		j = -1;
+		while (++j < src.size)
+			if (bubbled.stack[i] == src.stack[j])
+				ret.stack[j] = i;
 	}
-	while ((i <= n - 1) && i != 0)
-	{
-		ft_swap(arr[i], arr[0]);
-		heapify(arr, n, 0);
-		i--;
-	}
+	return (ret);
 }
