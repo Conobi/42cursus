@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 14:50:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/14 13:29:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/15 17:22:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ t_stack	parser(int cnt, char **arrstr)
 {
 	t_stack	ret;
 
-	ret.stack = ft_calloc(cnt, sizeof(int));
-	if (!ret.stack)
+	ret.arr = ft_calloc(cnt, sizeof(int));
+	if (!ret.arr)
 		return (stack_nulled());
 	ret.size = cnt;
 	while (--cnt >= 0)
 	{
-		ret.stack[cnt] = ft_atoi(arrstr[cnt]);
-		if (((ret.stack[cnt] == 0 || ret.stack[cnt] == -1)
+		ret.arr[cnt] = ft_atoi(arrstr[cnt]);
+		if (((ret.arr[cnt] == 0 || ret.arr[cnt] == -1)
 				&& ft_strlen(arrstr[cnt]) > 2)
 			|| !is_strdigitsign(arrstr[cnt]))
 		{
-			free(ret.stack);
+			free(ret.arr);
 			return (stack_nulled());
 		}
 	}
@@ -62,6 +62,8 @@ t_stack	split_parser(char **argv)
 	while (splitted[cnt])
 		cnt++;
 	ret = parser(cnt, splitted);
+	while (--cnt >= 0)
+		free(splitted[cnt]);
 	free(splitted);
 	return (ret);
 }

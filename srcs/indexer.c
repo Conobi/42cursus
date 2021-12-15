@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:12:25 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/14 16:50:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/15 15:26:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,25 @@ void	bubble_sort(int *tab, int size)
 	}
 }
 
-t_stack	stack_index(t_stack src)
+void	stack_reducer(t_stack *src)
 {
 	t_stack	bubbled;
 	t_stack	ret;
 	int		i;
 	int		j;
 
-	bubbled = stack_cpy(src);
-	ret = stack_cpy(src);
-	bubble_sort(bubbled.stack, src.size);
+	bubbled = stack_cpy(*src);
+	ret = stack_cpy(*src);
+	bubble_sort(bubbled.arr, src->size);
 	i = -1;
-	while (++i < src.size)
+	while (++i < src->size)
 	{
 		j = -1;
-		while (++j < src.size)
-			if (bubbled.stack[i] == src.stack[j])
-				ret.stack[j] = i;
+		while (++j < src->size)
+			if (bubbled.arr[i] == src->arr[j])
+				ret.arr[j] = i;
 	}
-	return (ret);
+	free(bubbled.arr);
+	free(src->arr);
+	src->arr = ret.arr;
 }

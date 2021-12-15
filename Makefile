@@ -10,7 +10,8 @@ SRC		=	push_swap.c \
 			push_swap_utils.c \
 			operations.c \
 			parser.c \
-			indexer.c
+			indexer.c \
+			sorter.c
 SDIR	=	srcs
 SRCS	=	$(addprefix $(SDIR)/,$(SRC))
 
