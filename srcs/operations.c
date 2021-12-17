@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 14:50:10 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/15 17:52:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/17 17:42:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,17 @@ void	stack_push(t_stack *stack_a, t_stack *stack_b, char oper)
 {
 	if (oper == 'a' && stack_b->size)
 	{
-		printf("*%d*\n", stack_b->arr[stack_b->size - 1]);
 		stack_a->size += 1;
 		stack_a->arr[stack_a->size - 1] = stack_b->arr[stack_b->size - 1];
 		stack_b->size -= 1;
-		ft_putstr_fd("sa\n", 1);
+		ft_putstr_fd("pa\n", 1);
 	}
 	else if (oper == 'b' && stack_a->size)
 	{
 		stack_b->size += 1;
 		stack_b->arr[stack_b->size - 1] = stack_a->arr[stack_a->size - 1];
 		stack_a->size -= 1;
-		ft_putstr_fd("sb\n", 1);
+		ft_putstr_fd("pb\n", 1);
 	}
 }
 
