@@ -6,12 +6,31 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 14:50:27 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/17 18:30:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/20 16:54:12 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
+
+void	stack_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	if (stack_a->size >= 500)
+	{
+		chunk_sort(stack_a, stack_b, stack_a->size / (stack_a->size * 0.075));
+		movsel_sort(stack_a, stack_b);
+	}
+	else if (stack_a->size >= 100)
+	{
+		chunk_sort(stack_a, stack_b, stack_a->size / (stack_a->size * 0.15));
+		movsel_sort(stack_a, stack_b);
+	}
+	else
+	{
+		chunk_sort(stack_a, stack_b, stack_a->size);
+		movsel_sort(stack_a, stack_b);
+	}
+}
 
 // static void	print_stack(t_stack stack)
 // {

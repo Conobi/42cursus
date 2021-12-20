@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 15:04:43 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/15 16:06:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/20 17:05:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef struct s_stack
 	int	*arr;
 	int	size;
 }	t_stack;
+
+/* push_swap.c */
+void	stack_sort(t_stack *stack_a, t_stack *stack_b);
 
 /* push_swap_utils.c */
 t_stack	stack_nulled(void);
@@ -44,6 +47,8 @@ void	stack_rotate(t_stack *stack_a, t_stack *stack_b, char oper);
 void	stack_revrotate(t_stack *stack_a, t_stack *stack_b, char oper);
 
 /* sorter.c */
-void	stack_sort(t_stack *stack_a, t_stack *stack_b);
+void	chunk_sort(t_stack *stack_a, t_stack *stack_b, int d);
+void	movsel_sort(t_stack *stack_a, t_stack *stack_b);
+void	minimal_sort(t_stack *stack_a, t_stack *stack_b);
 
 #endif
