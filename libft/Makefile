@@ -47,7 +47,7 @@ SRCS_BONUS= \
 OBJECTS=${SRCS:.c=.o}
 OBJECTS_BONUS=${SRCS_BONUS:.c=.o}
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -I $(HDRS)
+CFLAGS=-Wall -Wextra -Werror
 NAME=libft.a
 HDRS=libft.h
 

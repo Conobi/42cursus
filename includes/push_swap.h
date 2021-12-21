@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 15:04:43 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/20 17:05:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/21 18:48:51 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_stack	split_parser(char **argv);
 short	is_arr_unique(int *arr, int size);
 
 /* indexer.c */
-void	bubble_sort(int *tab, int size);
 void	stack_reducer(t_stack *src);
 
 /* operations.c */

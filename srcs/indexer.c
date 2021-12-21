@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:12:25 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/15 15:26:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/21 18:48:57 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	bubble_sort(int *tab, int size)
+static void	bubble_sort(int *tab, int size)
 {
 	int	i;
 	int	j;

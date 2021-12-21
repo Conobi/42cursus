@@ -8,5 +8,6 @@ a.out
 *.o
 README.md
 .vscode
-checker_Mac
+checker_*
 push_swap
+*test

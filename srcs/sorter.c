@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:01:00 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/20 20:31:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/21 18:31:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@ static short	top_or_bottom(t_stack stack, int max)
 		if (stack.arr[stack.size] == max && stack.size < mid)
 			return (1);
 	return (0);
+}
+
+static void	triple_sort(t_stack *stack)
+{
+	int	biggest;
+
+	biggest = stack->size - 1;
+	if (stack->arr[biggest] == biggest)
+		stack_rotate(stack, stack, 'a');
+	else if (biggest >= 2 && stack->arr[biggest - 1] == biggest)
+		stack_revrotate(stack, stack, 'a');
+	if (biggest >= 2 && stack->arr[biggest] == biggest - 1)
+		stack_swap(stack, stack, 'a');
 }
 
 void	chunk_sort(t_stack *stack_a, t_stack *stack_b, int d)
@@ -75,13 +88,24 @@ void	minimal_sort(t_stack *stack_a, t_stack *stack_b)
 	n = stack_a->size;
 	if (n > 3)
 	{
-		return ;
+		while (stack_a->size > 3)
+		{
+			if (stack_a->arr[stack_a->size - 1] == stack_a->size - 1)
+				stack_push(stack_a, stack_b, 'b');
+			else if (top_or_bottom(*stack_a, stack_a->size - 1))
+				while (stack_a->arr[stack_a->size - 1] != stack_a->size - 1)
+					stack_revrotate(stack_a, stack_b, 'a');
+			else
+				while (stack_a->arr[stack_a->size - 1] != stack_a->size - 1)
+					stack_rotate(stack_a, stack_b, 'a');
+		}
+		triple_sort(stack_a);
+		while (stack_b->size)
+		{
+			stack_push(stack_a, stack_b, 'a');
+			stack_rotate(stack_a, stack_b, 'a');
+		}
 	}
 	else
-	{
-		if (stack_a->arr[0] == n)
-			stack_revrotate(stack_a, stack_b, 'a');
-		else
-			stack_rotate(stack_a, stack_b, 'a');
-	}
+		triple_sort(stack_a);
 }
