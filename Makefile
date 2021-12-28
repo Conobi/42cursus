@@ -8,14 +8,15 @@ INCDIR	=	includes
 INCS	=	$(addprefix $(INCDIR)/,$(INC))
 
 SRC		=	fractol.c \
-			handlers.c
+			handlers.c \
+			utils.c
 SDIR	=	srcs
 SRCS	=	$(addprefix $(SDIR)/,$(SRC))
 
 OBJS 	= $(SRCS:.c=.o)
 
 MLXDIR	=	mlx
-MLXFLAGS=	-L$(MLXDIR) -l$(MLXDIR) -framework OpenGL -framework AppKit
+MLXFLAGS=	-l$(MLXDIR) -L$(MLXDIR) -framework OpenGL -framework AppKit
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g3 -I $(INCDIR) -I $(MLXDIR) -I $(LIBFTDIR)
