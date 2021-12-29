@@ -1,27 +1,39 @@
-NAME	= fractol
+NAME			= fractol
 
-LIBFTDIR=	libft
-LIBFT_AR=	$(addprefix $(LIBFTDIR)/,libft.a)
+LIBFTDIR	=	libft
+LIBFT_AR	=	$(addprefix $(LIBFTDIR)/,libft.a)
 
-INC		=	fractol.h
-INCDIR	=	includes
-INCS	=	$(addprefix $(INCDIR)/,$(INC))
+INC				=	fractol.h
+INCDIR		=	includes
+INCS			=	$(addprefix $(INCDIR)/,$(INC))
 
-SRC		=	fractol.c \
-			handlers.c \
-			utils.c
-SDIR	=	srcs
-SRCS	=	$(addprefix $(SDIR)/,$(SRC))
+SRC				=	fractol.c \
+					handlers.c \
+					utils.c
+SDIR			=	srcs
+SRCS			=	$(addprefix $(SDIR)/,$(SRC))
 
-OBJS 	= $(SRCS:.c=.o)
+ODIR			= build
+OBJS 			=  $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 
-MLXDIR	=	mlx
-MLXFLAGS=	-l$(MLXDIR) -L$(MLXDIR) -framework OpenGL -framework AppKit
+CC				= gcc
 
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g3 -I $(INCDIR) -I $(MLXDIR) -I $(LIBFTDIR)
+OSTEST		:= $(shell uname)
 
-all : libft mlx $(NAME)
+ifeq ($(OSTEST), Darwin)
+MLXDIR		=	mlx
+MLXFLAGS	=	-framework OpenGL -framework AppKit
+
+CFLAGS		= -Wall -Wextra -Werror -g3 -O3 -I $(INCDIR) -I $(MLXDIR) -I $(LIBFTDIR)
+endif
+
+ifeq ($(OSTEST), Linux)
+MLXDIR		=	mlx_linux
+MLXFLAGS	= -l mlx -L $(MLXDIR) -L/usr/lib -I $(MLXDIR) -I/usr/include -lXext -lX11 -lm -lz
+CFLAGS		= -Wall -Wextra -Werror -g3 -O3 -I/usr/include -I $(INCDIR) -I $(MLXDIR) -I $(LIBFTDIR)
+endif
+
+all: libft mlx $(NAME)
 
 mlx:
 	make -C $(MLXDIR)
@@ -29,14 +41,15 @@ mlx:
 libft:
 	make -C $(LIBFTDIR)
 
-%.o: %.c $(INCS)
+$(ODIR)/%.o: $(SDIR)/%.c $(INCS)
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT_AR)
-	$(CC) $(MLXFLAGS) $(OBJS) $(LIBFT_AR) -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) $(MLXFLAGS)
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(ODIR)
 	make clean -C $(LIBFTDIR)
 	make clean -C $(MLXDIR)
 
