@@ -44,8 +44,9 @@ SRCS_BONUS= \
 ./ft_lstiter.c \
 ./ft_lstclear.c \
 ./ft_lstmap.c
-OBJECTS=${SRCS:.c=.o}
-OBJECTS_BONUS=${SRCS_BONUS:.c=.o}
+ODIR=build
+OBJECTS=$(addprefix $(ODIR)/,$(SRCS:.c=.o))
+OBJECTS_BONUS=$(addprefix $(ODIR)/,$(SRCS_BONUS:.c=.o))
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror
 NAME=libft.a
@@ -66,7 +67,8 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 
-%.o: %.c $(HDRS)
+$(ODIR)/%.o: %.c $(HDRS)
+	@mkdir -p $(@D)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 .PHONY: clean fclean rclean re all bonus

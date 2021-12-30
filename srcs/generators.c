@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   generators.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/30 02:42:36 by conobi           ###   ########lyon.fr   */
+/*   Created: 2021/12/29 15:38:01 by conobi            #+#    #+#             */
+/*   Updated: 2021/12/30 02:42:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	pixel_put(t_data *data, int x, int y, int color)
+int	gradient(float t, int a, int b, char chn)
 {
-	char	*dst;
+	int		ret;
+	t_rgba	color_a;
+	t_rgba	color_b;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	color_a = hex2rgba(a);
+	color_b = hex2rgba(b);
+	if (chn == 'r')
+		ret = (color_a.r - color_b.r) * t + color_b.r;
+	else if (chn == 'g')
+		ret = (color_a.g - color_b.g) * t + color_b.g;
+	else if (chn == 'b')
+		ret = (color_a.b - color_b.b) * t + color_b.b;
+	else
+		ret = (color_a.a - color_b.a) * t + color_b.a;
+	return (ret);
 }
