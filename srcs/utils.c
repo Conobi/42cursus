@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/31 15:54:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/31 17:52:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ t_pos	pos(int sx, int sy, int x, int y)
 	ret.sy = sy;
 	ret.x = x;
 	ret.y = y;
+	ret.mx = -0.75;
+	ret.my = 0;
 	return (ret);
 }

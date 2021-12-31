@@ -11,7 +11,8 @@ SRC			= fractol.c \
 			  handlers.c \
 			  utils.c \
 			  rgba.c \
-			  generators.c
+			  generators.c \
+			  colors.c
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 

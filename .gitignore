@@ -12,3 +12,5 @@ checker_*
 fractol
 *test
 Makefile.gen
+test.py
+output.png
