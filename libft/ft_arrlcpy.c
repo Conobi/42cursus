@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_arrlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/31 15:54:24 by conobi           ###   ########lyon.fr   */
+/*   Created: 2021/11/02 15:29:09 by conobi            #+#    #+#             */
+/*   Updated: 2021/12/30 20:05:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	pixel_put(t_data *data, int x, int y, int color)
+size_t	ft_arrlcpy(int *dst, const int *src, size_t dstsize)
 {
-	char	*dst;
+	size_t	i;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-t_pos	pos(int sx, int sy, int x, int y)
-{
-	t_pos	ret;
-
-	ret.sx = sx;
-	ret.sy = sy;
-	ret.x = x;
-	ret.y = y;
-	return (ret);
+	i = -1;
+	while (++i < dstsize)
+		dst[i] = src[i];
+	return (dstsize);
 }

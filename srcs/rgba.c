@@ -6,47 +6,47 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:47:17 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/29 16:21:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/30 21:46:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	rgba2hex(t_rgba color)
+int	rgba2hex(int *color)
 {
-	return ((255 - color.a) << 24 | color.r << 16 | color.g << 8 | color.b);
+	return ((255 - color[3]) << 24 | color[0] << 16 | color[1] << 8 | color[2]);
 }
 
-t_rgba	hex2rgba(int color)
+int	*hex2rgba(int color)
 {
-	t_rgba	ret;
+	static int	ret[4];
 
-	ret.a = ((color >> 24) & 0xff) + 255;
-	ret.r = (color >> 16) & 0xff;
-	ret.g = (color >> 8) & 0xff;
-	ret.b = color & 0xff;
+	ret[3] = ((color >> 24) & 0xff) + 255;
+	ret[0] = (color >> 16) & 0xff;
+	ret[1] = (color >> 8) & 0xff;
+	ret[2] = color & 0xff;
 	return (ret);
 }
 
 int	rgba(int r, int g, int b, int a)
 {
-	t_rgba	color;
+	static int	color[4];
 
-	color.r = r;
-	color.g = g;
-	color.b = b;
-	color.a = a;
+	color[0] = r;
+	color[1] = g;
+	color[2] = b;
+	color[3] = a;
 	return (rgba2hex(color));
 }
 
-int	generate(float t, int a, int b, int (*gen)(float, int, int, char))
+int	generate(float t, int a, int b, int (*gen)(float, int, int, int))
 {
-	t_rgba	color;
+	int	color[4];
+	int	chn;
 
-	color.r = (*gen)(t, a, b, 'r');
-	color.g = (*gen)(t, a, b, 'g');
-	color.b = (*gen)(t, a, b, 'b');
-	color.a = (*gen)(t, a, b, 'a');
+	chn = -1;
+	while (++chn < 4)
+		color[chn] = (*gen)(t, a, b, chn);
 	return (rgba2hex(color));
 }
 // static int	palette(float t)

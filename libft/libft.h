@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/13 19:29:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2021/12/30 20:03:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -512,5 +512,15 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
  * @param b The second int to swap
  */
 void	ft_swap(int *a, int *b);
+
+/**
+ * @brief copies up to dstsize int from the array src to dst
+ *
+ * @param dst Your destination array
+ * @param src Your source; Cannot be modified
+ * @param dstsize The total size of the future array.
+ * @return size_t Returns the total length of the array they tried to create.
+ */
+size_t	ft_arrlcpy(int *dst, const int *src, size_t dstsize);
 
 #endif

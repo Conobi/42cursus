@@ -32,8 +32,7 @@ SRCS = \
 ./ft_putendl_fd.c \
 ./ft_putnbr_fd.c \
 ./ft_strmapi.c \
-./ft_striteri.c \
-./ft_swap.c
+./ft_striteri.c
 SRCS_BONUS= \
 ./ft_lstnew.c \
 ./ft_lstadd_front.c \
@@ -43,7 +42,10 @@ SRCS_BONUS= \
 ./ft_lstdelone.c \
 ./ft_lstiter.c \
 ./ft_lstclear.c \
-./ft_lstmap.c
+./ft_lstmap.c \
+./ft_swap.c \
+./ft_arrlcpy.c
+
 ODIR=build
 OBJECTS=$(addprefix $(ODIR)/,$(SRCS:.c=.o))
 OBJECTS_BONUS=$(addprefix $(ODIR)/,$(SRCS_BONUS:.c=.o))
