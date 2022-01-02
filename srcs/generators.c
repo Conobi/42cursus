@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 15:38:01 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/31 23:21:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/01 20:39:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 short	mandelbrot(const t_pos pos, const float zoom)
 {
 	t_complex	c;
+	int			i;
 	float		max;
 	float		szoom;
-	int			i;
 
 	szoom = 4.3;
 	max = zoom * szoom * pos.sy / pos.sx;
@@ -27,9 +27,11 @@ short	mandelbrot(const t_pos pos, const float zoom)
 	c.ox = c.x;
 	c.oy = c.y;
 	i = -1;
-	while (++i < 255 && (c.x * c.x + c.y * c.y) < 4)
+	while (++i < 255)
 	{
 		c.a = c.x * c.x - c.y * c.y;
+		if (c.a >= 2)
+			break ;
 		c.b = 2 * c.x * c.y;
 		c.x = c.a + c.ox;
 		c.y = c.b + c.oy;
@@ -49,9 +51,11 @@ short	julia(const t_pos pos, const float zoom)
 	c.x = (0.75 + pos.mx - zoom * szoom / 2) + pos.x * zoom * szoom / pos.sx;
 	c.y = (0 + max / 2) - pos.y * max / pos.sy;
 	i = -1;
-	while (++i < 255 && (c.x * c.x + c.y * c.y) < 4)
+	while (++i < 255)
 	{
 		c.a = c.x * c.x - c.y * c.y;
+		if (c.a >= 2)
+			break ;
 		c.b = 2 * c.x * c.y;
 		c.x = c.a - 0.7;
 		c.y = c.b + 0.27015;
@@ -62,8 +66,8 @@ short	julia(const t_pos pos, const float zoom)
 short	burning_ship(const t_pos pos, const float zoom)
 {
 	t_complex	c;
-	float		max;
 	int			i;
+	float		max;
 	float		szoom;
 
 	szoom = 4.3;
@@ -73,9 +77,11 @@ short	burning_ship(const t_pos pos, const float zoom)
 	c.ox = c.x;
 	c.oy = c.y;
 	i = -1;
-	while (++i < 255 && (c.x * c.x + c.y * c.y) < 4)
+	while (++i < 255)
 	{
 		c.a = c.x * c.x - c.y * c.y;
+		if (c.a >= 2)
+			break ;
 		c.b = fabs(2 * c.x * c.y);
 		c.x = c.a + c.ox;
 		c.y = c.b + c.oy;

@@ -6,35 +6,37 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:23:09 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/31 21:16:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/01 19:19:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_data	handler(const t_context con, short (*fractal)(t_pos, float))
+t_img	handler(t_context *con)
 {
-	t_data	img;
+	t_img	img;
 	int		isx;
 	int		isy;
 	float	t;
 	int		color;
 
-	img.img = mlx_new_image(con.mlx, con.sx, con.sy);
+	// printf("%p %d %d\n", con->mlx, con->sx, con->sy);
+	img.img = mlx_new_image(con->mlx, con->sx, con->sy);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
-	isx = con.sx;
+	isx = con->sx;
+	con->zoom = zoom_calc(con->inzoom);
 	while (--isx >= 0)
 	{
-		isy = con.sy;
+		isy = con->sy;
 		while (--isy >= 0)
 		{
-			t = (double)fractal(pos(con.sx, con.sy, isx, isy), 1) / 255;
+			t = (float)con->fractal_func(pos(con->sx, con->sy, isx, isy), con->zoom) / 255;
 			color = generate(t - 0.59, 0xFFFFFF, 0x001933, &linear);
 			pixel_put(&img, isx, isy, color);
 		}
 	}
-	printf("\e[92m\e[1mDone\e[0m\n");
+	// printf("\e[92m\e[1mDone\e[0m\n");
 	return (img);
 }
 

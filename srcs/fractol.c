@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/31 21:15:43 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/01 19:15:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@ static void	print_help(int argc, char **argv)
 	printf("\t\e[96mhelp\e[0m - To show this help\n\n");
 }
 
-static void	graph_manager(t_context con, short (*fractal)(t_pos, float))
+static void	graph_manager(t_context *con)
 {
 	char	*win_name;
-	void	*mlx_win;
-	t_data	img;
 
-	con.mlx = mlx_init();
-	win_name = ft_strjoin("Fractol - ", con.command);
+	con->mlx = mlx_init();
+	con->inzoom = 0.8;
+	win_name = ft_strjoin("Fractol - ", con->command);
 	if (!win_name)
 		return ;
-	mlx_win = mlx_new_window(con.mlx, con.sx, con.sy, win_name);
-	img = handler(con, fractal);
-	mlx_put_image_to_window(con.mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(con.mlx);
+	con->win = mlx_new_window(con->mlx, con->sx, con->sy, win_name);
+	con->img = handler(con);
+	mlx_put_image_to_window(con->mlx, con->win, con->img.img, 0, 0);
+	event_listener(con);
+	mlx_loop(con->mlx);
 	free(win_name);
 }
 
@@ -54,13 +54,13 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 		con.command = argv[1];
 	if (argc == 2 && !ft_strncmp(argv[1], "julia", ft_strlen(argv[1])))
-		graph_manager(con, &julia);
+		graph_manager(set_func(&con, julia));
 	else if (argc == 2
 		&& !ft_strncmp(argv[1], "mandelbrot", ft_strlen(argv[1])))
-		graph_manager(con, &mandelbrot);
+		graph_manager(set_func(&con, mandelbrot));
 	else if (argc == 2
 		&& !ft_strncmp(argv[1], "burning_ship", ft_strlen(argv[1])))
-		graph_manager(con, &burning_ship);
+		graph_manager(set_func(&con, burning_ship));
 	else if (argc == 2 && !ft_strncmp(argv[1], "debug", ft_strlen(argv[1])))
 	{
 		color = hex2rgba(rgba(127, 50, 63, 255));
