@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 23:23:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/01 22:14:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/02 18:58:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,56 @@
 static int	key_event(int keycode, t_context *con)
 {
 	printf("Key number: %d for %p\n", keycode, con->win);
+	if (keycode == 124 && con->midx > 0)
+		con->midx -= 0.05 * con->inzoom;
+	else if (keycode == 123 && con->midx < 1)
+		con->midx += 0.05 * con->inzoom;
+	else if (keycode == 126 && con->midy < 1)
+		con->midy += 0.05 * con->inzoom;
+	else if (keycode == 125 && con->midy > 0)
+		con->midy -= 0.05 * con->inzoom;
+	else if (keycode == 49)
+	{
+		printf("Debug alignement av: %f, %f\n", con->midx, con->midy);
+		if (con->midx == 0.5)
+			con->midx = 1;
+		else if (con->midx == 1)
+			con->midx = 0;
+		else
+			con->midx = 0.5;
+		if (con->midy == 0.5)
+			con->midy = 1;
+		else if (con->midy == 1)
+			con->midy = 0;
+		else
+			con->midy = 0.5;
+		mlx_destroy_image(con->mlx, con->img.img);
+	}
+	con->img = handler(con);
+	mlx_put_image_to_window(con->mlx, con->win, con->img.img, 0, 0);
+	printf("Debug alignement ap: %f, %f\n", con->midx, con->midy);
 	return (0);
 }
 
 static int	mouse_event(int button, int x, int y, t_context *con)
 {
-	// printf("Button [%d] ; Coords: (%d, %d)\n", button, x, y);
-	// printf("Zoom: %f\n", con->zoom);
-	x = x;
-	y = y;
-	if (button == 4 && con->inzoom < 1)
+	x += 0;
+	y += 0;
+	if (button == 4 && con->inzoom > 0)
 		con->inzoom -= 0.05;
-	else if (button == 5 && con->inzoom > 0)
+	else if (button == 5 && con->inzoom < 1)
 		con->inzoom += 0.05;
 	if (button == 4 || button == 5)
 	{
-		// mlx_destroy_image(con->mlx, con->img.img);
+		con->midx = (1 - (float)x / con->sx) * con->midx * 2;
+		con->midy = (1 - (float)y / con->sy) * con->midy * 2;
+		if (button == 4 && con->inzoom <= 0)
+			printf("Limite min atteinte \n");
+		else if (button == 5 && con->inzoom >= 1)
+			printf("Limite max atteinte \n");
+		mlx_destroy_image(con->mlx, con->img.img);
 		con->img = handler(con);
 		mlx_put_image_to_window(con->mlx, con->win, con->img.img, 0, 0);
-		// printf("Nouveau zoom: %f\n", con->zoom);
 	}
 	return (0);
 }

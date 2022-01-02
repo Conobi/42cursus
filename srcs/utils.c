@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/01 21:13:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/02 17:40:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,28 @@ t_pos	pos(int sx, int sy, int x, int y)
 	ret.sy = sy;
 	ret.x = x;
 	ret.y = y;
-	ret.mx = -0.75;
-	ret.my = 0;
 	return (ret);
 }
 
-t_context	*set_func(t_context *con, short (*func)(t_pos, float))
+t_context	*set_func(t_context *con,
+				short (*func)(const t_pos, const t_context*))
 {
 	con->fractal_func = func;
 	return (con);
 }
 
-float	zoom_calc(float input)
+// float	zoom_calc(float input)
+// {
+// 	float	ret;
+
+// 	ret = 0.005 + input * (1.8 - 0.005);
+// 	return (ret);
+// }
+
+float	remap(float input, float low, float high)
 {
 	float	ret;
 
-	ret = 0.005 + input * (1.8 - 0.005);
+	ret = low + input * (high - low);
 	return (ret);
 }

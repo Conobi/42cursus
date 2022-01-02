@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:40:18 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/01 19:05:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/02 17:23:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct s_pos {
 	int		sy;
 	int		x;
 	int		y;
-	float	mx;
-	float	my;
 }	t_pos;
 
 typedef struct s_complex {
@@ -46,17 +44,21 @@ typedef struct s_complex {
 	float	b;
 }	t_complex;
 
-typedef struct s_context {
+typedef struct s_context	t_context;
+
+struct s_context {
 	int		sx;
 	int		sy;
 	char	*command;
-	short	(*fractal_func)(t_pos, float);
+	short	(*fractal_func)(const t_pos, const t_context*);
 	void	*mlx;
 	void	*win;
 	t_img	img;
 	float	zoom;
 	float	inzoom;
-}	t_context;
+	float	midx;
+	float	midy;
+};
 
 /* handlers.c */
 t_img		handler(t_context *con);
@@ -64,8 +66,9 @@ t_img		handler(t_context *con);
 /* utils.c */
 void		pixel_put(t_img *data, int x, int y, int color);
 t_pos		pos(int sx, int sy, int x, int y);
-t_context	*set_func(t_context *con, short (*func)(t_pos, float));
-float		zoom_calc(float input);
+t_context	*set_func(t_context *con,
+				short (*func)(const t_pos, const t_context*));
+float		remap(float input, float low, float high);
 
 /* rgba.c */
 int			rgba2hex(int *color);
@@ -78,9 +81,9 @@ int			gradient(float t, int a, int b, int chn);
 int			linear(float t, int c, int d, int chn);
 
 /* generators.c */
-short		mandelbrot(const t_pos pos, const float zoom);
-short		julia(const t_pos pos, const float zoom);
-short		burning_ship(const t_pos pos, const float zoom);
+short		mandelbrot(const t_pos pos, const t_context *con);
+short		julia(const t_pos pos, const t_context *con);
+short		burning_ship(const t_pos pos, const t_context *con);
 
 /* events.c */
 void		event_listener(t_context *con);

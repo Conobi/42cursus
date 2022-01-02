@@ -26,9 +26,9 @@ OSTEST		:= $(shell uname)
 
 ifeq ($(OSTEST), Darwin)
 MLXDIR		= mlx/opengl
-MLXFLAGS	= -framework OpenGL -framework AppKit
+MLXFLAGS	= -l mlx -L $(MLXDIR) -framework OpenGL -framework AppKit
 
-CFLAGS		= -l mlx -L $(MLXDIR) -Wall -Wextra -Werror -g3 -O3 -I $(INCDIR) -I $(MLXDIR) -I $(LIBFTDIR)
+CFLAGS		=-Wall -Wextra -Werror -g3 -O3 -I $(INCDIR) -I $(MLXDIR) -I $(LIBFTDIR)
 endif
 
 ifeq ($(OSTEST), Linux)

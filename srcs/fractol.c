@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/01 19:15:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/02 18:19:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ static void	graph_manager(t_context *con)
 	char	*win_name;
 
 	con->mlx = mlx_init();
-	con->inzoom = 0.8;
+	con->inzoom = 0.5;
+	con->midx = 0.5;
+	con->midy = 0.5;
 	win_name = ft_strjoin("Fractol - ", con->command);
 	if (!win_name)
 		return ;

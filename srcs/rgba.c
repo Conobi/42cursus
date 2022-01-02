@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:47:17 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/30 21:46:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/02 16:31:37 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	generate(float t, int a, int b, int (*gen)(float, int, int, int))
 	chn = -1;
 	while (++chn < 4)
 		color[chn] = (*gen)(t, a, b, chn);
+	color[3] = 255;
 	return (rgba2hex(color));
 }
 // static int	palette(float t)

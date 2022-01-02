@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:23:09 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/01 19:19:55 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/02 18:00:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@ t_img	handler(t_context *con)
 	float	t;
 	int		color;
 
-	// printf("%p %d %d\n", con->mlx, con->sx, con->sy);
 	img.img = mlx_new_image(con->mlx, con->sx, con->sy);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
 	isx = con->sx;
-	con->zoom = zoom_calc(con->inzoom);
+	con->zoom = remap(con->inzoom, 0.005, 1.8);
 	while (--isx >= 0)
 	{
 		isy = con->sy;
 		while (--isy >= 0)
 		{
-			t = (float)con->fractal_func(pos(con->sx, con->sy, isx, isy), con->zoom) / 255;
+			t = (float)con->fractal_func(pos(con->sx, con->sy, isx, isy), con) / 512;
 			color = generate(t - 0.59, 0xFFFFFF, 0x001933, &linear);
 			pixel_put(&img, isx, isy, color);
 		}

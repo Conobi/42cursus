@@ -6,7 +6,6 @@ a.out
 *.code-workspace
 *.a
 *.o
-README.md
 .vscode
 checker_*
 fractol
