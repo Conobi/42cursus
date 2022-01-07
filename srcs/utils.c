@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/02 17:40:11 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/05 13:29:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ t_pos	pos(int sx, int sy, int x, int y)
 {
 	t_pos	ret;
 
-	ret.sx = sx;
-	ret.sy = sy;
-	ret.x = x;
-	ret.y = y;
+	ret.s.x = sx;
+	ret.s.y = sy;
+	ret.i.x = x;
+	ret.i.y = y;
 	return (ret);
 }
 
@@ -53,3 +53,22 @@ float	remap(float input, float low, float high)
 	ret = low + input * (high - low);
 	return (ret);
 }
+
+t_vec2	vec2(int x, int y)
+{
+	t_vec2	ret;
+
+	ret.x = x;
+	ret.y = y;
+	return (ret);
+}
+
+// t_chunk	chunk(t_vec2 s, t_vec2 e, t_context *con)
+// {
+// 	t_chunk	ret;
+
+// 	ret.s = s;
+// 	ret.e = e;
+// 	ret.con = con;
+// 	return (ret);
+// }

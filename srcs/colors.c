@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:02:13 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/31 19:02:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/05 20:02:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 int	gradient(float t, int a, int b, int chn)
 {
 	int	ret;
-	int	color_a[4];
-	int	color_b[4];
 
-	ft_arrlcpy(color_a, hex2rgba(a), 3);
-	ft_arrlcpy(color_b, hex2rgba(b), 3);
-	ret = (color_a[chn] - color_b[chn]) * t + color_b[chn];
+	ret = (hex2rgba(a)[chn] - hex2rgba(b)[chn]) * t + hex2rgba(b)[chn];
 	return (ret);
 }
 

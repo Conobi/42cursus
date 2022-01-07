@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/02 18:19:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/05 18:43:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static void	graph_manager(t_context *con)
 	char	*win_name;
 
 	con->mlx = mlx_init();
-	con->inzoom = 0.5;
+	con->inzoom = 0.8;
 	con->midx = 0.5;
 	con->midy = 0.5;
 	win_name = ft_strjoin("Fractol - ", con->command);
 	if (!win_name)
 		return ;
-	con->win = mlx_new_window(con->mlx, con->sx, con->sy, win_name);
-	con->img = handler(con);
+	con->win = mlx_new_window(con->mlx, con->s.x, con->s.y, win_name);
+	con->img = thread_handler(con);
 	mlx_put_image_to_window(con->mlx, con->win, con->img.img, 0, 0);
 	event_listener(con);
 	mlx_loop(con->mlx);
@@ -51,8 +51,9 @@ int	main(int argc, char **argv)
 	t_context	con;
 	int			*color;
 
-	con.sx = 1280;
-	con.sy = 720;
+	con.s.x = 800;
+	con.s.y = 620;
+	con.threads = 8;
 	if (argc == 2)
 		con.command = argv[1];
 	if (argc == 2 && !ft_strncmp(argv[1], "julia", ft_strlen(argv[1])))
