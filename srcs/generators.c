@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 15:38:01 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/05 19:40:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/11 00:37:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ short	mandelbrot(const t_pos pos, const t_context *con)
 	while (++i < 128)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.x * c.x + c.y * c.y >= 2)
+		if (c.a >= 2)
 			break ;
 		c.b = 2 * c.x * c.y;
 		c.x = c.a + c.ox;
@@ -54,7 +54,7 @@ short	julia(const t_pos pos, const t_context *con)
 	while (++i < 128)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.x * c.x + c.y * c.y >= 2)
+		if (c.a >= 2)
 			break ;
 		c.b = 2 * c.x * c.y;
 		c.x = c.a - 0.7;
@@ -73,7 +73,8 @@ short	burning_ship(const t_pos pos, const t_context *con)
 	c.x = remap(con->midx, 2.25, -2.75) - con->zoom * szoom / 2;
 	c.x += pos.i.x * con->zoom * szoom / pos.s.x;
 	c.y = con->zoom * szoom * pos.s.y / pos.s.x;
-	c.y = -1 * (c.y / 2 - remap(con->midy, 0.25, -1.65) - pos.i.y * c.y / pos.s.y);
+	c.y = -1 * (c.y / 2 - remap(con->midy, 0.25, -1.65)
+			- pos.i.y * c.y / pos.s.y);
 	c.ox = c.x;
 	c.oy = c.y;
 	i = -1;
@@ -82,7 +83,7 @@ short	burning_ship(const t_pos pos, const t_context *con)
 		c.a = c.x * c.x - c.y * c.y;
 		if (c.a >= 2)
 			break ;
-		c.b = fabs(2 * c.x * c.y);
+		c.b = fabs(2 * (float)c.x * (float)c.y);
 		c.x = c.a + c.ox;
 		c.y = c.b + c.oy;
 	}

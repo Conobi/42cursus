@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/05 13:29:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/11 00:12:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ t_context	*set_func(t_context *con,
 	return (con);
 }
 
-// float	zoom_calc(float input)
+// double long	zoom_calc(double long input)
 // {
-// 	float	ret;
+// 	double long	ret;
 
 // 	ret = 0.005 + input * (1.8 - 0.005);
 // 	return (ret);
 // }
 
-float	remap(float input, float low, float high)
+double long	remap(double long input, double long low, double long high)
 {
-	float	ret;
+	double long	ret;
 
 	ret = low + input * (high - low);
 	return (ret);

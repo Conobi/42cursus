@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/05 18:43:33 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/11 00:27:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	graph_manager(t_context *con)
 	char	*win_name;
 
 	con->mlx = mlx_init();
-	con->inzoom = 0.8;
+	con->zoom = 1;
 	con->midx = 0.5;
 	con->midy = 0.5;
 	win_name = ft_strjoin("Fractol - ", con->command);
@@ -49,11 +49,10 @@ static void	graph_manager(t_context *con)
 int	main(int argc, char **argv)
 {
 	t_context	con;
-	int			*color;
 
 	con.s.x = 800;
 	con.s.y = 620;
-	con.threads = 8;
+	con.threads = 16;
 	if (argc == 2)
 		con.command = argv[1];
 	if (argc == 2 && !ft_strncmp(argv[1], "julia", ft_strlen(argv[1])))
@@ -64,12 +63,6 @@ int	main(int argc, char **argv)
 	else if (argc == 2
 		&& !ft_strncmp(argv[1], "burning_ship", ft_strlen(argv[1])))
 		graph_manager(set_func(&con, burning_ship));
-	else if (argc == 2 && !ft_strncmp(argv[1], "debug", ft_strlen(argv[1])))
-	{
-		color = hex2rgba(rgba(127, 50, 63, 255));
-		printf("Hexa: %x\n", rgba2hex(color));
-		printf("rgba(%d, %d, %d, %d)\n", color[0], color[1], color[2], color[3]);
-	}
 	else
 		print_help(argc, argv);
 	return (0);

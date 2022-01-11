@@ -6,57 +6,58 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:47:17 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/02 16:31:37 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/11 00:12:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	rgba2hex(int *color)
+int	rgba2hex(t_rgba color)
 {
-	return ((255 - color[3]) << 24 | color[0] << 16 | color[1] << 8 | color[2]);
+	return ((255 - color.arr[3]) << 24 | color.arr[0] << 16
+		| color.arr[1] << 8 | color.arr[2]);
 }
 
-int	*hex2rgba(int color)
+t_rgba	hex2rgba(int color)
 {
-	static int	ret[4];
+	t_rgba	ret;
 
-	ret[3] = ((color >> 24) & 0xff) + 255;
-	ret[0] = (color >> 16) & 0xff;
-	ret[1] = (color >> 8) & 0xff;
-	ret[2] = color & 0xff;
+	ret.arr[3] = ((color >> 24) & 0xff) + 255;
+	ret.arr[0] = (color >> 16) & 0xff;
+	ret.arr[1] = (color >> 8) & 0xff;
+	ret.arr[2] = color & 0xff;
 	return (ret);
 }
 
 int	rgba(int r, int g, int b, int a)
 {
-	static int	color[4];
+	t_rgba	color;
 
-	color[0] = r;
-	color[1] = g;
-	color[2] = b;
-	color[3] = a;
+	color.arr[0] = r;
+	color.arr[1] = g;
+	color.arr[2] = b;
+	color.arr[3] = a;
 	return (rgba2hex(color));
 }
 
-int	generate(float t, int a, int b, int (*gen)(float, int, int, int))
+int	generate(double t, int a, int b, int (*gen)(double long, int, int, int))
 {
-	int	color[4];
-	int	chn;
+	t_rgba	color;
+	int		chn;
 
 	chn = -1;
 	while (++chn < 4)
-		color[chn] = (*gen)(t, a, b, chn);
-	color[3] = 255;
+		color.arr[chn] = (*gen)(t, a, b, chn);
+	color.arr[3] = 255;
 	return (rgba2hex(color));
 }
-// static int	palette(float t)
+// static int	palette(double long t)
 // {
 // 	int		a;
 // 	int		b;
 // 	int		c;
 // 	int		d;
-// 	float	ret;
+// 	double long	ret;
 
 // 	a = rgba(127, 127, 127, 255);
 // 	b = rgba(127, 127, 127, 255);
@@ -66,11 +67,11 @@ int	generate(float t, int a, int b, int (*gen)(float, int, int, int))
 // 	return ((int)ret);
 // }
 
-// static int	palette(float t)
+// static int	palette(double long t)
 // {
 // 	int		a;
 // 	int		b;
-// 	float	ret;
+// 	double long	ret;
 
 // 	a = rgba(0, 255, 255, 255);
 // 	b = rgba(65, 208, 117, 255);

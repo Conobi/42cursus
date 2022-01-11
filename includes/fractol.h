@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:40:18 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/05 15:28:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/11 00:26:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FRACTOL_H
 # include "mlx.h"
 # include "libft.h"
+# include "keys.h"
 # include <math.h>
 # include <stdio.h>
 # include <string.h>
@@ -25,6 +26,10 @@ typedef struct s_vec2 {
 	int	x;
 	int	y;
 }	t_vec2;
+
+typedef struct s_rgba {
+	int	arr[4];
+}	t_rgba;
 
 typedef struct s_img {
 	void	*img;
@@ -40,12 +45,12 @@ typedef struct s_pos {
 }	t_pos;
 
 typedef struct s_complex {
-	float	x;
-	float	y;
-	float	ox;
-	float	oy;
-	float	a;
-	float	b;
+	double long	x;
+	double long	y;
+	double long	ox;
+	double long	oy;
+	double long	a;
+	double long	b;
 }	t_complex;
 
 typedef struct s_chunk {
@@ -65,10 +70,10 @@ struct s_context {
 	char			*command;
 	void			*mlx;
 	void			*win;
-	float			zoom;
-	float			inzoom;
-	float			midx;
-	float			midy;
+	double long		zoom;
+	double long		inzoom;
+	double long		midx;
+	double long		midy;
 	int				threads;
 };
 
@@ -81,19 +86,20 @@ void		pixel_put(t_img *data, int x, int y, int color);
 t_pos		pos(int sx, int sy, int x, int y);
 t_context	*set_func(t_context *con,
 				short (*func)(const t_pos, const t_context*));
-float		remap(float input, float low, float high);
+double long	remap(double long input, double long low, double long high);
 t_vec2		vec2(int x, int y);
 t_chunk		chunk(t_vec2 s, t_vec2 e, t_context *con);
 
 /* rgba.c */
-int			rgba2hex(int *color);
-int			*hex2rgba(int color);
+int			rgba2hex(t_rgba color);
+t_rgba		hex2rgba(int color);
 int			rgba(int r, int g, int b, int a);
-int			generate(float t, int a, int b, int (*gen)(float, int, int, int));
+int			generate(double t, int a, int b,
+				int (*gen)(double long, int, int, int));
 
 /* colors.c */
-int			gradient(float t, int a, int b, int chn);
-int			linear(float t, int c, int d, int chn);
+int			gradient(double long t, int a, int b, int chn);
+int			linear(double long t, int c, int d, int chn);
 
 /* generators.c */
 short		mandelbrot(const t_pos pos, const t_context *con);
