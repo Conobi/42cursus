@@ -9,11 +9,13 @@ INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= fractol.c \
 			  handlers.c \
+			  helpers.c \
 			  utils.c \
 			  rgba.c \
 			  generators.c \
 			  colors.c \
-			  events.c
+			  events.c \
+			  events_handlers.c
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 

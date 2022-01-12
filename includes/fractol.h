@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:40:18 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/11 00:26:33 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 03:16:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,17 @@ struct s_context {
 	double long		inzoom;
 	double long		midx;
 	double long		midy;
+	double long		ox;
+	double long		oy;
 	int				threads;
+	int				miters;
 };
 
 /* handlers.c */
-t_img		handler(t_context *con);
 t_img		thread_handler(t_context *con);
+void		refresh_handler(t_context *con);
 
-/* utils.c */
+/* helpers.c */
 void		pixel_put(t_img *data, int x, int y, int color);
 t_pos		pos(int sx, int sy, int x, int y);
 t_context	*set_func(t_context *con,
@@ -89,6 +92,11 @@ t_context	*set_func(t_context *con,
 double long	remap(double long input, double long low, double long high);
 t_vec2		vec2(int x, int y);
 t_chunk		chunk(t_vec2 s, t_vec2 e, t_context *con);
+
+/* utils.c */
+void		err_printer(int err);
+void		err_ender(int err);
+int			ender(void);
 
 /* rgba.c */
 int			rgba2hex(t_rgba color);
@@ -108,5 +116,9 @@ short		burning_ship(const t_pos pos, const t_context *con);
 
 /* events.c */
 void		event_listener(t_context *con);
+
+/* events_handlers.c */
+void		space_debug(t_context *con);
+void		zoom_mouse(int btn, int x, int y, t_context *con);
 
 #endif

@@ -6,13 +6,17 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 23:33:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/11 00:04:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 00:13:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEYS_H
 # define KEYS_H
 # if __APPLE__
+/* Keys */
+#  define CLOSE_EVENT		33
+#  define CLOSE_MASK		131072L
+
 /* Function Keys */
 #  define KB_ESC			53
 #  define KB_ENTER			76
@@ -51,6 +55,10 @@
 #  define KB_PAGE_DOWN		121
 
 # elif __linux__
+/* Keys */
+#  define CLOSE_EVENT		33
+#  define CLOSE_MASK			131072L
+
 /* Function Keys */
 #  define KB_ESC			65307
 #  define KB_ENTER			65293

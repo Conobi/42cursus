@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/11 00:27:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 03:22:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	print_help(int argc, char **argv)
 {
 	if (argc == 1
 		|| (argc > 1 && ft_strncmp(argv[1], "help", ft_strlen(argv[1]))))
-		printf("\e[91m\e[1m\e[4mError:\e[0m %s.\n", strerror(22));
+		err_printer(22);
 	printf("\e[92m\e[1mfractol\e[39m - A simple fractal visualizer\n\e[0m");
 	printf("\n\e[92m\e[1mUSAGE:\e[0m\n\t%s \e[96m\e[4m[COMMAND]\e[0m", argv[0]);
 	printf("\n\n\e[92m\e[1mCOMMANDS:\e[0m\n");
@@ -52,7 +52,10 @@ int	main(int argc, char **argv)
 
 	con.s.x = 800;
 	con.s.y = 620;
+	con.ox = 0.5;
+	con.oy = 0.5;
 	con.threads = 16;
+	con.miters = 256;
 	if (argc == 2)
 		con.command = argv[1];
 	if (argc == 2 && !ft_strncmp(argv[1], "julia", ft_strlen(argv[1])))
