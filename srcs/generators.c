@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 15:38:01 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/12 03:34:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 23:29:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ short	julia(const t_pos pos, const t_context *con)
 		if (c.a >= 2)
 			break ;
 		c.b = 2 * c.x * c.y;
-		c.x = c.a - 0.7;
-		c.y = c.b + 0.27015;
+		c.x = c.a - con->cox;
+		c.y = c.b + con->coy;
 	}
 	return (i);
 }

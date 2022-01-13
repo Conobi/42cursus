@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/11 16:45:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 22:19:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ t_pos	pos(int sx, int sy, int x, int y)
 	return (ret);
 }
 
-t_context	*set_func(t_context *con,
+t_context	*set_func(int func_i, t_context *con,
 				short (*func)(const t_pos, const t_context*))
 {
+	con->func_i = func_i;
 	con->fractal_func = func;
 	return (con);
 }

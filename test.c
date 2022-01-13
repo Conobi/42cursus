@@ -1,52 +1,31 @@
-#include<stdio.h>
-#include<string.h>
-#include<pthread.h>
-#include<stdlib.h>
-#include<unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: conobi                                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/12 15:02:59 by conobi            #+#    #+#             */
+/*   Updated: 2022/01/12 15:04:38 by conobi           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-pthread_t tid[2];
-int counter;
-pthread_mutex_t lock;
+#include <time.h>
+#include <stdio.h>
 
-void* doSomeThing(void *arg)
+int	main(void)
 {
-    pthread_mutex_lock(&lock);
+	long long int	clk;
+	long int		ts;
 
-    unsigned long i = 0;
-    counter += 1;
-    printf("\n Job %d started\n", counter);
-
-    for(i=0; i<(0xFFFFFFFF);i++);
-
-    printf("\n Job %d finished\n", counter);
-
-    pthread_mutex_unlock(&lock);
-
-    return NULL;
-}
-
-int main(void)
-{
-    int i = 0;
-    int err;
-
-    if (pthread_mutex_init(&lock, NULL) != 0)
-    {
-        printf("\n mutex init failed\n");
-        return 1;
-    }
-
-    while(i < 2)
-    {
-        err = pthread_create(&(tid[i]), NULL, &doSomeThing, NULL);
-        if (err != 0)
-            printf("\ncan't create thread :[%s]", strerror(err));
-        i++;
-    }
-
-    pthread_join(tid[0], NULL);
-    pthread_join(tid[1], NULL);
-    pthread_mutex_destroy(&lock);
-
-    return 0;
+	ts = 0;
+	while (1)
+	{
+		clk = 0;
+		while (clk <= CLOCKS_PER_SEC * 100000)
+			clk++;
+		ts++;
+		printf("%ld secondes écoulées...\n", ts);
+	}
+	return (0);
 }

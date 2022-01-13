@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 23:23:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/12 03:27:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 01:09:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,14 @@
 
 static int	key_event(int key, t_context *con)
 {
-	printf("Key number: %d for %p\n", key, con->win);
-	printf("Debug alignement av: %Lf, %Lf\n", con->midx, con->midy);
-	if ((key == KB_RIGHT || key == KB_D) && con->midx > 0)
-		con->midx -= 0.1 * con->zoom;
-	else if ((key == KB_LEFT || key == KB_A) && con->midx < 1)
-		con->midx += 0.1 * con->zoom;
-	else if ((key == KB_UP || key == KB_W) && con->midy < 1)
-		con->midy += 0.1 * con->zoom;
-	else if ((key == KB_DOWN || key == KB_S) && con->midy > 0)
-		con->midy -= 0.1 * con->zoom;
-	else if (key == KB_SPACE)
-		space_debug(con);
+	zoom_move(key, con);
+	zoom_reset(key, con);
+	palette_change(key, con);
+	palette_locker(key, con);
+	if (key == KB_ESC)
+		ender();
+	// printf("Key \"%d\" pushed\n", key);
 	refresh_handler(con);
-	printf("Debug alignement ap: %Lf, %Lf\n", con->midx, con->midy);
 	return (0);
 }
 
@@ -40,15 +34,29 @@ static int	mouse_event(int button, int x, int y, t_context *con)
 
 static int	mouse_hover(int x, int y, t_context *con)
 {
-	// double long	box;
-	// double long	boy;
+	float	box;
+	float	boy;
+	float	nox;
+	float	noy;
 
-	// box = con->ox;
-	// boy = con->oy;
-	con->ox = 1 - (double long)x / con->s.x;
-	con->oy = 1 - (double long)y / con->s.y;
-	printf("(%Lf, %Lf)\n", con->ox, con->oy);
-	refresh_handler(con);
+	if (con->zoom > 0.30)
+	{
+		box = con->ox;
+		boy = con->oy;
+		nox = (double long)x / con->s.x;
+		noy = (double long)y / con->s.y;
+		if (nox >= box + 0.2 || nox <= box - 0.2)
+			con->ox = nox;
+		if (noy >= boy + 0.2 || noy <= boy - 0.2)
+			con->oy = noy;
+		if ((nox >= box + 0.2 || nox <= box - 0.2)
+			|| (noy >= boy + 0.2 || noy <= boy - 0.2))
+		{
+			con->cox = remap(con->ox, 0.68, 0.72);
+			con->coy = remap(con->oy, 0.26015, 0.28015);
+			refresh_handler(con);
+		}
+	}
 	return (0);
 }
 
@@ -57,5 +65,6 @@ void	event_listener(t_context *con)
 	mlx_key_hook(con->win, key_event, con);
 	mlx_mouse_hook(con->win, mouse_event, con);
 	mlx_hook(con->win, CLOSE_EVENT, CLOSE_MASK, ender, con);
-	mlx_hook(con->win, 6, 8192L, mouse_hover, con);
+	if (con->func_i == 0)
+		mlx_hook(con->win, 6, 64L, mouse_hover, con);
 }

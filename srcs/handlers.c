@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:23:09 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/12 02:33:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 00:13:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static void	*thread_cutter(void *args)
 		{
 			t = (double long)con->fractal_func(
 					pos(con->s.x, con->s.y, s.x, s.y), con) / con->miters;
-			color = generate(t - 0.59, 0xFFFFFF, 0x001933, &linear);
+			color = generate(t - con->pznum - con->pal.o, con, &linear);
 			pixel_put(&con->img, s.x, s.y, color);
 		}
 	}
-	return (con);
+	return (0);
 }
 
 t_img	thread_handler(t_context *con)

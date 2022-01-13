@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 13:47:17 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/11 00:12:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 00:12:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ int	rgba(int r, int g, int b, int a)
 	return (rgba2hex(color));
 }
 
-int	generate(double t, int a, int b, int (*gen)(double long, int, int, int))
+int	generate(double t, t_context *con, int (*gen)(double long, int, int, int))
 {
 	t_rgba	color;
 	int		chn;
+	int		a;
+	int		b;
 
+	a = con->pal.l;
+	b = con->pal.r;
 	chn = -1;
 	while (++chn < 4)
 		color.arr[chn] = (*gen)(t, a, b, chn);

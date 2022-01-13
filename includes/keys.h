@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 23:33:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/12 00:13:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 01:01:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 #  define KB_CTRL_LEFT		59
 #  define KB_CTRL_RIGHT		59
 #  define KB_SPACE			49
+#  define KB_DEL_KEY		117
 
 /* Numeric Keys */
+#  define KB_PAD_0			82
 #  define KB_PAD_1			83
 #  define KB_PAD_2			84
 #  define KB_PAD_3			85
@@ -36,7 +38,6 @@
 #  define KB_PAD_7			89
 #  define KB_PAD_8			91
 #  define KB_PAD_9			92
-#  define KB_PAD_0			82
 #  define KB_PAD_PLUS		69
 #  define KB_PAD_MINUS		78
 
@@ -57,7 +58,7 @@
 # elif __linux__
 /* Keys */
 #  define CLOSE_EVENT		33
-#  define CLOSE_MASK			131072L
+#  define CLOSE_MASK		131072L
 
 /* Function Keys */
 #  define KB_ESC			65307
@@ -67,8 +68,10 @@
 #  define KB_CTRL_LEFT		65507
 #  define KB_CTRL_RIGHT		65508
 #  define KB_SPACE			32
+#  define KB_DEL_KEY		65288
 
 /* Numeric Keys */
+#  define KB_PAD_0			65438
 #  define KB_PAD_1			65436
 #  define KB_PAD_2			65433
 #  define KB_PAD_3			65435
@@ -78,7 +81,6 @@
 #  define KB_PAD_7			65429
 #  define KB_PAD_8			65431
 #  define KB_PAD_9			65434
-#  define KB_PAD_0			65438
 #  define KB_PAD_PLUS		65453
 #  define KB_PAD_MINUS		65451
 

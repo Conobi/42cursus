@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/12 03:22:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 01:12:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,34 @@ static void	print_help(int argc, char **argv)
 	printf("\t\e[96mjulia\e[0m - The julia set visualizer\n");
 	printf("\t\e[96mmandelbrot\e[0m - The mandelbrot set visualizer\n");
 	printf("\t\e[96mburning_ship\e[0m - The burning ship fractal visualizer\n");
-	printf("\t\e[96mdebug\e[0m - For debugging simple commands without mlx\n");
 	printf("\t\e[96mhelp\e[0m - To show this help\n\n");
+}
+
+static void	context_init(t_context *con)
+{
+	con->s.x = 800;
+	con->s.y = 620;
+	con->threads = 16;
+	con->miters = 256;
+	con->zoom = 1;
+	con->midx = 0.5;
+	con->midy = 0.5;
+	con->ox = 0.5;
+	con->oy = 0.5;
+	con->cox = 0.70;
+	con->coy = 0.27015;
+	con->pznum = 1;
+	con->pzdir = -1;
+	con->pzlock = 1;
+	palette_set(con, con->func_i);
 }
 
 static void	graph_manager(t_context *con)
 {
 	char	*win_name;
 
+	context_init(con);
 	con->mlx = mlx_init();
-	con->zoom = 1;
-	con->midx = 0.5;
-	con->midy = 0.5;
 	win_name = ft_strjoin("Fractol - ", con->command);
 	if (!win_name)
 		return ;
@@ -50,22 +66,16 @@ int	main(int argc, char **argv)
 {
 	t_context	con;
 
-	con.s.x = 800;
-	con.s.y = 620;
-	con.ox = 0.5;
-	con.oy = 0.5;
-	con.threads = 16;
-	con.miters = 256;
 	if (argc == 2)
 		con.command = argv[1];
-	if (argc == 2 && !ft_strncmp(argv[1], "julia", ft_strlen(argv[1])))
-		graph_manager(set_func(&con, julia));
+	if (argc == 2 && !ft_strncmp("julia", argv[1], 5))
+		graph_manager(set_func(0, &con, julia));
 	else if (argc == 2
-		&& !ft_strncmp(argv[1], "mandelbrot", ft_strlen(argv[1])))
-		graph_manager(set_func(&con, mandelbrot));
+		&& !ft_strncmp("mandelbrot", argv[1], 10))
+		graph_manager(set_func(1, &con, mandelbrot));
 	else if (argc == 2
-		&& !ft_strncmp(argv[1], "burning_ship", ft_strlen(argv[1])))
-		graph_manager(set_func(&con, burning_ship));
+		&& !ft_strncmp("burning_ship", argv[1], 12))
+		graph_manager(set_func(2, &con, burning_ship));
 	else
 		print_help(argc, argv);
 	return (0);
