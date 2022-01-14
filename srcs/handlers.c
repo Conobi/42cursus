@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:23:09 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 00:01:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 18:58:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	*thread_cutter(void *args)
 	con = (t_context *)args;
 	pthread_mutex_lock(&con->lock);
 	--con->currthr;
-	s = vec2(con->s.x / con->threads * (con->currthr), 0);
-	e = vec2(con->s.x / con->threads * (con->currthr + 1), con->s.y);
+	s = (t_vec2){con->s.x / con->threads * (con->currthr), 0};
+	e = (t_vec2){con->s.x / con->threads * (con->currthr + 1), con->s.y};
 	pthread_mutex_unlock(&con->lock);
 	while (s.x < e.x)
 	{
@@ -34,9 +34,9 @@ static void	*thread_cutter(void *args)
 			t = con->fractal_func(pos(con->s.x, con->s.y, s.x, s.y), con);
 			color = generate(t, con, &linear);
 			pixel_put(con, s.x, s.y, color);
-			s.y += con->upsc;
+			s.y += con->res;
 		}
-		s.x += con->upsc;
+		s.x += con->res;
 	}
 	return (0);
 }

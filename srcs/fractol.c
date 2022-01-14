@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 23:55:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 18:46:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static void	print_help(int argc, char **argv)
 
 static void	context_init(t_context *con)
 {
-	con->s.x = 1080;
-	con->s.y = 720;
-	con->threads = 8;
+	con->threads = 16;
 	con->miters = 256;
-	con->upsc = 2;
+	con->res = 2;
+	con->s.x = 1080 - 1080 % con->threads;
+	con->s.y = 720;
 	con->zoom = 1;
 	con->midx = 0.5;
 	con->midy = 0.5;
@@ -49,7 +49,7 @@ static void	context_init(t_context *con)
 	con->coy = 0.27015;
 	con->pznum = 1;
 	con->pzdir = -1;
-	con->pzlock = -1;
+	con->pzlock = 1;
 	palette_set(con, con->func_i);
 }
 
@@ -84,6 +84,9 @@ int	main(int argc, char **argv)
 	else if (argc == 2
 		&& !ft_strncmp("burning_ship", argv[1], 12))
 		graph_manager(set_func(2, &con, burning_ship));
+	else if (argc == 2
+		&& !ft_strncmp("gradlr", argv[1], 12))
+		graph_manager(set_func(3, &con, gradlr));
 	else
 		print_help(argc, argv);
 	return (0);

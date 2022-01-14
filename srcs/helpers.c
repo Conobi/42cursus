@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 19:41:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 19:00:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	pixel_put(t_context *con, int x, int y, int color)
 	int		j;
 
 	i = -1;
-	while (++i <= con->upsc)
+	while (++i < con->res)
 	{
 		j = -1;
-		while (++j <= con->upsc)
+		while (++j < con->res)
 		{
 			dst = con->img.addr + ((y + i) * con->img.line_length
 					+ (x + j) * (con->img.bits_per_pixel / 8));
@@ -50,28 +50,11 @@ t_context	*set_func(int func_i, t_context *con,
 	return (con);
 }
 
-// double long	zoom_calc(double long input)
-// {
-// 	double long	ret;
-
-// 	ret = 0.005 + input * (1.8 - 0.005);
-// 	return (ret);
-// }
-
 double long	remap(double long input, double long low, double long high)
 {
 	double long	ret;
 
 	ret = low + input * (high - low);
-	return (ret);
-}
-
-t_vec2	vec2(int x, int y)
-{
-	t_vec2	ret;
-
-	ret.x = x;
-	ret.y = y;
 	return (ret);
 }
 

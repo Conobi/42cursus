@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 15:38:01 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 00:00:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 19:17:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ float	mandelbrot(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.x * c.x + c.y * c.y >= 2)
+		if (c.x * c.x + c.y * c.y >= 4)
 			break ;
-		c.b = 2 * c.x * c.y;
+		c.b = c.x * c.y;
+		c.b += c.b;
 		c.x = c.a + c.ox;
 		c.y = c.b + c.oy;
 	}
@@ -54,7 +55,7 @@ float	julia(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.a >= 2)
+		if (c.a >= 4)
 			break ;
 		c.b = 2 * c.x * c.y;
 		c.x = c.a - con->cox;
@@ -69,11 +70,11 @@ float	burning_ship(const t_pos pos, const t_context *con)
 	int			i;
 	double long	szoom;
 
-	szoom = 4.3;
-	c.x = remap(con->midx, 2.25, -2.75) - con->zoom * szoom / 2;
+	szoom = 0.25;
+	c.x = remap(con->midx, 0.2, -3.75) - con->zoom * szoom / 2;
 	c.x += pos.i.x * con->zoom * szoom / pos.s.x;
 	c.y = con->zoom * szoom * pos.s.y / pos.s.x;
-	c.y = -1 * (c.y / 2 - remap(con->midy, 0.25, -1.65)
+	c.y = -1 * (c.y / 2 - remap(con->midy, 0.2, -0.25)
 			- pos.i.y * c.y / pos.s.y);
 	c.ox = c.x;
 	c.oy = c.y;
@@ -81,11 +82,16 @@ float	burning_ship(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.a >= 2)
+		if (c.a >= 4)
 			break ;
-		c.b = fabs(2 * (float)c.x * (float)c.y);
+		c.b = fabs(2 * (double)c.x * (double)c.y);
 		c.x = c.a + c.ox;
 		c.y = c.b + c.oy;
 	}
 	return ((float)i / con->miters - con->pznum - con->pal.o);
+}
+
+float	gradlr(const t_pos pos, const t_context *con)
+{
+	return ((float)pos.i.x / con->s.x - con->pznum - con->pal.o);
 }

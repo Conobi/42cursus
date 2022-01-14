@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:40:18 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 19:55:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 18:59:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ struct s_context {
 	pthread_mutex_t	lock;
 	int				threads;
 	int				miters;
-	int				upsc;
+	int				res;
 	int				currthr;
 	double long		zoom;
 	float			pznum;
@@ -104,13 +104,12 @@ t_pos		pos(int sx, int sy, int x, int y);
 t_context	*set_func(int func_i, t_context *con,
 				float (*func)(const t_pos, const t_context*));
 double long	remap(double long input, double long low, double long high);
-t_vec2		vec2(int x, int y);
 t_chunk		chunk(t_vec2 s, t_vec2 e, t_context *con);
 
 /* utils.c */
 void		err_printer(int err);
 void		err_ender(int err);
-void		rem_printer(char *note);
+void		info_printer(char *note);
 int			ender(void);
 
 /* rgba.c */
@@ -129,6 +128,7 @@ void		palette_set(t_context *con, int index);
 float		mandelbrot(const t_pos pos, const t_context *con);
 float		julia(const t_pos pos, const t_context *con);
 float		burning_ship(const t_pos pos, const t_context *con);
+float		gradlr(const t_pos pos, const t_context *con);
 
 /* events.c */
 void		event_listener(t_context *con);

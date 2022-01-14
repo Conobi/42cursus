@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 23:33:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 20:05:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 15:41:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define KEYS_H
 # if __APPLE__
 /* Keys */
-#  define CLOSE_EVENT		33
+#  define CLOSE_EVENT		17
 #  define CLOSE_MASK		131072L
 
 /* Function Keys */
@@ -25,7 +25,7 @@
 #  define KB_CTRL_LEFT		59
 #  define KB_CTRL_RIGHT		59
 #  define KB_SPACE			49
-#  define KB_BACKSPACE		117
+#  define KB_BACKSPACE		51
 
 /* Numeric Keys */
 #  define KB_PAD_0			82

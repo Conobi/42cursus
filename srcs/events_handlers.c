@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:04:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 20:05:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 16:44:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	zoom_move_reset(int key, t_context *con)
 		con->zoom = 1;
 		con->midx = 0.5;
 		con->midy = 0.5;
-		rem_printer("Resetting the view");
+		info_printer("Resetting the view");
 	}
 }
 
@@ -64,6 +64,12 @@ void	palette_change(int key, t_context *con)
 		palette_set(con, 1);
 	else if (key == KB_PAD_3)
 		palette_set(con, 2);
+	else if (key == KB_PAD_4)
+		palette_set(con, 3);
+	else if (key == KB_PAD_5)
+		palette_set(con, 4);
+	else if (key == KB_PAD_6)
+		palette_set(con, 5);
 }
 
 void	palette_locker(int key, t_context *con)
@@ -72,23 +78,23 @@ void	palette_locker(int key, t_context *con)
 	{
 		con->pzlock *= -1;
 		if (con->pzlock == -1)
-			rem_printer("Locking the palette roller");
+			info_printer("Locking the palette roller");
 		else
-			rem_printer("Unlocking the palette roller");
+			info_printer("Unlocking the palette roller");
 	}
 }
 
 void	resol_change(int key, t_context *con)
 {
-	if (key == KB_PAGE_DOWN && con->upsc < 5)
+	if (key == KB_PAGE_DOWN && con->res < 5)
 	{
-		con->upsc += 1;
-		rem_printer("Reducing the resolution...");
+		con->res += 1;
+		info_printer("Reducing the resolution...");
 	}
-	else if (key == KB_PAGE_UP && con->upsc > 1)
+	else if (key == KB_PAGE_UP && con->res > 1)
 	{
-		con->upsc -= 1;
-		rem_printer("Increasing the resolution...");
+		con->res -= 1;
+		info_printer("Increasing the resolution...");
 	}
 }
 
