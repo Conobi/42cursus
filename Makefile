@@ -3,7 +3,8 @@ NAME		= fractol
 LIBFTDIR	= libft
 LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
 
-INC			= fractol.h
+INC			= fractol.h \
+			  keys.h
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 

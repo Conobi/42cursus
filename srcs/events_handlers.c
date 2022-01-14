@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:04:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 01:08:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 20:05:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	zoom_move(int key, t_context *con)
+void	zoom_move_reset(int key, t_context *con)
 {
 	if ((key == KB_RIGHT || key == KB_D) && con->midx > 0)
 		con->midx -= 0.1 * con->zoom;
@@ -22,11 +22,7 @@ void	zoom_move(int key, t_context *con)
 		con->midy += 0.1 * con->zoom;
 	else if ((key == KB_DOWN || key == KB_S) && con->midy > 0)
 		con->midy -= 0.1 * con->zoom;
-}
-
-void	zoom_reset(int key, t_context *con)
-{
-	if (key == KB_SPACE)
+	else if (key == KB_SPACE)
 	{
 		con->zoom = 1;
 		con->midx = 0.5;
@@ -72,13 +68,27 @@ void	palette_change(int key, t_context *con)
 
 void	palette_locker(int key, t_context *con)
 {
-	if (key == KB_DEL_KEY)
+	if (key == KB_BACKSPACE)
 	{
 		con->pzlock *= -1;
 		if (con->pzlock == -1)
 			rem_printer("Locking the palette roller");
 		else
 			rem_printer("Unlocking the palette roller");
+	}
+}
+
+void	resol_change(int key, t_context *con)
+{
+	if (key == KB_PAGE_DOWN && con->upsc < 5)
+	{
+		con->upsc += 1;
+		rem_printer("Reducing the resolution...");
+	}
+	else if (key == KB_PAGE_UP && con->upsc > 1)
+	{
+		con->upsc -= 1;
+		rem_printer("Increasing the resolution...");
 	}
 }
 

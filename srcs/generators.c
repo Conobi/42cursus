@@ -6,14 +6,14 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 15:38:01 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/12 23:29:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/14 00:00:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <complex.h>
 
-short	mandelbrot(const t_pos pos, const t_context *con)
+float	mandelbrot(const t_pos pos, const t_context *con)
 {
 	t_complex	c;
 	int			i;
@@ -36,10 +36,10 @@ short	mandelbrot(const t_pos pos, const t_context *con)
 		c.x = c.a + c.ox;
 		c.y = c.b + c.oy;
 	}
-	return (i);
+	return ((float)i / con->miters - con->pznum - con->pal.o);
 }
 
-short	julia(const t_pos pos, const t_context *con)
+float	julia(const t_pos pos, const t_context *con)
 {
 	t_complex	c;
 	int			i;
@@ -60,10 +60,10 @@ short	julia(const t_pos pos, const t_context *con)
 		c.x = c.a - con->cox;
 		c.y = c.b + con->coy;
 	}
-	return (i);
+	return ((float)i / con->miters - con->pznum - con->pal.o);
 }
 
-short	burning_ship(const t_pos pos, const t_context *con)
+float	burning_ship(const t_pos pos, const t_context *con)
 {
 	t_complex	c;
 	int			i;
@@ -87,5 +87,5 @@ short	burning_ship(const t_pos pos, const t_context *con)
 		c.x = c.a + c.ox;
 		c.y = c.b + c.oy;
 	}
-	return (i);
+	return ((float)i / con->miters - con->pznum - con->pal.o);
 }

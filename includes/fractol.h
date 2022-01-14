@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:40:18 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 01:03:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 19:55:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_palette {
 typedef struct s_context	t_context;
 
 struct s_context {
-	short			(*fractal_func)(const t_pos, const t_context*);
+	float			(*fractal_func)(const t_pos, const t_context*);
 	char			*command;
 	int				func_i;
 	t_vec2			s;
@@ -78,6 +78,7 @@ struct s_context {
 	pthread_mutex_t	lock;
 	int				threads;
 	int				miters;
+	int				upsc;
 	int				currthr;
 	double long		zoom;
 	float			pznum;
@@ -98,10 +99,10 @@ t_img		thread_handler(t_context *con);
 void		refresh_handler(t_context *con);
 
 /* helpers.c */
-void		pixel_put(t_img *data, int x, int y, int color);
+void		pixel_put(t_context *con, int x, int y, int color);
 t_pos		pos(int sx, int sy, int x, int y);
 t_context	*set_func(int func_i, t_context *con,
-				short (*func)(const t_pos, const t_context*));
+				float (*func)(const t_pos, const t_context*));
 double long	remap(double long input, double long low, double long high);
 t_vec2		vec2(int x, int y);
 t_chunk		chunk(t_vec2 s, t_vec2 e, t_context *con);
@@ -125,19 +126,19 @@ int			linear(double long t, int c, int d, int chn);
 void		palette_set(t_context *con, int index);
 
 /* generators.c */
-short		mandelbrot(const t_pos pos, const t_context *con);
-short		julia(const t_pos pos, const t_context *con);
-short		burning_ship(const t_pos pos, const t_context *con);
+float		mandelbrot(const t_pos pos, const t_context *con);
+float		julia(const t_pos pos, const t_context *con);
+float		burning_ship(const t_pos pos, const t_context *con);
 
 /* events.c */
 void		event_listener(t_context *con);
 
 /* events_handlers.c */
 void		zoom_mouse(int btn, int x, int y, t_context *con);
-void		zoom_move(int key, t_context *con);
-void		zoom_reset(int key, t_context *con);
+void		zoom_move_reset(int key, t_context *con);
 void		space_debug(int key, t_context *con);
 void		palette_change(int key, t_context *con);
 void		palette_locker(int key, t_context *con);
+void		resol_change(int key, t_context *con);
 
 #endif

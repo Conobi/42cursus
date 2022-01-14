@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 23:33:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/13 01:01:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 20:05:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #  define KB_CTRL_LEFT		59
 #  define KB_CTRL_RIGHT		59
 #  define KB_SPACE			49
-#  define KB_DEL_KEY		117
+#  define KB_BACKSPACE		117
 
 /* Numeric Keys */
 #  define KB_PAD_0			82
@@ -68,7 +68,7 @@
 #  define KB_CTRL_LEFT		65507
 #  define KB_CTRL_RIGHT		65508
 #  define KB_SPACE			32
-#  define KB_DEL_KEY		65288
+#  define KB_BACKSPACE		65288
 
 /* Numeric Keys */
 #  define KB_PAD_0			65438
@@ -81,8 +81,8 @@
 #  define KB_PAD_7			65429
 #  define KB_PAD_8			65431
 #  define KB_PAD_9			65434
-#  define KB_PAD_PLUS		65453
-#  define KB_PAD_MINUS		65451
+#  define KB_PAD_PLUS		65451
+#  define KB_PAD_MINUS		65453
 
 /* Characters */
 #  define KB_W				119

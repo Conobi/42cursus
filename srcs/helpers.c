@@ -6,18 +6,29 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/12 22:19:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/13 19:41:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	pixel_put(t_img *data, int x, int y, int color)
+void	pixel_put(t_context *con, int x, int y, int color)
 {
 	char	*dst;
+	int		i;
+	int		j;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	i = -1;
+	while (++i <= con->upsc)
+	{
+		j = -1;
+		while (++j <= con->upsc)
+		{
+			dst = con->img.addr + ((y + i) * con->img.line_length
+					+ (x + j) * (con->img.bits_per_pixel / 8));
+			*(unsigned int *)dst = color;
+		}
+	}
 }
 
 t_pos	pos(int sx, int sy, int x, int y)
@@ -32,7 +43,7 @@ t_pos	pos(int sx, int sy, int x, int y)
 }
 
 t_context	*set_func(int func_i, t_context *con,
-				short (*func)(const t_pos, const t_context*))
+				float (*func)(const t_pos, const t_context*))
 {
 	con->func_i = func_i;
 	con->fractal_func = func;
