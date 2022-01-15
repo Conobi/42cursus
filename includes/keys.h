@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 23:33:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 15:41:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/15 15:30:19 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 #  define KB_PAD_9			92
 #  define KB_PAD_PLUS		69
 #  define KB_PAD_MINUS		78
+#  define KB_PAD_DOT		65
+#  define KB_PAD_DIVIDE		75
+#  define KB_PAD_MULTIPLY	67
 
 /* Characters */
 #  define KB_W				13
@@ -83,6 +86,9 @@
 #  define KB_PAD_9			65434
 #  define KB_PAD_PLUS		65451
 #  define KB_PAD_MINUS		65453
+#  define KB_PAD_DOT		65439
+#  define KB_PAD_DIVIDE     65455
+#  define KB_PAD_MULTIPLY   65450
 
 /* Characters */
 #  define KB_W				119

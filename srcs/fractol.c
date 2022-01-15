@@ -6,11 +6,23 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 18:46:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/15 19:53:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+static void	print_controls(void)
+{
+	printf("\n\e[92m\e[1mCONTROLS:\e[0m\n");
+	printf("\t\e[93m[W,A,S,D, Dir arrows]\e[0m - Move the camera position\n");
+	printf("\t\e[93m[Space]\e[0m - Reset the zoom and the camera position\n");
+	printf("\t\e[93m[Numpad 1-6]\e[0m - Change the color palette\n");
+	printf("\t\e[93m[Backspace]\e[0m - Lock/Unlock the color palette roller\n");
+	printf("\t\e[93m[Numpad - +, Mouse wheel]\e[0m - Zoom/unzoom in the fractal\n");
+	printf("\t\e[93m[Numpad / *,]\e[0m - Change the number of iterations\n");
+	printf("\t\e[93m[Page up/down]\e[0m - Change the fractal resolution\n\n");
+}
 
 static void	print_help(int argc, char **argv)
 {
@@ -23,20 +35,17 @@ static void	print_help(int argc, char **argv)
 	printf("\t\e[96mjulia\e[0m - The julia set visualizer\n");
 	printf("\t\e[96mmandelbrot\e[0m - The mandelbrot set visualizer\n");
 	printf("\t\e[96mburning_ship\e[0m - The burning ship fractal visualizer\n");
+	printf("\t\e[96meagle_brain\e[0m - The eagle brain fractal visualizer\n");
+	printf("\t\e[96mbaobab\e[0m - The baobab fractal visualizer\n");
+	printf("\t\e[96mwobble\e[0m - The wobble fractal visualizer\n");
 	printf("\t\e[96mhelp\e[0m - To show this help\n");
-	printf("\n\e[92m\e[1mCONTROLS:\e[0m\n");
-	printf("\t\e[93m[W,A,S,D, Dir arrows]\e[0m - Move the camera position\n");
-	printf("\t\e[93m[Space]\e[0m - Reset the zoom and the camera position\n");
-	printf("\t\e[93m[Numpad 1-3]\e[0m - Change the color palette\n");
-	printf("\t\e[93m[Backspace]\e[0m - Lock/Unlock the color palette roller\n");
-	printf("\t\e[93m[Numpad -/+, Mouse wheel]\e[0m - Zoom/unzoom in the fractal\n");
-	printf("\t\e[93m[Page up/down]\e[0m - Change the fractal resolution\n\n");
+	print_controls();
 }
 
 static void	context_init(t_context *con)
 {
 	con->threads = 16;
-	con->miters = 256;
+	con->miters = 128;
 	con->res = 2;
 	con->s.x = 1080 - 1080 % con->threads;
 	con->s.y = 720;
@@ -50,6 +59,7 @@ static void	context_init(t_context *con)
 	con->pznum = 1;
 	con->pzdir = -1;
 	con->pzlock = 1;
+	con->holock = 1;
 	palette_set(con, con->func_i);
 }
 
@@ -85,8 +95,14 @@ int	main(int argc, char **argv)
 		&& !ft_strncmp("burning_ship", argv[1], 12))
 		graph_manager(set_func(2, &con, burning_ship));
 	else if (argc == 2
-		&& !ft_strncmp("gradlr", argv[1], 12))
-		graph_manager(set_func(3, &con, gradlr));
+		&& !ft_strncmp("eagle_brain", argv[1], 11))
+		graph_manager(set_func(3, &con, eagle_brain));
+	else if (argc == 2
+		&& !ft_strncmp("baobab", argv[1], 6))
+		graph_manager(set_func(4, &con, baobab));
+	else if (argc == 2
+		&& !ft_strncmp("wobble", argv[1], 6))
+		graph_manager(set_func(5, &con, wobble));
 	else
 		print_help(argc, argv);
 	return (0);

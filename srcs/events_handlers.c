@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:04:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 16:44:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/15 19:47:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	zoom_move_reset(int key, t_context *con)
 {
-	if ((key == KB_RIGHT || key == KB_D) && con->midx > 0)
+	if ((key == KB_RIGHT || key == KB_D))
 		con->midx -= 0.1 * con->zoom;
-	else if ((key == KB_LEFT || key == KB_A) && con->midx < 1)
+	else if ((key == KB_LEFT || key == KB_A))
 		con->midx += 0.1 * con->zoom;
-	else if ((key == KB_UP || key == KB_W) && con->midy < 1)
+	else if ((key == KB_UP || key == KB_W))
 		con->midy += 0.1 * con->zoom;
-	else if ((key == KB_DOWN || key == KB_S) && con->midy > 0)
+	else if ((key == KB_DOWN || key == KB_S))
 		con->midy -= 0.1 * con->zoom;
 	else if (key == KB_SPACE)
 	{
@@ -28,31 +28,6 @@ void	zoom_move_reset(int key, t_context *con)
 		con->midx = 0.5;
 		con->midy = 0.5;
 		info_printer("Resetting the view");
-	}
-}
-
-void	zoom_mouse(int btn, int x, int y, t_context *con)
-{
-	if (con->pznum < 0 && con->pzlock == 1)
-		con->pzdir *= -1;
-	if (btn == 4)
-	{
-		con->zoom = (double long)con->zoom * 0.9;
-		if (con->pzlock == 1)
-			con->pznum += 0.05 * con->pzdir;
-	}
-	else if (btn == 5)
-	{
-		con->zoom = (double long)con->zoom / 0.9;
-		if (con->pzlock == 1)
-			con->pznum -= 0.05 * con->pzdir;
-	}
-	if (btn == 4 || btn == 5)
-	{
-		con->midx += remap(1 - (double long)x / con->s.x, -0.5, 0.5)
-			* con->zoom / 5;
-		con->midy += remap(1 - (double long)y / con->s.y, -0.5, 0.5)
-			* con->zoom / 5;
 	}
 }
 
@@ -72,7 +47,7 @@ void	palette_change(int key, t_context *con)
 		palette_set(con, 5);
 }
 
-void	palette_locker(int key, t_context *con)
+void	lockers(int key, t_context *con)
 {
 	if (key == KB_BACKSPACE)
 	{
@@ -82,11 +57,30 @@ void	palette_locker(int key, t_context *con)
 		else
 			info_printer("Unlocking the palette roller");
 	}
+	if (key == KB_PAD_DOT && con->func_i == 0)
+	{
+		con->holock *= -1;
+		if (con->holock == -1)
+			info_printer("Locking the julia roller");
+		else
+			info_printer("Unlocking the julia roller");
+		printf("The roller is set at (cox: %f coy: %f)\n", con->cox, con->coy);
+	}
 }
 
-void	resol_change(int key, t_context *con)
+void	resol_iter_change(int key, t_context *con)
 {
-	if (key == KB_PAGE_DOWN && con->res < 5)
+	if (key == KB_PAD_DIVIDE && con->miters > 32)
+	{
+		con->miters -= 32;
+		info_printer("Reducing iterations...");
+	}
+	else if (key == KB_PAD_MULTIPLY && con->miters < 384)
+	{
+		con->miters += 32;
+		info_printer("Increasing iterations...");
+	}
+	else if (key == KB_PAGE_DOWN && con->res < 5)
 	{
 		con->res += 1;
 		info_printer("Reducing the resolution...");
@@ -98,18 +92,21 @@ void	resol_change(int key, t_context *con)
 	}
 }
 
-// void	space_debug(t_context *con)
+// void	space_debug(int key, t_context *con)
 // {
-// 	if (con->midx == 0.5)
-// 		con->midx = 1;
-// 	else if (con->midx == 1)
-// 		con->midx = 0;
-// 	else
-// 		con->midx = 0.5;
-// 	if (con->midy == 0.5)
-// 		con->midy = 1;
-// 	else if (con->midy == 1)
-// 		con->midy = 0;
-// 	else
-// 		con->midy = 0.5;
+// 	if (key == KB_SPACE)
+// 	{
+// 		if (con->midx == 0.5)
+// 			con->midx = 1;
+// 		else if (con->midx == 1)
+// 			con->midx = 0;
+// 		else
+// 			con->midx = 0.5;
+// 		if (con->midy == 0.5)
+// 			con->midy = 1;
+// 		else if (con->midy == 1)
+// 			con->midy = 0;
+// 		else
+// 			con->midy = 0.5;
+// 	}
 // }

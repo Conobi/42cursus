@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:02:59 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 15:14:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/15 19:37:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ typedef struct s_complex {
 	double long	b;
 }	t_complex;
 
-typedef struct s_chunk {
-	t_vec2		s;
-	t_vec2		e;
-}	t_chunk;
-
 typedef struct s_palette {
 	int			l;
 	int			r;
@@ -65,49 +60,35 @@ typedef struct s_palette {
 typedef struct s_context	t_context;
 
 struct s_context {
-	float			(*fractal_func)(const t_pos, const t_context*);
-	char			*command;
-	int				func_i;
+	t_palette		pal;
 	t_vec2			s;
 	t_img			img;
-	t_chunk			chk;
-	t_palette		pal;
 	pthread_mutex_t	lock;
-	int				threads;
-	int				miters;
-	int				upsc;
-	int				currthr;
 	double long		zoom;
-	float			pznum;
-	short			pzdir;
-	short			pzlock;
 	double long		midx;
 	double long		midy;
+	float			(*fractal_func)(const t_pos, const t_context*);
 	void			*mlx;
 	void			*win;
+	char			*command;
+	int				func_i;
+	int				threads;
+	int				miters;
+	int				res;
+	int				currthr;
 	float			ox;
 	float			oy;
 	float			cox;
 	float			coy;
+	float			pznum;
+	short			pzdir;
+	short			pzlock;
+	short			holock;
 };
-
-typedef struct s_vars {
-	void	*mlx;
-	void	*win;
-}	t_vars;
-
-int	key_hook(int button, int x, int y, t_context *con)
-{
-	printf("Hello %d from (%d, %d)\n", button, x, y);
-	return (0);
-}
 
 int	main(void)
 {
 	t_context	con;
 
-	con.mlx = mlx_init();
-	con.win = mlx_new_window(con.mlx, 1080, 720, "Hello world!");
-	mlx_mouse_hook(con.win, key_hook, &con);
-	mlx_loop(con.mlx);
+	printf("%lu\n", sizeof(con.s));
 }

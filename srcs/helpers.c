@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 17:56:37 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 19:00:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/15 19:27:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,3 @@ double long	remap(double long input, double long low, double long high)
 	ret = low + input * (high - low);
 	return (ret);
 }
-
-// t_chunk	chunk(t_vec2 s, t_vec2 e, t_context *con)
-// {
-// 	t_chunk	ret;
-
-// 	ret.s = s;
-// 	ret.e = e;
-// 	ret.con = con;
-// 	return (ret);
-// }

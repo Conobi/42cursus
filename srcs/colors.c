@@ -6,19 +6,43 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:02:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/14 19:12:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/15 19:24:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	gradient(double long t, int a, int b, int chn)
+int	rgba2hex(t_rgba color)
 {
-	int	ret;
+	return ((255 - color.arr[3]) << 24 | color.arr[0] << 16
+		| color.arr[1] << 8 | color.arr[2]);
+}
 
-	ret = (hex2rgba(a).arr[chn] - hex2rgba(b).arr[chn])
-		* t + hex2rgba(b).arr[chn];
+t_rgba	hex2rgba(int color)
+{
+	t_rgba	ret;
+
+	ret.arr[3] = ((color >> 24) & 0xff) + 255;
+	ret.arr[0] = (color >> 16) & 0xff;
+	ret.arr[1] = (color >> 8) & 0xff;
+	ret.arr[2] = color & 0xff;
 	return (ret);
+}
+
+int	generate(double t, t_context *con, int (*gen)(double long, int, int, int))
+{
+	t_rgba	color;
+	int		chn;
+	int		a;
+	int		b;
+
+	a = con->pal.l;
+	b = con->pal.r;
+	chn = -1;
+	while (++chn < 4)
+		color.arr[chn] = (*gen)(t, a, b, chn);
+	color.arr[3] = 255;
+	return (rgba2hex(color));
 }
 
 int	linear(double long t, int c, int d, int chn)
@@ -31,28 +55,28 @@ int	linear(double long t, int c, int d, int chn)
 	return ((int)ret);
 }
 
-static t_palette	palette(int pal_l, int pal_r, float pal_o)
-{
-	t_palette	ret;
-
-	ret.l = pal_l;
-	ret.r = pal_r;
-	ret.o = pal_o;
-	return (ret);
-}
-
 void	palette_set(t_context *con, int index)
 {
 	info_printer("Setting the palette...");
 	if (index == 0)
-		con->pal = palette(0xFFFFFF, 0x0054AA, 0.03);
+		con->pal = (t_palette){0xFFFFFF, 0x0054AA, 0.03};
 	else if (index == 1)
-		con->pal = palette(0xFFFFFF, 0x001933, 0.59);
+		con->pal = (t_palette){0xFFFFFF, 0x001933, 0.59};
 	else if (index == 2)
-		con->pal = palette(0xFFFFFF, 0xDABDAB, 1);
+		con->pal = (t_palette){0xFFFFFF, 0xDABDAB, 0.32};
 	else if (index == 3)
-		con->pal = palette(0xFFFFFF, 0xDDAADD, 1);
+		con->pal = (t_palette){0xFFFFFF, 0xAE7722, 1};
 	else if (index == 4)
-		con->pal = palette(0x10FF00, 0xFF54AA, 1);
+		con->pal = (t_palette){0xFFFFFF, 0x6645CC, 1};
+	else if (index == 5)
+		con->pal = (t_palette){0xFFFFFF, 0xEEAA33, 1};
 }
-//		con->pal = palette(0xFFFFFF, 0x8855FF, 1);
+
+// int	gradient(double long t, int a, int b, int chn)
+// {
+// 	int	ret;
+
+// 	ret = (hex2rgba(a).arr[chn] - hex2rgba(b).arr[chn])
+// 		* t + hex2rgba(b).arr[chn];
+// 	return (ret);
+// }

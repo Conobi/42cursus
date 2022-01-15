@@ -12,9 +12,9 @@ SRC			= fractol.c \
 			  handlers.c \
 			  helpers.c \
 			  utils.c \
-			  rgba.c \
-			  generators.c \
 			  colors.c \
+			  generators.c \
+			  bonus_generators.c \
 			  events.c \
 			  events_handlers.c
 SDIR		= srcs
