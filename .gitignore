@@ -1,0 +1,17 @@
+.DS_Store
+exec*
+*.dSYM
+a.out
+.*.c.swp
+*.code-workspace
+*.a
+*.o
+.vscode
+checker_*
+pipex
+*test
+test.c
+test.py
+tests
+Makefile.gen
+output.png
