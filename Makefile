@@ -7,7 +7,8 @@ INC			= pipex.h
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
-SRC			= pipex.c
+SRC			= pipex.c \
+			  utils.c
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 

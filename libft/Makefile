@@ -44,7 +44,8 @@ SRCS_BONUS= \
 ./ft_lstclear.c \
 ./ft_lstmap.c \
 ./ft_swap.c \
-./ft_arrlcpy.c
+./ft_arrlcpy.c \
+./ft_pathjoin.c
 
 ODIR=build
 OBJECTS=$(addprefix $(ODIR)/,$(SRCS:.c=.o))

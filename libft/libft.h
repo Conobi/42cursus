@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/30 20:03:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/01/17 18:57:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -522,5 +522,16 @@ void	ft_swap(int *a, int *b);
  * @return size_t Returns the total length of the array they tried to create.
  */
 size_t	ft_arrlcpy(int *dst, const int *src, size_t dstsize);
+
+/**
+ * @brief Allocates (with malloc(3)) and returns a new
+ * string, which is the result of the concatenation
+ * of ’s1’ , '/' and ’s2’.
+ *
+ * @param s1 The prefix path
+ * @param s2 The suffix path
+ * @return char* A pointer to the new path string.
+ */
+char	*ft_pathjoin(char const *s1, char const *s2);
 
 #endif
