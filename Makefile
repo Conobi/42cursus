@@ -8,7 +8,8 @@ INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= pipex.c \
-			  utils.c
+			  utils.c \
+			  memory.c
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 
