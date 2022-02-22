@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:15:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/02/22 15:44:13 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/02/22 19:45:37 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,27 @@ static int	print_help(char **argv)
 	return (0);
 }
 
-void	*routine(void *args)
+static void	fork_hand(t_data *data, int id, short action)
+{
+	if (action == 0)
+	{
+		pthread_mutex_lock(&data->atrium[id].fork);
+		if (id == data->nb_philo - 1)
+			pthread_mutex_lock(&data->atrium[0].fork);
+		else
+			pthread_mutex_lock(&data->atrium[id + 1].fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(&data->atrium[id].fork);
+		if (id == data->nb_philo - 1)
+			pthread_mutex_unlock(&data->atrium[0].fork);
+		else
+			pthread_mutex_unlock(&data->atrium[id + 1].fork);
+	}
+}
+
+static void	*routine(void *args)
 {
 	t_data	*data;
 	t_philo	*philo;
@@ -30,16 +50,30 @@ void	*routine(void *args)
 	data = (t_data *)args;
 	data->curr--;
 	philo = &data->atrium[data->curr];
-	pthread_mutex_lock(&data->debug_lock);
-	printf("nº%d:\n", philo->id);
-	printf("\ttid:  %d\n", (int) philo->tid);
-	printf("---\n");
-	pthread_mutex_unlock(&data->debug_lock);
-// printf("\tfork: %d\n", (int) data->atrium[data->curr].fork);
+	while (philo->is_alive)
+	{
+		if (philo->id % 2)
+		{
+			printer(calc_ts(data->start_ts), philo->id, 2, &data->lock);
+			usleep(data->sleep_time * 1e+3);
+		}
+		fork_hand(data, philo->id, 0);
+		printer(calc_ts(data->start_ts), philo->id, 0, &data->lock);
+		printer(calc_ts(data->start_ts), philo->id, 1, &data->lock);
+		usleep(data->meal_time * 1e+3);
+		fork_hand(data, philo->id, 1);
+		if (!(philo->id % 2))
+		{
+			printer(calc_ts(data->start_ts), philo->id, 2, &data->lock);
+			usleep(data->sleep_time * 1e+3);
+		}
+		printer(calc_ts(data->start_ts), philo->id, 3, &data->lock);
+		philo->is_alive = 1;
+	}
 	return (0);
 }
 
-short	birth(t_data *data)
+static short	birth(t_data *data)
 {
 	int		i;
 
@@ -50,11 +84,9 @@ short	birth(t_data *data)
 	while (++i <= data->nb_philo)
 	{
 		data->atrium[i].id = i;
+		data->atrium[i].last_meal = 0;
 		pthread_mutex_init(&data->atrium[i].fork, NULL);
-		pthread_mutex_lock(&data->atrium[i].fork);
-		if (i % 2)
-			pthread_mutex_unlock(&data->atrium[i].fork);
-		data->atrium[i].last_eat = 0;
+		data->atrium[i].is_alive = 1;
 	}
 	return (0);
 }
@@ -68,9 +100,13 @@ int	main(int argc, char **argv)
 		return (print_help(argv));
 	data.nb_philo = f_atoi(argv[1]);
 	data.curr = data.nb_philo;
-	printf("[%d]\n", data.nb_philo);
+	data.start_ts = calc_ts(0);
+	data.meal_time = 70;
+	data.sleep_time = 50;
+	data.starve_time = 150;
+	printf("(c Squide game enfaite, il y a %d joueurs.......)\n", data.nb_philo);
 	birth(&data);
-	pthread_mutex_init(&data.debug_lock, NULL);
+	pthread_mutex_init(&data.lock, NULL);
 	i = -1;
 	while (++i < data.nb_philo)
 		pthread_create(&(data.atrium[i].tid), NULL,
@@ -81,5 +117,6 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < data.nb_philo)
 		pthread_mutex_destroy(&(data.atrium[data.curr].fork));
+	pthread_mutex_destroy(&data.lock);
 	return (0);
 }
