@@ -5,7 +5,8 @@ INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= philosophers.c \
-			  utils.c
+			  utils.c \
+			  actions.c
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 
