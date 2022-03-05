@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:15:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/04 19:05:15 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/05 02:29:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,11 @@ void	fork_hand(t_data *data, int id, short action)
 
 static void	*routine(void *args)
 {
-	// t_data	*data;
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
 	while (!philo->data->somebody_died)
 	{
-		// data = philo->data;
-		// data = (t_data *)args;
-		// data->curr--;
-		// philo = &data->atrium[data->curr];
 		if (philo->id % 2)
 		{
 			bedtime(philo);
@@ -66,21 +61,19 @@ static void	*routine(void *args)
 		else
 		{
 			eat(philo);
-			bedtime(philo);
 			if (philo->data->somebody_died)
 				return (0);
-			printf("\e[90m%d \e[32m%d \e[39mis thinking\n",
-				(int)calc_ts(philo->data->start_ts), philo->id);
-			// printf("\e[90m%d \e[32m%d \e[39mis thinking (%d)\n",
-			// 	(int)calc_ts(philo->data->start_ts), philo->id, philo->last_meal);
+			bedtime(philo);
+			if (!philo->data->somebody_died)
+				printf("\e[90m%d \e[32m%d \e[39mis thinking\n",
+					(int)calc_ts(philo->data->start_ts), philo->id);
 		}
 	}
-	// printf("\e[90m%d \e[32m%d \e[39mis thinking\n",
-	// 	(int)calc_ts(philo->data->start_ts), philo->id);
-	// if (philo->data->somebody_died)
-	// 	printf("wowowow\n");
 	return (0);
 }
+
+// printf("\e[90m%d \e[32m%d \e[39mis thinking (%f)\n",
+// 	(int)calc_ts(philo->data->start_ts), philo->id, philo->last_meal);
 
 static short	birth(t_data *data)
 {
@@ -93,7 +86,7 @@ static short	birth(t_data *data)
 	while (++i < data->nb_philo)
 	{
 		data->atrium[i].id = i;
-		data->atrium[i].last_meal = calc_ts(data->start_ts);
+		data->atrium[i].last_meal = calc_ts(0);
 		data->atrium[i].data = data;
 		pthread_mutex_init(&data->atrium[i].fork, NULL);
 	}
@@ -129,7 +122,6 @@ int	main(int argc, char **argv)
 		pthread_detach(data.atrium[i].tid);
 		pthread_mutex_destroy(&(data.atrium[i].fork));
 	}
-	// pthread_mutex_unlock(&data.lock);
 	pthread_mutex_destroy(&data.lock);
 	free(data.atrium);
 	usleep(1000);
