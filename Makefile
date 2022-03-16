@@ -6,14 +6,16 @@ INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= philosophers.c \
 			  utils.c \
-			  actions.c
+			  actions.c \
+			  death.c
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 
 ODIR		= build
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -g3 -pthread -I $(INCDIR)
+CFLAGS		= -Wall -Wextra -Werror -pthread -I $(INCDIR)
+# CFLAGS		= -Wall -Wextra -Werror -fsanitize=thread -g -pthread -I $(INCDIR)
 
 all: $(NAME)
 
@@ -22,7 +24,7 @@ $(ODIR)/%.o: $(SDIR)/%.c $(INCS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
 	rm -rf $(ODIR)
