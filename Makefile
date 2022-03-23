@@ -1,4 +1,4 @@
-NAME		= philosophers
+NAME		= philo
 
 INC			= philosophers.h
 INCDIR		= includes
@@ -14,8 +14,8 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -pthread -I $(INCDIR)
-# CFLAGS		= -Wall -Wextra -Werror -fsanitize=thread -g -pthread -I $(INCDIR)
+# CFLAGS		= -Wall -Wextra -Werror -pthread -I $(INCDIR)
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=thread -g -pthread -I $(INCDIR)
 
 all: $(NAME)
 

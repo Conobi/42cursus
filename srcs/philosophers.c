@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:15:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/16 20:11:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 17:09:51 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,53 @@ static short	birth(t_data *data)
 		pthread_mutex_init(&data->forks[i], NULL);
 		pthread_mutex_init(&data->atrium[i].eat_lock, NULL);
 		pthread_mutex_init(&data->atrium[i].death_lock, NULL);
-		data->atrium[i].id = i;
+		data->atrium[i].id = i + 1;
+		data->atrium[i].nb_meal = 0;
 		data->atrium[i].data = data;
+		data->atrium[i].last_meal = data->start_ts;
 	}
 	return (0);
 }
 
 static void	*routine(void *args)
 {
-	int	i;
+	int		i;
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
-	// while (!philo->data->threads_ready)
-	// 	;
-	// printer(philo, "\e[39mis starting");
+	while (!philo->data->threads_ready)
+		;
 	i = 3;
-	while (--i)
+	while (!death_status(philo))
 	{
-		printer(philo, "\e[39mis sleeping");
-		precise_usleep(philo->data->sleep_time * 1000, philo);
-		// pthread_mutex_lock(&philo->eat_lock);
-		// philo->last_meal = calc_ts(0);
-		// pthread_mutex_unlock(&philo->eat_lock);
+		if (philo->id % 2)
+		{
+			fork_hand(philo->data, philo->id - 1, 0);
+			printer(philo, "\e[39mhas taken a fork");
+			printer(philo, "\e[39mis eating");
+			precise_usleep(philo->data->meal_time, philo);
+			pthread_mutex_lock(&philo->eat_lock);
+			philo->last_meal = calc_ts(0);
+			pthread_mutex_unlock(&philo->eat_lock);
+			fork_hand(philo->data, philo->id - 1, 1);
+			printer(philo, "\e[39mis sleeping");
+			precise_usleep(philo->data->sleep_time, philo);
+		}
+		else
+		{
+			printer(philo, "\e[39mis sleeping");
+			precise_usleep(philo->data->sleep_time, philo);
+			fork_hand(philo->data, philo->id - 1, 0);
+			printer(philo, "\e[39mhas taken a fork");
+			printer(philo, "\e[39mis eating");
+			precise_usleep(philo->data->meal_time, philo);
+			pthread_mutex_lock(&philo->eat_lock);
+			philo->last_meal = calc_ts(0);
+			pthread_mutex_unlock(&philo->eat_lock);
+			fork_hand(philo->data, philo->id - 1, 1);
+		}
 		printer(philo, "\e[39mis thinking");
 	}
-	philo->data->somebody_died = 1;
 	return (0);
 }
 
@@ -80,28 +101,29 @@ int	main(int argc, char **argv)
 	data.sleep_time = f_atoi(argv[4]);
 	data.somebody_died = 0;
 	data.threads_ready = 0;
-	pthread_mutex_init(&data.death_lock, NULL);
+	// pthread_mutex_init(&data.death_lock, NULL);
 	pthread_mutex_init(&data.lock, NULL);
 	birth(&data);
 	i = -1;
-	printf("Zéparti\n");
 	while (++i < data.nb_philo)
 		pthread_create(&(data.atrium[i].tid), NULL,
 			routine, &(data.atrium[i]));
 	data.start_ts = calc_ts(0);
-	printf("On défini les start...\n");
 	i = -1;
 	while (++i < data.nb_philo)
+	{
+		pthread_mutex_lock(&data.atrium[i].eat_lock);
 		data.atrium[i].last_meal = data.start_ts;
+		pthread_mutex_unlock(&data.atrium[i].eat_lock);
+	}
 	data.threads_ready = 1;
-	printf("On est ready\n");
-	pthread_create(&(data.checker_tid), NULL, checker_thread, &data);
-	death_checker(&data);
-	// printf("Ah !\n");
-	pthread_join(data.checker_tid, NULL);
+	// pthread_create(&(data.checker_tid), NULL, checker_thread, &data);
+	checker_thread(&data);
+	// pthread_join(data.checker_tid, NULL);
 	i = -1;
 	while (++i < data.nb_philo)
 		pthread_join(data.atrium[i].tid, NULL);
-	death(&data);
+	if (!data.somebody_died)
+		last_judgement(&data);
 	return (0);
 }
