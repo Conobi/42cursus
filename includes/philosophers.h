@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:14:10 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/23 17:00:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 16:52:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_philo	t_philo;
 typedef struct s_data {
 	pthread_t		checker_tid;
 	pthread_mutex_t	lock;
-	pthread_mutex_t	death_lock;
 	pthread_mutex_t	*forks;
 	t_philo			*atrium;
 	double			start_ts;
@@ -33,10 +32,13 @@ typedef struct s_data {
 	int				starve_time;
 	int				meal_time;
 	int				sleep_time;
+	int				nb_meals;
+	int				philos_done;
 	int				dead_philo;
 	int				death_ts;
-	short signed	somebody_died;
-	short signed	threads_ready;
+	unsigned short	full_belly;
+	unsigned short	somebody_died;
+	unsigned short	threads_ready;
 }	t_data;
 
 typedef struct s_philo {
@@ -44,12 +46,13 @@ typedef struct s_philo {
 	pthread_mutex_t	eat_lock;
 	pthread_mutex_t	death_lock;
 	int				id;
-	int				nb_meal;
+	int				nb_meals;
 	double			last_meal;
 	t_data			*data;
 }	t_philo;
 
 /* philosophers.c */
+void	*routine_handler(void *args);
 
 /* utils.c */
 int		f_atoi(char *str);
@@ -57,17 +60,18 @@ double	calc_ts(double start_date);
 void	precise_usleep(int time, t_philo *philo);
 void	printer(t_philo *philo, char *message);
 void	fork_hand(t_data *data, int id, short action);
-
-/* actions.c */
-// void	bedtime(t_philo *philo);
-// void	eat(t_philo *philo);
+// int		done_status(t_data *data);
+int		mut_status(pthread_mutex_t *lock, int value);
 
 /* death.c */
-short	death_status(t_philo *philo);
-short	death_statusv2(t_data *data);
+// short	death_status(t_philo *philo);
 void	death_checker(t_data *data);
 void	*checker_thread(void *args);
 void	death(t_data *data);
 void	last_judgement(t_data *data);
+
+/* init.c */
+int		init_data(int argc, char **argv, t_data *data);
+short	birth(t_data *data);
 
 #endif

@@ -5,8 +5,8 @@ INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= philosophers.c \
+			  init.c \
 			  utils.c \
-			  actions.c \
 			  death.c
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
@@ -14,7 +14,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-# CFLAGS		= -Wall -Wextra -Werror -pthread -I $(INCDIR)
+# CFLAGS		= -Wall -Wextra -Werror -pthread -g3 -I $(INCDIR)
 CFLAGS		= -Wall -Wextra -Werror -fsanitize=thread -g -pthread -I $(INCDIR)
 
 all: $(NAME)
