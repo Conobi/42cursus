@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/30 20:03:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 14:38:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,14 @@ char	*ft_strdup(const char *s1);
  * @return int Returns the integer.
  */
 int		ft_atoi(const char *str);
+
+/**
+ * @brief Convert a string to a double.
+ *
+ * @param str Your string
+ * @return double Returns the double.
+ */
+double	ft_atof(char *s);
 
 /**
  * @brief Allocates (with malloc(3)) and returns an array

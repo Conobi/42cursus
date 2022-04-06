@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 15:38:01 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 19:54:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 17:42:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ float	julia(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.a >= 4)
+		if (c.x * c.x + c.y * c.y >= 4)
 			break ;
 		c.b = 2 * c.x * c.y;
-		c.x = c.a - con->cox;
+		c.x = c.a + con->cox;
 		c.y = c.b + con->coy;
 	}
 	return ((float)i / con->miters - con->pznum - con->pal.o);

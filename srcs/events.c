@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 23:23:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 19:53:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 17:42:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,14 @@ int	zoom_kb(int key, t_context *con)
 		con->zoom = (double long)con->zoom / 0.9;
 		if (con->pzlock == 1)
 			con->pznum -= 0.02 * con->pzdir;
+		refresh_handler(con);
 	}
 	if (key == KB_PAD_PLUS)
 	{
 		con->zoom = (double long)con->zoom * 0.9;
 		if (con->pzlock == 1)
 			con->pznum += 0.02 * con->pzdir;
+		refresh_handler(con);
 	}
 	return (0);
 }
@@ -106,6 +108,5 @@ void	event_listener(t_context *con)
 	mlx_mouse_hook(con->win, zoom_mouse, con);
 	mlx_hook(con->win, 2, 1L, zoom_kb, con);
 	mlx_hook(con->win, CLOSE_EVENT, CLOSE_MASK, ender, con);
-	if (con->func_i == 0)
-		mlx_hook(con->win, 6L, 64L, mouse_hover, con);
+	mlx_hook(con->win, 6L, 64L, mouse_hover, con);
 }

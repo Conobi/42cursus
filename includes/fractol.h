@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:40:18 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 19:52:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 17:11:43 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ double long	remap(double long input, double long low, double long high);
 void		err_printer(int err);
 void		err_ender(int err);
 void		info_printer(char *note);
+void		cli_parser(int argc, char **argv, t_context *con);
 int			ender(void);
 
 /* colors.c */

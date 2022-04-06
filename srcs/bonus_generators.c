@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:17:24 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 18:53:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/02/03 14:20:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ float	burning_ship(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.a >= 4)
+		if (c.x * c.x + c.y * c.y >= 4)
 			break ;
 		c.b = fabs(2 * (double)c.x * (double)c.y);
 		c.x = c.a + c.ox;
@@ -55,7 +55,7 @@ float	eagle_brain(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.a >= 4)
+		if (c.x * c.x + c.y * c.y >= 4)
 			break ;
 		c.b = 1.5 * fabs((double)c.x) * c.y;
 		c.x = c.a + 0.501401;
@@ -81,7 +81,7 @@ float	baobab(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.a >= 4)
+		if (c.x * c.x + c.y * c.y >= 4)
 			break ;
 		c.b = 2 * fabs((double)c.x) * c.y;
 		c.x = c.a + 0.062932;
@@ -107,7 +107,7 @@ float	wobble(const t_pos pos, const t_context *con)
 	while (++i < con->miters)
 	{
 		c.a = c.x * c.x - c.y * c.y;
-		if (c.a >= 4)
+		if (c.x * c.x + c.y * c.y >= 4)
 			break ;
 		c.b = -1.5 * fabs((double)c.x) * c.y;
 		c.x = c.a - 1.096181;

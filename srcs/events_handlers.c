@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:04:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 19:47:47 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 17:42:15 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	zoom_move_reset(int key, t_context *con)
 		con->midy = 0.5;
 		info_printer("Resetting the view");
 	}
+	refresh_handler(con);
 }
 
 void	palette_change(int key, t_context *con)
@@ -64,7 +65,6 @@ void	lockers(int key, t_context *con)
 			info_printer("Locking the julia roller");
 		else
 			info_printer("Unlocking the julia roller");
-		printf("The roller is set at (cox: %f coy: %f)\n", con->cox, con->coy);
 	}
 }
 
@@ -91,22 +91,3 @@ void	resol_iter_change(int key, t_context *con)
 		info_printer("Increasing the resolution...");
 	}
 }
-
-// void	space_debug(int key, t_context *con)
-// {
-// 	if (key == KB_SPACE)
-// 	{
-// 		if (con->midx == 0.5)
-// 			con->midx = 1;
-// 		else if (con->midx == 1)
-// 			con->midx = 0;
-// 		else
-// 			con->midx = 0.5;
-// 		if (con->midy == 0.5)
-// 			con->midy = 1;
-// 		else if (con->midy == 1)
-// 			con->midy = 0;
-// 		else
-// 			con->midy = 0.5;
-// 	}
-// }

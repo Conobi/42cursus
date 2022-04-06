@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:02:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 19:24:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 17:30:38 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	palette_set(t_context *con, int index)
 {
 	info_printer("Setting the palette...");
 	if (index == 0)
-		con->pal = (t_palette){0xFFFFFF, 0x0054AA, 0.03};
+		con->pal = (t_palette){0xFFFFFF, 0x0054AA, 0.10};
 	else if (index == 1)
 		con->pal = (t_palette){0xFFFFFF, 0x001933, 0.59};
 	else if (index == 2)

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 15:41:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 19:53:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 17:12:05 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	print_help(int argc, char **argv)
 	printf("\e[92m\e[1mfractol\e[39m - A simple fractal visualizer\n\e[0m");
 	printf("\n\e[92m\e[1mUSAGE:\e[0m\n\t%s \e[96m\e[4m[COMMAND]\e[0m", argv[0]);
 	printf("\n\n\e[92m\e[1mCOMMANDS:\e[0m\n");
-	printf("\t\e[96mjulia\e[0m - The julia set visualizer\n");
+	printf("\t\e[96mjulia [x param] [y param]\e[0m - The julia set visualizer\n");
 	printf("\t\e[96mmandelbrot\e[0m - The mandelbrot set visualizer\n");
 	printf("\t\e[96mburning_ship\e[0m - The burning ship fractal visualizer\n");
 	printf("\t\e[96meagle_brain\e[0m - The eagle brain fractal visualizer\n");
@@ -54,12 +54,10 @@ static void	context_init(t_context *con)
 	con->midy = 0.5;
 	con->ox = 0.5;
 	con->oy = 0.5;
-	con->cox = 0.70;
-	con->coy = 0.27015;
 	con->pznum = 1;
 	con->pzdir = -1;
 	con->pzlock = 1;
-	con->holock = 1;
+	con->holock = -1;
 	palette_set(con, con->func_i);
 }
 
@@ -84,9 +82,10 @@ int	main(int argc, char **argv)
 {
 	t_context	con;
 
-	if (argc == 2)
+	if (argc == 2 || argc == 4)
 		con.command = argv[1];
-	if (argc == 2 && !ft_strncmp("julia", argv[1], 5))
+	cli_parser(argc, argv, &con);
+	if (argc == 4 && !ft_strncmp("julia", argv[1], 5))
 		graph_manager(set_func(0, &con, julia));
 	else if (argc == 2
 		&& !ft_strncmp("mandelbrot", argv[1], 10))

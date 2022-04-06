@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:46:21 by conobi            #+#    #+#             */
-/*   Updated: 2022/01/15 19:51:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 17:11:08 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ void	err_ender(int err)
 {
 	err_printer(err);
 	exit(1);
+}
+
+void	cli_parser(int argc, char **argv, t_context *con)
+{
+	if (argc == 4)
+	{
+		con->cox = ft_atof(argv[2]);
+		con->coy = ft_atof(argv[3]);
+	}
 }
 
 int	ender(void)

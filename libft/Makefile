@@ -5,6 +5,7 @@ SRCS = \
 ./ft_strncmp.c \
 ./ft_strdup.c \
 ./ft_atoi.c \
+./ft_atof.c \
 ./ft_split.c \
 ./ft_strjoin.c \
 ./ft_itoa.c \
