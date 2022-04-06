@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:02:02 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/29 16:52:15 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 19:19:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,14 @@ short	birth(t_data *data)
 		pthread_create(&(data->atrium[i].tid), NULL,
 			routine_handler, &(data->atrium[i]));
 	return (0);
+}
+
+int	meal_status(t_data *data)
+{
+	int	ret;
+
+	pthread_mutex_lock(&data->lock);
+	ret = data->philos_done;
+	pthread_mutex_unlock(&data->lock);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:49:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/29 16:48:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 19:26:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ double	calc_ts(double start_date)
 void	printer(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(&philo->data->lock);
-	if (!mut_status(&philo->death_lock, philo->data->somebody_died))
+	if (!death_status(philo))
 		printf("\e[90m%d \e[32m%d %s\n",
 			(int)calc_ts(philo->data->start_ts), philo->id, message);
 	pthread_mutex_unlock(&philo->data->lock);
@@ -59,8 +59,7 @@ void	precise_usleep(int time, t_philo *philo)
 	initial_ts = (initial_time.tv_sec * 1000 + initial_time.tv_usec / 1000);
 	gettimeofday(&curr_time, NULL);
 	curr_ts = (curr_time.tv_sec * 1000 + curr_time.tv_usec / 1000);
-	while (curr_ts < (initial_ts + time)
-		&& !mut_status(&philo->death_lock, philo->data->somebody_died))
+	while (curr_ts < (initial_ts + time) && !death_status(philo))
 	{
 		usleep(500);
 		gettimeofday(&curr_time, NULL);
@@ -70,8 +69,7 @@ void	precise_usleep(int time, t_philo *philo)
 
 void	fork_hand(t_data *data, int id, short action)
 {
-	if (action == 0
-		&& !mut_status(&(&data->atrium[id])->death_lock, data->somebody_died))
+	if (action == 0 && !death_status(&(data->atrium[id])))
 	{
 		pthread_mutex_lock(&data->forks[id]);
 		if (id == data->nb_philo - 1)
@@ -79,7 +77,7 @@ void	fork_hand(t_data *data, int id, short action)
 		else
 			pthread_mutex_lock(&data->forks[id + 1]);
 	}
-	else if (!mut_status(&(&data->atrium[id])->death_lock, data->somebody_died))
+	else if (!death_status(&(data->atrium[id])))
 	{
 		pthread_mutex_unlock(&data->forks[id]);
 		if (id == data->nb_philo - 1)

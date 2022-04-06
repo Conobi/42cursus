@@ -14,8 +14,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-# CFLAGS		= -Wall -Wextra -Werror -pthread -g3 -I $(INCDIR)
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=thread -g -pthread -I $(INCDIR)
+CFLAGS		= -Wall -Wextra -Werror -g -pthread -I $(INCDIR)
 
 all: $(NAME)
 

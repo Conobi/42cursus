@@ -6,19 +6,19 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 19:25:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/29 16:48:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 19:44:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	mut_status(pthread_mutex_t *lock, int value)
+int	death_status(t_philo *philo)
 {
 	int	ret;
 
-	pthread_mutex_lock(lock);
-	ret = value;
-	pthread_mutex_unlock(lock);
+	pthread_mutex_lock(&philo->death_lock);
+	ret = philo->data->somebody_died;
+	pthread_mutex_unlock(&philo->death_lock);
 	return (ret);
 }
 
@@ -33,9 +33,7 @@ void	death_checker(t_data *data)
 		pthread_mutex_lock(&data->atrium[i].eat_lock);
 		eat_delay = calc_ts(0) - data->atrium[i].last_meal;
 		pthread_mutex_unlock(&data->atrium[i].eat_lock);
-		if (eat_delay >= data->starve_time
-			&& !mut_status(&(&data->atrium[i])->death_lock,
-				data->somebody_died))
+		if (eat_delay >= data->starve_time && !death_status(&(data->atrium[i])))
 		{
 			data->dead_philo = data->atrium[i].id;
 			i = -1;

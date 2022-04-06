@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:15:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/29 16:51:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 19:42:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ short	meal_checker(t_philo *philo)
 		philo->data->philos_done++;
 		pthread_mutex_unlock(&philo->data->lock);
 	}
-	if (mut_status(&philo->data->lock, philo->data->philos_done)
-		>= philo->data->nb_philo)
+	if (meal_status(philo->data) >= philo->data->nb_philo)
 	{
 		pthread_mutex_lock(&philo->data->lock);
 		philo->data->full_belly = 1;
@@ -70,7 +69,7 @@ void	*routine_handler(void *args)
 	while (!philo->data->threads_ready)
 		;
 	i = 3;
-	while (!mut_status(&philo->death_lock, philo->data->somebody_died))
+	while (!death_status(philo))
 	{
 		if (philo->id % 2)
 			routine_odd(philo);

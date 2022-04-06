@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:14:10 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/29 16:52:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 19:44:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ typedef struct s_data {
 	int				philos_done;
 	int				dead_philo;
 	int				death_ts;
-	unsigned short	full_belly;
-	unsigned short	somebody_died;
-	unsigned short	threads_ready;
+	int				full_belly;
+	int				somebody_died;
+	int				threads_ready;
 }	t_data;
 
 typedef struct s_philo {
@@ -60,11 +60,9 @@ double	calc_ts(double start_date);
 void	precise_usleep(int time, t_philo *philo);
 void	printer(t_philo *philo, char *message);
 void	fork_hand(t_data *data, int id, short action);
-// int		done_status(t_data *data);
-int		mut_status(pthread_mutex_t *lock, int value);
+int		death_status(t_philo *philo);
 
 /* death.c */
-// short	death_status(t_philo *philo);
 void	death_checker(t_data *data);
 void	*checker_thread(void *args);
 void	death(t_data *data);
@@ -73,5 +71,6 @@ void	last_judgement(t_data *data);
 /* init.c */
 int		init_data(int argc, char **argv, t_data *data);
 short	birth(t_data *data);
+int		meal_status(t_data *data);
 
 #endif
