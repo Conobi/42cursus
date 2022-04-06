@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 19:33:25 by conobi            #+#    #+#             */
-/*   Updated: 2021/12/13 17:27:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 18:15:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,38 +48,3 @@ int	ft_atoi(char const *str)
 	}
 	return (ft_check_max(res, sign));
 }
-
-// static int	f_checkflow(long nb, short sign)
-// {
-// 	if (nb > 2147483648 || nb < -2147483649)
-// 	{
-// 		if (sign == 1)
-// 			return (-1);
-// 		return (0);
-// 	}
-// 	return ((int)nb * sign);
-// }
-
-// int	ft_atoi(const char *str)
-// {
-// 	int		sign;
-// 	long	r;
-
-// 	r = 0;
-// 	while (*str == ' ' || (*str >= 9 && *str <= 13))
-// 		str++;
-// 	sign = 1;
-// 	if (*str == '-')
-// 	{
-// 		sign = -1;
-// 		str++;
-// 	}
-// 	else if (*str == '+')
-// 		str++;
-// 	while (ft_isdigit(*str))
-// 	{
-// 		r = r * 10 + *str - '0';
-// 		str++;
-// 	}
-// 	return (f_checkflow(r, sign));
-// }

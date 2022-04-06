@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 19:02:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/25 17:30:38 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/06 18:16:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,3 @@ void	palette_set(t_context *con, int index)
 	else if (index == 5)
 		con->pal = (t_palette){0xFFFFFF, 0xEEAA33, 1};
 }
-
-// int	gradient(double long t, int a, int b, int chn)
-// {
-// 	int	ret;
-
-// 	ret = (hex2rgba(a).arr[chn] - hex2rgba(b).arr[chn])
-// 		* t + hex2rgba(b).arr[chn];
-// 	return (ret);
-// }
