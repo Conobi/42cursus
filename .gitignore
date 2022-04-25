@@ -1,2 +1,15 @@
 /out
 minishell
+**/.DS_Store
+.DS_Store
+exec*
+*.dSYM
+a.out
+.*.c.swp
+*.code-workspace
+*.a
+*.o
+.vscode
+checker_*
+*test
+build
