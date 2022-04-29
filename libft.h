@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2021/11/12 19:53:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 18:39:12 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 /**
  * @brief Gives you the size of the string, not including '\\0'.
@@ -504,5 +505,80 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
  * @return t_list* The new list. NULL if the allocation fails.
  */
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+/**
+ * @brief Concatenates the number of arguments sent to the function
+ *
+ * @param argc Number of arguments to concat
+ * @param ... all strings to concat
+ * @return char* returns a string in all arguments have been concatenated,
+ * or NULL on allocation failure.
+ */
+char	*ft_aconcat(int argc, ...);
+
+/* GARBAGE COLLECTOR */
+
+/**
+ * @brief The list of allocated items, that we can clean or keep
+ * depending on the type.
+ */
+typedef struct s_garbc
+{
+	void			*content;
+	char			type;
+	struct s_garbc	*next;
+}	t_garbc;
+
+/**
+ * @brief A function to create the first element of the garbage collector.
+ *
+ * @return t_garbc* Create the first element of the list, nulled on every
+ * parameter.
+ */
+t_garbc	*gb_init(void);
+
+/**
+ * @brief Add an allocated memory pointer to the garbage collector linked-list.
+ *
+ * @param ptr The allocated memory
+ * @param garbcl A pointer to the linked-list, headed to the top of the list.
+ * @param type The type of element allocated
+ * @return void* Returns a pointer to the allocated memory.
+ */
+void	*gb_add(void *ptr, t_garbc **garbcl, const char type);
+
+/**
+ * @brief Works similarly as the ft_calloc function, but saves the allocated
+ * pointer to a linked-list, that can be cleaned up.
+ *
+ * @param count The number of elements to allocate
+ * @param size The size of each element. Use sizeof(type) to get the exact
+ * size of an element of a given type.
+ * @param type The type of element allocated.
+ * This parameter is used to be able to choose
+ * which element delete when this kind of element is not used
+ * @param last A pointer to the linked-list, headed to the top of the list.
+ * @return void* Returns a pointer to the allocated memory.
+ */
+void	*gb_calloc(size_t count, size_t size, const char type, t_garbc **last);
+
+/**
+ * @brief Deletes every element of type x in the garbage collector linked-list.
+ *
+ * @param garbcl A pointer to the linked-list, headed to the top of the list.
+ * @param type The kind of element to delete. Can be between -128 and 127.
+ * @return void
+ */
+void	gb_delete(t_garbc **garbcl, const char type);
+
+/**
+ * @brief Deallocates all the elements in the linked-list
+ * created by `gb_calloc`, and sets it to NULL.
+ * Should be used at the end of the program.
+ *
+ * @param garbcl The list, headed to the top of the list.
+ * @return void
+ */
+void	gb_clear(t_garbc **garbcl);
 
 #endif

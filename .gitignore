@@ -1,10 +1,16 @@
 exec*
+**/.DS_Store
+.DS_Store
+exec*
+*.dSYM
 a.out
 .*.c.swp
 *.code-workspace
 *.a
 *.o
-corrections
 README.md
 .vscode
 test*.c
+checker_*
+*test
+build
