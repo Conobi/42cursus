@@ -2,7 +2,6 @@
 minishell
 **/.DS_Store
 .DS_Store
-exec*
 *.dSYM
 a.out
 .*.c.swp

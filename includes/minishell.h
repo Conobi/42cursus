@@ -35,9 +35,9 @@ typedef struct s_command {
 	char	**args;
 	bool	piped;
 	bool	heredoc;
+	bool	append;
 	char	**infiles;
 	int		infile;
-	bool	append;
 	char	**outfiles;
 	int		outfile;
 	char	*exec_path;
