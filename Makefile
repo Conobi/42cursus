@@ -34,9 +34,9 @@ $(NAME): $(OBJS) $(LIBFT_AR)
 	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME)  -lreadline
 
 check-and-reinit-submodules:
-	@if git submodule status | egrep -q '^[-]|^[+]' ; then \
+	@if git submodule status | egrep -q '^[-]' ; then \
 		echo "INFO: Need to reinitialize git submodules"; \
-		git submodule update --init; \
+		git submodule update --init --remote; \
 	fi
 
 clean:

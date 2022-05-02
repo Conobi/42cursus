@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/03/30 16:52:45 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 18:00:19 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	while (true)
 	{
-		entry = readline(ft_strjoin(ft_strjoin(RED, "minishell "), RESET));
+		entry = readline(ft_aconcat(15, WHT_FG, "", WHT_BG, BLK_FG,
+					BOLD, "  ", WHT_FG, RED_BG,
+					" ", "minishell _$", RESET,
+					RED_FG, " ", RESET, WHT_FG));
 		if (ft_strncmp(entry, "exit", 5) == 0)
 			exit_shell(table);
 		add_history(entry);
-		create_table(table, ft_split(entry, ' '));
-		exec(table);
+		// create_table(table, ft_split(entry, ' '));
+		// exec(table);
 	}
 }
