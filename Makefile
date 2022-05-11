@@ -11,6 +11,8 @@ SRC			= minishell.c \
 			  executor/executor.c \
 			  executor/executor_utils.c \
 			  executor/files_handlers.c \
+	 		  parsing/parser.c \
+	 		  parsing/pipe.c \
 	 		  utils/exit_shell.c \
 
 SDIR		= srcs
@@ -19,7 +21,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR)
+CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR) -g3
 
 all: libft $(NAME)
 
@@ -31,7 +33,7 @@ $(ODIR)/%.o: $(SDIR)/%.c $(INCS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT_AR)
-	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME)  -lreadline
+	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include
 
 check-and-reinit-submodules:
 	@if git submodule status | egrep -q '^[-]' ; then \

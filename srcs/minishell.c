@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/02 18:00:19 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 18:50:16 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,33 @@ void	signal_handler(int sig)
 	return ;
 }
 
+static void ctx_init(t_ctx *c)
+{
+	c->gbc = gb_init();
+	if (!c->gbc)
+		exit_shell(c, 1);
+	c->prompt = gb_add(ft_aconcat(15, WHT_FG, "", WHT_BG, BLK_FG,
+					BOLD, "  ", WHT_FG, RED_BG,
+					" ", "Minishell $_ ", RESET,
+					RED_FG, " ", RESET, WHT_FG), &(c->gbc), PERM_GB);
+	c->parser.squoted = -1;
+	c->parser.dquoted = -1;
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	char	*entry;
-	t_table	*table;
+	t_ctx	c;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	table = malloc(sizeof(t_table));
+	ctx_init(&c);
 	signal(SIGINT, signal_handler);
-	if (!table)
-		return (1);
 	while (true)
 	{
-		entry = readline(ft_aconcat(15, WHT_FG, "", WHT_BG, BLK_FG,
-					BOLD, "  ", WHT_FG, RED_BG,
-					" ", "minishell _$", RESET,
-					RED_FG, " ", RESET, WHT_FG));
-		if (ft_strncmp(entry, "exit", 5) == 0)
-			exit_shell(table);
-		add_history(entry);
+		c.entry = gb_add(readline(c.prompt), &c.gbc, ENTRY_GB);
+		parser(&c);
+		add_history(c.entry);
 		// create_table(table, ft_split(entry, ' '));
 		// exec(table);
 	}
