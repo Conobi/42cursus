@@ -6,12 +6,18 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/03/30 16:41:37 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 01:12:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function is used to handle all outfile redirections
+ *
+ * @param table Commands table struct
+ * @param curr_cmd Index of current command
+ */
 void	outfile_handler(t_table *table, int curr_cmd)
 {
 	int	i;
@@ -31,6 +37,12 @@ void	outfile_handler(t_table *table, int curr_cmd)
 		table->command_table[curr_cmd].outfile = 1;
 }
 
+/**
+ * @brief This function is used to handle all infile redirections
+ *
+ * @param table Commands table struct
+ * @param curr_cmd Index of current command
+ */
 void	infile_handler(t_table *table, int curr_cmd)
 {
 	int	i;
@@ -48,6 +60,14 @@ void	infile_handler(t_table *table, int curr_cmd)
 	}
 }
 
+// Deprecated functions
+/**
+ * @brief This function is used to handle infile redirection
+ *
+ * @param table Commands table struct
+ * @param curr Index of current command
+ * @param in File descriptor to modify for input
+ */
 void	in_selector(t_table *table, int curr, int *in)
 {
 	// if (table->command_table[curr].infile)
@@ -58,6 +78,14 @@ void	in_selector(t_table *table, int curr, int *in)
 		*in = table->pipe_fd[2 * curr - 2];
 }
 
+/**
+ * @brief This function is used to handle outfile redirection
+ *
+ * @param table Commands table struct
+ * @param curr Index of current command
+ * @param piped_commands Number of piped commands
+ * @param out File descriptor to modify for output
+ */
 void	out_selector(t_table *table, int curr, int piped_commands, int *out)
 {
 	if (table->command_table[curr].outfile)

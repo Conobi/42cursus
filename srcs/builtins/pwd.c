@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_shell.c                                       :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 19:06:17 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/11 15:43:27 by abastos          ###   ########lyon.fr   */
+/*   Created: 2022/05/11 13:23:28 by abastos           #+#    #+#             */
+/*   Updated: 2022/05/12 00:47:58 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_shell(t_table *table, t_ctx *c, int code)
+/**
+ * @brief This function is a clone of pwd command for builtins
+ *
+ */
+void	b_pwd(void)
 {
-	free(table);
-	gb_clear(&c->gbc);
-	exit(code);
+	char	pwd[256];
+
+	printf("%s\n", getcwd(pwd, sizeof(pwd)));
 }

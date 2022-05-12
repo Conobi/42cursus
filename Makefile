@@ -1,7 +1,33 @@
+BLUE		=	\033[0;34m
+COMPIL		=	\033[3;35m
+GREEN		=	\033[0;32m
+RED			=	\033[0;31m
+RESET		=	\033[0;m
+
+RUN_CMD		=	script -q $@.log $1 > /dev/null; \
+				RESULT=$$?
+
+define compile_cmd
+	printf "%b%-30b" "$(BLUE)compiling " "$(COMPIL)$(@F)$(RESET)";
+	$(RUN_CMD); \
+	if [ $$RESULT -ne 0 ]; then \
+		printf "%b\n" "$(RED)[✖]$(RESET)"; \
+		cat $@.log; \
+	else  \
+		printf "%b\n" "$(GREEN)[✓]$(RESET)"; \
+	fi; \
+	rm -f $@.log; \
+	exit $$RESULT
+endef
+
 NAME		= minishell
 
 LIBFTDIR	= libft
 LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
+
+RLINCS		= $(shell brew --prefix readline)/include
+RLLIB		= $(shell brew --prefix readline)/lib
+
 
 INC			= minishell.h
 INCDIR		= includes
@@ -11,7 +37,13 @@ SRC			= minishell.c \
 			  executor/executor.c \
 			  executor/executor_utils.c \
 			  executor/files_handlers.c \
+			  builtins/cd.c \
+			  builtins/pwd.c \
+			  builtins/echo.c \
 	 		  utils/exit_shell.c \
+			  utils/get_path.c \
+			  utils/errors.c \
+			  utils/history.c \
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
@@ -24,14 +56,21 @@ CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR)
 all: libft $(NAME)
 
 libft: check-and-reinit-submodules
-	make -C $(LIBFTDIR)
+	@printf "$(BLUE)compiling $(COMPIL)libft:$(RESET)\n";
+	@make -C $(LIBFTDIR) --no-print-directory
 
-$(ODIR)/%.o: $(SDIR)/%.c $(INCS)
+$(ODIR)/%.o: $(SDIR)/%.c $(INCS) Makefile
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(call compile_cmd, $(CC) $(CFLAGS) -c $< -o $@)
 
 $(NAME): $(OBJS) $(LIBFT_AR)
-	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME)  -lreadline
+ifndef debug
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -lreadline -I$(RLINCS) -L$(RLLIB) -o $(NAME) )
+	@printf "$(GREEN)Done$(RESET)\n";
+else
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -I$(RLINCS) -L$(RLLIB) -g3 -fsanitize=address)
+	@printf "$(GREEN)Done debug mode$(RESET)\n";
+endif
 
 check-and-reinit-submodules:
 	@if git submodule status | egrep -q '^[-]' ; then \
@@ -40,12 +79,16 @@ check-and-reinit-submodules:
 	fi
 
 clean:
-	rm -rf $(ODIR)
-	make clean -C $(LIBFTDIR)
+	@printf "$(RED)Deleting build files$(RESET)\n";
+	@rm -rf $(ODIR)
+	@printf "$(RED)Clean libft:$(RESET)\n";
+	@make clean -C $(LIBFTDIR)
 
 fclean: clean
-	rm -rf $(LIBFT_AR)
-	rm -rf $(NAME)
+	@printf "$(RED)Deleting $(LIBFT_AR)$(RESET)\n";
+	@rm -rf $(LIBFT_AR)
+	@printf "$(RED)Deleting $(NAME)$(RESET)\n";
+	@rm -rf $(NAME)
 
 re: fclean all
 

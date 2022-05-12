@@ -6,12 +6,20 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/03/30 16:39:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 18:18:09 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function executes the child process
+ *
+ * @param table Commands table struct
+ * @param cmd Current fork
+ * @param curr_cmd Current command to execute
+ * @param piped_commands Number of piped commands
+ */
 void	exec_child(t_table *table, int cmd,
 	int curr_cmd, int piped_commands)
 {
@@ -23,8 +31,10 @@ void	exec_child(t_table *table, int cmd,
 		return (perror("fork"));
 	if (table->process[curr_cmd] == 0)
 	{
+		// todo: check utility of these functions
 		in_selector(table, curr_cmd, &in);
 		out_selector(table, curr_cmd, piped_commands, &out);
+		// todo end
 		if (curr_cmd == 0)
 			switch_pipes(table->pipe_fd[0], table->pipe_fd[1]);
 		else if (curr_cmd == piped_commands - 1)
@@ -39,6 +49,13 @@ void	exec_child(t_table *table, int cmd,
 	}
 }
 
+/**
+ * @brief This function is used to create a pipe array with pipe()
+ * in table->pipe_fd
+ *
+ * @param table Commands table struct
+ * @param piped_commands Number of piped commands
+ */
 void	pipe_fd(t_table *table, int piped_commands)
 {
 	int	i;
@@ -55,6 +72,13 @@ void	pipe_fd(t_table *table, int piped_commands)
 	}
 }
 
+/**
+ * @brief This function is called when a command is piped
+ *
+ * @param table Ccommands table struct
+ * @param curr_command Current command to execute
+ * @return int
+ */
 int	exec_piped(t_table *table, int curr_command)
 {
 	int		i;
@@ -76,6 +100,12 @@ int	exec_piped(t_table *table, int curr_command)
 	return (piped_commands);
 }
 
+/**
+ * @brief this function is called when the current command is not piped
+ *
+ * @param table Commands table struct
+ * @param cmd Index of the command to execute
+ */
 void	exec_single(t_table *table, int cmd)
 {
 	pid_t	pid;
@@ -94,14 +124,20 @@ void	exec_single(t_table *table, int cmd)
 		waitpid(pid, 0, 0);
 }
 
-void	exec(t_table *table)
+/**
+ * @brief This function is the main function of execution
+ *
+ * @param c Ccontext struct
+ * @param table Commands table struct
+ */
+void	exec(t_ctx *c, t_table *table)
 {
 	int		i;
 
 	i = 0;
 	while (i < table->commands_num)
 		outfile_handler(table, i++);
-	set_exec_path(table);
+	set_exec_path(c, table);
 	i = 0;
 	while (i < table->commands_num)
 	{
@@ -110,7 +146,6 @@ void	exec(t_table *table)
 		if (i < 0)
 			return ;
 		exec_single(table, i);
-		free(table->command_table[i].exec_path);
 		i++;
 	}
 }
