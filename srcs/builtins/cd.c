@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 01:03:39 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 19:26:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	b_cd(t_ctx *c, char *path)
 		else
 			new_path = getenv("HOME");
 	}
+	else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
+	{
+		new_path = c->last_path;
+		printf("%s\n", new_path);
+	}
 	else if (ft_strlen(path) == 0)
 		new_path = getenv("HOME");
 	else
@@ -41,6 +46,8 @@ void	b_cd(t_ctx *c, char *path)
 	err.type = FILE_ERR;
 	if (!error_handler(c, err))
 	{
+		free(c->last_path);
+		c->last_path = getcwd(NULL, sizeof(char) * 128);
 		chdir(new_path);
 		free(c->prompt);
 		gen_prompt(c, get_path(c));

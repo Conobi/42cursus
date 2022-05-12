@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 18:17:48 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 19:31:20 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	ctx_init(t_ctx *c, t_table *table)
 	if (!c->gbc)
 		exit_shell(table, c, 1);
 	gen_prompt(c, get_path(c));
+	c->last_path = getcwd(NULL, sizeof(char) * 128);
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
 }

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:34:52 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 01:04:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 19:28:01 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static size_t	get_len(const char *home_path, const char *pwd)
 {
 	if (ft_strlen(home_path) > ft_strlen(pwd))
-		return(ft_strlen(home_path));
+		return (ft_strlen(home_path));
 	else
-		return(ft_strlen(pwd));
+		return (ft_strlen(pwd));
 }
 
 /**
@@ -32,8 +32,7 @@ char	*get_path(t_ctx *c)
 	char	*new_path;
 	char	*home_path;
 
-	pwd = NULL;
-	pwd = gb_add(getcwd(pwd, sizeof(pwd)), &c->gbc, CMD_GB);
+	pwd = gb_add(getcwd(NULL, 256), &c->gbc, CMD_GB);
 	home_path = getenv("HOME");
 	if (ft_strncmp(home_path, pwd, get_len(home_path, pwd)) == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 00:44:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 18:24:49 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_parser {
 typedef struct s_ctx {
 	t_garbc				*gbc;
 	char				*prompt;
+	char				*last_path;
 	char				*entry;
 	t_parser			parser;
 	struct s_command	*command_table;

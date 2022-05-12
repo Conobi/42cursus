@@ -16,7 +16,7 @@
 
 ## To-do list Arthur
 - [ ] cd multi path parsing
-- [ ] cd Permission denied in /Users/<user>/Desktop fix
+- [x] cd Permission denied in /Users/user/Desktop fix
 
 ## Glossaire des fonctions
 En vrac:
