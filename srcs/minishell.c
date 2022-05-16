@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 19:31:20 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/14 16:21:07 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **env)
 		if (c.entry)
 		{
 			history(&c);
-			if (ft_strncmp(c.entry, "exit", 4) == 0)
+			if (ft_strncmp(c.entry, "exit", ft_strlen(c.entry)) == 0)
 				exit_shell(table, &c, 1);
 			else if (ft_strncmp(c.entry, "cd", 2) == 0)
 				b_cd(&c, c.entry);

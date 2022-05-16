@@ -1,11 +1,20 @@
-BLUE		=	\033[0;34m
-COMPIL		=	\033[3;35m
-GREEN		=	\033[0;32m
-RED			=	\033[0;31m
-RESET		=	\033[0;m
+BLUE		= \033[0;34m
+COMPIL		= \033[3;35m
+GREEN		= \033[0;32m
+RED			= \033[0;31m
+RESET		= \033[0;m
 
-RUN_CMD		=	script -q $@.log $1 > /dev/null; \
+OS			= $(shell uname)
+
+ifeq ($(OS), Darwin)
+	RUN_CMD	= script -q $@.log $1 > /dev/null; \
 				RESULT=$$?
+else ifeq ($(OS), Linux)
+	RUN_CMD	= script -q -e -c "$(1)" $@.log > /dev/null; \
+				RESULT=$$?; \
+				sed -i '1d' $@.log; \
+				sed -i "$$(($$(wc -l < $@.log)-1)),\$$d" $@.log
+endif
 
 define compile_cmd
 	printf "%b%-30b" "$(BLUE)compiling " "$(COMPIL)$(@F)$(RESET)";
@@ -48,7 +57,7 @@ SRC			= minishell.c \
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 
-ODIR		= build
+ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR)

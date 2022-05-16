@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 19:26:17 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/14 16:25:28 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,26 @@ void	b_cd(t_ctx *c, char *path)
 	}
 	else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
 	{
+		printf("last path before -> %s\n", c->last_path);
 		new_path = c->last_path;
-		printf("%s\n", new_path);
+		printf("new path -> %s\n", new_path);
 	}
 	else if (ft_strlen(path) == 0)
 		new_path = getenv("HOME");
 	else
 		new_path = path;
+	printf("new path end -> %s\n", new_path);
 	err.path = new_path;
 	err.cmd = "cd";
 	err.type = FILE_ERR;
-	if (!error_handler(c, err))
-	{
-		free(c->last_path);
-		c->last_path = getcwd(NULL, sizeof(char) * 128);
-		chdir(new_path);
-		free(c->prompt);
-		gen_prompt(c, get_path(c));
-	}
+	// if (!error_handler(c, err))
+	// {
+	// 	free(c->last_path);
+	// 	c->last_path = getcwd(NULL, sizeof(char) * 128);
+	// 	printf("last path after -> %s\n", c->last_path);
+	// 	printf("new path after -> %s\n", new_path);
+	// 	chdir(new_path);
+	// 	free(c->prompt);
+	// 	gen_prompt(c, get_path(c));
+	// }
 }
