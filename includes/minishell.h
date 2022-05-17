@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 20:09:02 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 20:31:23 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ bool	error_handler(t_ctx *c, t_error err);
 void	gen_prompt(t_ctx *c, const char *path);
 void	history(t_ctx *c);
 void	init_history(t_ctx *c);
+char	*get_branch(t_ctx *c);
 
 #endif

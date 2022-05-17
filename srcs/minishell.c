@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 20:08:36 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 20:34:18 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ void	sig_handler(int sig)
  * @param c Minishell context struct
  * @param path New path to display in prompt
  */
-void	gen_prompt(t_ctx *c, const char *path)
+void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 {
 	c->prompt = ft_aconcat(22, WHT_FG, "",
 			WHT_BG, BLK_FG, BOLD, "  ", WHT_FG, RED_BG,
 			" ", "Minishell ", path, " ",
 			RED_FG, BLU_BG, " ",
-			BLU_BG, WHT_FG, "dswdwd ", RESET, BLU_FG, " ", RESET, WHT_FG);
+			BLU_BG, WHT_FG, branch, RESET, BLU_FG, "  ", RESET, WHT_FG);
 }
 
 static void	ctx_init(t_ctx *c, t_table *table)
@@ -86,7 +86,7 @@ static void	ctx_init(t_ctx *c, t_table *table)
 	if (!c->gbc)
 		exit_shell(table, c, 1);
 	gen_prompt(c, format_path(c));
-	c->last_path = getcwd(NULL, sizeof(char) * 128);
+	c->last_path = get_path(c);
 	c->history_fd = open("./.minishell_history",
 			O_CREAT | O_RDWR, 0000644);
 	c->last_entry = NULL;
