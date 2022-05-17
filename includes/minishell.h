@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 20:31:23 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 00:54:21 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_command {
 	int		outfile;
 	char	*exec_path;
 }	t_command;
-void	add_args(char *arg);
 
 typedef struct s_table {
 	int					commands_num;
@@ -103,6 +102,11 @@ typedef struct s_error {
 	int		code;
 }	t_error;
 
+typedef struct s_env {
+	char	*key;
+	char	*value;
+}	t_env;
+
 void	add_command(t_command *command);
 
 // Executor functions
@@ -124,9 +128,10 @@ void	exit_shell(t_table *table, t_ctx *c, int code);
 char	*get_path(t_ctx *c);
 char	*format_path(t_ctx *c);
 bool	error_handler(t_ctx *c, t_error err);
-void	gen_prompt(t_ctx *c, const char *path);
+void	gen_prompt(t_ctx *c, const char *path, const char *branch);
 void	history(t_ctx *c);
 void	init_history(t_ctx *c);
 char	*get_branch(t_ctx *c);
+t_list	*create_env(t_ctx *c, char **env);
 
 #endif

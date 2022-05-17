@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 20:34:18 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 00:26:18 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,19 @@ void	sig_handler(int sig)
  */
 void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 {
-	c->prompt = ft_aconcat(22, WHT_FG, "",
-			WHT_BG, BLK_FG, BOLD, "  ", WHT_FG, RED_BG,
-			" ", "Minishell ", path, " ",
-			RED_FG, BLU_BG, " ",
-			BLU_BG, WHT_FG, branch, RESET, BLU_FG, "  ", RESET, WHT_FG);
+	if (branch)
+	{
+		c->prompt = ft_aconcat(24, WHT_FG, "",
+				WHT_BG, BLK_FG, BOLD, "  ", WHT_FG, RED_BG,
+				" ", "Minishell ", path, " ",
+				RED_FG, BLU_BG, " ", WHT_FG,
+				"⚡️git:(", branch, ") ", RESET, BLU_FG, " ", RESET, WHT_FG);
+		return ;
+	}
+	c->prompt = ft_aconcat(15, WHT_FG, "",
+				WHT_BG, BLK_FG, BOLD, "  ", WHT_FG, RED_BG,
+				" ", "Minishell ", path, RESET,
+					RED_FG, " ", RESET, WHT_FG);
 }
 
 static void	ctx_init(t_ctx *c, t_table *table)
@@ -85,7 +93,7 @@ static void	ctx_init(t_ctx *c, t_table *table)
 	c->gbc = gb_init();
 	if (!c->gbc)
 		exit_shell(table, c, 1);
-	gen_prompt(c, format_path(c));
+	gen_prompt(c, format_path(c), get_branch(c));
 	c->last_path = get_path(c);
 	c->history_fd = open("./.minishell_history",
 			O_CREAT | O_RDWR, 0000644);
@@ -108,6 +116,7 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	ctx_init(&c, table);
 	init_history(&c);
+	create_env(&c, env);
 	while (true)
 	{
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);

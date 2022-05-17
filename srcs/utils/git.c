@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 20:33:45 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 23:54:07 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	*get_branch(t_ctx *c)
 	char	*branch;
 
 	fd = open(".git/HEAD", O_RDWR);
-	if (fd > 0)
-	{
-		branch = gb_add(ft_gnl(fd), &c->gbc, CMD_GB);
-		return (branch + 16);
-	}
-	return (NULL);
+	if (fd < 0)
+		return (NULL);
+	branch = gb_add(ft_gnl(fd), &c->gbc, CMD_GB);
+	branch += 16;
+	branch = gb_add(ft_substr(branch, 0, ft_strlen(branch) - 1), &c->gbc, CMD_GB);
+	return (branch);
 }

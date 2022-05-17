@@ -54,6 +54,7 @@ SRC			= minishell.c \
 			  utils/errors.c \
 			  utils/history.c \
 			  utils/git.c \
+			  utils/env.c \
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

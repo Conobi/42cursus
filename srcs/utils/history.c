@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:56:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 19:34:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 00:28:19 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@ void	init_history(t_ctx *c)
 		entry = ft_gnl(c->history_fd);
 		if (!entry)
 			break ;
-		if (entry)
-		{
-			new_entry = ft_substr(entry, 0, ft_strlen(entry) - 1);
-			add_history(new_entry);
-			free(new_entry);
-		}
+		new_entry = ft_substr(entry, 0, ft_strlen(entry) - 1);
+		add_history(new_entry);
+		free(new_entry);
 		free(entry);
 	}
 }
