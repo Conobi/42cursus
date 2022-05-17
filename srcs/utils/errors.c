@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 01:04:46 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 18:55:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	err_print(char *err)
  * @brief This function prints the error message corresponding
  * to the given error
  *
- * @param c Context struct
+ * @param c Minishell context struct
  * @param err Error struct must contains err.path and err.command
  * @return true if an error occurred
  * @return false if no error
@@ -57,7 +57,7 @@ static bool	file_errors(t_ctx *c, t_error err)
  * error informations. If err.type is define, the error display function
  * corresponding to the given type is triggered
  *
- * @param c Context struct
+ * @param c Minishell context struct
  * @param err Error struct
  * @return true if an error occurred
  * @return false if no error

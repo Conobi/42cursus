@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 18:24:49 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 20:09:02 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include <termios.h>
 # include "../libft/libft.h"
 
 // Term colors
@@ -89,6 +90,8 @@ typedef struct s_ctx {
 	char				*prompt;
 	char				*last_path;
 	char				*entry;
+	char				*last_entry;
+	int					history_fd;
 	t_parser			parser;
 	struct s_command	*command_table;
 }	t_ctx;
@@ -113,14 +116,16 @@ void	out_selector(t_table *table, int curr, int piped_commands, int *out);
 
 // Builtins
 void	b_cd(t_ctx *c, char *path);
-void	b_pwd(void);
+void	b_pwd(t_ctx *c);
 void	b_echo(const char *args);
 
 // Utils
 void	exit_shell(t_table *table, t_ctx *c, int code);
 char	*get_path(t_ctx *c);
+char	*format_path(t_ctx *c);
 bool	error_handler(t_ctx *c, t_error err);
 void	gen_prompt(t_ctx *c, const char *path);
 void	history(t_ctx *c);
+void	init_history(t_ctx *c);
 
 #endif

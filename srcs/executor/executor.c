@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 18:18:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 18:55:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void	exec_single(t_table *table, int cmd)
 		return (perror("fork"));
 	if (pid == 0)
 	{
+		if (!table->command_table[cmd].exec_path)
+			return ;
 		execve(table->command_table[cmd].exec_path,
 			table->command_table[cmd].args, NULL);
 		perror("execve");
@@ -127,7 +129,7 @@ void	exec_single(t_table *table, int cmd)
 /**
  * @brief This function is the main function of execution
  *
- * @param c Ccontext struct
+ * @param c CMinishell context struct
  * @param table Commands table struct
  */
 void	exec(t_ctx *c, t_table *table)

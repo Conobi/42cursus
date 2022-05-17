@@ -6,16 +6,22 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/14 16:25:28 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 20:09:48 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
+ * todo: fix bug when cd / and cd -
+ * Mem error l:56 new_path not defined
+ * (final path not change)
+*/
+
+/**
  * @brief This function is a clone of cd command for builtins
  *
- * @param c Context struct
+ * @param c Minishell context struct
  * @param path Destination
  */
 void	b_cd(t_ctx *c, char *path)
@@ -24,7 +30,9 @@ void	b_cd(t_ctx *c, char *path)
 	char	*new_path;
 
 	path += 3;
-	if (path[0] == '~')
+	if (!path || ft_strlen(path) == 0) // todo: check if err after parsing
+		new_path = getenv("HOME");
+	else if (path[0] == '~')
 	{
 		if (path[1] == '/')
 			new_path = gb_add(ft_aconcat(2, getenv("HOME"), path + 1),
@@ -34,26 +42,20 @@ void	b_cd(t_ctx *c, char *path)
 	}
 	else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
 	{
-		printf("last path before -> %s\n", c->last_path);
 		new_path = c->last_path;
-		printf("new path -> %s\n", new_path);
+		printf("%s\n", new_path);
 	}
-	else if (ft_strlen(path) == 0)
-		new_path = getenv("HOME");
 	else
 		new_path = path;
-	printf("new path end -> %s\n", new_path);
 	err.path = new_path;
 	err.cmd = "cd";
 	err.type = FILE_ERR;
-	// if (!error_handler(c, err))
-	// {
-	// 	free(c->last_path);
-	// 	c->last_path = getcwd(NULL, sizeof(char) * 128);
-	// 	printf("last path after -> %s\n", c->last_path);
-	// 	printf("new path after -> %s\n", new_path);
-	// 	chdir(new_path);
-	// 	free(c->prompt);
-	// 	gen_prompt(c, get_path(c));
-	// }
+	if (!error_handler(c, err))
+	{
+		free(c->last_path);
+		c->last_path = get_path(c);
+		chdir(new_path);
+		free(c->prompt);
+		gen_prompt(c, format_path(c));
+	}
 }

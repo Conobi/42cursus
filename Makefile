@@ -50,7 +50,7 @@ SRC			= minishell.c \
 			  builtins/pwd.c \
 			  builtins/echo.c \
 	 		  utils/exit_shell.c \
-			  utils/get_path.c \
+			  utils/path.c \
 			  utils/errors.c \
 			  utils/history.c \
 
@@ -60,7 +60,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR)
+CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR) -g3
 
 all: libft $(NAME)
 
@@ -74,10 +74,10 @@ $(ODIR)/%.o: $(SDIR)/%.c $(INCS) Makefile
 
 $(NAME): $(OBJS) $(LIBFT_AR)
 ifndef debug
-	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -lreadline -I$(RLINCS) -L$(RLLIB) -o $(NAME) )
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -lreadline -I$(RLINCS) -L$(RLLIB) -o $(NAME))
 	@printf "$(GREEN)Done$(RESET)\n";
 else
-	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -I$(RLINCS) -L$(RLLIB) -g3 -fsanitize=address)
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -I$(RLINCS) -L$(RLLIB) -fsanitize=address)
 	@printf "$(GREEN)Done debug mode$(RESET)\n";
 endif
 

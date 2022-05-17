@@ -17,6 +17,8 @@
 ## To-do list Arthur
 - [ ] cd multi path parsing
 - [x] cd Permission denied in /Users/user/Desktop fix
+- [ ] check cd perms with symbolic links
+- [ ] return codes with wait pid
 
 ## Glossaire des fonctions
 En vrac:

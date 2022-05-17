@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:34:52 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/12 19:28:01 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 20:10:53 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_path(t_ctx *c)
+{
+	return (gb_add(getcwd(NULL, 256), &c->gbc, CMD_GB));
+}
 
 static size_t	get_len(const char *home_path, const char *pwd)
 {
@@ -23,16 +28,16 @@ static size_t	get_len(const char *home_path, const char *pwd)
 /**
  * @brief This function is used to get the current path location
  *
- * @param c Context struct
+ * @param c Minishell context struct
  * @return char* Path of current location
  */
-char	*get_path(t_ctx *c)
+char	*format_path(t_ctx *c)
 {
 	char	*pwd;
 	char	*new_path;
 	char	*home_path;
 
-	pwd = gb_add(getcwd(NULL, 256), &c->gbc, CMD_GB);
+	pwd = get_path(c);
 	home_path = getenv("HOME");
 	if (ft_strncmp(home_path, pwd, get_len(home_path, pwd)) == 0)
 	{

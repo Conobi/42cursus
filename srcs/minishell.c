@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/14 16:21:07 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 20:08:36 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ void	create_table(t_table *table, char **args)
 	// table->command_table[4].outfiles = ft_split(">", '>');
 }
 
-void	signal_handler(int sig)
+/**
+ * @brief This function is used to handle unix signals with the provided sig code
+ *
+ * @param sig Signal code
+ */
+void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -51,14 +56,28 @@ void	signal_handler(int sig)
 		rl_redisplay();
 		return ;
 	}
+	if (sig == SIGQUIT)
+	{
+		printf("exit\n");
+		exit(SIGQUIT);
+		return ;
+	}
+	return ;
 }
 
+/**
+ * @brief This function is used to create shell promp with custom path
+ *
+ * @param c Minishell context struct
+ * @param path New path to display in prompt
+ */
 void	gen_prompt(t_ctx *c, const char *path)
 {
-	c->prompt = ft_aconcat(15, WHT_FG, "",
+	c->prompt = ft_aconcat(22, WHT_FG, "",
 			WHT_BG, BLK_FG, BOLD, "  ", WHT_FG, RED_BG,
-			" ", "minishell ", path, RESET,
-			RED_FG, " ", RESET, WHT_FG);
+			" ", "Minishell ", path, " ",
+			RED_FG, BLU_BG, " ",
+			BLU_BG, WHT_FG, "dswdwd ", RESET, BLU_FG, " ", RESET, WHT_FG);
 }
 
 static void	ctx_init(t_ctx *c, t_table *table)
@@ -66,46 +85,63 @@ static void	ctx_init(t_ctx *c, t_table *table)
 	c->gbc = gb_init();
 	if (!c->gbc)
 		exit_shell(table, c, 1);
-	gen_prompt(c, get_path(c));
+	gen_prompt(c, format_path(c));
 	c->last_path = getcwd(NULL, sizeof(char) * 128);
+	c->history_fd = open("./.minishell_history",
+			O_CREAT | O_RDWR, 0000644);
+	c->last_entry = NULL;
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_ctx	c;
-	t_table	*table;
+	t_ctx			c;
+	t_table			*table;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	signal(SIGINT, signal_handler);
+	signal(SIGINT, sig_handler);
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (1);
 	ctx_init(&c, table);
+	init_history(&c);
 	while (true)
 	{
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
 		if (c.entry)
 		{
-			history(&c);
-			if (ft_strncmp(c.entry, "exit", ft_strlen(c.entry)) == 0)
-				exit_shell(table, &c, 1);
-			else if (ft_strncmp(c.entry, "cd", 2) == 0)
-				b_cd(&c, c.entry);
-			else if (ft_strncmp(c.entry, "pwd", 3) == 0)
-				b_pwd();
-			else if (ft_strncmp(c.entry, "echo", 4) == 0)
-				b_echo(c.entry);
+			if (ft_strlen(c.entry) == 0)
+			{
+				rl_on_new_line();
+				rl_redisplay();
+			}
 			else
 			{
-				create_table(table, gb_add(ft_split(c.entry, ' '),
-						&c.gbc, CMD_GB));
-				exec(&c, table);
+				history(&c);
+				if (ft_strncmp(c.entry, "exit", ft_strlen(c.entry)) == 0)
+				{
+					printf("exit SHELL\n");
+					exit_shell(table, &c, 0);
+				}
+				else if (ft_strncmp(c.entry, "cd", 2) == 0)
+					b_cd(&c, c.entry);
+				else if (ft_strncmp(c.entry, "pwd", 3) == 0)
+					b_pwd(&c);
+				// else if (ft_strncmp(c.entry, "echo", 4) == 0)
+				// 	b_echo(c.entry);
+				else
+				{
+					create_table(table, gb_add(ft_split(c.entry, ' '),
+							&c.gbc, CMD_GB));
+					exec(&c, table);
+				}
 			}
 			gb_delete(&c.gbc, CMD_GB);
 		}
+		else
+			sig_handler(SIGQUIT);
 	}
 }
