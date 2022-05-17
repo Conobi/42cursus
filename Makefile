@@ -55,7 +55,8 @@ SRC = ft_strlen.c \
 	  gb_clear.c \
 	  gb_add.c \
 	  ft_gnl.c \
-	  ft_gnl_utils.c
+	  ft_gnl_utils.c \
+	  ft_eq.c
 SDIR		= .
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 

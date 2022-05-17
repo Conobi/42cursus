@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/17 15:18:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 17:01:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -598,5 +598,17 @@ void	gb_clear(t_garbc **garbcl);
  * @return ** char* Returns the allocated string finishing by `\n`
  */
 char	*ft_gnl(int fd);
+
+/**
+ * @brief This function takes an action to compare two string
+ *
+ * @param action 0 to compare strings, 1 to check if the a string startwith
+ * b string, 2 to check if the a string endswith b string
+ * @param a First string to compare
+ * @param b Second string to compare
+ * @return int 1 if strings are equal, 0 if strings are not equal
+ * and -1 if an error occured
+ */
+int		ft_eq(const char *a, const char *b, char action);
 
 #endif
