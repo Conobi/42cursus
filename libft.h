@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2022/04/29 18:39:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 14:47:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -580,5 +580,8 @@ void	gb_delete(t_garbc **garbcl, const char type);
  * @return void
  */
 void	gb_clear(t_garbc **garbcl);
+
+/* ft_gnl.c */
+char	*ft_gnl(int fd);
 
 #endif
