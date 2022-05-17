@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/17 14:47:33 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 15:18:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,14 @@ int		ft_isascii(int c);
  * @return int Returns 1 if the character is printable, 0 otherwise.
  */
 int		ft_isprint(int c);
+
+/**
+ * @brief This function tests if the character c is a whitespace
+ *
+ * @param c The character to test
+ * @return int Returns 1 if the character is a whitespace, 0 otherwise.
+ */
+int		ft_isspace(int c);
 
 /**
  * @brief Does lowercase to uppercase conversion.
@@ -581,7 +589,14 @@ void	gb_delete(t_garbc **garbcl, const char type);
  */
 void	gb_clear(t_garbc **garbcl);
 
-/* ft_gnl.c */
+/**
+ * @brief Allocates (with malloc(3)) a pointer
+ * to the memory read in a given file descriptor, up to '\n'.
+ * It uses by default a buffer of 128 characters.
+ *
+ * @param fd Your file descriptor
+ * @return ** char* Returns the allocated string finishing by `\n`
+ */
 char	*ft_gnl(int fd);
 
 #endif
