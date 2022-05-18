@@ -6,15 +6,11 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:20:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 01:31:28 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 12:28:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * Check memory leaks here
- */
 
 /**
  * @brief This function create a env object
@@ -31,7 +27,7 @@ t_list	*create_env_entry(t_ctx *c, char *entry)
 	int		i;
 
 	i = 0;
-	new_env = ft_calloc(1, sizeof(t_env));
+	new_env = gb_calloc(1, sizeof(t_env), PERM_GB, &c->gbc);
 	if (!new_env) // todo: if an error occurred exit shell with code 12 Cannot allocate memory
 		return (NULL);
 	while (entry[i] != '=')
@@ -44,28 +40,29 @@ t_list	*create_env_entry(t_ctx *c, char *entry)
 	new_entry = ft_lstnew(new_env);
 	if (!new_entry)
 		return (NULL);
-	printf("new entry -> %s=%s\n", new_env->key, new_env->value);
 	return (new_entry);
 }
 
-// todo: error with last env key fix
+/**
+ * @brief This function is used to get the env object by key
+ *
+ * @param head Head of the environment variable list
+ * @param key Key to search
+ * @return t_env* Returns env object for the given key, NULL if not found
+ */
 t_env	*get_env_by_key(t_list *head, char *key)
 {
 	t_list	*curr;
 	t_env	*curr_env;
 
 	curr = head;
-	while (curr)
+	while (curr->next)
 	{
 		curr_env = (t_env *)curr->content;
-		printf("-> %s\n", curr_env->key);
 		if (ft_eq(curr_env->key, key, 0))
 			return (curr_env);
-		if (!curr->next)
-			break;
 		curr = curr->next;
 	}
-	printf("Not found: %s\n", key);
 	return (NULL);
 }
 
@@ -82,14 +79,13 @@ t_list	*create_env(t_ctx *c, char **env)
 	t_list	*head;
 	int		i;
 
-	(void)c;
-	head = gb_add(ft_lstnew(
-		gb_add(create_env_entry(c, env[0]),
-		&c->gbc, PERM_GB)),
-		&c->gbc, PERM_GB);
-	i = 0;
+	head = gb_calloc(1, sizeof(t_list), PERM_GB, &c->gbc);
+	if (!head) // todo: if an error occurred exit shell with code 12 Cannot allocate memory
+		return (NULL);
+	head->content = NULL;
+	head->next = NULL;
+	i = -1;
 	while (env[++i])
-		ft_lstadd_front(&head, gb_add(create_env_entry(c, env[i]), &c->gbc, PERM_GB));
-	printf("%s\n", get_env_by_key(head, "fwefwefwfew")->value);
-	return (NULL);
+		ft_lstadd_front(&head, create_env_entry(c, env[i]));
+	return (head);
 }

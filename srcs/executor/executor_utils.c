@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/16 18:55:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 19:27:08 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
  * @param exec_name executable name to search
  * @return char* Returns the executable path
  */
-static char	*find_exec(t_ctx *c, const char *exec_name)
+char	*find_exec(t_ctx *c, const char *exec_name)
 {
 	char	**path;
 	char	*exec_path;
 	int		i;
 
-	path = gb_add(ft_split(getenv("PATH"), ':'), &c->gbc, CMD_GB);
+	path = gb_split(c, getenv("PATH"), ':');
 	i = 0;
 	while (path[i])
 	{
@@ -36,6 +36,10 @@ static char	*find_exec(t_ctx *c, const char *exec_name)
 			return (exec_path);
 		i++;
 	}
+	exec_path = (char *)exec_name;
+	printf("exec_path %s\n", exec_path);
+	if (access(exec_path, X_OK) == 0)
+		return (exec_path);
 	return (NULL);
 }
 

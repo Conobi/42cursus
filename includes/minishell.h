@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 00:54:21 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 19:29:31 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <string.h>
 # include <termios.h>
+# include <dirent.h>
 # include "../libft/libft.h"
 
 // Term colors
@@ -45,6 +46,9 @@
 # define BLK_BG	"\x1B[40m"
 # define RESET	"\x1B[0m"
 # define BOLD	"\x1B[1m"
+
+# define DS_PROMPT	1
+// todo: Use ds_prompt settings to enable or disable prompt generation
 
 // GARBAGE TYPE
 # define PERM_GB	0
@@ -86,11 +90,14 @@ typedef struct s_parser {
 
 typedef struct s_ctx {
 	t_garbc				*gbc;
+	t_list				*env;
+	int					return_code;
 	char				*prompt;
 	char				*last_path;
 	char				*entry;
 	char				*last_entry;
 	int					history_fd;
+	char				**env_list;
 	t_parser			parser;
 	struct s_command	*command_table;
 }	t_ctx;
@@ -99,7 +106,7 @@ typedef struct s_error {
 	short	type;
 	char	*cmd;
 	char	*path;
-	int		code;
+	bool	is_file;
 }	t_error;
 
 typedef struct s_env {
@@ -122,9 +129,10 @@ void	out_selector(t_table *table, int curr, int piped_commands, int *out);
 void	b_cd(t_ctx *c, char *path);
 void	b_pwd(t_ctx *c);
 void	b_echo(const char *args);
+void	b_ls(t_ctx *c, t_table *table, int cmd);
 
 // Utils
-void	exit_shell(t_table *table, t_ctx *c, int code);
+void	exit_shell(t_ctx *c, int code);
 char	*get_path(t_ctx *c);
 char	*format_path(t_ctx *c);
 bool	error_handler(t_ctx *c, t_error err);
@@ -133,5 +141,6 @@ void	history(t_ctx *c);
 void	init_history(t_ctx *c);
 char	*get_branch(t_ctx *c);
 t_list	*create_env(t_ctx *c, char **env);
+char	**gb_split(t_ctx *ctx, char const *s, char c);
 
 #endif

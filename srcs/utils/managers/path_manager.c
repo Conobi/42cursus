@@ -6,12 +6,18 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:34:52 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 20:10:53 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 18:25:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function is used to get the current path
+ *
+ * @param c Minishell context struct
+ * @return char* Path of current location (in garbage collector)
+ */
 char	*get_path(t_ctx *c)
 {
 	return (gb_add(getcwd(NULL, 256), &c->gbc, CMD_GB));
@@ -26,10 +32,11 @@ static size_t	get_len(const char *home_path, const char *pwd)
 }
 
 /**
- * @brief This function is used to get the current path location
+ * @brief This function is used to format the current path location
+ * (ex: /User/<user>/Documents -> ~/Documents)
  *
  * @param c Minishell context struct
- * @return char* Path of current location
+ * @return char* Path of current location formated (in garbage collector)
  */
 char	*format_path(t_ctx *c)
 {

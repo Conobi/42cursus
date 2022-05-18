@@ -37,7 +37,6 @@ LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
 RLINCS		= $(shell brew --prefix readline)/include
 RLLIB		= $(shell brew --prefix readline)/lib
 
-
 INC			= minishell.h
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
@@ -49,12 +48,14 @@ SRC			= minishell.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \
 			  builtins/echo.c \
+			  builtins/ls.c \
 	 		  utils/exit_shell.c \
-			  utils/path.c \
-			  utils/errors.c \
-			  utils/history.c \
-			  utils/git.c \
-			  utils/env.c \
+			  utils/gb_split.c \
+			  utils/managers/path_manager.c \
+			  utils/managers/errors_manager.c \
+			  utils/managers/history_manager.c \
+			  utils/managers/git_manager.c \
+			  utils/managers/env_manager.c \
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

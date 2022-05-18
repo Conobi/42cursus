@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/16 18:55:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 13:23:38 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,25 @@ static bool	file_errors(t_ctx *c, t_error err)
 					": ", strerror(errno), "\n"), &c->gbc, CMD_GB));
 		return (true);
 	}
-	else if (!(path_stat.st_mode & S_IRUSR))
+	if (!(path_stat.st_mode & S_IRUSR))
 	{
 		err_print(gb_add(ft_aconcat(6, err.cmd, ": ", err.path,
 					": ", strerror(EACCES), "\n"), &c->gbc, CMD_GB));
 		return (true);
 	}
-	else if (S_ISDIR(path_stat.st_mode))
-		return (false);
-	else
+	if (!err.is_file && !S_ISDIR(path_stat.st_mode))
 	{
 		err_print(gb_add(ft_aconcat(6, err.cmd, ": ", err.path,
 					": ", strerror(ENOTDIR), "\n"), &c->gbc, CMD_GB));
 		return (true);
 	}
+	if (err.is_file && S_ISDIR(path_stat.st_mode))
+	{
+		err_print(gb_add(ft_aconcat(6, err.cmd, ": ", err.path,
+					": ", strerror(EISDIR), "\n"), &c->gbc, CMD_GB));
+		return (true);
+	}
+	return (false);
 }
 
 /**

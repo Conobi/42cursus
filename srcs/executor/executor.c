@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/16 18:55:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 19:29:35 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	exec_piped(t_table *table, int curr_command)
  * @param table Commands table struct
  * @param cmd Index of the command to execute
  */
-void	exec_single(t_table *table, int cmd)
+void	exec_single(t_ctx *c, t_table *table, int cmd)
 {
 	pid_t	pid;
 
@@ -118,12 +118,12 @@ void	exec_single(t_table *table, int cmd)
 		if (!table->command_table[cmd].exec_path)
 			return ;
 		execve(table->command_table[cmd].exec_path,
-			table->command_table[cmd].args, NULL);
+			table->command_table[cmd].args, c->env_list);
 		perror("execve");
 		exit(0);
 	}
 	else
-		waitpid(pid, 0, 0);
+		waitpid(pid, &c->return_code, 0);
 }
 
 /**
@@ -143,11 +143,16 @@ void	exec(t_ctx *c, t_table *table)
 	i = 0;
 	while (i < table->commands_num)
 	{
+		if (!table->command_table[i].exec_path)
+			return ;
 		if (table->command_table[i].piped)
 			i = exec_piped(table, i);
 		if (i < 0)
 			return ;
-		exec_single(table, i);
+		if (ft_eq(table->command_table[i].exec_path, "/bin/ls", 0)
+			&& !table->command_table[i].args[1])
+			return (b_ls(c, table, i));
+		exec_single(c, table, i);
 		i++;
 	}
 }
