@@ -12,8 +12,10 @@ SRC			= minishell.c \
 			  executor/executor_utils.c \
 			  executor/files_handlers.c \
 	 		  parsing/parser.c \
+			  parsing/parser_utils.c \
 	 		  parsing/pipe.c \
-	 		  utils/exit_shell.c \
+			  parsing/split_quote.c \
+	 		  utils/exit_shell.c
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
@@ -33,7 +35,7 @@ $(ODIR)/%.o: $(SDIR)/%.c $(INCS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT_AR)
-	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include
+	$(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include -g3
 
 check-and-reinit-submodules:
 	@if git submodule status | egrep -q '^[-]' ; then \

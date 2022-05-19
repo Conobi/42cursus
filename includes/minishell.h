@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/11 19:59:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 19:52:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,25 @@
 # include "../libft/libft.h"
 
 //Term colors
-# define RED_FG	"[91m"
-# define GRN_FG	"[32m"
-# define YEL_FG	"[33m"
-# define BLU_FG	"[34m"
-# define MAG_FG	"[35m"
-# define CYN_FG	"[36m"
-# define WHT_FG	"[37m"
-# define BLK_FG	"[30m"
+# define RED_FG	"\e[91m"
+# define GRN_FG	"\e[32m"
+# define YEL_FG	"\e[33m"
+# define BLU_FG	"\e[34m"
+# define MAG_FG	"\e[35m"
+# define CYN_FG	"\e[36m"
+# define WHT_FG	"\e[37m"
+# define BLK_FG	"\e[30m"
 
-# define RED_BG	"[101m"
-# define GRN_BG	"[42m"
-# define YEL_BG	"[43m"
-# define BLU_BG	"[44m"
-# define MAG_BG	"[45m"
-# define CYN_BG	"[46m"
-# define WHT_BG	"[47m"
-# define BLK_BG	"[40m"
-# define RESET	"[0m"
-# define BOLD	"[1m"
+# define RED_BG	"\e[101m"
+# define GRN_BG	"\e[42m"
+# define YEL_BG	"\e[43m"
+# define BLU_BG	"\e[44m"
+# define MAG_BG	"\e[45m"
+# define CYN_BG	"\e[46m"
+# define WHT_BG	"\e[47m"
+# define BLK_BG	"\e[40m"
+# define RESET	"\e[0m"
+# define BOLD	"\e[1m"
 
 // GARBAGE TYPE
 # define PERM_GB	0
@@ -63,7 +63,9 @@ typedef struct s_parser {
 	char	squoted;
 	char	dquoted;
 	char	**quotes;
-} t_parser;
+	char	**pipes;
+	int		pipes_n;
+}	t_parser;
 
 typedef struct s_ctx {
 	t_garbc				*gbc;
@@ -100,5 +102,9 @@ void	exit_shell(t_ctx *c, int code);
 // Parsing
 void	parser(t_ctx *c);
 void	pipe_cutter(t_ctx *c);
+void	set_quote_bool(t_ctx *c, char curr);
+void	reset_quote_bool(t_ctx *c);
+int		is_curr_quoted(t_ctx *c);
+char 	**split_quote(t_ctx *c, char *str);
 
 #endif
