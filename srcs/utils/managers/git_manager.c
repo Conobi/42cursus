@@ -1,16 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   git.c                                              :+:      :+:    :+:   */
+/*   git_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 13:14:29 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 20:24:50 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	get_weather(t_ctx *c)
+{
+	int		link[2];
+	char	*args[2];
+	pid_t	pid;
+
+	if (pipe(link) == -1)
+		return (perror("pipe"));
+	pid = fork();
+	if (pid == -1)
+		return (perror("fork"));
+	if (pid == 0)
+	{
+		dup2 (link[1], STDOUT_FILENO);
+		close(link[0]);
+		close(link[1]);
+		args[0] = "https://kiyo.ooo/f/meteoshell.php";
+		args[1] = "-k";
+		printf("%s\n", find_exec(c, "curl"));
+		exit(execve(find_exec(c, "curl"), args, c->env_list));
+	}
+	else
+	{
+		close(link[1]);
+		printf("%c\n", link[0]);
+		c->weather_emoji = link[0];
+		waitpid(pid, &c->return_code, 0);
+	}
+}
 
 char	*get_branch(t_ctx *c)
 {

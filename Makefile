@@ -49,7 +49,8 @@ SRC			= minishell.c \
 			  builtins/pwd.c \
 			  builtins/echo.c \
 			  builtins/ls.c \
-	 		  utils/exit_shell.c \
+	 		  builtins/exit_shell.c \
+			  builtins/builtins_manager.c \
 			  utils/gb_split.c \
 			  utils/managers/path_manager.c \
 			  utils/managers/errors_manager.c \

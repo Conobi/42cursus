@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 19:33:37 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 20:30:51 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	create_table(t_ctx *c, t_table *table, char **args)
  */
 void	sig_handler(int sig)
 {
+	//todo: clear buffer
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
@@ -61,7 +62,7 @@ void	sig_handler(int sig)
 	if (sig == SIGKILL)
 	{
 		printf("exit\n");
-		exit(0);
+		exit(1);
 		return ;
 	}
 	return ;
@@ -77,10 +78,14 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 {
 	char	*status;
 
-	if (c->return_code == 0)
+	free(c->prompt);
+	printf("%d -> %d\n", c->return_code, WEXITSTATUS(c->return_code));
+	if (WEXITSTATUS(c->return_code) == 0)
 		status = "✓";
 	else
-		status = ft_itoa(c->return_code); //todo: remove leak
+		status = gb_add(ft_strjoin("✖ ",
+					gb_add(ft_itoa(WEXITSTATUS(c->return_code)),
+						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
 	if (branch)
 	{
 		c->prompt = ft_aconcat(25, WHT_FG, "",
@@ -128,6 +133,13 @@ int	main(int argc, char **argv, char **env)
 	ctx_init(&c, env);
 	printf("Minishell ready\n");
 	init_history(&c);
+	// get_weather(&c);
+	// char	*args[2];
+	// args[0] = "https://kiyo.ooo/f/meteoshell.php";
+	// args[1] = "-k";
+	// printf("%s -> %s : %s\n", find_exec(&c, "curl"), args[0], args[1]);
+	// execve(find_exec(&c, "curl"), args, c.env_list);
+	// printf("%c -> %d\n", c.weather_emoji, c.return_code);
 	while (true)
 	{
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
@@ -141,17 +153,8 @@ int	main(int argc, char **argv, char **env)
 			else
 			{
 				history(&c);
-				if (ft_strncmp(c.entry, "exit", ft_strlen(c.entry)) == 0)
-				{
-					printf("exit\n");
-					exit_shell(&c, 0);
-				}
-				else if (ft_strncmp(c.entry, "cd", 2) == 0)
-					b_cd(&c, c.entry);
-				else if (ft_strncmp(c.entry, "pwd", 3) == 0)
-					b_pwd(&c);
-				// else if (ft_strncmp(c.entry, "echo", 4) == 0)
-				// 	b_echo(c.entry);
+				if (exec_builtin(&c))
+					continue ;
 				else
 				{
 					create_table(&c, table, gb_split(&c, c.entry, ' '));

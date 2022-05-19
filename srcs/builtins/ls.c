@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:50:42 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 19:33:14 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 18:32:39 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	print_ls(t_ctx *c, DIR *dir, char *filename)
 {
 	if (dir)
 	{
-		printf("%s", gb_add(
+		printf("%-3s", gb_add(
 				ft_aconcat(5, BLU_FG, "📁 ", filename, "/    ", RESET),
 				&c->gbc, CMD_GB));
 		closedir(dir);

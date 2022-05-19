@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 19:27:08 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 18:41:46 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 		i++;
 	}
 	exec_path = (char *)exec_name;
-	printf("exec_path %s\n", exec_path);
 	if (access(exec_path, X_OK) == 0)
 		return (exec_path);
 	return (NULL);
@@ -90,6 +89,7 @@ void	set_exec_path(t_ctx *c, t_table *table)
 		{
 			printf("%s: %s\n", table->command_table[i].args[0],
 				"command not found");
+			c->return_code = 127 * 256;
 			return ;
 		}
 		i++;

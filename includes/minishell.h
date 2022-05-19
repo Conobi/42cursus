@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 19:29:31 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 20:17:05 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_parser {
 typedef struct s_ctx {
 	t_garbc				*gbc;
 	t_list				*env;
+	char				weather_emoji;
 	int					return_code;
 	char				*prompt;
 	char				*last_path;
@@ -124,8 +125,10 @@ void	switch_pipes(int in, int out);
 void	set_exec_path(t_ctx *c, t_table *table);
 void	in_selector(t_table *table, int curr, int *in);
 void	out_selector(t_table *table, int curr, int piped_commands, int *out);
+char	*find_exec(t_ctx *c, const char *exec_name);
 
 // Builtins
+bool	exec_builtin(t_ctx *c);
 void	b_cd(t_ctx *c, char *path);
 void	b_pwd(t_ctx *c);
 void	b_echo(const char *args);
@@ -140,6 +143,7 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch);
 void	history(t_ctx *c);
 void	init_history(t_ctx *c);
 char	*get_branch(t_ctx *c);
+void	get_weather(t_ctx *c);
 t_list	*create_env(t_ctx *c, char **env);
 char	**gb_split(t_ctx *ctx, char const *s, char c);
 
