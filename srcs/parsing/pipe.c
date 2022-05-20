@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/17 18:44:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 20:02:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,47 @@
 
 // Si action == 1, on compte le nombre de pipes,
 // sinon on compte le nombre de caractères jusqu'au prochain pipe
-static int	pipe_count(char *curr, int actioncnt)
+// A REVOIR C'EST (un peu) FOIREUX
+static int	pipe_count(char *curr, const int action)
 {
 	char	squoted;
 	char	dquoted;
 	char	*cur;
+	int		cnt;
 
 	cur = curr;
 	squoted = -1;
 	dquoted = -1;
+	cnt = 0;
 	while (*cur)
 	{
-		if (!actioncnt)
-			actioncnt++;
 		if (*cur == '\'' && dquoted == -1)
 			squoted *= -1;
 		if (*cur == '"' && squoted == -1)
 			dquoted *= -1;
 		else if (squoted == -1 && dquoted == -1 && *cur == '|')
 		{
-			if (!actioncnt)
+			if (!action)
 				break ;
-			actioncnt++;
+			cnt++;
 		}
+		else
+			cnt++;
 		cur++;
 	}
-	return (actioncnt);
+	printf("RRRRR %d RRRRRRRR\n", cnt);
+	return (cnt);
 }
 
 static void	cutter_init(t_ctx *c)
 {
 	c->parser.pipes_n = pipe_count(c->entry, 1);
-	c->parser.pipes = gb_calloc(c->parser.pipes_n,
-			sizeof(char **), PIPE_GB, &c->gbc);
-	c->parser.pipes[0] = gb_calloc(pipe_count(c->entry, 0) + 1,
+	c->parser.pipes = gb_calloc(c->parser.pipes_n + 1,
 			sizeof(char *), PIPE_GB, &c->gbc);
+	c->parser.pipes[0] = gb_calloc(pipe_count(c->entry, 0) + 1,
+			sizeof(char), PIPE_GB, &c->gbc);
+	c->parser.squoted = -1;
+	c->parser.dquoted = -1;
 }
 
 static char	pipe_quote(t_ctx *c, char curr)
