@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
+/*   history_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:56:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 13:40:39 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 16:55:34 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function is used to load .minishell_hystory file and
+ * add his content to readline history
+ *
+ * @param c Minishell context struct
+ */
 void	init_history(t_ctx *c)
 {
 	char	*entry;
@@ -31,6 +37,11 @@ void	init_history(t_ctx *c)
 	}
 }
 
+/**
+ * @brief This function is used to add a new entry to the history
+ *
+ * @param c Minishell context struct
+ */
 void	history(t_ctx *c)
 {
 	if (c->last_entry && ft_eq(c->last_entry, c->entry, 0))

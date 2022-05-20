@@ -59,6 +59,7 @@ SRC			= minishell.c \
 			  utils/managers/history_manager.c \
 			  utils/managers/env_manager.c \
 			  utils/managers/termios_manager.c \
+			  utils/managers/sig_manager.c \
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

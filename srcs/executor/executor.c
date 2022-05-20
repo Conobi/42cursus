@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 03:14:29 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:15:13 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	exec_single(t_ctx *c, t_table *table, int cmd)
 		return (perror("fork"));
 	if (pid == 0)
 	{
+		fork_sig_handler(SIGINT);
 		if (!table->command_table[cmd].exec_path)
 			return ;
 		execve(table->command_table[cmd].exec_path,

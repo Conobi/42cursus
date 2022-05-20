@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 02:54:37 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:14:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <string.h>
 # include <termios.h>
+# include <signal.h>
 # include <dirent.h>
 # include "../libft/libft.h"
 
@@ -103,6 +104,8 @@ typedef struct s_ctx {
 	char				**env_list;
 	t_parser			parser;
 	struct s_command	*command_table;
+	struct termios		term;
+	struct termios		base;
 }	t_ctx;
 
 typedef struct s_error {
@@ -138,7 +141,7 @@ void	b_cd(t_ctx *c, char *path);
 void	b_pwd(t_ctx *c);
 void	b_echo(const char *args);
 void	b_ls(t_ctx *c, t_table *table, int cmd);
-void	rl_replace_line (const char *text, int clear_undo);
+void	rl_replace_line(const char *text, int clear_undo);
 
 // Utils
 void	exit_shell(t_ctx *c, int code);
@@ -153,7 +156,11 @@ void	get_weather(t_ctx *c);
 t_list	*create_env(t_ctx *c, char **env);
 char	**gb_split(t_ctx *ctx, char const *s, char c);
 void	termios_init(t_ctx *c);
+void	termios_set(t_ctx *c, short mode);
 void	create_error(t_ctx *c, t_error err);
-void	fork_signal_handler(int signal);
+
+// Signal handlers
+void	fork_sig_handler(int sig);
+void	sig_handler(int sig);
 
 #endif

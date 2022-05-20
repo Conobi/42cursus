@@ -6,19 +6,11 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 03:18:16 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:01:56 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	fork_signal_handler(int signal)
-{
-	if (signal == SIGINT)
-		exit(1);
-	if (signal == SIGQUIT)
-		exit(1);
-}
 
 void	create_heredoc(t_ctx *c)
 {
@@ -34,7 +26,7 @@ void	create_heredoc(t_ctx *c)
 		return (perror("fork"));
 	if (pid == 0)
 	{
-		signal(SIGINT, fork_signal_handler);
+		signal(SIGINT, fork_sig_handler);
 		close(fd[0]);
 		while (true)
 		{

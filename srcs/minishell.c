@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 03:14:49 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:10:38 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,36 +43,6 @@ void	create_table(t_ctx *c, t_table *table, char **args)
 }
 
 /**
- * @brief This function is used to handle unix signals with the provided sig code
- *
- * @param sig Signal code
- */
-void	sig_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		return ;
-	}
-	if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-		return ;
-	}
-	if (sig == SIGKILL)
-	{
-		printf("exit\n");
-		exit(1);
-		return ;
-	}
-	return ;
-}
-
-/**
  * @brief This function is used to create shell promp with custom path
  *
  * @param c Minishell context struct
@@ -93,7 +63,8 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	if (branch)
 	{
 		c->prompt = ft_aconcat(27, WHT_FG, "",
-				WHT_BG, BLK_FG, BOLD, " ", c->weather_emoji, " ", WHT_FG, RED_BG,
+				WHT_BG, BLK_FG, BOLD, " ",
+				c->weather_emoji, " ", WHT_FG, RED_BG,
 				" ", "Minishell ", path, " ", status, " ",
 				RED_FG, BLU_BG, " ", WHT_FG,
 				"⚡️git:(", branch, ") ", RESET, BLU_FG, " ", RESET);
@@ -140,9 +111,12 @@ int	main(int argc, char **argv, char **env)
 	printf("Minishell ready\n");
 	init_history(&c);
 	termios_init(&c);
+	termios_set(&c, 0); //todo: remove this
 	while (true)
 	{
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
+		if (!c.entry)
+			exit_shell(&c, 0);
 		if (c.entry && ft_strlen(c.entry) != 0)
 		{
 			history(&c);
