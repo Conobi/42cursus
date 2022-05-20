@@ -45,6 +45,7 @@ SRC			= minishell.c \
 			  executor/executor.c \
 			  executor/executor_utils.c \
 			  executor/files_handlers.c \
+			  executor/heredoc.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \
 			  builtins/echo.c \
@@ -52,11 +53,12 @@ SRC			= minishell.c \
 	 		  builtins/exit_shell.c \
 			  builtins/builtins_manager.c \
 			  utils/gb_split.c \
+			  utils/prompt_misc.c \
 			  utils/managers/path_manager.c \
 			  utils/managers/errors_manager.c \
 			  utils/managers/history_manager.c \
-			  utils/managers/git_manager.c \
 			  utils/managers/env_manager.c \
+			  utils/managers/termios_manager.c \
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

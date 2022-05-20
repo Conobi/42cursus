@@ -6,15 +6,26 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/19 18:22:17 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 02:17:07 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	err_print(char *err)
+static void	err_print(const char *err)
 {
 	write(2, err, ft_strlen(err));
+}
+
+void	create_error(t_ctx *c, t_error err)
+{
+	char	*message;
+
+	message = ft_aconcat(6, err.cmd, ": ", err.message, ": ",
+			gb_add(ft_itoa(err.code), &c->gbc, PERM_GB), "\n");
+	write(2, message, ft_strlen(message));
+	if (err.type == ERROR)
+		exit_shell(c, err.code);
 }
 
 /**

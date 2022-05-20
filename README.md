@@ -19,6 +19,7 @@
 - [x] cd Permission denied in /Users/user/Desktop fix
 - [ ] check cd perms with symbolic links
 - [ ] return codes with wait pid
+- [ ] Verif all return error codes in fork
 
 ## Glossaire des fonctions
 En vrac:

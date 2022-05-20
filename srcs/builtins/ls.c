@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:50:42 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/19 18:32:39 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 03:15:00 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static void	print_ls(t_ctx *c, DIR *dir, char *filename)
 {
 	if (dir)
 	{
-		printf("%-3s", gb_add(
-				ft_aconcat(5, BLU_FG, "📁 ", filename, "/    ", RESET),
+		printf("%s     ", (char *)gb_add(
+				ft_aconcat(5, BLU_FG, "📁 ", filename, "/", RESET),
 				&c->gbc, CMD_GB));
 		closedir(dir);
 	}
 	else
-		printf("%s", gb_add(
-				ft_aconcat(4, WHT_FG, filename, "   ", RESET),
+		printf("%s     ", (char *)gb_add(
+				ft_aconcat(3, WHT_FG, filename, RESET),
 				&c->gbc, CMD_GB));
 }
 
@@ -89,8 +89,9 @@ void	b_ls(t_ctx *c, t_table *table, int cmd)
 	}
 	else
 	{
+		waitpid(pid, &c->return_code, 0);
 		close(link[1]);
 		dir_or_file(c, link[0]);
-		waitpid(pid, &c->return_code, 0);
+		close(link[0]);
 	}
 }

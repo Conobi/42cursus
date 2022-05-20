@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/19 20:30:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 03:14:49 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,20 @@ void	create_table(t_ctx *c, t_table *table, char **args)
  */
 void	sig_handler(int sig)
 {
-	//todo: clear buffer
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		return ;
 	}
 	if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
 		return ;
+	}
 	if (sig == SIGKILL)
 	{
 		printf("exit\n");
@@ -79,7 +83,7 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	char	*status;
 
 	free(c->prompt);
-	printf("%d -> %d\n", c->return_code, WEXITSTATUS(c->return_code));
+	// printf("%d -> %d\n", c->return_code, WEXITSTATUS(c->return_code)); // debug
 	if (WEXITSTATUS(c->return_code) == 0)
 		status = "✓";
 	else
@@ -88,15 +92,15 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
 	if (branch)
 	{
-		c->prompt = ft_aconcat(25, WHT_FG, "",
-				WHT_BG, BLK_FG, BOLD, "  ", WHT_FG, RED_BG,
+		c->prompt = ft_aconcat(27, WHT_FG, "",
+				WHT_BG, BLK_FG, BOLD, " ", c->weather_emoji, " ", WHT_FG, RED_BG,
 				" ", "Minishell ", path, " ", status, " ",
 				RED_FG, BLU_BG, " ", WHT_FG,
 				"⚡️git:(", branch, ") ", RESET, BLU_FG, " ", RESET);
 		return ;
 	}
-	c->prompt = ft_aconcat(18, WHT_FG, "",
-			WHT_BG, BLK_FG, BOLD, "  ", WHT_FG, RED_BG,
+	c->prompt = ft_aconcat(20, WHT_FG, "",
+			WHT_BG, BLK_FG, BOLD, " ", c->weather_emoji, " ", WHT_FG, RED_BG,
 			" ", "Minishell ", path, " ", status, " ", RESET,
 			RED_FG, " ", RESET);
 }
@@ -108,6 +112,8 @@ static void	ctx_init(t_ctx *c, char **env)
 	if (!c->gbc)
 		exit_shell(c, 1);
 	c->return_code = 0;
+	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
+	get_weather(c);
 	gen_prompt(c, format_path(c), get_branch(c));
 	c->last_path = get_path(c);
 	c->history_fd = open("./.minishell_history",
@@ -133,38 +139,24 @@ int	main(int argc, char **argv, char **env)
 	ctx_init(&c, env);
 	printf("Minishell ready\n");
 	init_history(&c);
-	// get_weather(&c);
-	// char	*args[2];
-	// args[0] = "https://kiyo.ooo/f/meteoshell.php";
-	// args[1] = "-k";
-	// printf("%s -> %s : %s\n", find_exec(&c, "curl"), args[0], args[1]);
-	// execve(find_exec(&c, "curl"), args, c.env_list);
-	// printf("%c -> %d\n", c.weather_emoji, c.return_code);
+	termios_init(&c);
 	while (true)
 	{
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
-		if (c.entry)
+		if (c.entry && ft_strlen(c.entry) != 0)
 		{
-			if (ft_strlen(c.entry) == 0)
-			{
-				rl_on_new_line();
-				rl_redisplay();
-			}
+			history(&c);
+			if (exec_builtin(&c))
+				continue ;
+			if (ft_eq(c.entry, "here", 0))
+				create_heredoc(&c);
 			else
 			{
-				history(&c);
-				if (exec_builtin(&c))
-					continue ;
-				else
-				{
-					create_table(&c, table, gb_split(&c, c.entry, ' '));
-					exec(&c, table);
-				}
+				create_table(&c, table, gb_split(&c, c.entry, ' '));
+				exec(&c, table);
 			}
 			gen_prompt(&c, format_path(&c), get_branch(&c));
 			gb_delete(&c.gbc, CMD_GB);
 		}
-		else
-			sig_handler(SIGKILL);
 	}
 }
