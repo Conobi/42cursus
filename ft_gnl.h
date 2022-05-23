@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:51:21 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/17 14:47:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 13:56:08 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 # define FT_GNL_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define BUFFER_SIZE 128
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 1024
+# endif
 
 /* ft_gnl_utils.c */
 size_t	f_strlen(const char *s);

@@ -6,12 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:51:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/17 14:41:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 14:05:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_gnl.h"
-#include <limits.h>
 
 void	remainds_getter(char **old, char **ret)
 {
