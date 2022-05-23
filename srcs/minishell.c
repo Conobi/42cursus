@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 17:10:38 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 17:33:07 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	if (branch)
 	{
 		c->prompt = ft_aconcat(27, WHT_FG, "",
-				WHT_BG, BLK_FG, BOLD, " ",
-				c->weather_emoji, " ", WHT_FG, RED_BG,
+				WHT_BG, BLK_FG, BOLD, "  ",
+				c->weather_emoji, "  ", WHT_FG, RED_BG,
 				" ", "Minishell ", path, " ", status, " ",
 				RED_FG, BLU_BG, " ", WHT_FG,
 				"⚡️git:(", branch, ") ", RESET, BLU_FG, " ", RESET);
@@ -84,7 +84,9 @@ static void	ctx_init(t_ctx *c, char **env)
 		exit_shell(c, 1);
 	c->return_code = 0;
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
+	c->env_list = env;
 	get_weather(c);
+	c->prompt = malloc(0);
 	gen_prompt(c, format_path(c), get_branch(c));
 	c->last_path = get_path(c);
 	c->history_fd = open("./.minishell_history",
@@ -92,7 +94,6 @@ static void	ctx_init(t_ctx *c, char **env)
 	c->last_entry = NULL;
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
-	c->env_list = env;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -111,9 +112,9 @@ int	main(int argc, char **argv, char **env)
 	printf("Minishell ready\n");
 	init_history(&c);
 	termios_init(&c);
-	termios_set(&c, 0); //todo: remove this
 	while (true)
 	{
+		termios_set(&c, 0);
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
 		if (!c.entry)
 			exit_shell(&c, 0);

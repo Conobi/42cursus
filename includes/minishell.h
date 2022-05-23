@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 17:14:11 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 17:18:36 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,6 @@ void	create_error(t_ctx *c, t_error err);
 // Signal handlers
 void	fork_sig_handler(int sig);
 void	sig_handler(int sig);
+void	heredoc_sig_handler(int sig);
 
 #endif

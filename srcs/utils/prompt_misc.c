@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 03:15:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 16:24:48 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	get_weather(t_ctx *c)
 		args[1] = "-s";
 		args[2] = "https://kiyo.ooo/f/meteoshell.php";
 		args[3] = "-k";
-		args[4] = NULL;
+		args[4] = 0;
 		exit(execve(find_exec(c, "curl"), args, c->env_list));
 	}
 	else

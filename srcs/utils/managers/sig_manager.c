@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 17:19:52 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 17:56:38 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,26 @@ void	sig_handler(int sig)
 	return ;
 }
 
-static void	fork_process(int sig, siginfo_t *s_infos, void *proto)
+void	heredoc_sig_handler(int sig)
 {
-	(void)s_infos;
-	(void)proto;
 	if (sig == SIGINT)
+		exit(1);
+	if (sig == SIGKILL) //todo: not working (check for a solution to disable SIGKILL)
 		return ;
 }
 
-void	fork_sig_handler(int sig) //todo: raise condition on sig with main
+void	fork_sig_handler(int sig)
 {
-	struct sigaction	s_sig;
-
-	(void)sig;
-	s_sig.sa_sigaction = fork_process;
-	s_sig.sa_flags = SA_SIGINFO; // to give signum to sigaction function
-	sigaction(SIGINT, &s_sig, 0);
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		return ;
+	}
+	if (sig == SIGQUIT)
+	{
+		write(1, "Quit: 3\n", 10);
+		return ;
+	}
+	if (sig == SIGKILL)
+		return ;
 }

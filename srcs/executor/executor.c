@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 17:15:13 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 17:47:35 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,11 @@ void	exec_single(t_ctx *c, t_table *table, int cmd)
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));
+	termios_set(c, 1);
+	signal(SIGINT, fork_sig_handler);
+	signal(SIGQUIT, fork_sig_handler);
 	if (pid == 0)
 	{
-		fork_sig_handler(SIGINT);
 		if (!table->command_table[cmd].exec_path)
 			return ;
 		execve(table->command_table[cmd].exec_path,
@@ -129,6 +131,8 @@ void	exec_single(t_ctx *c, t_table *table, int cmd)
 	}
 	else
 		waitpid(pid, &c->return_code, 0);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler); //todo: function to switch signals
 }
 
 /**
