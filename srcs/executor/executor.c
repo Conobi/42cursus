@@ -6,15 +6,11 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/23 17:47:35 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 19:16:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * todo: fix rl_redisplay bug when SIGINT
-*/
 
 /**
  * @brief This function executes the child process

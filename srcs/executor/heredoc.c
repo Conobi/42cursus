@@ -6,12 +6,17 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/23 17:55:15 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 15:51:19 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function create an heredoc instance
+ *
+ * @param c Minishell context struct
+ */
 void	create_heredoc(t_ctx *c)
 {
 	pid_t	pid;

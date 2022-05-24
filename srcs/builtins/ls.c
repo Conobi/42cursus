@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:50:42 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 03:15:00 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 15:24:07 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,28 @@ static void	print_ls(t_ctx *c, DIR *dir, char *filename)
 	if (dir)
 	{
 		printf("%s     ", (char *)gb_add(
-				ft_aconcat(5, BLU_FG, "📁 ", filename, "/", RESET),
+				ft_aconcat(5, BLU_FG, " ", filename, "/", RESET),
 				&c->gbc, CMD_GB));
 		closedir(dir);
+		return ;
 	}
-	else
+	if (ft_eq(filename, ".c", 2))
+	{
 		printf("%s     ", (char *)gb_add(
-				ft_aconcat(3, WHT_FG, filename, RESET),
+				ft_aconcat(4, WHT_FG, " ", filename, RESET),
 				&c->gbc, CMD_GB));
+		return ;
+	}
+	if (ft_eq(filename, ".cpp", 2))
+	{
+		printf("%s     ", (char *)gb_add(
+				ft_aconcat(4, WHT_FG, " ", filename, RESET),
+				&c->gbc, CMD_GB));
+		return ;
+	}
+	printf("%s     ", (char *)gb_add(
+			ft_aconcat(3, WHT_FG, filename, RESET),
+			&c->gbc, CMD_GB));
 }
 
 /**

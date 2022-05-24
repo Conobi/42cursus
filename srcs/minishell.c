@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/23 17:33:07 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 17:44:00 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
 	if (branch)
 	{
-		c->prompt = ft_aconcat(27, WHT_FG, "",
-				WHT_BG, BLK_FG, BOLD, "  ",
+		c->prompt = ft_aconcat(28, WHT_FG, "",
+				WHT_BG, BLK_FG, BOLD, " ",
 				c->weather_emoji, "  ", WHT_FG, RED_BG,
-				" ", "Minishell ", path, " ", status, " ",
+				" ", "Minishell ", " ", path, " ", status, " ",
 				RED_FG, BLU_BG, " ", WHT_FG,
-				"⚡️git:(", branch, ") ", RESET, BLU_FG, " ", RESET);
+				" ", branch, " ", RESET, BLU_FG, " ", RESET);
 		return ;
 	}
-	c->prompt = ft_aconcat(20, WHT_FG, "",
-			WHT_BG, BLK_FG, BOLD, " ", c->weather_emoji, " ", WHT_FG, RED_BG,
-			" ", "Minishell ", path, " ", status, " ", RESET,
+	c->prompt = ft_aconcat(21, WHT_FG, "",
+			WHT_BG, BLK_FG, BOLD, " ", c->weather_emoji, "  ", WHT_FG, RED_BG,
+			" ", "Minishell ", " ", path, " ", status, " ", RESET,
 			RED_FG, " ", RESET);
 }
 

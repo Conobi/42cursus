@@ -6,12 +6,19 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 03:04:30 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 15:49:20 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function is used to handle and execute if entry is a builtins
+ *
+ * @param c Minishell context struct
+ * @return true if entry is a builtins
+ * @return false if entry isnt a builtins
+ */
 bool	exec_builtin(t_ctx *c)
 {
 	if (ft_eq(c->entry, "exit", 1))

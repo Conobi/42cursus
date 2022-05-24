@@ -6,12 +6,19 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:51:22 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 16:58:55 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 15:54:55 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function is used to set termios mode for execution
+ *
+ * @param c Minishell context struct
+ * @param mode 0 is to set main execution termios,
+ * 1 is to set termios for fork execution
+ */
 void	termios_set(t_ctx *c, short mode)
 {
 	if (mode == 0)
@@ -28,6 +35,11 @@ void	termios_set(t_ctx *c, short mode)
 	}
 }
 
+/**
+ * @brief This function is used to initialize the termios
+ *
+ * @param c Minishell context struct
+ */
 void	termios_init(t_ctx *c)
 {
 	t_error			err;
