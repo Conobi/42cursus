@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:10:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/20 19:50:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 19:55:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,15 @@ static void	split_viewer(char **arrstr)
 		printf("{%d: %s}\n", i, arrstr[i]);
 }
 
-int		ft_is_space(char to_find, char *str)
+int	ft_is_space(char to_find, char *str)
 {
 	while (*str)
-	{
 		if (to_find == *str++)
 			return (1);
-	}
 	return (0);
 }
 
-int		ft_wordcount(t_ctx *c, char *str, char *charset)
+int	ft_wordcount(t_ctx *c, char *str, char *charset)
 {
 	int	count;
 	int	flag;
@@ -44,7 +42,8 @@ int		ft_wordcount(t_ctx *c, char *str, char *charset)
 		set_quote_bool(c, *str);
 		if (ft_is_space(*str, charset) && !is_curr_quoted(c))
 			flag = 1;
-		if (!ft_is_space(*str, charset) || (ft_is_space(*str, charset) && is_curr_quoted(c)))
+		if (!ft_is_space(*str, charset)
+			|| (ft_is_space(*str, charset) && is_curr_quoted(c)))
 		{
 			if (flag)
 				++count;
@@ -53,7 +52,6 @@ int		ft_wordcount(t_ctx *c, char *str, char *charset)
 		str++;
 	}
 	reset_quote_bool(c);
-	printf("AAAAAAAA%dAAAAAAAAA\n", count);
 	return (count);
 }
 
@@ -75,39 +73,42 @@ char	*create_word(const char *str, int i, int j)
 	return (word);
 }
 
-char	**ft_charsplit(t_ctx *c, char *str, char *charset)
+typedef struct s_split
 {
 	char	**arr;
 	int		index;
 	int		j;
 	int		i;
 	int		words;
+}	t_split;
 
-	i = 0;
-	index = 0;
-	words = ft_wordcount(c, str, charset);
-	if (words)
+static char	**split_quote_2(t_ctx *c, char *str)
+{
+	t_split	s;
+
+	s = (t_split){0, 0, 0, 0, ft_wordcount(c, str, " \t\n\v\f\r")};
+	reset_quote_bool(c);
+	if (s.words && str)
 	{
-		arr = ft_calloc(sizeof(char *), (words + 1));
-		if (!str || arr == ((void *)0))
-			return ((void *)0);
-		while (str[i] && index < words)
+		s.arr = ft_calloc(sizeof(char *), (s.words + 1));
+		while (str[s.i] && s.index < s.words)
 		{
-			while (ft_is_space(str[i], charset) && !is_curr_quoted(c) && str[i])
-				set_quote_bool(c, str[i++]);
-			j = i;
-			while (str[j] && (!ft_is_space(str[j], charset) || (ft_is_space(str[j], charset) && is_curr_quoted(c))))
-				set_quote_bool(c, str[j++]);
-			arr[index++] = create_word(str, i, j);
-			if (!str[j])
+			while (ft_is_space(str[s.i], " \t\n\v\f\r")
+				&& !is_curr_quoted(c) && str[s.i])
+				set_quote_bool(c, str[s.i++]);
+			s.j = s.i;
+			while (str[s.j] && (!ft_is_space(str[s.j], " \t\n\v\f\r")
+					|| (ft_is_space(str[s.j], " \t\n\v\f\r") && is_curr_quoted(c))))
+				set_quote_bool(c, str[s.j++]);
+			s.arr[s.index++] = create_word(str, s.i, s.j);
+			if (!str[s.j])
 				break ;
-			i = j + 1;
+			s.i = s.j + 1;
 		}
 	}
 	else
-		arr = (char **)malloc(sizeof(char *));
-	arr[index] = (void *)0;
-	return (arr);
+		s.arr = ft_calloc(sizeof(char *), 1);
+	return (s.arr);
 }
 
 char **split_quote(t_ctx *c, char *str)
@@ -115,11 +116,7 @@ char **split_quote(t_ctx *c, char *str)
 	char	**tamerelapute;
 
 	reset_quote_bool(c);
-	printf("-> %d <-\n", ft_wordcount(c, str, " \t\n\v\f\r"));
-	tamerelapute = ft_charsplit(c, str, " \t\n\v\f\r");
-	printf("-+-\nTa mere la pute vaut %s\n-+-\n", tamerelapute[0]);
+	tamerelapute = split_quote_2(c, str);
 	split_viewer(tamerelapute);
-	// c += 0;
-	// printf("|>--- %s ---<|\n", str);
 	return (0);
 }

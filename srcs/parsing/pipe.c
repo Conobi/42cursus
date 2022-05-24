@@ -6,43 +6,39 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/20 20:02:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 18:32:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Si action == 1, on compte le nombre de pipes,
-// sinon on compte le nombre de caractères jusqu'au prochain pipe
-// A REVOIR C'EST (un peu) FOIREUX
-static int	pipe_count(char *curr, const int action)
+// Sinon on compte le nombre de caractères jusqu'au prochain pipe
+static int	pipe_count(char *cur, const int action)
 {
 	char	squoted;
 	char	dquoted;
-	char	*cur;
 	int		cnt;
 
-	cur = curr;
 	squoted = -1;
 	dquoted = -1;
-	cnt = 0;
+	cnt = action;
 	while (*cur)
 	{
 		if (*cur == '\'' && dquoted == -1)
 			squoted *= -1;
 		if (*cur == '"' && squoted == -1)
 			dquoted *= -1;
-		else if (squoted == -1 && dquoted == -1 && *cur == '|')
+		if (squoted == -1 && dquoted == -1 && *cur == '|')
 		{
 			if (!action)
 				break ;
 			cnt++;
 		}
-		else
+		if (!action)
 			cnt++;
 		cur++;
 	}
-	printf("RRRRR %d RRRRRRRR\n", cnt);
 	return (cnt);
 }
 
@@ -53,6 +49,7 @@ static void	cutter_init(t_ctx *c)
 			sizeof(char *), PIPE_GB, &c->gbc);
 	c->parser.pipes[0] = gb_calloc(pipe_count(c->entry, 0) + 1,
 			sizeof(char), PIPE_GB, &c->gbc);
+	printf("[0: %d]\n", pipe_count(c->entry, 0));
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
 }
@@ -74,7 +71,7 @@ void	pipe_cutter(t_ctx *c)
 	cutter_init(c);
 	printf("%d\n", pipe_count(cur, 0));
 	i = 0;
-	j = -1;
+	j = 0;
 	while (*cur)
 	{
 		set_quote_bool(c, *cur);
@@ -84,12 +81,9 @@ void	pipe_cutter(t_ctx *c)
 			c->parser.pipes[++i] = gb_calloc(pipe_count(cur, 0) + 1,
 					sizeof(char *), PIPE_GB, &c->gbc);
 			printf("[%d: %d]\n", i, pipe_count(cur, 0));
-			j = -1;
+			j = 0;
 		}
-		c->parser.pipes[i][++j] = 0;
-		if (!pipe_quote(c, *cur))
-			c->parser.pipes[i][j] = *cur;
-		if (*cur != '|')
-			cur++;
+		if (*cur && !pipe_quote(c, *cur))
+			c->parser.pipes[i][j++] = *(cur++);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/20 14:27:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 18:27:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	multi_viewer(char **pipes, int cnt)
 
 void	parser(t_ctx *c)
 {
+	int	i;
+
 	if (!c->entry
 		|| !ft_strncmp(c->entry, "exit", 5)
 		|| !ft_strncmp(c->entry, "bye", 3))
@@ -37,7 +39,9 @@ void	parser(t_ctx *c)
 	pipe_cutter(c);
 	multi_viewer(c->parser.pipes, c->parser.pipes_n);
 	printf("-----------------\n");
-	split_quote(c, c->parser.pipes[0]);
+	i = -1;
+	while (c->parser.pipes[++i])
+		split_quote(c, c->parser.pipes[i]);
 	printf("-----------------\n");
 	parse_print(c);
 }

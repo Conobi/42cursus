@@ -10,6 +10,7 @@ Les redirections peuvent être partout. Dans n'importe quel sens.
 ## Globalement
 - 1. On split-quote en dry
 - 2. On split-quote avec les bonnes allocs
+
 - 3. On compte le nombre de redirections de chaque type, on alloc le tableau
 - 4. On remplit chaque tableau de redirections. Si le prochain token est '\0' ou une redirection, on remplit avec un '\0'
 - 5. Pour chaque entrée avec pas de redirection avant, on le compte
