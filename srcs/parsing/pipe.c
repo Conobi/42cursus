@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/24 18:32:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 19:10:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static void	cutter_init(t_ctx *c)
 	c->parser.pipes[0] = gb_calloc(pipe_count(c->entry, 0) + 1,
 			sizeof(char), PIPE_GB, &c->gbc);
 	printf("[0: %d]\n", pipe_count(c->entry, 0));
-	c->parser.squoted = -1;
-	c->parser.dquoted = -1;
 }
 
 static char	pipe_quote(t_ctx *c, char curr)

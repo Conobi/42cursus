@@ -15,6 +15,7 @@ SRC			= minishell.c \
 			  parsing/parser_utils.c \
 	 		  parsing/pipe.c \
 			  parsing/split_quote.c \
+			  parsing/split_redir.c \
 	 		  utils/exit_shell.c
 
 SDIR		= srcs

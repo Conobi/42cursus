@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/17 19:52:41 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/05/30 16:02:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@
 // GARBAGE TYPE
 # define PERM_GB	0
 # define ENTRY_GB	1
-# define PIPE_GB	1
+# define PIPE_GB	2
+# define QUOTE_GB	3
+# define REDIR_GB	4
 
 typedef struct s_command {
 	int		args_num;
@@ -62,9 +64,10 @@ typedef struct s_command {
 typedef struct s_parser {
 	char	squoted;
 	char	dquoted;
-	char	**quotes;
 	char	**pipes;
+	char	***quotes;
 	int		pipes_n;
+	int		len;
 }	t_parser;
 
 typedef struct s_ctx {
@@ -106,5 +109,6 @@ void	set_quote_bool(t_ctx *c, char curr);
 void	reset_quote_bool(t_ctx *c);
 int		is_curr_quoted(t_ctx *c);
 char 	**split_quote(t_ctx *c, char *str);
+char	**split_redir(t_ctx *c, char **quotes);
 
 #endif
