@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:10:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/30 14:26:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/01 20:02:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static char	**split_quote_2(t_ctx *c, char *str)
 	return (s.arr);
 }
 
-char **split_quote(t_ctx *c, char *str)
+char	**split_quote(t_ctx *c, char *str)
 {
 	char	**tamerelapute;
 

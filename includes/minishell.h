@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/30 16:02:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/01 20:01:51 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	pipe_cutter(t_ctx *c);
 void	set_quote_bool(t_ctx *c, char curr);
 void	reset_quote_bool(t_ctx *c);
 int		is_curr_quoted(t_ctx *c);
-char 	**split_quote(t_ctx *c, char *str);
+char	**split_quote(t_ctx *c, char *str);
 char	**split_redir(t_ctx *c, char **quotes);
 
 #endif
