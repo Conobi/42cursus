@@ -16,7 +16,8 @@ SRC			= minishell.c \
 	 		  parsing/pipe.c \
 			  parsing/split_quote.c \
 			  parsing/split_redir.c \
-	 		  utils/exit_shell.c
+			  parsing/cmd_create.c \
+			  utils/exit_shell.c
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

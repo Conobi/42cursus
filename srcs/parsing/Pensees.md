@@ -14,7 +14,7 @@ Les redirections peuvent être partout. Dans n'importe quel sens.
 - 3. On compte le nombre de redirections de chaque type, on alloc le tableau
 - 4. On remplit chaque tableau de redirections. Si le prochain token est '\0' ou une redirection, on remplit avec un '\0'
 - 5. Pour chaque entrée avec pas de redirection avant, on le compte
-- 6. Pour chaque entrée avec pas de redirection avant, on l'ajoute et on enlève les quotes.
+- 6. Pour chaque entrée avec pas de redirection avant, on l'ajoute et on enlève les split.
 
 `int count_redirect(char **tab, char *delimiter)`
 count_redirect(split_quoted, ">>");

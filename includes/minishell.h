@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/01 20:01:51 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/05 21:48:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <readline/readline.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+// Linux required
+# include <readline/history.h>
+# include <sys/wait.h>
+# include <signal.h>
 
 //Term colors
 # define RED_FG	"\e[91m"
@@ -41,12 +45,19 @@
 # define RESET	"\e[0m"
 # define BOLD	"\e[1m"
 
+# define OTHR_TK	0
+# define OUT_TK		1
+# define IN_TK		2
+# define APPD_TK	3
+# define HRDC_TK	4
+
 // GARBAGE TYPE
 # define PERM_GB	0
 # define ENTRY_GB	1
 # define PIPE_GB	2
 # define QUOTE_GB	3
 # define REDIR_GB	4
+# define CMD1P_GB	5
 
 typedef struct s_command {
 	int		args_num;
@@ -61,11 +72,23 @@ typedef struct s_command {
 	char	*exec_path;
 }	t_command;
 
+typedef struct s_redir {
+	char	*arg;
+	short	type;
+}	t_redir;
+
+typedef struct s_ncommand {
+	int		argc;
+	char	**argv;
+	int		redc;
+	t_redir	*redirections;
+}	t_ncommand;
+
 typedef struct s_parser {
 	char	squoted;
 	char	dquoted;
 	char	**pipes;
-	char	***quotes;
+	char	***split;
 	int		pipes_n;
 	int		len;
 }	t_parser;
@@ -76,6 +99,7 @@ typedef struct s_ctx {
 	char				*entry;
 	t_parser			parser;
 	struct s_command	*command_table;
+	struct s_ncommand	*cmds;
 }	t_ctx;
 
 typedef struct s_table {
@@ -86,29 +110,31 @@ typedef struct s_table {
 	int					*pipe_fd;
 }	t_table;
 
-void	add_args(char *arg);
-void	add_command(t_command *command);
+void		add_args(char *arg);
+void		add_command(t_command *command);
 
-// Executor functions
-void	exec(t_table *table);
-char	*find_exec(char *exec_name);
-void	outfile_handler(t_table *table, int curr_cmd);
-void	close_pipes(t_table *table, int pipes);
-void	switch_pipes(int in, int out);
-void	set_exec_path(t_table *table);
-void	in_selector(t_table *table, int curr, int *in);
-void	out_selector(t_table *table, int curr, int piped_commands, int *out);
+// Execu	tor functions
+void		exec(t_table *table);
+char		*find_exec(char *exec_name);
+void		outfile_handler(t_table *table, int curr_cmd);
+void		close_pipes(t_table *table, int pipes);
+void		switch_pipes(int in, int out);
+void		set_exec_path(t_table *table);
+void		in_selector(t_table *table, int curr, int *in);
+void		out_selector(t_table *table,
+				int curr, int piped_commands, int *out);
 
 // Utils
-void	exit_shell(t_ctx *c, int code);
+void		exit_shell(t_ctx *c, int code);
 
 // Parsing
-void	parser(t_ctx *c);
-void	pipe_cutter(t_ctx *c);
-void	set_quote_bool(t_ctx *c, char curr);
-void	reset_quote_bool(t_ctx *c);
-int		is_curr_quoted(t_ctx *c);
-char	**split_quote(t_ctx *c, char *str);
-char	**split_redir(t_ctx *c, char **quotes);
+void		parser(t_ctx *c);
+void		pipe_cutter(t_ctx *c);
+void		set_quote_bool(t_ctx *c, char curr);
+void		reset_quote_bool(t_ctx *c);
+int			is_curr_quoted(t_ctx *c);
+char		**split_quote(t_ctx *c, char *str);
+char		**split_redir(t_ctx *c, char **split);
+t_ncommand	cmd_create(t_ctx *c, char **split);
 
 #endif

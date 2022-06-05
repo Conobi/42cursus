@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/30 19:22:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/05 22:04:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	parser(t_ctx *c)
 	i = -1;
 	while (c->parser.pipes[++i])
 		;
-	c->parser.quotes = gb_calloc(i + 1, sizeof(char), QUOTE_GB, &c->gbc);
+	c->cmds = gb_calloc(i + 1, sizeof(char), QUOTE_GB, &c->gbc);
 	i = -1;
 	while (c->parser.pipes[++i])
-		c->parser.quotes[i] = split_redir(c, split_quote(c, c->parser.pipes[i]));
-	// c->parser.quotes[i] = split_quote(c, c->parser.pipes[i]);
+		c->cmds[i] = cmd_create(c, split_redir(c,
+					split_quote(c, c->parser.pipes[i])));
 	printf("-----------------\n");
 	parse_print(c);
 }
