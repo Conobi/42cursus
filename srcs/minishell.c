@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 17:37:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 18:36:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ void	signal_handler(int sig)
 	return ;
 }
 
-static void ctx_init(t_ctx *c)
+static void	ctx_init(t_ctx *c)
 {
 	c->gbc = gb_init();
 	if (!c->gbc)
 		exit_shell(c, 1);
 	c->prompt = gb_add(ft_aconcat(15, WHT_FG, "", WHT_BG, BLK_FG,
-					BOLD, "  ", WHT_FG, RED_BG,
-					" ", "Minishell $_ ", RESET,
-					RED_FG, " ", RESET, WHT_FG), &(c->gbc), PERM_GB);
+				BOLD, "  ", WHT_FG, ACC_BG,
+				" ", "Minishell $_ ", RESET,
+				ACC_FG, " ", RESET, WHT_FG), &(c->gbc), PERM_GB);
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
 }

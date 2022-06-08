@@ -6,24 +6,32 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 17:16:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 18:35:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+# include <termios.h>
+# include <signal.h>
+# include <dirent.h>
 # include "../libft/libft.h"
 // Linux required
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
 
+// To show the printf debug for parsing purpose
 # define PDEBUG	1
 
 //Term colors
@@ -35,6 +43,7 @@
 # define CYN_FG	"\e[36m"
 # define WHT_FG	"\e[37m"
 # define BLK_FG	"\e[30m"
+# define ACC_FG	"\e[38;2;65;208;117m"
 
 # define RED_BG	"\e[101m"
 # define GRN_BG	"\e[42m"
@@ -44,6 +53,8 @@
 # define CYN_BG	"\e[46m"
 # define WHT_BG	"\e[47m"
 # define BLK_BG	"\e[40m"
+# define ACC_BG	"\e[48;2;65;208;117m"
+
 # define RESET	"\e[0m"
 # define BOLD	"\e[1m"
 
@@ -60,7 +71,19 @@
 # define QUOTE_GB	3
 # define REDIR_GB	4
 # define CMD1P_GB	5
+# define CMD_GB		6
 
+// todo: Use ds_prompt settings to enable or disable prompt generation
+# define DS_PROMPT	1
+
+// Errors
+# define FILE_ERR 	1
+# define ERROR		2
+# define WARNING	3
+
+/**
+ * @brief Struct for a command object
+ */
 typedef struct s_command {
 	int		args_num;
 	char	**args;
@@ -96,12 +119,21 @@ typedef struct s_parser {
 }	t_parser;
 
 typedef struct s_ctx {
-	t_garbc				*gbc;
-	char				*prompt;
-	char				*entry;
-	t_parser			parser;
 	struct s_command	*command_table;
 	struct s_ncommand	*cmds;
+	t_garbc				*gbc;
+	t_list				*env;
+	t_parser			parser;
+	char				*prompt;
+	char				*entry;
+	char				*weather_emoji;
+	int					return_code;
+	char				*last_path;
+	char				*last_entry;
+	int					history_fd;
+	char				**env_list;
+	struct termios		term;
+	struct termios		base;
 }	t_ctx;
 
 typedef struct s_table {
@@ -115,16 +147,16 @@ typedef struct s_table {
 void		add_args(char *arg);
 void		add_command(t_command *command);
 
-// Execu	tor functions
-void		exec(t_table *table);
-char		*find_exec(char *exec_name);
-void		outfile_handler(t_table *table, int curr_cmd);
-void		close_pipes(t_table *table, int pipes);
-void		switch_pipes(int in, int out);
-void		set_exec_path(t_table *table);
-void		in_selector(t_table *table, int curr, int *in);
-void		out_selector(t_table *table,
-				int curr, int piped_commands, int *out);
+// Executor functions
+// void		exec(t_table *table);
+// char		*find_exec(char *exec_name);
+// void		outfile_handler(t_table *table, int curr_cmd);
+// void		close_pipes(t_table *table, int pipes);
+// void		switch_pipes(int in, int out);
+// void		set_exec_path(t_table *table);
+// void		in_selector(t_table *table, int curr, int *in);
+// void		out_selector(t_table *table,
+// 				int curr, int piped_commands, int *out);
 
 // Utils
 void		exit_shell(t_ctx *c, int code);
@@ -138,5 +170,61 @@ int			is_curr_quoted(t_ctx *c);
 char		**split_quote(t_ctx *c, char *str);
 char		**split_redir(t_ctx *c, char **split);
 t_ncommand	cmd_create(t_ctx *c, char **split);
+
+typedef struct s_error {
+	short	type;
+	char	*cmd;
+	char	*message;
+	char	*path;
+	int		code;
+	bool	is_file;
+}	t_error;
+
+typedef struct s_env {
+	char	*key;
+	char	*value;
+}	t_env;
+
+void		add_command(t_command *command);
+
+// Executor functions
+void		exec(t_ctx *c, t_table *table);
+void		outfile_handler(t_table *table, int curr_cmd);
+void		close_pipes(t_table *table, int pipes);
+void		switch_pipes(int in, int out);
+void		set_exec_path(t_ctx *c, t_table *table);
+void		in_selector(t_table *table, int curr, int *in);
+void		out_selector(t_table *table, int curr,
+				int piped_commands, int *out);
+char		*find_exec(t_ctx *c, const char *exec_name);
+void		create_heredoc(t_ctx *c);
+
+// Builtins
+bool		exec_builtin(t_ctx *c);
+void		b_cd(t_ctx *c, char *path);
+void		b_pwd(t_ctx *c);
+void		b_echo(const char *args);
+void		b_ls(t_ctx *c, t_table *table, int cmd);
+void		rl_replace_line(const char *text, int clear_undo);
+
+// Utils
+void		exit_shell(t_ctx *c, int code);
+char		*get_path(t_ctx *c);
+char		*format_path(t_ctx *c);
+bool		error_handler(t_ctx *c, t_error err);
+void		gen_prompt(t_ctx *c, const char *path, const char *branch);
+void		history(t_ctx *c);
+void		init_history(t_ctx *c);
+char		*get_branch(t_ctx *c);
+void		get_weather(t_ctx *c);
+t_list		*create_env(t_ctx *c, char **env);
+void		termios_init(t_ctx *c);
+void		termios_set(t_ctx *c, short mode);
+void		create_error(t_ctx *c, t_error err);
+
+// Signal handlers
+void		fork_sig_handler(int sig);
+void		sig_handler(int sig);
+void		heredoc_sig_handler(int sig);
 
 #endif

@@ -6,12 +6,20 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/03/30 16:39:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 19:16:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function executes the child process
+ *
+ * @param table Commands table struct
+ * @param cmd Current fork
+ * @param curr_cmd Current command to execute
+ * @param piped_commands Number of piped commands
+ */
 void	exec_child(t_table *table, int cmd,
 	int curr_cmd, int piped_commands)
 {
@@ -23,8 +31,10 @@ void	exec_child(t_table *table, int cmd,
 		return (perror("fork"));
 	if (table->process[curr_cmd] == 0)
 	{
+		// todo: check utility of these functions
 		in_selector(table, curr_cmd, &in);
 		out_selector(table, curr_cmd, piped_commands, &out);
+		// todo end
 		if (curr_cmd == 0)
 			switch_pipes(table->pipe_fd[0], table->pipe_fd[1]);
 		else if (curr_cmd == piped_commands - 1)
@@ -39,6 +49,13 @@ void	exec_child(t_table *table, int cmd,
 	}
 }
 
+/**
+ * @brief This function is used to create a pipe array with pipe()
+ * in table->pipe_fd
+ *
+ * @param table Commands table struct
+ * @param piped_commands Number of piped commands
+ */
 void	pipe_fd(t_table *table, int piped_commands)
 {
 	int	i;
@@ -55,6 +72,13 @@ void	pipe_fd(t_table *table, int piped_commands)
 	}
 }
 
+/**
+ * @brief This function is called when a command is piped
+ *
+ * @param table Ccommands table struct
+ * @param curr_command Current command to execute
+ * @return int
+ */
 int	exec_piped(t_table *table, int curr_command)
 {
 	int		i;
@@ -76,41 +100,64 @@ int	exec_piped(t_table *table, int curr_command)
 	return (piped_commands);
 }
 
-void	exec_single(t_table *table, int cmd)
+/**
+ * @brief this function is called when the current command is not piped
+ *
+ * @param table Commands table struct
+ * @param cmd Index of the command to execute
+ */
+void	exec_single(t_ctx *c, t_table *table, int cmd)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));
+	termios_set(c, 1);
+	signal(SIGINT, fork_sig_handler);
+	signal(SIGQUIT, fork_sig_handler);
 	if (pid == 0)
 	{
+		if (!table->command_table[cmd].exec_path)
+			return ;
 		execve(table->command_table[cmd].exec_path,
-			table->command_table[cmd].args, NULL);
+			table->command_table[cmd].args, c->env_list);
 		perror("execve");
 		exit(0);
 	}
 	else
-		waitpid(pid, 0, 0);
+		waitpid(pid, &c->return_code, 0);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler); //todo: function to switch signals
 }
 
-void	exec(t_table *table)
+/**
+ * @brief This function is the main function of execution
+ *
+ * @param c CMinishell context struct
+ * @param table Commands table struct
+ */
+void	exec(t_ctx *c, t_table *table)
 {
 	int		i;
 
 	i = 0;
 	while (i < table->commands_num)
 		outfile_handler(table, i++);
-	set_exec_path(table);
+	set_exec_path(c, table);
 	i = 0;
 	while (i < table->commands_num)
 	{
+		if (!table->command_table[i].exec_path)
+			return ;
 		if (table->command_table[i].piped)
 			i = exec_piped(table, i);
 		if (i < 0)
 			return ;
-		exec_single(table, i);
-		free(table->command_table[i].exec_path);
+		if (ft_eq(table->command_table[i].exec_path, "/bin/ls", 0)
+			&& !table->command_table[i].args[1])
+			return (b_ls(c, table, i));
+		exec_single(c, table, i);
 		i++;
 	}
 }
