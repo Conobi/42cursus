@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/04 13:15:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 18:21:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -569,6 +569,18 @@ void	*gb_add(void *ptr, t_garbc **garbcl, const char type);
  * @return void* Returns a pointer to the allocated memory.
  */
 void	*gb_calloc(size_t count, size_t size, const char type, t_garbc **last);
+
+/**
+ * @brief Works similarly as the ft_split function, but saves the allocated
+ * pointer to a linked-list, that can be cleaned up.
+ *
+ * @param s The string to split
+ * @param c The delimiter character
+ * @param garbcl A pointer to the linked-list, headed to the top of the list.
+ * @param type The kind of element to delete. Can be between -128 and 127.
+ * @return char Returns an array of strings.
+ */
+char	**gb_split(char const *s, char c, t_garbc **garbcl, const char type);
 
 /**
  * @brief Deletes every element of type x in the garbage collector linked-list.
