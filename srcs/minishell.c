@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 18:36:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 19:30:30 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,22 @@ void	signal_handler(int sig)
 	return ;
 }
 
-static void	ctx_init(t_ctx *c)
+static void	ctx_init(t_ctx *c, char **env)
 {
 	c->gbc = gb_init();
+	c->env = create_env(c, env);
 	if (!c->gbc)
 		exit_shell(c, 1);
-	c->prompt = gb_add(ft_aconcat(15, WHT_FG, "", WHT_BG, BLK_FG,
-				BOLD, "  ", WHT_FG, ACC_BG,
-				" ", "Minishell $_ ", RESET,
-				ACC_FG, " ", RESET, WHT_FG), &(c->gbc), PERM_GB);
+	c->return_code = 0;
+	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
+	c->env_list = env;
+	get_weather(c);
+	c->prompt = malloc(0);
+	gen_prompt(c, format_path(c), get_branch(c));
+	c->last_path = get_path(c);
+	c->history_fd = open("./.minishell_history",
+			O_CREAT | O_RDWR, 0000644);
+	c->last_entry = NULL;
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
 }
@@ -56,12 +63,29 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	ctx_init(&c);
-	signal(SIGINT, signal_handler);
+	ctx_init(&c, env);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
+	init_history(&c);
+	termios_init(&c);
 	while (true)
 	{
-		c.entry = gb_add(readline(c.prompt), &c.gbc, ENTRY_GB);
+		termios_set(&c, 0);
+		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
+		if (!c.entry)
+			exit_shell(&c, 0);
 		parser(&c);
-		add_history(c.entry);
+		if (c.entry && ft_strlen(c.entry) != 0)
+		{
+			history(&c);
+			if (exec_builtin(&c))
+				continue ;
+			if (ft_eq(c.entry, "here", 0))
+				create_heredoc(&c);
+			// else
+			// 	exec(&c, table);
+			gen_prompt(&c, format_path(&c), get_branch(&c));
+			gb_delete(&c.gbc, CMD_GB);
+		}
 	}
 }

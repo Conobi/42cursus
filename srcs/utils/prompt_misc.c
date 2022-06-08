@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 18:27:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 19:31:52 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	{
 		c->prompt = ft_aconcat(28, WHT_FG, "",
 				WHT_BG, BLK_FG, BOLD, " ",
-				c->weather_emoji, "  ", WHT_FG, RED_BG,
+				c->weather_emoji, "  ", WHT_FG, ACC_BG,
 				" ", "Minishell ", " ", path, " ", status, " ",
-				RED_FG, BLU_BG, " ", WHT_FG,
+				ACC_FG, BLU_BG, " ", WHT_FG,
 				" ", branch, " ", RESET, BLU_FG, " ", RESET);
 		return ;
 	}
 	c->prompt = ft_aconcat(21, WHT_FG, "",
-			WHT_BG, BLK_FG, BOLD, " ", c->weather_emoji, "  ", WHT_FG, RED_BG,
+			WHT_BG, BLK_FG, BOLD, " ", c->weather_emoji, "  ", WHT_FG, ACC_BG,
 			" ", "Minishell ", " ", path, " ", status, " ", RESET,
-			RED_FG, " ", RESET);
+			ACC_FG, " ", RESET);
 }
 
 /**
