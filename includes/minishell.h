@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/05 21:48:21 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 17:16:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+
+# define PDEBUG	1
 
 //Term colors
 # define RED_FG	"\e[91m"

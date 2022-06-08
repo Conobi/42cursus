@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/30 19:10:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 17:19:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static void	cutter_init(t_ctx *c)
 			sizeof(char *), PIPE_GB, &c->gbc);
 	c->parser.pipes[0] = gb_calloc(pipe_count(c->entry, 0) + 1,
 			sizeof(char), PIPE_GB, &c->gbc);
-	printf("[0: %d]\n", pipe_count(c->entry, 0));
+	if (PDEBUG == 1)
+		printf("[0: %d]\n", pipe_count(c->entry, 0));
 }
 
 static char	pipe_quote(t_ctx *c, char curr)
@@ -65,9 +66,9 @@ void	pipe_cutter(t_ctx *c)
 	int		j;
 
 	cur = c->entry;
-	printf("{ nb pipes: %d }\n", pipe_count(cur, 1));
+	if (PDEBUG == 1)
+		printf("{ nb pipes: %d }\n%d\n", pipe_count(cur, 1), pipe_count(cur, 0));
 	cutter_init(c);
-	printf("%d\n", pipe_count(cur, 0));
 	i = 0;
 	j = 0;
 	while (*cur)
@@ -78,7 +79,8 @@ void	pipe_cutter(t_ctx *c)
 			cur++;
 			c->parser.pipes[++i] = gb_calloc(pipe_count(cur, 0) + 1,
 					sizeof(char *), PIPE_GB, &c->gbc);
-			printf("[%d: %d]\n", i, pipe_count(cur, 0));
+			if (PDEBUG == 1)
+				printf("[%d: %d]\n", i, pipe_count(cur, 0));
 			j = 0;
 		}
 		if (*cur && !pipe_quote(c, *cur))

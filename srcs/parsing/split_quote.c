@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:10:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/01 20:02:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 17:22:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	split_viewer(char **arrstr)
 {
 	int	i;
 
+	if (PDEBUG != 1)
+		return ;
 	i = -1;
 	printf("Liste des strings: \n");
 	while (arrstr[++i])
@@ -82,7 +84,7 @@ typedef struct s_split
 	int		words;
 }	t_split;
 
-static char	**split_quote_2(t_ctx *c, char *str)
+char	**split_quote(t_ctx *c, char *str)
 {
 	t_split	s;
 
@@ -108,15 +110,6 @@ static char	**split_quote_2(t_ctx *c, char *str)
 	}
 	else
 		s.arr = ft_calloc(sizeof(char *), 1);
+	split_viewer(s.arr);
 	return (s.arr);
-}
-
-char	**split_quote(t_ctx *c, char *str)
-{
-	char	**tamerelapute;
-
-	reset_quote_bool(c);
-	tamerelapute = split_quote_2(c, str);
-	split_viewer(tamerelapute);
-	return (tamerelapute);
 }

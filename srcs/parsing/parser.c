@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/05 22:04:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 17:34:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	parse_print(t_ctx *c)
 {
-	c += 0;
+	if (PDEBUG != 1)
+		return ;
 	printf("Jacques a dit: [%s] (%d)\n", c->entry, (int)c->entry[0]);
 }
 
@@ -23,6 +24,8 @@ static void	multi_viewer(char **pipes, int cnt)
 	int	i;
 
 	i = -1;
+	if (PDEBUG != 1)
+		return ;
 	printf("Liste des pipes: \n");
 	while (++i < cnt && pipes[i])
 		printf("{%d: %s}\n", i, pipes[i]);
@@ -46,18 +49,17 @@ void	parser(t_ctx *c)
 	parser_init(c);
 	pipe_cutter(c);
 	multi_viewer(c->parser.pipes, c->parser.pipes_n);
-	printf("-----------------\n");
+	if (PDEBUG)
+		printf("-----------------\n");
 	i = -1;
 	while (c->parser.pipes[++i])
 		;
-	c->cmds = gb_calloc(i + 1, sizeof(char), QUOTE_GB, &c->gbc);
+	c->cmds = gb_calloc(i + 1, sizeof(t_ncommand), QUOTE_GB, &c->gbc);
 	i = -1;
 	while (c->parser.pipes[++i])
 		c->cmds[i] = cmd_create(c, split_redir(c,
 					split_quote(c, c->parser.pipes[i])));
-	printf("-----------------\n");
+	if (PDEBUG)
+		printf("-----------------\n");
 	parse_print(c);
 }
-
-// Tant que l'on atteint pas de pipe (et qu'on est hors quote):
-//	- On cut

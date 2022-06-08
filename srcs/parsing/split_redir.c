@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:16:53 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/03 13:44:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 17:18:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	split_viewer(char **arrstr)
 	int	i;
 
 	i = -1;
+	if (PDEBUG != 1)
+		return ;
 	printf("Liste des strings: \n");
 	while (arrstr[++i])
 		printf("{%d: %s}\n", i, arrstr[i]);
@@ -53,12 +55,12 @@ static void	redir_splitter(t_ctx *c, t_split *s, char **old)
 	s->l = -1;
 }
 
-static char	**split_redir_2(t_ctx *c, char **old)
+char	**split_redir(t_ctx *c, char **old)
 {
 	t_split	s;
 
 	s = (t_split){0, -1, -1, -1, -1, c->parser.len * 3};
-	s.new = gb_calloc(s.tokens_nb, sizeof(void *), REDIR_GB, &c->gbc);
+	s.new = gb_calloc(s.tokens_nb + 1, sizeof(void *), REDIR_GB, &c->gbc);
 	while (old[++s.i])
 	{
 		s.k = -1;
@@ -75,15 +77,6 @@ static char	**split_redir_2(t_ctx *c, char **old)
 				s.new[s.j][s.l] = old[s.i][s.k];
 		}
 	}
+	split_viewer(s.new);
 	return (s.new);
-}
-
-char	**split_redir(t_ctx *c, char **split)
-{
-	char	**tamerelapute;
-
-	reset_quote_bool(c);
-	tamerelapute = split_redir_2(c, split);
-	split_viewer(tamerelapute);
-	return (tamerelapute);
 }
