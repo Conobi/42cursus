@@ -6,30 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:42:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/08 17:20:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 14:08:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	cmd_viewer(t_ncommand cmd)
-{
-	int	i;
-
-	if (PDEBUG != 1)
-		return ;
-	printf("-----------------\n");
-	printf("argc: %d\n", cmd.argc);
-	printf("argv: \n");
-	i = -1;
-	while (cmd.argv[++i])
-		printf("\t[%d] {%s}\n", i, cmd.argv[i]);
-	printf("redc: %d\n", cmd.redc);
-	i = -1;
-	while (++i < cmd.redc)
-		printf("\t[%d] (%d) {%s}\n", i,
-			cmd.redirections[i].type, cmd.redirections[i].arg);
-}
 
 static int	token_type(char *str)
 {
@@ -84,6 +65,5 @@ t_ncommand	cmd_create(t_ctx *c, char **split)
 		cmd_create_alg(c, &b, split, &cmd);
 	cmd.redc = b.j + 1;
 	cmd.argc = b.k + 1;
-	cmd_viewer(cmd);
 	return (cmd);
 }

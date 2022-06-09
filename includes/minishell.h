@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 18:35:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 14:04:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,19 +121,20 @@ typedef struct s_parser {
 typedef struct s_ctx {
 	struct s_command	*command_table;
 	struct s_ncommand	*cmds;
+	struct termios		term;
+	struct termios		base;
 	t_garbc				*gbc;
 	t_list				*env;
 	t_parser			parser;
+	char				**env_list;
 	char				*prompt;
 	char				*entry;
 	char				*weather_emoji;
-	int					return_code;
 	char				*last_path;
 	char				*last_entry;
+	int					ncmds;
+	int					return_code;
 	int					history_fd;
-	char				**env_list;
-	struct termios		term;
-	struct termios		base;
 }	t_ctx;
 
 typedef struct s_table {
