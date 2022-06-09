@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 18:24:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/08 22:32:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ char	*find_exec(t_ctx *c, const char *exec_name)
  * @param table Commands table struct
  * @param pipes	Number of pipes to close
  */
-void	close_pipes(t_table *table, int pipes)
+void	close_pipes(t_ctx *c, int pipes)
 {
 	int	i;
 
 	i = 0;
 	while (i < pipes)
-		close(table->pipe_fd[i++]);
+		close(c->exec.pipe_fd[i++]);
 }
 
 /**
@@ -75,19 +75,19 @@ void	switch_pipes(int in, int out)
  * @param c Minishell context struct
  * @param table Commands table struct
  */
-void	set_exec_path(t_ctx *c, t_table *table)
+void	set_exec_path(t_ctx *c)
 {
 	int	i;
 
 	i = 0;
-	while (i < table->commands_num)
+	while (&c->cmds[i])
 	{
-		table->command_table[i].exec_path = find_exec(
+		c->cmds[i].exec_path = find_exec(
 				c,
-				table->command_table[i].args[0]);
-		if (!table->command_table[i].exec_path)
+				c->cmds[i].argv[0]);
+		if (!c->cmds[i].exec_path)
 		{
-			printf("%s: %s\n", table->command_table[i].args[0],
+			printf("%s: %s\n", c->cmds[i].argv[0],
 				"command not found");
 			c->return_code = 127 * 256;
 			return ;

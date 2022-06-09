@@ -55,7 +55,6 @@ SRC			= minishell.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \
 			  builtins/echo.c \
-			  builtins/ls.c \
 	 		  builtins/exit_shell.c \
 			  builtins/builtins_manager.c \
 			  utils/prompt_misc.c \
