@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 14:04:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 20:12:04 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@
 # define QUOTE_GB	3
 # define REDIR_GB	4
 # define CMD1P_GB	5
-# define CMD_GB		6
+# define CMD2P_GB	6
+# define CMD3P_GB	7
+# define CMD_GB		8
 
 // todo: Use ds_prompt settings to enable or disable prompt generation
 # define DS_PROMPT	1
@@ -171,6 +173,8 @@ int			is_curr_quoted(t_ctx *c);
 char		**split_quote(t_ctx *c, char *str);
 char		**split_redir(t_ctx *c, char **split);
 t_ncommand	cmd_create(t_ctx *c, char **split);
+void		enverr_pass(t_ctx *c);
+void		envvar_pass(t_ctx *c);
 
 typedef struct s_error {
 	short	type;
@@ -219,6 +223,7 @@ void		init_history(t_ctx *c);
 char		*get_branch(t_ctx *c);
 void		get_weather(t_ctx *c);
 t_list		*create_env(t_ctx *c, char **env);
+char		*get_env_by_key(t_list *head, char *key);
 void		termios_init(t_ctx *c);
 void		termios_set(t_ctx *c, short mode);
 void		create_error(t_ctx *c, t_error err);

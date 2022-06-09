@@ -51,6 +51,8 @@ SRC			= minishell.c \
 			  parsing/split_quote.c \
 			  parsing/split_redir.c \
 			  parsing/cmd_create.c \
+			  parsing/enverr_pass.c \
+			  parsing/envvar_pass.c \
 			  executor/heredoc.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \

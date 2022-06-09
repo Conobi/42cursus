@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/09 14:08:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 20:12:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	parser(t_ctx *c)
 		c->cmds[i] = cmd_create(c, split_redir(c,
 					split_quote(c, c->parser.pipes[i])));
 	i = -1;
+	enverr_pass(c);
+	envvar_pass(c);
 	while (PDEBUG && ++i < c->ncmds)
 		cmd_viewer(c->cmds[i]);
 	if (PDEBUG)

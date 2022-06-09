@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:20:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/18 12:28:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 20:02:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ t_list	*create_env_entry(t_ctx *c, char *entry)
  *
  * @param head Head of the environment variable list
  * @param key Key to search
- * @return t_env* Returns env object for the given key, NULL if not found
+ * @return char * Returns env value for the given key, NULL if not found
  */
-t_env	*get_env_by_key(t_list *head, char *key)
+char	*get_env_by_key(t_list *head, char *key)
 {
 	t_list	*curr;
 	t_env	*curr_env;
@@ -60,7 +60,7 @@ t_env	*get_env_by_key(t_list *head, char *key)
 	{
 		curr_env = (t_env *)curr->content;
 		if (ft_eq(curr_env->key, key, 0))
-			return (curr_env);
+			return (curr_env->value);
 		curr = curr->next;
 	}
 	return (NULL);
