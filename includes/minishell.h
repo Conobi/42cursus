@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 22:14:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 14:10:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,21 @@ typedef struct s_exec {
 
 typedef struct s_ctx {
 	struct s_ncommand	*cmds;
+	struct termios		term;
+	struct termios		base;
 	t_garbc				*gbc;
 	t_list				*env;
 	t_parser			parser;
 	t_exec				exec;
+	char				**env_list;
 	char				*prompt;
 	char				*entry;
 	char				*weather_emoji;
-	int					return_code;
 	char				*last_path;
 	char				*last_entry;
+	int					ncmds;
+	int					return_code;
 	int					history_fd;
-	char				**env_list;
-	struct termios		term;
-	struct termios		base;
 }	t_ctx;
 
 // Utils
