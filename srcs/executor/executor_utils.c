@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 22:32:54 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 14:20:45 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	close_pipes(t_ctx *c, int pipes)
 
 	i = 0;
 	while (i < pipes)
-		close(c->exec.pipe_fd[i++]);
+		close(c->exec->pipe_fd[i++]);
 }
 
 /**
@@ -80,7 +80,7 @@ void	set_exec_path(t_ctx *c)
 	int	i;
 
 	i = 0;
-	while (&c->cmds[i])
+	while (i < c->ncmds)
 	{
 		c->cmds[i].exec_path = find_exec(
 				c,

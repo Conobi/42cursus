@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 22:55:45 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 19:49:57 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ int	main(int argc, char **argv, char **env)
 			history(&c);
 			if (exec_builtin(&c)) // todo: check in exec command for piped builtins
 				continue ;
-			if (ft_eq(c.entry, "here", 0))
-				create_heredoc(&c);
-			else
-				exec(&c);
+			exec(&c);
 			gen_prompt(&c, format_path(&c), get_branch(&c));
 			gb_delete(&c.gbc, CMD_GB);
 		}

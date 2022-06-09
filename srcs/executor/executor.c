@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 22:52:40 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 20:19:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,26 @@
  */
 void	exec_child(t_ctx *c, int curr_cmd, int piped_commands)
 {
-	// int	in;
-	// int	out;
+	int	in;
+	int	out;
 
-	c->exec.process[curr_cmd] = fork();
-	if (c->exec.process[curr_cmd] < 0)
+	printf("Executing command %d\n", curr_cmd);
+	c->exec->process[curr_cmd] = fork();
+	if (c->exec->process[curr_cmd] < 0)
 		return (perror("fork"));
-	if (c->exec.process[curr_cmd] == 0)
+	if (c->exec->process[curr_cmd] == 0)
 	{
-		// todo: check utility of these functions
-		// in_selector(c, curr_cmd, &in);
-		// out_selector(c, curr_cmd, piped_commands, &out);
-		// todo end
-		if (curr_cmd == 0)
-			switch_pipes(c->exec.pipe_fd[0], c->exec.pipe_fd[1]);
-		else if (curr_cmd == piped_commands - 1)
-			switch_pipes(c->exec.pipe_fd[2 * curr_cmd - 2],
-				c->cmds[curr_cmd].outfile);
+		in_selector(c, curr_cmd, piped_commands, &in);
+		out_selector(c, curr_cmd, piped_commands, &out);
+		if (curr_cmd == piped_commands - 1)
+			switch_pipes(in, out);
+		else if (curr_cmd == 0)
+			switch_pipes(in, out);
 		else
-			switch_pipes(c->exec.pipe_fd[2 * curr_cmd - 2],
-				c->exec.pipe_fd[2 * curr_cmd + 1]);
+			switch_pipes(in, out);
 		close_pipes(c, 2 * piped_commands);
-		execve(c->cmds[curr_cmd].exec_path,
-			c->cmds[curr_cmd].argv, NULL);
+		exit(execve(c->cmds[curr_cmd].exec_path,
+				c->cmds[curr_cmd].argv, NULL));
 	}
 }
 
@@ -59,14 +56,14 @@ void	pipe_fd(t_ctx *c, int cmds)
 {
 	int	i;
 
-	c->exec.pipe_fd = malloc(sizeof(int) * (cmds * 2));
+	c->exec->pipe_fd = malloc(sizeof(int) * (cmds * 2));
 	i = 0;
 	while (i < cmds)
 	{
-		if (pipe(c->exec.pipe_fd + 2 * i++) < 0)
+		if (pipe(c->exec->pipe_fd + 2 * i++) < 0)
 		{
 			return (perror("pipe"));
-			free(c->exec.pipe_fd);
+			free(c->exec->pipe_fd);
 		}
 	}
 }
@@ -81,20 +78,16 @@ void	pipe_fd(t_ctx *c, int cmds)
 int	exec_piped(t_ctx *c)
 {
 	int		i;
-	int		piped_commands;
 
-	piped_commands = 0;
-	while (&c->cmds[piped_commands])
-		piped_commands++;
-	pipe_fd(c, piped_commands);
+	pipe_fd(c, c->ncmds);
 	i = 0;
-	while (&c->cmds[i])
-		exec_child(c, i++, piped_commands);
-	close_pipes(c, 2 * piped_commands);
+	while (i < c->ncmds)
+		exec_child(c, i++, c->ncmds);
+	close_pipes(c, 2 * c->ncmds);
 	i = 0;
-	while (i < piped_commands)
-		waitpid(c->exec.process[i++], 0, 0);
-	return (piped_commands);
+	while (i < c->ncmds)
+		waitpid(c->exec->process[i++], 0, 0);
+	return (c->ncmds);
 }
 
 /**
@@ -106,6 +99,8 @@ int	exec_piped(t_ctx *c)
 void	exec_single(t_ctx *c, int cmd)
 {
 	pid_t	pid;
+	int		in;
+	int		out;
 
 	pid = fork();
 	if (pid < 0)
@@ -117,6 +112,9 @@ void	exec_single(t_ctx *c, int cmd)
 	{
 		if (!c->cmds[cmd].exec_path)
 			return ;
+		in_selector(c, cmd, 1, &in);
+		out_selector(c, cmd, 0, &out);
+		switch_pipes(in, out);
 		execve(c->cmds[cmd].exec_path,
 			c->cmds[cmd].argv, c->env_list);
 		perror("execve");
@@ -136,12 +134,21 @@ void	exec_single(t_ctx *c, int cmd)
  */
 void	exec(t_ctx *c)
 {
-	// int		i;
+	int		i;
 
 	// todo: rewrite all redirections functions
-	// i = 0;
-	// while (c->command_table[i])
-	// 	outfile_handler(c, i++);
+	i = -1;
+	while (++i < c->ncmds)
+	{
+		c->cmds[i].infile = 0;
+		c->cmds[i].outfile = 1;
+		infile_handler(c, i);
+		outfile_handler(c, i);
+	}
+	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
+	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
 	set_exec_path(c);
+	if (c->ncmds == 1)
+		return (exec_single(c, 0));
 	exec_piped(c);
 }

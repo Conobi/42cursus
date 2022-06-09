@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 14:10:33 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 19:49:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <signal.h>
 
 // To show the printf debug for parsing purpose
-# define PDEBUG	1
+# define PDEBUG	0
 
 //Term colors
 # define RED_FG	"\e[91m"
@@ -93,6 +93,7 @@ typedef struct s_ncommand {
 	t_redir	*redirections;
 	char	*exec_path;
 	int		outfile;
+	int		infile;
 }	t_ncommand;
 
 typedef struct s_parser {
@@ -116,7 +117,7 @@ typedef struct s_ctx {
 	t_garbc				*gbc;
 	t_list				*env;
 	t_parser			parser;
-	t_exec				exec;
+	t_exec				*exec;
 	char				**env_list;
 	char				*prompt;
 	char				*entry;
@@ -158,14 +159,15 @@ typedef struct s_env {
 // Executor functions
 void		exec(t_ctx *c);
 void		outfile_handler(t_ctx *c, int curr_cmd);
+void		infile_handler(t_ctx *c, int curr_cmd);
 void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int in, int out);
 void		set_exec_path(t_ctx *c);
-void		in_selector(t_ctx *c, int curr, int *in);
+void		in_selector(t_ctx *c, int curr, int piped_commands, int *in);
 void		out_selector(t_ctx *c, int curr,
 				int piped_commands, int *out);
 char		*find_exec(t_ctx *c, const char *exec_name);
-void		create_heredoc(t_ctx *c);
+void		create_heredoc(t_ctx *c, char *stop);
 
 // Builtins
 bool		exec_builtin(t_ctx *c);
