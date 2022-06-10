@@ -6,11 +6,13 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 19:49:57 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 15:52:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_return = 0;
 
 void	signal_handler(int sig)
 {
@@ -24,7 +26,6 @@ static void	ctx_init(t_ctx *c, char **env)
 	c->env = create_env(c, env);
 	if (!c->gbc)
 		exit_shell(c, 1);
-	c->return_code = 0;
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->env_list = env;
 	get_weather(c);

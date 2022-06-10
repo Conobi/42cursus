@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 14:20:45 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 15:53:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	set_exec_path(t_ctx *c)
 		{
 			printf("%s: %s\n", c->cmds[i].argv[0],
 				"command not found");
-			c->return_code = 127 * 256;
+			g_return = 127 * 256;
 			return ;
 		}
 		i++;

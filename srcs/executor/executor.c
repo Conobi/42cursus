@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 09:30:15 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 15:53:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	exec_single(t_ctx *c, int cmd)
 		exit(0);
 	}
 	else
-		waitpid(pid, &c->return_code, 0);
+		waitpid(pid, &g_return, 0);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler); //todo: function to switch signals
 }

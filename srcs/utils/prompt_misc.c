@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 19:31:52 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 15:56:01 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	char	*status;
 
 	free(c->prompt);
-	// printf("%d -> %d\n", c->return_code, WEXITSTATUS(c->return_code)); // debug
-	if (WEXITSTATUS(c->return_code) == 0)
+	printf("%d -> %d\n", g_return, WEXITSTATUS(g_return)); // debug
+	if (WEXITSTATUS(g_return) == 0)
 		status = "✓";
 	else
 		status = gb_add(ft_strjoin("✖ ",
-					gb_add(ft_itoa(WEXITSTATUS(c->return_code)),
+					gb_add(ft_itoa(g_return),
 						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
+	/**
+	 * todo: fix emoji align with ft_strlen(c->weather_emoji)
+	 */
 	if (branch)
 	{
 		c->prompt = ft_aconcat(28, WHT_FG, "",
@@ -80,7 +83,7 @@ void	get_weather(t_ctx *c)
 		close(link[1]);
 		read(link[0], c->weather_emoji, 4);
 		close(link[0]);
-		waitpid(pid, &c->return_code, 0);
+		waitpid(pid, &g_return, 0);
 	}
 }
 

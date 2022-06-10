@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 09:23:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 15:53:32 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	create_heredoc(t_ctx *c, char *stop)
 	char	*line;
 	char	*tmp;
 
+	(void)c;
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
@@ -53,10 +54,12 @@ int	create_heredoc(t_ctx *c, char *stop)
 	}
 	else
 	{
-		waitpid(pid, &c->return_code, 0);
+		waitpid(pid, &g_return, 0);
 		close(fd[1]);
-		if (c->return_code == 0)
+		if (g_return == 0)
 			return (fd[0]);
+		else
+			return (-1);
 	}
 	return (1);
 }

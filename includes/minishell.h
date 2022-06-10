@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 09:22:16 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 15:52:19 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+
+int	g_return;
 
 // To show the printf debug for parsing purpose
 # define PDEBUG	0
