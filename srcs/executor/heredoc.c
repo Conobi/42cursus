@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 19:57:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 09:23:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  *
  * @param c Minishell context struct
  */
-void	create_heredoc(t_ctx *c, char *stop)
+int	create_heredoc(t_ctx *c, char *stop)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -25,10 +25,16 @@ void	create_heredoc(t_ctx *c, char *stop)
 	char	*tmp;
 
 	if (pipe(fd) == -1)
-		return (perror("pipe"));
+	{
+		perror("pipe");
+		return (1);
+	}
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"));
+	{
+		perror("fork");
+		return (1);
+	}
 	if (pid == 0)
 	{
 		signal(SIGINT, heredoc_sig_handler);
@@ -50,15 +56,7 @@ void	create_heredoc(t_ctx *c, char *stop)
 		waitpid(pid, &c->return_code, 0);
 		close(fd[1]);
 		if (c->return_code == 0)
-		{
-			while (true)
-			{
-				line = ft_gnl(fd[0]);
-				if (!line)
-					break ;
-				printf("%s", line);
-				free(line);
-			}
-		}
+			return (fd[0]);
 	}
+	return (1);
 }

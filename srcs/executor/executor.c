@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 20:19:15 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 09:30:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_child(t_ctx *c, int curr_cmd, int piped_commands)
 		return (perror("fork"));
 	if (c->exec->process[curr_cmd] == 0)
 	{
-		in_selector(c, curr_cmd, piped_commands, &in);
+		in_selector(c, curr_cmd, &in);
 		out_selector(c, curr_cmd, piped_commands, &out);
 		if (curr_cmd == piped_commands - 1)
 			switch_pipes(in, out);
@@ -112,8 +112,8 @@ void	exec_single(t_ctx *c, int cmd)
 	{
 		if (!c->cmds[cmd].exec_path)
 			return ;
-		in_selector(c, cmd, 1, &in);
-		out_selector(c, cmd, 0, &out);
+		in_selector(c, cmd, &in);
+		out_selector(c, cmd, c->ncmds, &out);
 		switch_pipes(in, out);
 		execve(c->cmds[cmd].exec_path,
 			c->cmds[cmd].argv, c->env_list);
@@ -140,8 +140,6 @@ void	exec(t_ctx *c)
 	i = -1;
 	while (++i < c->ncmds)
 	{
-		c->cmds[i].infile = 0;
-		c->cmds[i].outfile = 1;
 		infile_handler(c, i);
 		outfile_handler(c, i);
 	}

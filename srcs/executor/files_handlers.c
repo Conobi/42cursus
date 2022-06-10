@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 19:51:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 09:34:20 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	outfile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
+	c->cmds[curr_cmd].outfile = -1;
 	if (c->cmds[curr_cmd].redc == 0)
 	{
 		c->cmds[curr_cmd].outfile = 1;
@@ -56,6 +57,7 @@ void	infile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
+	c->cmds[curr_cmd].infile = -1;
 	if (c->cmds[curr_cmd].redc == 0)
 	{
 		c->cmds[curr_cmd].infile = 0;
@@ -65,7 +67,7 @@ void	infile_handler(t_ctx *c, int curr_cmd)
 	while (i < c->cmds[curr_cmd].redc)
 	{
 		if (c->cmds[curr_cmd].redirections[i].type == HRDC_TK)
-			create_heredoc(c, c->cmds[curr_cmd].redirections[i].arg);
+			c->cmds[curr_cmd].infile = create_heredoc(c, c->cmds[curr_cmd].redirections[i].arg);
 		if (c->cmds[curr_cmd].redirections[i].type == IN_TK)
 		{
 			c->cmds[curr_cmd].infile = open(
@@ -83,16 +85,27 @@ void	infile_handler(t_ctx *c, int curr_cmd)
  * @param curr Index of current command
  * @param in File descriptor to modify for input
  */
-void	in_selector(t_ctx *c, int curr, int piped_commands, int *in)
+void	in_selector(t_ctx *c, int curr, int *in)
 {
-	if (c->cmds[curr].infile)
+	printf("======in selection======\n");
+	printf("in -> %d\n", c->cmds[curr].infile);
+	if (c->cmds[curr].infile != -1)
+	{
+		printf("enter in infile mode\n");
 		*in = c->cmds[curr].infile;
-	else if (curr == piped_commands)
-		*in = c->cmds[curr].outfile;
+	}
 	else if (curr == 0)
+	{
+		printf("enter in first cmd mode\n");
 		*in = 0;
-	else if (c->ncmds > 1)
+	}
+	else
+	{
+		printf("enter in last or middle cmd mode\n");
 		*in = c->exec->pipe_fd[2 * curr - 2];
+	}
+	printf("in -> %d\n", *in);
+	printf("========================\n");
 }
 
 /**
@@ -105,12 +118,29 @@ void	in_selector(t_ctx *c, int curr, int piped_commands, int *in)
  */
 void	out_selector(t_ctx *c, int curr, int piped_commands, int *out)
 {
-	if (c->cmds[curr].outfile)
+	printf("======out selection======\n");
+	printf("out -> %d\n", c->cmds[curr].outfile);
+	if (c->cmds[curr].outfile > 0)
+	{
+		printf("enter in outfile mode\n");
 		*out = c->cmds[curr].outfile;
-	else if (curr == 0)
-		*out = c->exec->pipe_fd[1];
+	}
 	else if (curr == piped_commands - 1)
+	{
+		printf("enter in last cmd mode\n");
 		*out = c->cmds[curr].outfile;
+	}
+	else if (curr == 0)
+	{
+
+		printf("enter in first cmd mode\n");
+		*out = c->exec->pipe_fd[1];
+	}
 	else
+	{
+		printf("enter in middle cmd mode\n");
 		*out = c->exec->pipe_fd[2 * curr + 1];
+	}
+	printf("out -> %d\n", *out);
+	printf("========================\n");
 }
