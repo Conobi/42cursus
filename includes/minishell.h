@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 20:12:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 19:34:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,28 @@
 # define PDEBUG	1
 
 //Term colors
-# define RED_FG	"\e[91m"
-# define GRN_FG	"\e[32m"
-# define YEL_FG	"\e[33m"
-# define BLU_FG	"\e[34m"
-# define MAG_FG	"\e[35m"
-# define CYN_FG	"\e[36m"
-# define WHT_FG	"\e[37m"
-# define BLK_FG	"\e[30m"
-# define ACC_FG	"\e[38;2;65;208;117m"
+# define RED_FG	"\033[91m"
+# define GRN_FG	"\033[32m"
+# define YEL_FG	"\033[33m"
+# define BLU_FG	"\033[34m"
+# define MAG_FG	"\033[35m"
+# define CYN_FG	"\033[36m"
+# define WHT_FG	"\033[37m"
+# define BLK_FG	"\033[30m"
+# define ACC_FG	"\033[38;2;65;208;117m"
 
-# define RED_BG	"\e[101m"
-# define GRN_BG	"\e[42m"
-# define YEL_BG	"\e[43m"
-# define BLU_BG	"\e[44m"
-# define MAG_BG	"\e[45m"
-# define CYN_BG	"\e[46m"
-# define WHT_BG	"\e[47m"
-# define BLK_BG	"\e[40m"
-# define ACC_BG	"\e[48;2;65;208;117m"
+# define RED_BG	"\033[101m"
+# define GRN_BG	"\033[42m"
+# define YEL_BG	"\033[43m"
+# define BLU_BG	"\033[44m"
+# define MAG_BG	"\033[45m"
+# define CYN_BG	"\033[46m"
+# define WHT_BG	"\033[47m"
+# define BLK_BG	"\033[40m"
+# define ACC_BG	"\033[48;2;65;208;117m"
 
-# define RESET	"\e[0m"
-# define BOLD	"\e[1m"
+# define RESET	"\033[0m"
+# define BOLD	"\033[1m"
 
 # define OTHR_TK	0
 # define OUT_TK		1
@@ -73,7 +73,8 @@
 # define CMD1P_GB	5
 # define CMD2P_GB	6
 # define CMD3P_GB	7
-# define CMD_GB		8
+# define CMD4P_GB	8
+# define CMD_GB		9
 
 // todo: Use ds_prompt settings to enable or disable prompt generation
 # define DS_PROMPT	1
@@ -175,6 +176,7 @@ char		**split_redir(t_ctx *c, char **split);
 t_ncommand	cmd_create(t_ctx *c, char **split);
 void		enverr_pass(t_ctx *c);
 void		envvar_pass(t_ctx *c);
+void		remquote_pass(t_ctx *c);
 
 typedef struct s_error {
 	short	type;

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:42:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/09 14:08:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 19:58:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ t_ncommand	cmd_create(t_ctx *c, char **split)
 	t_ncommand	cmd;
 	t_builder	b;
 
-	b = (t_builder){0, -1, -1, -1};
-	while (split[b.nb_tokens])
-		b.nb_tokens++;
+	b = (t_builder){-1, -1, -1, -1};
+	while (split[++b.nb_tokens])
+		;
 	cmd.redirections = gb_calloc(b.nb_tokens + 1, sizeof(t_redir),
 			CMD1P_GB, &c->gbc);
-	cmd.argv = gb_calloc(b.nb_tokens + 1, sizeof(cmd.argv),
+	cmd.argv = gb_calloc(b.nb_tokens + 1, sizeof(char *),
 			CMD1P_GB, &c->gbc);
 	while (split[++b.i])
 		cmd_create_alg(c, &b, split, &cmd);

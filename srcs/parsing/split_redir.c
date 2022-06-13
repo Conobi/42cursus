@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:16:53 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/08 17:18:55 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 19:51:19 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ char	**split_redir(t_ctx *c, char **old)
 	t_split	s;
 
 	s = (t_split){0, -1, -1, -1, -1, c->parser.len * 3};
-	s.new = gb_calloc(s.tokens_nb + 1, sizeof(void *), REDIR_GB, &c->gbc);
+	printf(">>%d<<\n", s.tokens_nb);
+	s.new = gb_calloc(s.tokens_nb + 1, sizeof(char *), REDIR_GB, &c->gbc);
 	while (old[++s.i])
 	{
 		s.k = -1;

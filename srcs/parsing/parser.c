@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/09 20:12:47 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 20:32:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ static void	cmd_viewer(t_ncommand cmd)
 {
 	int	i;
 
+	i = -1;
 	if (PDEBUG != 1)
 		return ;
 	printf("-----------------\n");
+	printf("OOOO %p OOOO\n", &cmd);
 	printf("argc: %d\n", cmd.argc);
 	printf("argv: \n");
-	i = -1;
-	while (cmd.argv[++i])
+	while (++i < cmd.argc)
 		printf("\t[%d] {%s}\n", i, cmd.argv[i]);
 	printf("redc: %d\n", cmd.redc);
 	i = -1;
@@ -78,9 +79,10 @@ void	parser(t_ctx *c)
 	while (++i < c->ncmds)
 		c->cmds[i] = cmd_create(c, split_redir(c,
 					split_quote(c, c->parser.pipes[i])));
-	i = -1;
 	enverr_pass(c);
 	envvar_pass(c);
+	remquote_pass(c);
+	i = -1;
 	while (PDEBUG && ++i < c->ncmds)
 		cmd_viewer(c->cmds[i]);
 	if (PDEBUG)

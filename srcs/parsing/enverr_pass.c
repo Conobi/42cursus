@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:19:06 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/09 19:30:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 18:10:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@ static char	*str_enverr(t_ctx *c, char *token)
 	return (gb_add(ft_strdup(token), &c->gbc, CMD2P_GB));
 }
 
+static short	contains_enverr(t_ctx *c, const char *token)
+{
+	int	i;
+
+	i = -1;
+	reset_quote_bool(c);
+	while (token[++i] && token[i + 1])
+	{
+		set_quote_bool(c, token[i]);
+		if (c->parser.squoted == 1)
+			continue ;
+		if (token[i] == '$'
+			&& token[i + 1] == '?')
+			return (1);
+	}
+	return (0);
+}
+
 void	enverr_pass(t_ctx *c)
 {
 	int	i;
@@ -53,13 +71,13 @@ void	enverr_pass(t_ctx *c)
 	{
 		j = -1;
 		while (++j < c->cmds[i].argc)
-			while (ft_strnstr(c->cmds[i].argv[j], "$?",
-					ft_strlen(c->cmds[i].argv[j])))
+			while (contains_enverr(c, c->cmds[i].argv[j]))
 				c->cmds[i].argv[j] = str_enverr(c, c->cmds[i].argv[j]);
 		j = -1;
 		while (++j < c->cmds[i].redc)
-			c->cmds[i].redirections[j].arg = str_enverr(c,
-					c->cmds[i].redirections[j].arg);
+			while (contains_enverr(c, c->cmds[i].redirections[j].arg))
+				c->cmds[i].redirections[j].arg = str_enverr(c,
+						c->cmds[i].redirections[j].arg);
 	}
 }
 

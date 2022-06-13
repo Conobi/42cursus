@@ -53,6 +53,7 @@ SRC			= minishell.c \
 			  parsing/cmd_create.c \
 			  parsing/enverr_pass.c \
 			  parsing/envvar_pass.c \
+			  parsing/remquote_pass.c \
 			  executor/heredoc.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \
@@ -74,7 +75,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR) -g3
+CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -I $(LIBFTDIR) -std=c99 -O1 -g3
 
 all: libft $(NAME)
 
