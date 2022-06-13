@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 17:03:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 16:01:10 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	fork_sig_handler(int sig)
 {
 	if (sig == SIGINT) //todo: return code -> 131
 	{
-		g_return = 1;
-		write(1, "\n", 1);
 		return ;
 	}
 	if (sig == SIGQUIT) //todo: return code -> 131

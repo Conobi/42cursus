@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 15:52:19 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 18:25:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,10 @@ char		*find_exec(t_ctx *c, const char *exec_name);
 int			create_heredoc(t_ctx *c, char *stop);
 
 // Builtins
-bool		exec_builtin(t_ctx *c);
+bool		exec_builtin(t_ctx *c, t_ncommand cmd);
 void		b_cd(t_ctx *c, char *path);
 void		b_pwd(t_ctx *c);
-void		b_echo(const char *args);
+void		b_echo(t_ncommand cmd);
 void		b_ls(t_ctx *c, int cmd);
 void		rl_replace_line(const char *text, int clear_undo);
 

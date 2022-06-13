@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 15:53:15 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 20:08:13 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	exec_child(t_ctx *c, int curr_cmd, int piped_commands)
 		else
 			switch_pipes(in, out);
 		close_pipes(c, 2 * piped_commands);
+		if (exec_builtin(c, c->cmds[curr_cmd]))
+			exit(0);
 		exit(execve(c->cmds[curr_cmd].exec_path,
-				c->cmds[curr_cmd].argv, NULL));
+				c->cmds[curr_cmd].argv, c->env_list));
 	}
 }
 
@@ -115,6 +117,8 @@ void	exec_single(t_ctx *c, int cmd)
 		in_selector(c, cmd, &in);
 		out_selector(c, cmd, c->ncmds, &out);
 		switch_pipes(in, out);
+		if (exec_builtin(c, c->cmds[cmd]))
+			exit(0);
 		execve(c->cmds[cmd].exec_path,
 			c->cmds[cmd].argv, c->env_list);
 		perror("execve");

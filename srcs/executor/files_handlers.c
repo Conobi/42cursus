@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 09:34:20 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 18:27:24 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,25 @@ void	infile_handler(t_ctx *c, int curr_cmd)
  */
 void	in_selector(t_ctx *c, int curr, int *in)
 {
-	printf("======in selection======\n");
-	printf("in -> %d\n", c->cmds[curr].infile);
+	// printf("======in selection======\n");
+	// printf("%d in -> %d\n", curr, c->cmds[curr].infile);
 	if (c->cmds[curr].infile != -1)
 	{
-		printf("enter in infile mode\n");
+		// printf("enter in infile mode\n");
 		*in = c->cmds[curr].infile;
 	}
 	else if (curr == 0)
 	{
-		printf("enter in first cmd mode\n");
+		// printf("enter in first cmd mode\n");
 		*in = 0;
 	}
 	else
 	{
-		printf("enter in last or middle cmd mode\n");
+		// printf("enter in last or middle cmd mode\n");
 		*in = c->exec->pipe_fd[2 * curr - 2];
 	}
-	printf("in -> %d\n", *in);
-	printf("========================\n");
+	// printf("%d in -> %d\n", curr, *in);
+	// printf("========================\n");
 }
 
 /**
@@ -118,29 +118,28 @@ void	in_selector(t_ctx *c, int curr, int *in)
  */
 void	out_selector(t_ctx *c, int curr, int piped_commands, int *out)
 {
-	printf("======out selection======\n");
-	printf("out -> %d\n", c->cmds[curr].outfile);
-	if (c->cmds[curr].outfile > 0)
+	// printf("======out selection======\n");
+	// printf("%d out -> %d\n", curr, c->cmds[curr].outfile);
+	if (c->cmds[curr].outfile != -1)
 	{
-		printf("enter in outfile mode\n");
+		// printf("enter in outfile mode\n");
 		*out = c->cmds[curr].outfile;
 	}
-	else if (curr == piped_commands - 1)
+	if (curr == piped_commands - 1)
 	{
-		printf("enter in last cmd mode\n");
+		// printf("enter in last cmd mode\n");
 		*out = c->cmds[curr].outfile;
 	}
 	else if (curr == 0)
 	{
-
-		printf("enter in first cmd mode\n");
+		// printf("enter in first cmd mode\n");
 		*out = c->exec->pipe_fd[1];
 	}
 	else
 	{
-		printf("enter in middle cmd mode\n");
+		// printf("enter in middle cmd mode\n");
 		*out = c->exec->pipe_fd[2 * curr + 1];
 	}
-	printf("out -> %d\n", *out);
-	printf("========================\n");
+	// printf("%d out -> %d\n", curr, *out);
+	// printf("========================\n");
 }
