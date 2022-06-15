@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/13 20:06:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:54:10 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
  */
 bool	exec_builtin(t_ctx *c, t_ncommand cmd)
 {
-	printf("%s\n", cmd.argv[0]);
 	if (ft_eq(cmd.argv[0], "exit", 1))
 	{
-		printf("fgdfgv\n");
 		if (cmd.argc > 0)
 			exit_shell(c, ft_atoi(cmd.argv[1]));
 		else

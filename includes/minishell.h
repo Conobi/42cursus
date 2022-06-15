@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/13 18:25:17 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:33:33 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void		outfile_handler(t_ctx *c, int curr_cmd);
 void		infile_handler(t_ctx *c, int curr_cmd);
 void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int in, int out);
-void		set_exec_path(t_ctx *c);
+bool		set_exec_path(t_ctx *c);
 void		in_selector(t_ctx *c, int curr, int *in);
 void		out_selector(t_ctx *c, int curr,
 				int piped_commands, int *out);

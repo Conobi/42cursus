@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 15:53:15 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:33:43 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	switch_pipes(int in, int out)
  * @param c Minishell context struct
  * @param table Commands table struct
  */
-void	set_exec_path(t_ctx *c)
+bool	set_exec_path(t_ctx *c)
 {
 	int	i;
 
@@ -90,8 +90,9 @@ void	set_exec_path(t_ctx *c)
 			printf("%s: %s\n", c->cmds[i].argv[0],
 				"command not found");
 			g_return = 127 * 256;
-			return ;
+			return (false);
 		}
 		i++;
 	}
+	return (true);
 }

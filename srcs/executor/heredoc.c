@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 15:53:32 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 19:42:40 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int	create_heredoc(t_ctx *c, char *stop)
 	char	*line;
 	char	*tmp;
 
-	(void)c;
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
 		return (1);
 	}
+	signal(SIGINT, fork_sig_handler);
+	signal(SIGQUIT, fork_sig_handler);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -55,6 +56,8 @@ int	create_heredoc(t_ctx *c, char *stop)
 	else
 	{
 		waitpid(pid, &g_return, 0);
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, sig_handler);
 		close(fd[1]);
 		if (g_return == 0)
 			return (fd[0]);

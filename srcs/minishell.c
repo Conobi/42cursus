@@ -6,19 +6,13 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/13 18:03:29 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 19:01:04 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_return = 0;
-
-void	signal_handler(int sig)
-{
-	(void) sig;
-	return ;
-}
 
 static void	ctx_init(t_ctx *c, char **env)
 {

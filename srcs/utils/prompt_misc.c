@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/10 15:56:01 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 14:29:31 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 		status = "✓";
 	else
 		status = gb_add(ft_strjoin("✖ ",
-					gb_add(ft_itoa(g_return),
+					gb_add(ft_itoa(WEXITSTATUS(g_return)),
 						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
 	/**
 	 * todo: fix emoji align with ft_strlen(c->weather_emoji)

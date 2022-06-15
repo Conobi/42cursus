@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/13 20:06:22 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:24:38 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	b_cd(t_ctx *c, char *path)
 	t_error	err;
 	char	*new_path;
 
-	path += 3;
 	if (!path || ft_strlen(path) == 0) // todo: check if err after parsing
 		new_path = getenv("HOME");
 	else if (path[0] == '~')
