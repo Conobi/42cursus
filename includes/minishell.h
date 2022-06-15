@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/13 19:34:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:18:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,15 @@
 
 // GARBAGE TYPE
 # define PERM_GB	0
-# define ENTRY_GB	1
-# define PIPE_GB	2
-# define QUOTE_GB	3
-# define REDIR_GB	4
-# define CMD1P_GB	5
-# define CMD2P_GB	6
-# define CMD3P_GB	7
-# define CMD4P_GB	8
-# define CMD_GB		9
+# define CMD_GB		1
+# define ENTRY_GB	2
+# define PIPE_GB	3
+# define QUOTE_GB	4
+# define REDIR_GB	5
+# define CMD1P_GB	6
+# define CMD2P_GB	7
+# define CMD3P_GB	8
+# define CMD4P_GB	9
 
 // todo: Use ds_prompt settings to enable or disable prompt generation
 # define DS_PROMPT	1

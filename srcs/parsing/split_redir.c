@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:16:53 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/13 19:51:19 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:43:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	**split_redir(t_ctx *c, char **old)
 	t_split	s;
 
 	s = (t_split){0, -1, -1, -1, -1, c->parser.len * 3};
-	printf(">>%d<<\n", s.tokens_nb);
 	s.new = gb_calloc(s.tokens_nb + 1, sizeof(char *), REDIR_GB, &c->gbc);
 	while (old[++s.i])
 	{
@@ -79,5 +78,6 @@ char	**split_redir(t_ctx *c, char **old)
 		}
 	}
 	split_viewer(s.new);
+	gb_delete(&c->gbc, QUOTE_GB);
 	return (s.new);
 }

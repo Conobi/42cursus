@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:13:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/13 18:51:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:15:39 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*remquote(t_ctx *c, char *token)
 
 	r = (t_remquote){0, 0, ft_strlen(token), -1, -1};
 	reset_quote_bool(c);
-	r.ret = gb_calloc(r.tk_len, sizeof(char), CMD4P_GB, &c->gbc);
+	r.ret = gb_calloc(r.tk_len + 1, sizeof(char), CMD4P_GB, &c->gbc);
 	while (token[++r.i])
 	{
 		set_quote_bool(c, token[r.i]);
@@ -56,4 +56,5 @@ void	remquote_pass(t_ctx *c)
 			c->cmds[i].redirections[j].arg = remquote(c,
 					c->cmds[i].redirections[j].arg);
 	}
+	gb_delete(&c->gbc, CMD3P_GB);
 }

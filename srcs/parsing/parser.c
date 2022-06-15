@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/13 20:32:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/15 17:43:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	cmd_viewer(t_ncommand cmd)
+static void	cmd_viewer(t_ncommand *cmd)
 {
 	int	i;
 
@@ -20,23 +20,15 @@ static void	cmd_viewer(t_ncommand cmd)
 	if (PDEBUG != 1)
 		return ;
 	printf("-----------------\n");
-	printf("OOOO %p OOOO\n", &cmd);
-	printf("argc: %d\n", cmd.argc);
+	printf("argc: %d\n", cmd->argc);
 	printf("argv: \n");
-	while (++i < cmd.argc)
-		printf("\t[%d] {%s}\n", i, cmd.argv[i]);
-	printf("redc: %d\n", cmd.redc);
+	while (++i < cmd->argc)
+		printf("\t[%d] {%s}\n", i, cmd->argv[i]);
+	printf("redc: %d\n", cmd->redc);
 	i = -1;
-	while (++i < cmd.redc)
+	while (++i < cmd->redc)
 		printf("\t[%d] (%d) {%s}\n", i,
-			cmd.redirections[i].type, cmd.redirections[i].arg);
-}
-
-static void	parse_print(t_ctx *c)
-{
-	if (PDEBUG != 1)
-		return ;
-	printf("Jacques a dit: [%s] (%d)\n", c->entry, (int)c->entry[0]);
+			cmd->redirections[i].type, cmd->redirections[i].arg);
 }
 
 static void	multi_viewer(char **pipes, int cnt)
@@ -51,7 +43,7 @@ static void	multi_viewer(char **pipes, int cnt)
 		printf("{%d: %s}\n", i, pipes[i]);
 }
 
-void	parser_init(t_ctx *c)
+static void	parser_init(t_ctx *c)
 {
 	if (!c->entry
 		|| !ft_strncmp(c->entry, "exit", 5)
@@ -74,18 +66,18 @@ void	parser(t_ctx *c)
 	c->ncmds = -1;
 	while (c->parser.pipes[++c->ncmds])
 		;
-	c->cmds = gb_calloc(c->ncmds + 1, sizeof(t_ncommand), QUOTE_GB, &c->gbc);
+	c->cmds = gb_calloc(c->ncmds + 1, sizeof(t_ncommand), CMD_GB, &c->gbc);
 	i = -1;
 	while (++i < c->ncmds)
 		c->cmds[i] = cmd_create(c, split_redir(c,
 					split_quote(c, c->parser.pipes[i])));
+	gb_delete(&c->gbc, PIPE_GB);
 	enverr_pass(c);
 	envvar_pass(c);
 	remquote_pass(c);
 	i = -1;
 	while (PDEBUG && ++i < c->ncmds)
-		cmd_viewer(c->cmds[i]);
+		cmd_viewer(&c->cmds[i]);
 	if (PDEBUG)
 		printf("-----------------\n");
-	parse_print(c);
 }
