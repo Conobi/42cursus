@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/15 19:31:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 14:23:52 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	heredoc_sig_handler(int sig)
 	if (sig == SIGINT)
 		exit(1);
 	if (sig == SIGKILL) //todo: not working (check for a solution to disable SIGKILL)
-		return ;
+		exit(0);
 }
 
 /**
