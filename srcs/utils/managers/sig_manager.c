@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 14:23:52 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:02:16 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	sig_handler(int sig)
 	}
 	if (sig == SIGKILL)
 	{
-		printf("exit\n");
+		if (EDEBUG)
+			printf("exit\n");
 		exit(1);
 		return ;
 	}

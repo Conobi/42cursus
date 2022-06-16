@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 18:40:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:03:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 int	g_return;
 
 // To show the printf debug for parsing purpose
-# define PDEBUG	0
+# define PDEBUG	1
+# define EDEBUG	0
 
 //Term colors
 # define RED_FG	"\033[91m"

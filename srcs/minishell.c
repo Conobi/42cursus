@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 18:42:06 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:04:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	main(int argc, char **argv, char **env)
 		if (c.entry && ft_strlen(c.entry) != 0)
 		{
 			history(&c);
-			exec(&c);
+			if (!PDEBUG)
+				exec(&c);
 			gen_prompt(&c, format_path(&c), get_branch(&c));
 			gb_delete(&c.gbc, CMD_GB);
 		}

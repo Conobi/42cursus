@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/15 14:29:31 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:02:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	char	*status;
 
 	free(c->prompt);
-	printf("%d -> %d\n", g_return, WEXITSTATUS(g_return)); // debug
+	if (EDEBUG)
+		printf("%d -> %d\n", g_return, WEXITSTATUS(g_return)); // debug
 	if (WEXITSTATUS(g_return) == 0)
 		status = "✓";
 	else

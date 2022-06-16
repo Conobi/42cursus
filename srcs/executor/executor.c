@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 18:41:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 18:58:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 	int	in;
 	int	out;
 
-	printf("Executing command %d\n", curr);
+	if (EDEBUG)
+		printf("Executing command %d\n", curr);
 	signal(SIGINT, fork_sig_handler);
 	termios_set(c, 1);
 	if (exec_builtin(c, c->cmds[curr])) // function to execute builtins with redirections
