@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/24 15:49:20 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 17:24:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,30 @@
  * @return true if entry is a builtins
  * @return false if entry isnt a builtins
  */
-bool	exec_builtin(t_ctx *c)
+bool	exec_builtin(t_ctx *c, t_ncommand cmd)
 {
-	if (ft_eq(c->entry, "exit", 1))
+	if (ft_eq(cmd.argv[0], "exit", 1))
 	{
-		if (ft_strlen(c->entry) > 4)
-			exit_shell(c, ft_atoi(c->entry + 5));
+		if (cmd.argc > 0)
+			exit_shell(c, ft_atoi(cmd.argv[1]));
 		else
 			exit_shell(c, 0);
 		return (true);
 	}
-	else if (ft_eq(c->entry, "cd", 1))
+	if (ft_eq(cmd.argv[0], "cd", 1))
 	{
-		b_cd(c, c->entry);
+		b_cd(c, cmd.argv[1]);
 		return (true);
 	}
-	else if (ft_eq(c->entry, "pwd", 1))
+	if (ft_eq(cmd.argv[0], "pwd", 1))
 	{
 		b_pwd(c);
 		return (true);
 	}
-	// else if (ft_strncmp(c->entry, "echo", 4) == 0)
-	// 	b_echo(c->entry);
+	if (ft_strncmp(cmd.argv[0], "echo", 4) == 0)
+	{
+		b_echo(cmd);
+		return (true);
+	}
 	return (false);
 }

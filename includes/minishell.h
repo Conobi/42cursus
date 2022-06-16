@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/15 17:18:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 18:40:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@
 # include <sys/wait.h>
 # include <signal.h>
 
+int	g_return;
+
 // To show the printf debug for parsing purpose
-# define PDEBUG	1
+# define PDEBUG	0
 
 //Term colors
 # define RED_FG	"\033[91m"
@@ -84,22 +86,6 @@
 # define ERROR		2
 # define WARNING	3
 
-/**
- * @brief Struct for a command object
- */
-typedef struct s_command {
-	int		args_num;
-	char	**args;
-	bool	piped;
-	bool	heredoc;
-	bool	append;
-	char	**infiles;
-	int		infile;
-	char	**outfiles;
-	int		outfile;
-	char	*exec_path;
-}	t_command;
-
 typedef struct s_redir {
 	char	*arg;
 	short	type;
@@ -110,6 +96,9 @@ typedef struct s_ncommand {
 	char	**argv;
 	int		redc;
 	t_redir	*redirections;
+	char	*exec_path;
+	int		outfile;
+	int		infile;
 }	t_ncommand;
 
 typedef struct s_parser {
@@ -121,14 +110,19 @@ typedef struct s_parser {
 	int		len;
 }	t_parser;
 
+typedef struct s_exec {
+	pid_t	*process;
+	int		*pipe_fd;
+}	t_exec;
+
 typedef struct s_ctx {
-	struct s_command	*command_table;
 	struct s_ncommand	*cmds;
 	struct termios		term;
 	struct termios		base;
 	t_garbc				*gbc;
 	t_list				*env;
 	t_parser			parser;
+	t_exec				*exec;
 	char				**env_list;
 	char				*prompt;
 	char				*entry;
@@ -139,28 +133,6 @@ typedef struct s_ctx {
 	int					return_code;
 	int					history_fd;
 }	t_ctx;
-
-typedef struct s_table {
-	int					commands_num;
-	struct s_command	*command_table;
-	pid_t				*process;
-	int					cmd_idx;
-	int					*pipe_fd;
-}	t_table;
-
-void		add_args(char *arg);
-void		add_command(t_command *command);
-
-// Executor functions
-// void		exec(t_table *table);
-// char		*find_exec(char *exec_name);
-// void		outfile_handler(t_table *table, int curr_cmd);
-// void		close_pipes(t_table *table, int pipes);
-// void		switch_pipes(int in, int out);
-// void		set_exec_path(t_table *table);
-// void		in_selector(t_table *table, int curr, int *in);
-// void		out_selector(t_table *table,
-// 				int curr, int piped_commands, int *out);
 
 // Utils
 void		exit_shell(t_ctx *c, int code);
@@ -192,26 +164,25 @@ typedef struct s_env {
 	char	*value;
 }	t_env;
 
-void		add_command(t_command *command);
-
 // Executor functions
-void		exec(t_ctx *c, t_table *table);
-void		outfile_handler(t_table *table, int curr_cmd);
-void		close_pipes(t_table *table, int pipes);
+void		exec(t_ctx *c);
+void		outfile_handler(t_ctx *c, int curr_cmd);
+void		infile_handler(t_ctx *c, int curr_cmd);
+void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int in, int out);
-void		set_exec_path(t_ctx *c, t_table *table);
-void		in_selector(t_table *table, int curr, int *in);
-void		out_selector(t_table *table, int curr,
+bool		set_exec_path(t_ctx *c);
+void		in_selector(t_ctx *c, int curr, int *in);
+void		out_selector(t_ctx *c, int curr,
 				int piped_commands, int *out);
 char		*find_exec(t_ctx *c, const char *exec_name);
-void		create_heredoc(t_ctx *c);
+int			create_heredoc(t_ctx *c, char *stop);
 
 // Builtins
-bool		exec_builtin(t_ctx *c);
+bool		exec_builtin(t_ctx *c, t_ncommand cmd);
 void		b_cd(t_ctx *c, char *path);
 void		b_pwd(t_ctx *c);
-void		b_echo(const char *args);
-void		b_ls(t_ctx *c, t_table *table, int cmd);
+void		b_echo(t_ncommand cmd);
+void		b_ls(t_ctx *c, int cmd);
 void		rl_replace_line(const char *text, int clear_undo);
 
 // Utils

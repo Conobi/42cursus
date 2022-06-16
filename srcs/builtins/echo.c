@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/13 19:32:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 18:43:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,22 @@
  *
  * @param args Text to print, first args can be -n
  */
-void	b_echo(const char *args)
+void	b_echo(t_ncommand cmd)
 {
-	args += 5;
-	if (ft_strncmp(args, "-n", 2) == 0)
+	int	i;
+
+	if (ft_strncmp(cmd.argv[1], "-n", 2) == 0)
 	{
-		args += 3;
-		printf("%s", args);
+		i = 1;
+		while (++i < cmd.argc - 1)
+			printf("%s ", cmd.argv[i]);
+		printf("%s", cmd.argv[i]);
 	}
 	else
-		printf("%s\n", args);
+	{
+		i = 0;
+		while (++i < cmd.argc - 1)
+			printf("%s ", cmd.argv[i]);
+		printf("%s\n", cmd.argv[i]);
+	}
 }
