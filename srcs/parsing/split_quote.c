@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:10:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:42:43 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:57:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	**split_quote(t_ctx *c, char *str)
 		}
 	}
 	else
-		s.arr = ft_calloc(sizeof(char *), 1);
+		s.arr = gb_calloc(sizeof(char *), 1, QUOTE_GB, &c->gbc);
 	gb_delete(&c->gbc, ENTRY_GB);
 	return (s.arr);
 }

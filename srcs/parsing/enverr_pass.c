@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:19:06 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:40:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:48:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*str_enverr(t_ctx *c, char *token)
 	{
 		e.end_kw = e.start_kw + 1;
 		token[e.start_kw] = 0;
-		e.var = gb_add(ft_itoa(WEXITSTATUS(c->return_code)),
+		e.var = gb_add(ft_itoa(WEXITSTATUS(g_return)),
 				&c->gbc, CMD2P_GB);
 		e.ret = gb_add(ft_aconcat(3, token, e.var, token + e.end_kw + 1),
 				&c->gbc, CMD2P_GB);

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 19:03:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/17 15:57:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <signal.h>
 
 int	g_return;
+
+# define SHELL_NAME "Minishell"
 
 // To show the printf debug for parsing purpose
 # define PDEBUG	1
@@ -84,7 +86,7 @@ int	g_return;
 
 // Errors
 # define FILE_ERR 	1
-# define ERROR		2
+# define FATAL		2
 # define WARNING	3
 
 typedef struct s_redir {
@@ -139,8 +141,8 @@ typedef struct s_ctx {
 void		exit_shell(t_ctx *c, int code);
 
 // Parsing
-void		parser(t_ctx *c);
-void		pipe_cutter(t_ctx *c);
+short		parser(t_ctx *c);
+void		split_pipe(t_ctx *c);
 void		set_quote_bool(t_ctx *c, char curr);
 void		reset_quote_bool(t_ctx *c);
 int			is_curr_quoted(t_ctx *c);
@@ -150,6 +152,12 @@ t_ncommand	cmd_create(t_ctx *c, char **split);
 void		enverr_pass(t_ctx *c);
 void		envvar_pass(t_ctx *c);
 void		remquote_pass(t_ctx *c);
+
+// Tests
+short		test_quote(t_ctx *c);
+short		test_pipe(t_ctx *c);
+short		test_redir(t_ctx *c);
+void		syntax_err(t_ctx *c, char *token);
 
 typedef struct s_error {
 	short	type;
@@ -190,6 +198,7 @@ void		rl_replace_line(const char *text, int clear_undo);
 void		exit_shell(t_ctx *c, int code);
 char		*get_path(t_ctx *c);
 char		*format_path(t_ctx *c);
+void		err_print(const char *err);
 bool		error_handler(t_ctx *c, t_error err);
 void		gen_prompt(t_ctx *c, const char *path, const char *branch);
 void		history(t_ctx *c);

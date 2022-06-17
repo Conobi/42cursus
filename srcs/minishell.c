@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 19:04:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/17 15:48:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ int	main(int argc, char **argv, char **env)
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
 		if (!c.entry)
 			exit_shell(&c, 0);
-		parser(&c);
-		if (c.entry && ft_strlen(c.entry) != 0)
+		if (parser(&c))
 		{
-			history(&c);
 			if (!PDEBUG)
 				exec(&c);
 			gen_prompt(&c, format_path(&c), get_branch(&c));

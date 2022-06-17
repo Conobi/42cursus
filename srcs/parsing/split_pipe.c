@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   split_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/08 17:19:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/17 15:59:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	pipe_quote(t_ctx *c, char curr)
 }
 
 // Tant qu'on a pas fini le string, on split à chaque pipe
-void	pipe_cutter(t_ctx *c)
+void	split_pipe(t_ctx *c)
 {
 	char	*cur;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:26:47 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/17 19:52:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/17 15:48:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,21 @@ int	is_curr_quoted(t_ctx *c)
 		return (0);
 	else
 		return (1);
+}
+
+void	syntax_err(t_ctx *c, char *token)
+{
+	err_print(
+		gb_add(
+			ft_aconcat(
+				4,
+				SHELL_NAME,
+				": syntax error near unexpected token `",
+				token,
+				"'\n"
+				),
+			&c->gbc,
+			CMD_GB
+			)
+		);
 }

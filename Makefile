@@ -47,13 +47,16 @@ SRC			= minishell.c \
 			  executor/files_handlers.c \
 	 		  parsing/parser.c \
 			  parsing/parser_utils.c \
-	 		  parsing/pipe.c \
+	 		  parsing/split_pipe.c \
 			  parsing/split_quote.c \
 			  parsing/split_redir.c \
 			  parsing/cmd_create.c \
 			  parsing/enverr_pass.c \
 			  parsing/envvar_pass.c \
 			  parsing/remquote_pass.c \
+			  parsing/assert/test_quote.c \
+			  parsing/assert/test_pipe.c \
+			  parsing/assert/test_redir.c \
 			  executor/heredoc.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \
