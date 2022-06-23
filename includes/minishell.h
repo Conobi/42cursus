@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/17 15:57:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 17:16:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	g_return;
 # define SHELL_NAME "Minishell"
 
 // To show the printf debug for parsing purpose
-# define PDEBUG	1
+# define PDEBUG	0
 # define EDEBUG	0
 
 //Term colors
@@ -193,6 +193,8 @@ void		b_pwd(t_ctx *c);
 void		b_echo(t_ncommand cmd);
 void		b_ls(t_ctx *c, int cmd);
 void		rl_replace_line(const char *text, int clear_undo);
+
+int			export_builtin(t_ctx *c, int argc, char **argv);
 
 // Utils
 void		exit_shell(t_ctx *c, int code);

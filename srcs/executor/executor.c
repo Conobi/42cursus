@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/17 14:04:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 16:42:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,16 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 		else
 			switch_pipes(in, out);
 		close_pipes(c, 2 * ncmd);
-		if (WEXITSTATUS(g_return) == 0)
-			execve(c->cmds[curr].exec_path,
-				c->cmds[curr].argv, c->env_list);
-		else
-			exit(1);
+		// if (WEXITSTATUS(g_return) == 0)
+		execve(c->cmds[curr].exec_path,
+			c->cmds[curr].argv, c->env_list);
+		// else
+		// 	exit(1);
 	}
 	else
+	{
 		waitpid(c->exec->process[curr], &g_return, 0);
+	}
 }
 
 /**
@@ -68,7 +70,7 @@ void	pipe_fd(t_ctx *c, int cmds)
 {
 	int	i;
 
-	c->exec->pipe_fd = malloc(sizeof(int) * (cmds * 2));
+	c->exec->pipe_fd = gb_calloc(cmds * 2, sizeof(int), CMD_GB, &c->gbc);
 	i = 0;
 	while (i < cmds)
 	{

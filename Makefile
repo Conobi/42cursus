@@ -57,6 +57,7 @@ SRC			= minishell.c \
 			  parsing/assert/test_quote.c \
 			  parsing/assert/test_pipe.c \
 			  parsing/assert/test_redir.c \
+			  parsing/export_builtin.c \
 			  executor/heredoc.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \

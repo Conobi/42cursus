@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:10:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/16 19:57:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 17:32:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_space(char to_find, char *str)
+static int	is_char(char to_find, char *str)
 {
 	while (*str)
 		if (to_find == *str++)
@@ -20,7 +20,7 @@ int	is_space(char to_find, char *str)
 	return (0);
 }
 
-int	wordcount(t_ctx *c, char *str, char *charset)
+static int	wordcount(t_ctx *c, char *str, char *charset)
 {
 	int	count;
 	int	flag;
@@ -30,10 +30,10 @@ int	wordcount(t_ctx *c, char *str, char *charset)
 	while (*str)
 	{
 		set_quote_bool(c, *str);
-		if (is_space(*str, charset) && !is_curr_quoted(c))
+		if (is_char(*str, charset) && !is_curr_quoted(c))
 			flag = 1;
-		if (!is_space(*str, charset)
-			|| (is_space(*str, charset) && is_curr_quoted(c)))
+		if (!is_char(*str, charset)
+			|| (is_char(*str, charset) && is_curr_quoted(c)))
 		{
 			if (flag)
 				++count;
@@ -45,7 +45,7 @@ int	wordcount(t_ctx *c, char *str, char *charset)
 	return (count);
 }
 
-char	*create_word(t_ctx *c, const char *str, int i, int j)
+static char	*create_word(t_ctx *c, const char *str, int i, int j)
 {
 	char	*word;
 	int		o;
@@ -74,12 +74,12 @@ typedef struct s_split
 
 static void	split_quote_builder(t_ctx *c, char *str, t_split *s)
 {
-	while (is_space(str[s->i], " \t\n\v\f\r")
+	while (is_char(str[s->i], " \t\n\v\f\r")
 		&& !is_curr_quoted(c) && str[s->i])
 		set_quote_bool(c, str[s->i++]);
 	s->j = s->i;
-	while (str[s->j] && (!is_space(str[s->j], " \t\n\v\f\r")
-			|| (is_space(str[s->j], " \t\n\v\f\r") && is_curr_quoted(c))))
+	while (str[s->j] && (!is_char(str[s->j], " \t\n\v\f\r")
+			|| (is_char(str[s->j], " \t\n\v\f\r") && is_curr_quoted(c))))
 		set_quote_bool(c, str[s->j++]);
 	s->arr[s->index++] = create_word(c, str, s->i, s->j);
 }

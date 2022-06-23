@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/17 15:48:06 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/17 16:11:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ctx_init(t_ctx *c, char **env)
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->env_list = env;
 	get_weather(c);
-	c->prompt = malloc(0);
+	c->prompt = 0;
 	gen_prompt(c, format_path(c), get_branch(c));
 	c->last_path = get_path(c);
 	c->history_fd = open("./.minishell_history",
