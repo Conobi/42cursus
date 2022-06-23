@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 19:03:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/22 19:00:42 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 int	g_return;
 
 // To show the printf debug for parsing purpose
-# define PDEBUG	1
-# define EDEBUG	0
+# define PDEBUG	0
+# define EDEBUG	1
 
 //Term colors
 # define RED_FG	"\033[91m"
@@ -170,7 +170,7 @@ void		exec(t_ctx *c);
 void		outfile_handler(t_ctx *c, int curr_cmd);
 void		infile_handler(t_ctx *c, int curr_cmd);
 void		close_pipes(t_ctx *c, int pipes);
-void		switch_pipes(int in, int out);
+void		switch_pipes(int *in, int *out);
 bool		set_exec_path(t_ctx *c);
 void		in_selector(t_ctx *c, int curr, int *in);
 void		out_selector(t_ctx *c, int curr,
@@ -179,6 +179,7 @@ char		*find_exec(t_ctx *c, const char *exec_name);
 int			create_heredoc(t_ctx *c, char *stop);
 
 // Builtins
+bool		is_builtin(t_ncommand cmd);
 bool		exec_builtin(t_ctx *c, t_ncommand cmd);
 void		b_cd(t_ctx *c, char *path);
 void		b_pwd(t_ctx *c);

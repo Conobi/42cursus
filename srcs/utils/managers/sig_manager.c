@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 19:02:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:22:51 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	sig_handler(int sig)
 	// printf("Received signal: %d\n", sig);
 	if (sig == SIGINT)
 	{
+		g_return = 1 * 256;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

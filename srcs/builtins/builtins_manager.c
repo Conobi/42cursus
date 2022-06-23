@@ -6,11 +6,24 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 17:24:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/22 13:56:10 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	is_builtin(t_ncommand cmd)
+{
+	if (ft_eq(cmd.argv[0], "exit", 1))
+		return (true);
+	if (ft_eq(cmd.argv[0], "cd", 1))
+		return (true);
+	if (ft_eq(cmd.argv[0], "pwd", 1))
+		return (true);
+	if (ft_strncmp(cmd.argv[0], "echo", 4) == 0)
+		return (true);
+	return (false);
+}
 
 /**
  * @brief This function is used to handle and execute if entry is a builtins

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 18:58:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/22 19:06:22 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 	int	out;
 
 	if (EDEBUG)
-		printf("Executing command %d\n", curr);
+		printf("Executing command %s\n", c->cmds[curr].argv[0]);
 	signal(SIGINT, fork_sig_handler);
 	termios_set(c, 1);
-	if (exec_builtin(c, c->cmds[curr])) // function to execute builtins with redirections
-		return ;
 	c->exec->process[curr] = fork();
 	if (c->exec->process[curr] < 0)
 		return (perror("fork"));
@@ -40,18 +38,18 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 		outfile_handler(c, curr);
 		in_selector(c, curr, &in);
 		out_selector(c, curr, ncmd, &out);
-		if (curr == ncmd - 1)
-			switch_pipes(in, out);
-		else if (curr == 0)
-			switch_pipes(in, out);
-		else
-			switch_pipes(in, out);
+		switch_pipes(&in, &out);
 		close_pipes(c, 2 * ncmd);
-		if (WEXITSTATUS(g_return) == 0)
+		if (WEXITSTATUS(g_return) != 0 && c->ncmds > 1)
+			exit(1);
+		if (is_builtin(c->cmds[curr]))
+		{
+			printf("is builtins\n");
+			b_echo(c->cmds[curr]);
+		}
+		else
 			execve(c->cmds[curr].exec_path,
 				c->cmds[curr].argv, c->env_list);
-		else
-			exit(1);
 	}
 	else
 		waitpid(c->exec->process[curr], &g_return, 0);
@@ -68,11 +66,11 @@ void	pipe_fd(t_ctx *c, int cmds)
 {
 	int	i;
 
-	c->exec->pipe_fd = malloc(sizeof(int) * (cmds * 2));
-	i = 0;
+	c->exec->pipe_fd = ft_calloc(cmds * 2, sizeof(int));
+	i = -1;
 	while (i < cmds)
 	{
-		if (pipe(c->exec->pipe_fd + 2 * i++) < 0)
+		if (pipe(c->exec->pipe_fd + 2 * ++i) < 0)
 		{
 			perror("pipe");
 			free(c->exec->pipe_fd);

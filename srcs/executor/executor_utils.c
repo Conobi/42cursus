@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/15 17:33:43 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/22 19:00:00 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	close_pipes(t_ctx *c, int pipes)
  * @param in in fd to switch
  * @param out out fd to switch
  */
-void	switch_pipes(int in, int out)
+void	switch_pipes(int *in, int *out)
 {
-	dup2(in, STDIN_FILENO);
-	dup2(out, STDOUT_FILENO);
+	dup2(*in, STDIN_FILENO);
+	dup2(*out, STDOUT_FILENO);
 }
 
 /**
@@ -88,7 +88,7 @@ bool	set_exec_path(t_ctx *c)
 		if (!c->cmds[i].exec_path)
 		{
 			printf("%s: %s\n", c->cmds[i].argv[0],
-				"command not found");
+				"command not found"); // todo: std err
 			g_return = 127 * 256;
 			return (false);
 		}

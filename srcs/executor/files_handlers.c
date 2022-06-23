@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_handlers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 19:01:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/22 19:03:35 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	infile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
-	c->cmds[curr_cmd].infile = -1;
+	c->cmds[curr_cmd].infile = -2;
 	if (c->cmds[curr_cmd].redc == 0)
 	{
 		c->cmds[curr_cmd].infile = 0;
@@ -90,9 +90,10 @@ void	in_selector(t_ctx *c, int curr, int *in)
 	if (EDEBUG)
 	{
 		printf("======in selection======\n");
+		printf("%s\n", c->cmds[curr].argv[0]);
 		printf("%d in -> %d\n", curr, c->cmds[curr].infile);
 	}
-	if (c->cmds[curr].infile != -1)
+	if (c->cmds[curr].infile != -2 && c->cmds[curr].infile != 0)
 	{
 		if (EDEBUG)
 			printf("enter in infile mode\n");
