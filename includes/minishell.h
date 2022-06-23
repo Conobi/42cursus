@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/22 19:00:42 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 18:35:31 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,7 @@ void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int *in, int *out);
 bool		set_exec_path(t_ctx *c);
 void		in_selector(t_ctx *c, int curr, int *in);
-void		out_selector(t_ctx *c, int curr,
-				int piped_commands, int *out);
+void		out_selector(t_ctx *c, int curr, int *out);
 char		*find_exec(t_ctx *c, const char *exec_name);
 int			create_heredoc(t_ctx *c, char *stop);
 

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 19:22:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 18:54:24 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
  */
 void	sig_handler(int sig)
 {
-	// printf("Received signal: %d\n", sig);
 	if (sig == SIGINT)
 	{
 		g_return = 1 * 256;

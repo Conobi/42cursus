@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/22 19:03:35 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 18:44:56 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,20 +126,20 @@ void	in_selector(t_ctx *c, int curr, int *in)
  * @param piped_commands Number of piped commands
  * @param out File descriptor to modify for output
  */
-void	out_selector(t_ctx *c, int curr, int piped_commands, int *out)
+void	out_selector(t_ctx *c, int curr, int *out)
 {
 	if (EDEBUG)
 	{
 		printf("======out selection======\n");
 		printf("%d out -> %d\n", curr, c->cmds[curr].outfile);
 	}
-	if (c->cmds[curr].outfile != -1)
+	if (c->cmds[curr].outfile != -1 && c->cmds[curr].outfile != 1)
 	{
 		if (EDEBUG)
 			printf("enter in outfile mode\n");
 		*out = c->cmds[curr].outfile;
 	}
-	if (curr == piped_commands - 1)
+	else if (curr == c->ncmds - 1)
 	{
 		if (EDEBUG)
 			printf("enter in last cmd mode\n");

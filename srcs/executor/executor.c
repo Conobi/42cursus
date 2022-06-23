@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/22 19:06:22 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 19:08:58 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@
  * @param curr Current command to execute
  * @param ncmd Number of piped commands
  */
-static void	exec_child(t_ctx *c, int curr, int ncmd)
+static void	exec_child(t_ctx *c, int curr)
 {
 	int	in;
 	int	out;
 
 	if (EDEBUG)
 		printf("Executing command %s\n", c->cmds[curr].argv[0]);
+	infile_handler(c, curr);
+	outfile_handler(c, curr);
+	in_selector(c, curr, &in);
+	out_selector(c, curr, &out);
 	signal(SIGINT, fork_sig_handler);
 	termios_set(c, 1);
 	c->exec->process[curr] = fork();
@@ -34,12 +38,10 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 		return (perror("fork"));
 	if (c->exec->process[curr] == 0)
 	{
-		infile_handler(c, curr);
-		outfile_handler(c, curr);
-		in_selector(c, curr, &in);
-		out_selector(c, curr, ncmd, &out);
 		switch_pipes(&in, &out);
-		close_pipes(c, 2 * ncmd);
+		close(4);
+		close(5);
+		// close_pipes(c, 2 * c->ncmds);
 		if (WEXITSTATUS(g_return) != 0 && c->ncmds > 1)
 			exit(1);
 		if (is_builtin(c->cmds[curr]))
@@ -48,8 +50,8 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 			b_echo(c->cmds[curr]);
 		}
 		else
-			execve(c->cmds[curr].exec_path,
-				c->cmds[curr].argv, c->env_list);
+			exit(execve(c->cmds[curr].exec_path,
+					c->cmds[curr].argv, c->env_list));
 	}
 	else
 		waitpid(c->exec->process[curr], &g_return, 0);
@@ -96,7 +98,7 @@ void	exec(t_ctx *c)
 	pipe_fd(c, c->ncmds);
 	i = 0;
 	while (i < c->ncmds)
-		exec_child(c, i++, c->ncmds);
+		exec_child(c, i++);
 	close_pipes(c, 2 * c->ncmds);
 	i = 0;
 	while (i < c->ncmds)

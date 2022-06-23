@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/22 17:59:10 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/23 19:30:25 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	b_echo(t_ncommand cmd)
 	int	i;
 
 	printf("exec echo cmd\n");
-	if (ft_strncmp(cmd.argv[1], "-n", 2) == 0)
+	if (ft_eq(cmd.argv[1], "-n", 0))
 	{
 		i = 1;
 		while (++i < cmd.argc - 1)
