@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/23 16:42:13 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 17:56:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 		printf("Executing command %d\n", curr);
 	signal(SIGINT, fork_sig_handler);
 	termios_set(c, 1);
-	if (c->cmds[curr].argc && exec_builtin(c, c->cmds[curr])) // function to execute builtins with redirections
+	if (exec_builtin(c, c->cmds[curr])) // function to execute builtins with redirections
 		return ;
 	c->exec->process[curr] = fork();
 	if (c->exec->process[curr] < 0)
@@ -48,6 +48,8 @@ static void	exec_child(t_ctx *c, int curr, int ncmd)
 			switch_pipes(in, out);
 		close_pipes(c, 2 * ncmd);
 		// if (WEXITSTATUS(g_return) == 0)
+		if (set_exec_path(c) == false)
+			return ;
 		execve(c->cmds[curr].exec_path,
 			c->cmds[curr].argv, c->env_list);
 		// else
@@ -95,8 +97,6 @@ void	exec(t_ctx *c)
 
 	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
 	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
-	if (set_exec_path(c) == false)
-		return ;
 	pipe_fd(c, c->ncmds);
 	i = 0;
 	while (i < c->ncmds)

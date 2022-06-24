@@ -57,12 +57,13 @@ SRC			= minishell.c \
 			  parsing/assert/test_quote.c \
 			  parsing/assert/test_pipe.c \
 			  parsing/assert/test_redir.c \
-			  parsing/export_builtin.c \
 			  executor/heredoc.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \
 			  builtins/echo.c \
 	 		  builtins/exit_shell.c \
+			  builtins/export.c \
+			  builtins/export_print.c \
 			  builtins/builtins_manager.c \
 			  utils/prompt_misc.c \
 			  utils/managers/path_manager.c \

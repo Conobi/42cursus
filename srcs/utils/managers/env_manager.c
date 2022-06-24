@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:20:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 20:02:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 18:09:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_env_by_key(t_list *head, char *key)
 	while (curr->next)
 	{
 		curr_env = (t_env *)curr->content;
-		if (ft_eq(curr_env->key, key, 0))
+		if (key && ft_eq(curr_env->key, key, 0))
 			return (curr_env->value);
 		curr = curr->next;
 	}
@@ -79,13 +79,13 @@ t_list	*create_env(t_ctx *c, char **env)
 	t_list	*head;
 	int		i;
 
-	head = gb_calloc(1, sizeof(t_list), PERM_GB, &c->gbc);
-	if (!head) // todo: if an error occurred exit shell with code 12 Cannot allocate memory
-		return (NULL);
-	head->content = NULL;
-	head->next = NULL;
 	i = -1;
 	while (env[++i])
-		ft_lstadd_front(&head, create_env_entry(c, env[i]));
+	{
+		if (!i)
+			head = ft_lstnew(create_env_entry(c, env[i]));
+		else
+			ft_lstadd_back(&head, create_env_entry(c, env[i]));
+	}
 	return (head);
 }

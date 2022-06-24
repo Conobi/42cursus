@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/23 17:19:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 16:49:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ short	post_cmd_create(t_ctx *c)
 		cmd_viewer(&c->cmds[i]);
 	if (PDEBUG)
 		printf("-----------------\n");
-	if (c->ncmds && c->cmds[0].argc > 0 && ft_eq(c->cmds[0].argv[0], "export", 0))
-		export_builtin(c, c->cmds[0].argc, c->cmds[0].argv);
 	return (1);
 }
 

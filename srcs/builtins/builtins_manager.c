@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_manager.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 17:24:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 19:54:51 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
  */
 bool	exec_builtin(t_ctx *c, t_ncommand cmd)
 {
-	if (ft_eq(cmd.argv[0], "exit", 1))
+	if (cmd.argc < 1)
+		return (false);
+	if (ft_eq(cmd.argv[0], "exit", 0))
 	{
 		if (cmd.argc > 0)
 			exit_shell(c, ft_atoi(cmd.argv[1]));
@@ -29,19 +31,24 @@ bool	exec_builtin(t_ctx *c, t_ncommand cmd)
 			exit_shell(c, 0);
 		return (true);
 	}
-	if (ft_eq(cmd.argv[0], "cd", 1))
+	if (ft_eq(cmd.argv[0], "cd", 0))
 	{
 		b_cd(c, cmd.argv[1]);
 		return (true);
 	}
-	if (ft_eq(cmd.argv[0], "pwd", 1))
+	if (ft_eq(cmd.argv[0], "pwd", 0))
 	{
 		b_pwd(c);
 		return (true);
 	}
-	if (ft_strncmp(cmd.argv[0], "echo", 4) == 0)
+	if (ft_eq(cmd.argv[0], "echo", 0))
 	{
 		b_echo(cmd);
+		return (true);
+	}
+	if (ft_eq(cmd.argv[0], "export", 0))
+	{
+		b_export(c, cmd.argc, cmd.argv);
 		return (true);
 	}
 	return (false);

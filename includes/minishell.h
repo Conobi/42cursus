@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/23 17:16:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 20:07:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	g_return;
 # define CMD2P_GB	7
 # define CMD3P_GB	8
 # define CMD4P_GB	9
+# define EXPT_PT_GB	10
 
 // todo: Use ds_prompt settings to enable or disable prompt generation
 # define DS_PROMPT	1
@@ -171,6 +172,7 @@ typedef struct s_error {
 typedef struct s_env {
 	char	*key;
 	char	*value;
+	bool	unset;
 }	t_env;
 
 // Executor functions
@@ -194,7 +196,8 @@ void		b_echo(t_ncommand cmd);
 void		b_ls(t_ctx *c, int cmd);
 void		rl_replace_line(const char *text, int clear_undo);
 
-int			export_builtin(t_ctx *c, int argc, char **argv);
+int			b_export(t_ctx *c, int argc, char **argv);
+void		export_print(t_ctx *c);
 
 // Utils
 void		exit_shell(t_ctx *c, int code);

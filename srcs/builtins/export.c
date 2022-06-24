@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_builtin.c                                   :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/23 19:54:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 20:09:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	multi_viewer(char **string, int cnt)
-{
-	int	i;
+// static void	multi_viewer(char **string, int cnt)
+// {
+// 	int	i;
 
-	i = -1;
-	printf("Liste des strings: \n");
-	while (++i < cnt && string[i])
-		printf("{%d: %s}\n", i, string[i]);
-}
+// 	i = -1;
+// 	printf("Liste des strings: \n");
+// 	while (++i < cnt && string[i])
+// 		printf("{%d: %s}\n", i, string[i]);
+// }
 
 static int	not_identifier(char *str)
 {
@@ -37,23 +37,24 @@ static int	not_identifier(char *str)
 
 static void	split_env_keyval(t_ctx *c, char *str)
 {
-	t_env	env;
+	t_env	*env;
 	t_list	*ret;
 	int		i;
 	int		j;
 
-	env.key = gb_calloc(ft_strlen(str) + 1, sizeof(char), PERM_GB, &c->gbc);
-	env.value = gb_calloc(ft_strlen(str) + 1, sizeof(char), PERM_GB, &c->gbc);
+	env = gb_calloc(1, sizeof(t_env), PERM_GB, &c->gbc);
+	env->key = gb_calloc(ft_strlen(str) + 1, sizeof(char), PERM_GB, &c->gbc);
+	env->value = gb_calloc(ft_strlen(str) + 1, sizeof(char), PERM_GB, &c->gbc);
 	i = -1;
 	j = -1;
 	while (str[++i] && str[i] != '=')
-		env.key[++j] = str[i];
+		env->key[++j] = str[i];
 	j = -1;
-	while (str[++i])
-		env.value[++j] = str[i];
-	printf("\nkey:\n\t{%s}\nvalue:\n\t{%s}\n", env.key, env.value);
+	while (str[i] && str[++i])
+		env->value[++j] = str[i];
+	printf("\nkey:\n\t{%s}\nvalue:\n\t{%s}\n", env->key, env->value);
 	ret = gb_add(ft_lstnew(&env), &c->gbc, PERM_GB);
-	ft_lstadd_front(&c->env, ret);
+	ft_lstadd_back(&c->env, ret);
 }
 
 typedef struct s_temp
@@ -62,12 +63,14 @@ typedef struct s_temp
 	int		j;
 }	t_temp;
 
-int	export_builtin(t_ctx *c, int argc, char **argv)
+int	b_export(t_ctx *c, int argc, char **argv)
 {
 	t_temp	t;
 
-	t = (t_temp){-1, -1};
+	t = (t_temp){0, -1};
 	c += 0;
+	if (argc == 1)
+		export_print(c);
 	while (++t.i < argc)
 	{
 		if (not_identifier(argv[t.i]) == -1)
@@ -75,6 +78,6 @@ int	export_builtin(t_ctx *c, int argc, char **argv)
 		else
 			printf("`%s` c'est pas un identifier valide\n", argv[t.i]);
 	}
-	multi_viewer(argv + 1, argc - 1);
+	// multi_viewer(argv + 1, argc - 1);
 	return (0);
 }
