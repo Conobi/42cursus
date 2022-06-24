@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 18:41:37 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 14:06:44 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// static void	exec_heredoc()
+// {
+
+// }
+
 /**
  * @brief This function create an heredoc instance
  *
  * @param c Minishell context struct
+ * @param stop EOF for termination of heredoc
  */
 int	create_heredoc(t_ctx *c, char *stop)
 {

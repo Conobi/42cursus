@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:20:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/09 20:02:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 20:27:34 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,58 @@ char	*get_env_by_key(t_list *head, char *key)
 		curr = curr->next;
 	}
 	return (NULL);
+}
+
+/**
+ * @brief This function is used to get the env object by key
+ *
+ * @param head Head of the environment variable list
+ * @param key Key to search
+ * @return char * Returns env value for the given key, NULL if not found
+ */
+t_env	*get_env_struct_by_key(t_list *head, char *key)
+{
+	t_list	*curr;
+	t_env	*curr_env;
+
+	curr = head;
+	while (curr->next)
+	{
+		curr_env = (t_env *)curr->content;
+		if (ft_eq(curr_env->key, key, 0))
+			return (curr_env);
+		curr = curr->next;
+	}
+	return (NULL);
+}
+
+char	**convert_env(t_ctx *c)
+{
+	t_list	*curr;
+	t_env	*curr_env;
+	char	**rtn;
+	int		i;
+
+	curr = c->env;
+	i = 0;
+	rtn = gb_calloc(ft_lstsize(c->env) + 1,
+			sizeof(char *), CMD_GB, &c->gbc);
+	while (curr && curr->next)
+	{
+		curr_env = (t_env *)curr->content;
+		if (curr_env->value)
+			rtn[i] = gb_add(
+					ft_aconcat(5, curr_env->key, "=",
+						curr_env->value, RESET, "\n"),
+					&c->gbc, CMD_GB
+					);
+		else
+			rtn[i] = gb_add(
+					ft_aconcat(2, curr_env->key, "\n"), &c->gbc, CMD_GB);
+		curr = curr->next;
+		i++;
+	}
+	return (rtn);
 }
 
 /**

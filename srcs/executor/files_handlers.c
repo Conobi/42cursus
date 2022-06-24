@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/23 18:44:56 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 13:54:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * @brief This function is used to handle all outfile redirections
  *
- * @param c Commands table struct
+ * @param c Minshell context struct
  * @param curr_cmd Index of current command
  */
-void	outfile_handler(t_ctx *c, int curr_cmd)
+static void	outfile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
@@ -50,10 +50,10 @@ void	outfile_handler(t_ctx *c, int curr_cmd)
 /**
  * @brief This function is used to handle all infile redirections
  *
- * @param table Commands table struct
+ * @param c Minishell context struct
  * @param curr_cmd Index of current command
  */
-void	infile_handler(t_ctx *c, int curr_cmd)
+static void	infile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
@@ -67,7 +67,8 @@ void	infile_handler(t_ctx *c, int curr_cmd)
 	while (i < c->cmds[curr_cmd].redc)
 	{
 		if (c->cmds[curr_cmd].redirections[i].type == HRDC_TK)
-			c->cmds[curr_cmd].infile = create_heredoc(c, c->cmds[curr_cmd].redirections[i].arg);
+			c->cmds[curr_cmd].infile = create_heredoc(c,
+					c->cmds[curr_cmd].redirections[i].arg);
 		if (c->cmds[curr_cmd].redirections[i].type == IN_TK)
 		{
 			c->cmds[curr_cmd].infile = open(
@@ -77,15 +78,13 @@ void	infile_handler(t_ctx *c, int curr_cmd)
 	}
 }
 
-// Deprecated functions
 /**
  * @brief This function is used to handle infile redirection
  *
- * @param table Commands table struct
  * @param curr Index of current command
  * @param in File descriptor to modify for input
  */
-void	in_selector(t_ctx *c, int curr, int *in)
+static void	in_selector(t_ctx *c, int curr, int *in)
 {
 	if (EDEBUG)
 	{
@@ -121,12 +120,11 @@ void	in_selector(t_ctx *c, int curr, int *in)
 /**
  * @brief This function is used to handle outfile redirection
  *
- * @param table Commands table struct
+ * @param c Minishell context struct
  * @param curr Index of current command
- * @param piped_commands Number of piped commands
  * @param out File descriptor to modify for output
  */
-void	out_selector(t_ctx *c, int curr, int *out)
+static void	out_selector(t_ctx *c, int curr, int *out)
 {
 	if (EDEBUG)
 	{
@@ -162,4 +160,12 @@ void	out_selector(t_ctx *c, int curr, int *out)
 		printf("%d out -> %d\n", curr, *out);
 		printf("========================\n");
 	}
+}
+
+void	io_handler(t_ctx *c, int curr, int *in, int *out)
+{
+	infile_handler(c, curr);
+	outfile_handler(c, curr);
+	in_selector(c, curr, in);
+	out_selector(c, curr, out);
 }

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/23 19:05:44 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 17:15:29 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,21 @@ void	close_pipes(t_ctx *c, int pipes)
  * @param in in fd to switch
  * @param out out fd to switch
  */
-void	switch_pipes(int *in, int *out)
+void	switch_pipes(int in, int out)
 {
-	dup2(*in, STDIN_FILENO);
-	dup2(*out, STDOUT_FILENO);
+	dup2(in, STDIN_FILENO);
+	dup2(out, STDOUT_FILENO);
 }
 
 /**
- * @brief This function set the exec path in all commands
+ * @brief This function set the exec path in commands
  *
  * @param c Minishell context struct
- * @param table Commands table struct
  */
-bool	set_exec_path(t_ctx *c)
+void	set_exec_path(t_ctx *c)
 {
-	int	i;
+	int		i;
+	char	*err;
 
 	i = 0;
 	while (i < c->ncmds)
@@ -85,14 +85,13 @@ bool	set_exec_path(t_ctx *c)
 		c->cmds[i].exec_path = find_exec(
 				c,
 				c->cmds[i].argv[0]);
-		if (!c->cmds[i].exec_path)
+		if (!c->cmds[i].exec_path && !is_builtin(c->cmds[i]))
 		{
-			printf("%s: %s\n", c->cmds[i].argv[0],
-				"command not found"); // todo: std err
+			err = ft_aconcat(2, c->cmds[i].argv[0], ": command not found\n");
+			write(2, err, ft_strlen(err));
 			g_return = 127 * 256;
-			return (false);
+			return ;
 		}
 		i++;
 	}
-	return (true);
 }

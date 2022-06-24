@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/22 13:56:10 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 17:54:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,27 @@
 
 bool	is_builtin(t_ncommand cmd)
 {
-	if (ft_eq(cmd.argv[0], "exit", 1))
+	if (ft_eq(cmd.argv[0], "exit", 0))
 		return (true);
-	if (ft_eq(cmd.argv[0], "cd", 1))
+	if (ft_eq(cmd.argv[0], "cd", 0))
 		return (true);
-	if (ft_eq(cmd.argv[0], "pwd", 1))
+	if (ft_eq(cmd.argv[0], "pwd", 0))
 		return (true);
-	if (ft_strncmp(cmd.argv[0], "echo", 4) == 0)
+	if (ft_eq(cmd.argv[0], "echo", 0))
+		return (true);
+	if (ft_eq(cmd.argv[0], "export", 0))
 		return (true);
 	return (false);
 }
 
 /**
- * @brief This function is used to handle and execute if entry is a builtins
+ * @brief This function is used to execute a builtin
  *
  * @param c Minishell context struct
- * @return true if entry is a builtins
- * @return false if entry isnt a builtins
+ * @param cmd Current command struct to execute
+ * @return Error code
  */
-bool	exec_builtin(t_ctx *c, t_ncommand cmd)
+int	exec_builtin(t_ctx *c, t_ncommand cmd)
 {
 	if (ft_eq(cmd.argv[0], "exit", 1))
 	{
@@ -40,22 +42,13 @@ bool	exec_builtin(t_ctx *c, t_ncommand cmd)
 			exit_shell(c, ft_atoi(cmd.argv[1]));
 		else
 			exit_shell(c, 0);
-		return (true);
+		return (0);
 	}
 	if (ft_eq(cmd.argv[0], "cd", 1))
-	{
-		b_cd(c, cmd.argv[1]);
-		return (true);
-	}
+		return (b_cd(c, cmd.argv[1]));
 	if (ft_eq(cmd.argv[0], "pwd", 1))
-	{
-		b_pwd(c);
-		return (true);
-	}
+		return (b_pwd(c));
 	if (ft_strncmp(cmd.argv[0], "echo", 4) == 0)
-	{
-		b_echo(cmd);
-		return (true);
-	}
-	return (false);
+		return (b_echo(cmd));
+	return (-1);
 }

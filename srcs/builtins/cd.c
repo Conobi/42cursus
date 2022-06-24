@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/15 17:24:38 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 17:52:04 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * @param c Minishell context struct
  * @param path Destination
  */
-void	b_cd(t_ctx *c, char *path)
+int	b_cd(t_ctx *c, char *path)
 {
 	t_error	err;
 	char	*new_path;
@@ -52,12 +52,13 @@ void	b_cd(t_ctx *c, char *path)
 	err.is_file = false;
 	if (error_handler(c, err))
 	{
-		g_return = 256;
-		gen_prompt(c, format_path(c), get_branch(c));
-		return ;
+		if (c->better_prompt)
+			gen_prompt(c, format_path(c), get_branch(c));
+		return (256);
 	}
 	c->last_path = get_path(c);
 	chdir(new_path);
-	g_return = 0;
-	gen_prompt(c, format_path(c), get_branch(c));
+	if (c->better_prompt)
+		gen_prompt(c, format_path(c), get_branch(c));
+	return (0);
 }

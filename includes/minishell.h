@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/23 18:35:31 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 20:24:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ int	g_return;
 # define CMD3P_GB	8
 # define CMD4P_GB	9
 
-// todo: Use ds_prompt settings to enable or disable prompt generation
-# define DS_PROMPT	1
-
 // Errors
 # define FILE_ERR 	1
 # define ERROR		2
@@ -125,6 +122,7 @@ typedef struct s_ctx {
 	t_parser			parser;
 	t_exec				*exec;
 	char				**env_list;
+	bool				better_prompt;
 	char				*prompt;
 	char				*entry;
 	char				*weather_emoji;
@@ -167,37 +165,37 @@ typedef struct s_env {
 
 // Executor functions
 void		exec(t_ctx *c);
-void		outfile_handler(t_ctx *c, int curr_cmd);
-void		infile_handler(t_ctx *c, int curr_cmd);
+void		io_handler(t_ctx *c, int curr, int *in, int *out);
 void		close_pipes(t_ctx *c, int pipes);
-void		switch_pipes(int *in, int *out);
-bool		set_exec_path(t_ctx *c);
-void		in_selector(t_ctx *c, int curr, int *in);
-void		out_selector(t_ctx *c, int curr, int *out);
+void		switch_pipes(int in, int out);
+void		set_exec_path(t_ctx *c);
 char		*find_exec(t_ctx *c, const char *exec_name);
 int			create_heredoc(t_ctx *c, char *stop);
 
 // Builtins
 bool		is_builtin(t_ncommand cmd);
-bool		exec_builtin(t_ctx *c, t_ncommand cmd);
-void		b_cd(t_ctx *c, char *path);
-void		b_pwd(t_ctx *c);
-void		b_echo(t_ncommand cmd);
-void		b_ls(t_ctx *c, int cmd);
-void		rl_replace_line(const char *text, int clear_undo);
+int			exec_builtin(t_ctx *c, t_ncommand cmd);
+int			b_cd(t_ctx *c, char *path);
+int			b_pwd(t_ctx *c);
+int			b_echo(t_ncommand cmd);
+int			b_ls(t_ctx *c, int cmd);
+void		exit_shell(t_ctx *c, int code);
 
 // Utils
-void		exit_shell(t_ctx *c, int code);
+void		rl_replace_line(const char *text, int clear_undo);
 char		*get_path(t_ctx *c);
 char		*format_path(t_ctx *c);
 bool		error_handler(t_ctx *c, t_error err);
 void		gen_prompt(t_ctx *c, const char *path, const char *branch);
+void		gen_sad_prompt(t_ctx *c, const char *path, const char *branch);
 void		history(t_ctx *c);
 void		init_history(t_ctx *c);
 char		*get_branch(t_ctx *c);
 void		get_weather(t_ctx *c);
 t_list		*create_env(t_ctx *c, char **env);
 char		*get_env_by_key(t_list *head, char *key);
+t_env		*get_env_struct_by_key(t_list *head, char *key);
+char		**convert_env(t_ctx *c);
 void		termios_init(t_ctx *c);
 void		termios_set(t_ctx *c, short mode);
 void		create_error(t_ctx *c, t_error err);

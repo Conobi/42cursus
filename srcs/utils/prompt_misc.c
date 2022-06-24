@@ -6,17 +6,41 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/16 19:32:06 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 19:34:25 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	gen_sad_prompt(t_ctx *c, const char *path, const char *branch)
+{
+	char	*status;
+
+	free(c->prompt);
+	if (EDEBUG)
+		printf("%d -> %d\n", g_return, WEXITSTATUS(g_return));
+	if (WEXITSTATUS(g_return) == 0)
+		status = "✓";
+	else
+		status = gb_add(ft_strjoin("✖ ",
+					gb_add(ft_itoa(WEXITSTATUS(g_return)),
+						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
+	if (branch)
+	{
+		c->prompt = ft_aconcat(10, c->weather_emoji, "  Minishell ", "  ",
+				path, " ", status, " ", " ", branch, " > ");
+		return ;
+	}
+	c->prompt = ft_aconcat(7, c->weather_emoji, "  Minishell ", "  ",
+			path, " ", status, " > ");
+}
 
 /**
  * @brief This function is used to create shell promp with custom path
  *
  * @param c Minishell context struct
  * @param path New path to display in prompt
+ * @param branch Git branch to display in prompt
  */
 void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 {
@@ -24,16 +48,13 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 
 	free(c->prompt);
 	if (EDEBUG)
-		printf("%d -> %d\n", g_return, WEXITSTATUS(g_return)); // debug
+		printf("%d -> %d\n", g_return, WEXITSTATUS(g_return));
 	if (WEXITSTATUS(g_return) == 0)
 		status = "✓";
 	else
 		status = gb_add(ft_strjoin("✖ ",
 					gb_add(ft_itoa(WEXITSTATUS(g_return)),
 						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
-	/**
-	 * todo: fix emoji align with ft_strlen(c->weather_emoji)
-	 */
 	if (branch)
 	{
 		c->prompt = ft_aconcat(28, WHT_FG, "",
@@ -49,10 +70,6 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 			" ", "Minishell ", "  ", path, " ", status, " ", RESET,
 			ACC_FG, " ", RESET);
 }
-
-/**
- * todo: implement a function to execute a command like curl or ls
-*/
 
 /**
  * @brief This function is used to get the current weather

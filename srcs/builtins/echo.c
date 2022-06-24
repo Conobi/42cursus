@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/23 19:30:25 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 17:51:33 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
  *
  * @param args Text to print, first args can be -n
  */
-void	b_echo(t_ncommand cmd)
+int	b_echo(t_ncommand cmd)
 {
 	int	i;
 
-	printf("exec echo cmd\n");
 	if (ft_eq(cmd.argv[1], "-n", 0))
 	{
 		i = 1;
@@ -36,6 +35,5 @@ void	b_echo(t_ncommand cmd)
 			printf("%s ", cmd.argv[i]);
 		printf("%s\n", cmd.argv[i]);
 	}
-	g_return = 0;
-	exit(0);
+	return (0);
 }

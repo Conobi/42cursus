@@ -6,17 +6,28 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/20 02:17:07 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/24 13:10:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Just a function to print the error message in stderr
+ *
+ * @param err Error message
+ */
 static void	err_print(const char *err)
 {
 	write(2, err, ft_strlen(err));
 }
 
+/**
+ * @brief Create an error and exit if necessary
+ *
+ * @param c Minishell context struct
+ * @param err Error struct
+ */
 void	create_error(t_ctx *c, t_error err)
 {
 	char	*message;
@@ -69,9 +80,9 @@ static bool	file_errors(t_ctx *c, t_error err)
 }
 
 /**
- * @brief This function takes as parameter the context and an struct that contains
- * error informations. If err.type is define, the error display function
- * corresponding to the given type is triggered
+ * @brief This function takes as parameter the context and an struct
+ * that contains error informations. If err.type is define,
+ * the error display function corresponding to the given type is triggered
  *
  * @param c Minishell context struct
  * @param err Error struct
