@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:11:20 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:45:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 19:21:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static char	*envvar_builder(t_ctx *c, char *token, t_envvar *e)
 	ft_strlcpy(e->kw, token + e->start_kw + 1, e->end_kw - e->start_kw);
 	if (get_env_by_key(c->env, e->kw))
 		e->var = gb_add(ft_strdup(
-					get_env_by_key(c->env, e->kw)), &c->gbc, CMD3P_GB);
+					get_env_by_key(c->env, e->kw)->key),
+				&c->gbc, CMD3P_GB);
 	else
 		e->var = gb_calloc(1, sizeof(char), CMD3P_GB, &c->gbc);
 	e->ret = gb_add(ft_aconcat(3, token, e->var, token + e->end_kw),

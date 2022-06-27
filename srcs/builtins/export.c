@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/24 20:09:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 20:09:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,24 @@
 // 		printf("{%d: %s}\n", i, string[i]);
 // }
 
+static int	identifier_err(t_ctx *c, char *token)
+{
+	err_print(
+		gb_add(
+			ft_aconcat(
+				4,
+				SHELL_NAME,
+				": export: `",
+				token,
+				"': not a valid identifier\n"
+				),
+			&c->gbc,
+			CMD_GB
+			)
+		);
+	return (1);
+}
+
 static int	not_identifier(char *str)
 {
 	int	i;
@@ -35,26 +53,54 @@ static int	not_identifier(char *str)
 	return (-1);
 }
 
+void	set_list_entry(t_ctx *c, char *key,
+		char *value, bool unset)
+{
+	t_env	*new;
+	t_list	*new_list;
+
+	new = get_env_by_key(c->env, key);
+	new_list = get_env_list_by_key(c->env, key);
+	if (new)
+	{
+		free(new->key);
+		free(new->value);
+		new->key = 0;
+		new->value = 0;
+	}
+	else
+		new = gb_calloc(1, sizeof(t_env), PERM_GB, &c->gbc);
+	new->key = gb_add(ft_strdup(key), &c->gbc, PERM_GB);
+	new->value = gb_add(ft_strdup(value), &c->gbc, PERM_GB);
+	new->unset = unset;
+	if (!new_list)
+	{
+		new_list = gb_add(ft_lstnew(new), &c->gbc, PERM_GB);
+		ft_lstadd_front(&c->env, new_list);
+	}
+}
+
 static void	split_env_keyval(t_ctx *c, char *str)
 {
-	t_env	*env;
-	t_list	*ret;
+	char	*key;
+	char	*value;
 	int		i;
 	int		j;
 
-	env = gb_calloc(1, sizeof(t_env), PERM_GB, &c->gbc);
-	env->key = gb_calloc(ft_strlen(str) + 1, sizeof(char), PERM_GB, &c->gbc);
-	env->value = gb_calloc(ft_strlen(str) + 1, sizeof(char), PERM_GB, &c->gbc);
+	key = gb_calloc(ft_strlen(str) + 1, sizeof(char), CMD_GB, &c->gbc);
+	value = gb_calloc(ft_strlen(str) + 1, sizeof(char), CMD_GB, &c->gbc);
 	i = -1;
 	j = -1;
 	while (str[++i] && str[i] != '=')
-		env->key[++j] = str[i];
+		key[++j] = str[i];
 	j = -1;
 	while (str[i] && str[++i])
-		env->value[++j] = str[i];
-	printf("\nkey:\n\t{%s}\nvalue:\n\t{%s}\n", env->key, env->value);
-	ret = gb_add(ft_lstnew(&env), &c->gbc, PERM_GB);
-	ft_lstadd_back(&c->env, ret);
+		value[++j] = str[i];
+	if (ft_strnstr(str, "=", ft_strlen(str)))
+		i = 0;
+	else
+		i = 1;
+	set_list_entry(c, key, value, i);
 }
 
 typedef struct s_temp
@@ -76,8 +122,7 @@ int	b_export(t_ctx *c, int argc, char **argv)
 		if (not_identifier(argv[t.i]) == -1)
 			split_env_keyval(c, argv[t.i]);
 		else
-			printf("`%s` c'est pas un identifier valide\n", argv[t.i]);
+			return (identifier_err(c, argv[t.i]));
 	}
-	// multi_viewer(argv + 1, argc - 1);
 	return (0);
 }

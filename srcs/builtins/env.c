@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_print.c                                     :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/27 20:26:18 by conobi           ###   ########lyon.fr   */
+/*   Created: 2022/06/27 20:14:38 by conobi            #+#    #+#             */
+/*   Updated: 2022/06/27 20:31:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_sort_int_tab(char **arr, int size)
+static int	toomany_err(t_ctx *c)
 {
-	int		i;
-	int		j;
-	char	*temp;
-
-	i = 0;
-	while (i < size - 1)
-	{
-		j = 1;
-		while (j < size - i - 1)
-		{
-			if (ft_strncmp(arr[j], arr[j + 1], ft_strlen(arr[j])) > 0)
-			{
-				temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
+	err_print(
+		gb_add(
+			ft_aconcat(
+				3,
+				SHELL_NAME,
+				": env: ",
+				strerror(7)
+				),
+			&c->gbc,
+			CMD_GB
+			)
+		);
+	return (7);
 }
 
 typedef struct s_temp {
@@ -43,36 +36,35 @@ typedef struct s_temp {
 	int		i;
 }	t_temp;
 
-void	build_line(t_ctx *c, t_temp *t)
+static void	build_line(t_ctx *c, t_temp *t)
 {
 	t->curr_env = (t_env *)t->curr->content;
 	if (t->curr_env->key && t->curr_env->value && !t->curr_env->unset)
 		t->print_list[t->i] = gb_add(
-				ft_aconcat(6, "declare -x ", t->curr_env->key, "=\"",
+				ft_aconcat(5, t->curr_env->key, "=\"",
 					t->curr_env->value, RESET, "\"\n"),
 				&c->gbc, EXPT_PT_GB
 				);
-	else if (t->curr_env->key && t->curr_env->unset)
-		t->print_list[t->i] = gb_add(
-				ft_aconcat(3, "declare -x ",
-					t->curr_env->key, "\n"), &c->gbc, EXPT_PT_GB);
 	t->curr = t->curr->next;
 	t->i++;
 }
 
-void	export_print(t_ctx *c)
+int	b_env(t_ctx *c, int argc, char **argv)
 {
 	t_temp	t;
 
+	argv += 0;
+	if (argc != 1)
+		return (toomany_err(c));
 	t.curr = c->env;
 	t.i = 0;
 	t.print_list = gb_calloc(ft_lstsize(c->env) + 1,
 			sizeof(char *), EXPT_PT_GB, &c->gbc);
 	while (t.curr->content && t.curr->next->content)
 		build_line(c, &t);
-	ft_sort_int_tab(t.print_list, t.i);
 	t.i = -1;
 	while (t.print_list[++t.i])
 		printf("%s", t.print_list[t.i]);
 	gb_delete(&c->gbc, EXPT_PT_GB);
+	return (0);
 }

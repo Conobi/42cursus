@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 19:54:51 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 20:32:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ bool	exec_builtin(t_ctx *c, t_ncommand cmd)
 	if (ft_eq(cmd.argv[0], "export", 0))
 	{
 		b_export(c, cmd.argc, cmd.argv);
+		return (true);
+	}
+	if (ft_eq(cmd.argv[0], "env", 0))
+	{
+		b_env(c, cmd.argc, cmd.argv);
 		return (true);
 	}
 	return (false);

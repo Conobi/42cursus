@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 20:07:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 20:31:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void		rl_replace_line(const char *text, int clear_undo);
 
 int			b_export(t_ctx *c, int argc, char **argv);
 void		export_print(t_ctx *c);
+int			b_env(t_ctx *c, int argc, char **argv);
 
 // Utils
 void		exit_shell(t_ctx *c, int code);
@@ -211,7 +212,8 @@ void		init_history(t_ctx *c);
 char		*get_branch(t_ctx *c);
 void		get_weather(t_ctx *c);
 t_list		*create_env(t_ctx *c, char **env);
-char		*get_env_by_key(t_list *head, char *key);
+t_env		*get_env_by_key(t_list *head, char *key);
+t_list		*get_env_list_by_key(t_list *head, char *key);
 void		termios_init(t_ctx *c);
 void		termios_set(t_ctx *c, short mode);
 void		create_error(t_ctx *c, t_error err);
