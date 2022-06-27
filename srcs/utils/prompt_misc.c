@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 19:34:25 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 18:18:25 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	gen_sad_prompt(t_ctx *c, const char *path, const char *branch)
 	char	*status;
 
 	free(c->prompt);
-	if (EDEBUG)
-		printf("%d -> %d\n", g_return, WEXITSTATUS(g_return));
 	if (WEXITSTATUS(g_return) == 0)
 		status = "✓";
 	else
@@ -47,8 +45,6 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	char	*status;
 
 	free(c->prompt);
-	if (EDEBUG)
-		printf("%d -> %d\n", g_return, WEXITSTATUS(g_return));
 	if (WEXITSTATUS(g_return) == 0)
 		status = "✓";
 	else

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:20:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 20:27:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 19:55:05 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_list	*create_env_entry(t_ctx *c, char *entry)
  * @param key Key to search
  * @return char * Returns env value for the given key, NULL if not found
  */
-char	*get_env_by_key(t_list *head, char *key)
+char	*get_env_by_key(t_list *head, char *key) // todo: remove this function
 {
 	t_list	*curr;
 	t_env	*curr_env;
@@ -71,7 +71,7 @@ char	*get_env_by_key(t_list *head, char *key)
  *
  * @param head Head of the environment variable list
  * @param key Key to search
- * @return char * Returns env value for the given key, NULL if not found
+ * @return t_env * Returns env struct for the given key, NULL if not found
  */
 t_env	*get_env_struct_by_key(t_list *head, char *key)
 {
@@ -103,17 +103,13 @@ char	**convert_env(t_ctx *c)
 	while (curr && curr->next)
 	{
 		curr_env = (t_env *)curr->content;
-		if (curr_env->value)
-			rtn[i] = gb_add(
-					ft_aconcat(5, curr_env->key, "=",
-						curr_env->value, RESET, "\n"),
-					&c->gbc, CMD_GB
-					);
-		else
-			rtn[i] = gb_add(
-					ft_aconcat(2, curr_env->key, "\n"), &c->gbc, CMD_GB);
+		if (curr_env->value && !curr_env->unset)
+		{
+			rtn[i] = gb_add(ft_aconcat(3, curr_env->key, "=", curr_env->value),
+					&c->gbc, CMD_GB);
+			i++;
+		}
 		curr = curr->next;
-		i++;
 	}
 	return (rtn);
 }

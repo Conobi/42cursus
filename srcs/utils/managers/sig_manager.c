@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 13:46:33 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 17:42:48 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ void	sig_handler(int sig)
 	}
 	if (sig == SIGKILL)
 	{
-		if (EDEBUG)
-			printf("exit\n");
-		exit(1);
+		rl_replace_line("exit", 0);
+		exit(0);
 		return ;
 	}
 	return ;
@@ -51,8 +50,14 @@ void	sig_handler(int sig)
  */
 void	heredoc_sig_handler(int sig)
 {
+	printf("heredoc_sig_handler %d\n", sig);
 	if (sig == SIGINT)
 		exit(1);
+	if (sig == SIGQUIT)
+	{
+		printf("sigquit\n");
+		return ;
+	}
 	if (sig == SIGKILL) //todo: not working (check for a solution to disable SIGKILL)
 		exit(0);
 }
@@ -66,6 +71,8 @@ void	fork_sig_handler(int sig)
 {
 	if (sig == SIGINT) //todo: return code -> 131
 	{
+		write(1, "\n", 1);
+		g_return = 130 * 256;
 		return ;
 	}
 	if (sig == SIGQUIT) //todo: return code -> 131

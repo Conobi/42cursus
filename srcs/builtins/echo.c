@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 17:51:33 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 19:29:57 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,18 @@ int	b_echo(t_ncommand cmd)
 {
 	int	i;
 
+	if (cmd.argc < 2)
+	{
+		printf("\n");
+		return (0);
+	}
 	if (ft_eq(cmd.argv[1], "-n", 0))
 	{
 		i = 1;
-		while (++i < cmd.argc - 1)
-			printf("%s ", cmd.argv[i]);
+		while (ft_eq(cmd.argv[i], "-n", 0))
+			i++;
+		while (i < cmd.argc - 1)
+			printf("%s ", cmd.argv[i++]);
 		printf("%s", cmd.argv[i]);
 	}
 	else

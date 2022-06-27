@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:42:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:18:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 15:16:14 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_ncommand	cmd_create(t_ctx *c, char **split)
 		cmd_create_alg(c, &b, split, &cmd);
 	cmd.redc = b.j + 1;
 	cmd.argc = b.k + 1;
+	cmd.exec_path = NULL;
 	gb_delete(&c->gbc, REDIR_GB);
 	return (cmd);
 }

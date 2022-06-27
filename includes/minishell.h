@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 20:24:27 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 19:49:36 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	g_return;
 
 // To show the printf debug for parsing purpose
 # define PDEBUG	0
-# define EDEBUG	1
+# define EDEBUG	0
 
 //Term colors
 # define RED_FG	"\033[91m"
@@ -161,6 +161,7 @@ typedef struct s_error {
 typedef struct s_env {
 	char	*key;
 	char	*value;
+	bool	unset;
 }	t_env;
 
 // Executor functions
@@ -168,13 +169,15 @@ void		exec(t_ctx *c);
 void		io_handler(t_ctx *c, int curr, int *in, int *out);
 void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int in, int out);
-void		set_exec_path(t_ctx *c);
+int			set_exec_path(t_ctx *c, t_ncommand *cmd);
 char		*find_exec(t_ctx *c, const char *exec_name);
-int			create_heredoc(t_ctx *c, char *stop);
+int			create_heredoc(t_ctx *c, const char *stop);
 
 // Builtins
-bool		is_builtin(t_ncommand cmd);
-int			exec_builtin(t_ctx *c, t_ncommand cmd);
+bool		is_fork_builtin(t_ncommand cmd);
+bool		is_normal_builtin(t_ncommand cmd);
+int			exec_fork_builtin(t_ctx *c, t_ncommand cmd);
+int			exec_normal_builtin(t_ctx *c, t_ncommand cmd);
 int			b_cd(t_ctx *c, char *path);
 int			b_pwd(t_ctx *c);
 int			b_echo(t_ncommand cmd);

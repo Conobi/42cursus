@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 13:54:11 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 15:10:10 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,35 +86,12 @@ static void	infile_handler(t_ctx *c, int curr_cmd)
  */
 static void	in_selector(t_ctx *c, int curr, int *in)
 {
-	if (EDEBUG)
-	{
-		printf("======in selection======\n");
-		printf("%s\n", c->cmds[curr].argv[0]);
-		printf("%d in -> %d\n", curr, c->cmds[curr].infile);
-	}
 	if (c->cmds[curr].infile != -2 && c->cmds[curr].infile != 0)
-	{
-		if (EDEBUG)
-			printf("enter in infile mode\n");
 		*in = c->cmds[curr].infile;
-	}
 	else if (curr == 0)
-	{
-		if (EDEBUG)
-			printf("enter in first cmd mode\n");
 		*in = 0;
-	}
 	else
-	{
-		if (EDEBUG)
-			printf("enter in last or middle cmd mode\n");
 		*in = c->exec->pipe_fd[2 * curr - 2];
-	}
-	if (EDEBUG)
-	{
-		printf("%d in -> %d\n", curr, *in);
-		printf("========================\n");
-	}
 }
 
 /**
@@ -126,40 +103,14 @@ static void	in_selector(t_ctx *c, int curr, int *in)
  */
 static void	out_selector(t_ctx *c, int curr, int *out)
 {
-	if (EDEBUG)
-	{
-		printf("======out selection======\n");
-		printf("%d out -> %d\n", curr, c->cmds[curr].outfile);
-	}
 	if (c->cmds[curr].outfile != -1 && c->cmds[curr].outfile != 1)
-	{
-		if (EDEBUG)
-			printf("enter in outfile mode\n");
 		*out = c->cmds[curr].outfile;
-	}
 	else if (curr == c->ncmds - 1)
-	{
-		if (EDEBUG)
-			printf("enter in last cmd mode\n");
 		*out = c->cmds[curr].outfile;
-	}
 	else if (curr == 0)
-	{
-		if (EDEBUG)
-			printf("enter in first cmd mode\n");
 		*out = c->exec->pipe_fd[1];
-	}
 	else
-	{
-		if (EDEBUG)
-			printf("enter in middle cmd mode\n");
 		*out = c->exec->pipe_fd[2 * curr + 1];
-	}
-	if (EDEBUG)
-	{
-		printf("%d out -> %d\n", curr, *out);
-		printf("========================\n");
-	}
 }
 
 void	io_handler(t_ctx *c, int curr, int *in, int *out)

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 17:52:04 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 20:29:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * todo: fix bug when cd / and cd -
  * Mem error l:56 new_path not defined
  * (final path not change)
+ * check with symlink
 */
 
 /**
@@ -39,11 +40,11 @@ int	b_cd(t_ctx *c, char *path)
 		else
 			new_path = getenv("HOME");
 	}
-	else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
-	{
-		new_path = c->last_path;
-		printf("%s\n", new_path);
-	}
+	// todo: make a function to change value of env list values
+	// else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
+	// {
+	// 	printf("%s\n", new_path);
+	// }
 	else
 		new_path = path;
 	err.path = new_path;
@@ -56,7 +57,6 @@ int	b_cd(t_ctx *c, char *path)
 			gen_prompt(c, format_path(c), get_branch(c));
 		return (256);
 	}
-	c->last_path = get_path(c);
 	chdir(new_path);
 	if (c->better_prompt)
 		gen_prompt(c, format_path(c), get_branch(c));

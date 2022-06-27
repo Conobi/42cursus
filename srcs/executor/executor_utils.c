@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/24 17:15:29 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/27 18:51:05 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,27 @@ void	switch_pipes(int in, int out)
 }
 
 /**
- * @brief This function set the exec path in commands
+ * @brief This function set the exec path in current command
  *
  * @param c Minishell context struct
+ * @param cmd Current command to set exec path
+ * @return 1 if an executable was not found, 0 if it was found
  */
-void	set_exec_path(t_ctx *c)
+int	set_exec_path(t_ctx *c, t_ncommand *cmd)
 {
-	int		i;
 	char	*err;
 
-	i = 0;
-	while (i < c->ncmds)
+	if (c->better_prompt && ft_eq(cmd->argv[0], "ls", 0))
+		cmd->exec_path = find_exec(c, "lsd");
+	if (!cmd->exec_path)
+		cmd->exec_path = find_exec(c, cmd->argv[0]);
+	if (!cmd->exec_path
+		&& !is_fork_builtin(*cmd) && !is_normal_builtin(*cmd))
 	{
-		c->cmds[i].exec_path = find_exec(
-				c,
-				c->cmds[i].argv[0]);
-		if (!c->cmds[i].exec_path && !is_builtin(c->cmds[i]))
-		{
-			err = ft_aconcat(2, c->cmds[i].argv[0], ": command not found\n");
-			write(2, err, ft_strlen(err));
-			g_return = 127 * 256;
-			return ;
-		}
-		i++;
+		err = ft_aconcat(2, cmd->argv[0], ": command not found\n");
+		write(2, err, ft_strlen(err));
+		g_return = 127 * 256;
+		return (1);
 	}
+	return (0);
 }
