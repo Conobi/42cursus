@@ -65,6 +65,7 @@ SRC			= minishell.c \
 			  builtins/export.c \
 			  builtins/export_print.c \
 			  builtins/env.c \
+			  builtins/unset.c \
 			  builtins/builtins_manager.c \
 			  utils/prompt_misc.c \
 			  utils/managers/path_manager.c \

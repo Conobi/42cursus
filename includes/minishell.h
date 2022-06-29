@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/27 20:31:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 15:25:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ void		rl_replace_line(const char *text, int clear_undo);
 int			b_export(t_ctx *c, int argc, char **argv);
 void		export_print(t_ctx *c);
 int			b_env(t_ctx *c, int argc, char **argv);
+int			b_unset(t_ctx *c, int argc, char **argv);
 
 // Utils
 void		exit_shell(t_ctx *c, int code);

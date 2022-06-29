@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:14:38 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/27 20:31:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 14:48:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ static int	toomany_err(t_ctx *c)
 	err_print(
 		gb_add(
 			ft_aconcat(
-				3,
+				4,
 				SHELL_NAME,
 				": env: ",
-				strerror(7)
+				strerror(7),
+				"\n"
 				),
 			&c->gbc,
 			CMD_GB
@@ -40,13 +41,15 @@ static void	build_line(t_ctx *c, t_temp *t)
 {
 	t->curr_env = (t_env *)t->curr->content;
 	if (t->curr_env->key && t->curr_env->value && !t->curr_env->unset)
+	{
 		t->print_list[t->i] = gb_add(
 				ft_aconcat(5, t->curr_env->key, "=\"",
 					t->curr_env->value, RESET, "\"\n"),
 				&c->gbc, EXPT_PT_GB
 				);
+		t->i++;
+	}
 	t->curr = t->curr->next;
-	t->i++;
 }
 
 int	b_env(t_ctx *c, int argc, char **argv)

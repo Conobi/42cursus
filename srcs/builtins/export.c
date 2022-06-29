@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/27 20:09:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 15:16:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ static int	identifier_err(t_ctx *c, char *token)
 	return (1);
 }
 
-static int	not_identifier(char *str)
+static bool	not_identifier(char *str)
 {
 	int	i;
 
 	i = -1;
 	if (!(str[0] == '_' || ft_isalpha(str[0])))
-		return ((int)str[0]);
+		return (true);
 	while (str[++i] && str[i] != '=')
 		if (!(str[i] == '_' || ft_isalnum(str[i])))
-			return ((int)str[0]);
-	return (-1);
+			return (true);
+	return (false);
 }
 
 void	set_list_entry(t_ctx *c, char *key,
@@ -103,26 +103,18 @@ static void	split_env_keyval(t_ctx *c, char *str)
 	set_list_entry(c, key, value, i);
 }
 
-typedef struct s_temp
-{
-	int		i;
-	int		j;
-}	t_temp;
-
 int	b_export(t_ctx *c, int argc, char **argv)
 {
-	t_temp	t;
+	int		i;
 
-	t = (t_temp){0, -1};
-	c += 0;
+	i = 0;
 	if (argc == 1)
 		export_print(c);
-	while (++t.i < argc)
+	while (++i < argc)
 	{
-		if (not_identifier(argv[t.i]) == -1)
-			split_env_keyval(c, argv[t.i]);
-		else
-			return (identifier_err(c, argv[t.i]));
+		if (not_identifier(argv[i]))
+			return (identifier_err(c, argv[i]));
+		split_env_keyval(c, argv[i]);
 	}
 	return (0);
 }

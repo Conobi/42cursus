@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/27 20:26:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 14:49:12 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,22 @@ void	build_line(t_ctx *c, t_temp *t)
 {
 	t->curr_env = (t_env *)t->curr->content;
 	if (t->curr_env->key && t->curr_env->value && !t->curr_env->unset)
+	{
 		t->print_list[t->i] = gb_add(
 				ft_aconcat(6, "declare -x ", t->curr_env->key, "=\"",
 					t->curr_env->value, RESET, "\"\n"),
 				&c->gbc, EXPT_PT_GB
 				);
+		t->i++;
+	}
 	else if (t->curr_env->key && t->curr_env->unset)
+	{
 		t->print_list[t->i] = gb_add(
 				ft_aconcat(3, "declare -x ",
 					t->curr_env->key, "\n"), &c->gbc, EXPT_PT_GB);
+		t->i++;
+	}
 	t->curr = t->curr->next;
-	t->i++;
 }
 
 void	export_print(t_ctx *c)
