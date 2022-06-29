@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/27 20:32:31 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 15:08:40 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	create_error(t_ctx *c, t_error err)
 {
 	char	*message;
 
-	message = ft_aconcat(8, RED_FG, err.cmd, ": ", err.message, ": ",
-			gb_add(ft_itoa(err.code), &c->gbc, PERM_GB), "\n", RESET);
+	message = gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.message, ": ",
+				gb_add(ft_itoa(err.code), &c->gbc, PERM_GB), "\n", RESET),
+			&c->gbc, CMD_GB);
 	write(2, message, ft_strlen(message));
 	if (err.type == ERROR)
 		exit_shell(c, err.code);
@@ -60,20 +61,20 @@ static bool	file_errors(t_ctx *c, t_error err)
 	}
 	if (!(path_stat.st_mode & S_IRUSR))
 	{
-		err_print(gb_add(ft_aconcat(8, err.cmd, ": ", err.path,
-					": ", strerror(EACCES), "\n"), &c->gbc, CMD_GB));
+		err_print(gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.path,
+					": ", strerror(EACCES), "\n", RESET), &c->gbc, CMD_GB));
 		return (true);
 	}
 	if (!err.is_file && !S_ISDIR(path_stat.st_mode))
 	{
-		err_print(gb_add(ft_aconcat(6, err.cmd, ": ", err.path,
-					": ", strerror(ENOTDIR), "\n"), &c->gbc, CMD_GB));
+		err_print(gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.path,
+					": ", strerror(ENOTDIR), "\n", RESET), &c->gbc, CMD_GB));
 		return (true);
 	}
 	if (err.is_file && S_ISDIR(path_stat.st_mode))
 	{
-		err_print(gb_add(ft_aconcat(6, err.cmd, ": ", err.path,
-					": ", strerror(EISDIR), "\n"), &c->gbc, CMD_GB));
+		err_print(gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.path,
+					": ", strerror(EISDIR), "\n", RESET), &c->gbc, CMD_GB));
 		return (true);
 	}
 	return (false);

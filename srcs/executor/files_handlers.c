@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/27 15:10:10 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 15:31:30 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	outfile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
-	c->cmds[curr_cmd].outfile = -1;
+	c->cmds[curr_cmd].outfile = -2;
 	if (c->cmds[curr_cmd].redc == 0)
 	{
 		c->cmds[curr_cmd].outfile = 1;
@@ -103,7 +103,7 @@ static void	in_selector(t_ctx *c, int curr, int *in)
  */
 static void	out_selector(t_ctx *c, int curr, int *out)
 {
-	if (c->cmds[curr].outfile != -1 && c->cmds[curr].outfile != 1)
+	if (c->cmds[curr].outfile != -2 && c->cmds[curr].outfile != 1)
 		*out = c->cmds[curr].outfile;
 	else if (curr == c->ncmds - 1)
 		*out = c->cmds[curr].outfile;

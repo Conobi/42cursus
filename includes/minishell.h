@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/27 19:49:36 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 15:14:32 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,15 @@ void		enverr_pass(t_ctx *c);
 void		envvar_pass(t_ctx *c);
 void		remquote_pass(t_ctx *c);
 
+/**
+ * @brief Error struct
+ * @param short type : type of error
+ * @param char *cmd : cmd created error
+ * @param char *msg : error message
+ * @param char *path : a path to display in error message if needed
+ * @param int code : error code to return
+ * @param bool is_file : if given path must be a file or not
+ */
 typedef struct s_error {
 	short	type;
 	char	*cmd;
