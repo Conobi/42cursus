@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 16:40:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 19:16:56 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,10 +193,8 @@ char		*find_exec(t_ctx *c, const char *exec_name);
 int			create_heredoc(t_ctx *c, const char *stop);
 
 // Builtins
-bool		is_fork_builtin(t_ncommand cmd);
-bool		is_normal_builtin(t_ncommand cmd);
-int			exec_fork_builtin(t_ctx *c, t_ncommand cmd);
-int			exec_normal_builtin(t_ctx *c, t_ncommand cmd);
+bool		is_builtin(t_ncommand cmd);
+int			exec_builtin(t_ctx *c, t_ncommand cmd);
 int			b_cd(t_ctx *c, char *path);
 int			b_pwd(t_ctx *c);
 int			b_echo(t_ncommand cmd);

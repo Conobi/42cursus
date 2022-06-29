@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 16:44:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 20:20:01 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ static void	exec_child(t_ctx *c, int curr)
 
 	signal(SIGINT, fork_sig_handler);
 	termios_set(c, 1);
-	if (is_normal_builtin(c->cmds[curr]))
+	if (is_builtin(c->cmds[curr]))
 	{
-		g_return = exec_normal_builtin(c, c->cmds[curr]);
+		io_handler(c, curr, &in, &out);
+		switch_pipes(in, out);
+		g_return = exec_builtin(c, c->cmds[curr]);
+		dup2(STDIN_FILENO, STDOUT_FILENO);
+		printf("%d\n", g_return);
 		return ;
 	}
 	c->exec->process[curr] = fork();
@@ -41,12 +45,12 @@ static void	exec_child(t_ctx *c, int curr)
 		switch_pipes(in, out);
 		close_pipes(c, 2 * c->ncmds);
 		if (WEXITSTATUS(g_return) != 0 && c->ncmds > 1)
-			exit(0);
-		if (is_fork_builtin(c->cmds[curr]))
-			exit(exec_fork_builtin(c, c->cmds[curr]));
-		else
-			exit(execve(c->cmds[curr].exec_path,
-					c->cmds[curr].argv, convert_env(c)));
+		{
+			printf("error\n");
+			exit(1);
+		}
+		exit(execve(c->cmds[curr].exec_path,
+				c->cmds[curr].argv, convert_env(c)));
 	}
 }
 
@@ -95,6 +99,7 @@ void	exec(t_ctx *c)
 	close_pipes(c, 2 * c->ncmds);
 	i = -1;
 	while (++i < c->ncmds)
-		waitpid(c->exec->process[i], &g_return, 0);
+		if (!is_builtin(c->cmds[i]))
+			waitpid(c->exec->process[i], &g_return, 0);
 	signal(SIGINT, sig_handler);
 }

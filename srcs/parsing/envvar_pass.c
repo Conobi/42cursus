@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envvar_pass.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:11:20 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 16:45:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 19:24:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*envvar_builder(t_ctx *c, char *token, t_envvar *e)
 	ft_strlcpy(e->kw, token + e->start_kw + 1, e->end_kw - e->start_kw);
 	if (get_env_by_key(c->env, e->kw))
 		e->var = gb_add(ft_strdup(
-					get_env_by_key(c->env, e->kw)->key),
+					get_env_by_key(c->env, e->kw)->value),
 				&c->gbc, CMD3P_GB);
 	else
 		e->var = gb_calloc(1, sizeof(char), CMD3P_GB, &c->gbc);

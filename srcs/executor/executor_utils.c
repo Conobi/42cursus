@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 14:50:38 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 19:17:53 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ int	set_exec_path(t_ctx *c, t_ncommand *cmd)
 		cmd->exec_path = find_exec(c, "lsd");
 	if (!cmd->exec_path)
 		cmd->exec_path = find_exec(c, cmd->argv[0]);
-	if (!cmd->exec_path
-		&& !is_fork_builtin(*cmd) && !is_normal_builtin(*cmd))
+	if (!cmd->exec_path && !is_builtin(*cmd))
 	{
 		err = ft_aconcat(2, cmd->argv[0], ": command not found\n");
 		write(2, err, ft_strlen(err));

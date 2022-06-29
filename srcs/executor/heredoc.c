@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/27 17:52:23 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 20:17:03 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	exit_heredoc(int pid, int *fd)
 	if (g_return == 0)
 		return (fd[0]);
 	else
-		return (-1);
+		return (-2);
 }
 
 static int	exec_heredoc(t_ctx *c, int *fd, const char *stop)

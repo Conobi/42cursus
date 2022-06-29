@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 15:16:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 19:32:33 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,18 @@ static void	split_env_keyval(t_ctx *c, char *str)
 int	b_export(t_ctx *c, int argc, char **argv)
 {
 	int		i;
+	int		ret;
 
 	i = 0;
+	ret = 0;
 	if (argc == 1)
 		export_print(c);
 	while (++i < argc)
 	{
 		if (not_identifier(argv[i]))
-			return (identifier_err(c, argv[i]));
-		split_env_keyval(c, argv[i]);
+			ret = identifier_err(c, argv[i]);
+		if (c->ncmds == 1)
+			split_env_keyval(c, argv[i]);
 	}
-	return (0);
+	return (ret);
 }

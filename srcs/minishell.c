@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 16:48:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 20:01:48 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	main(int argc, char **argv, char **env)
 			exec(&c);
 			if (c.better_prompt)
 				gen_prompt(&c, format_path(&c), get_branch(&c));
+			else
+				gen_sad_prompt(&c, format_path(&c), get_branch(&c));
 			gb_delete(&c.gbc, CMD_GB);
 		}
 	}
