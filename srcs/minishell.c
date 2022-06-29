@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/27 20:27:10 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 16:48:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 	if (!c->gbc)
 		exit_shell(c, 1);
 	c->env = create_env(c, env);
-	shlvl = get_env_struct_by_key(c->env, "SHLVL");
+	shlvl = get_env_by_key(c->env, "SHLVL");
 	shlvl->value = gb_add(ft_itoa(ft_atoi(shlvl->value) + 1), &c->gbc, PERM_GB);
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->env_list = env;

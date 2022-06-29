@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   termios_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:51:22 by abastos           #+#    #+#             */
-/*   Updated: 2022/05/24 15:54:55 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/16 19:27:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	termios_init(t_ctx *c)
 		err.cmd = "tcgetattr";
 		err.code = 1;
 		err.message = "Unable to initialize terminal";
-		err.type = ERROR;
+		err.type = FATAL;
 		create_error(c, err);
 		return ;
 	}

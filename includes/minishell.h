@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 15:14:32 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 16:40:42 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <signal.h>
 
 int	g_return;
+
+# define SHELL_NAME "Minishell"
 
 // To show the printf debug for parsing purpose
 # define PDEBUG	0
@@ -78,10 +80,11 @@ int	g_return;
 # define CMD2P_GB	7
 # define CMD3P_GB	8
 # define CMD4P_GB	9
+# define EXPT_PT_GB	10
 
 // Errors
 # define FILE_ERR 	1
-# define ERROR		2
+# define FATAL		2
 # define WARNING	3
 
 typedef struct s_redir {
@@ -137,8 +140,8 @@ typedef struct s_ctx {
 void		exit_shell(t_ctx *c, int code);
 
 // Parsing
-void		parser(t_ctx *c);
-void		pipe_cutter(t_ctx *c);
+short		parser(t_ctx *c);
+void		split_pipe(t_ctx *c);
 void		set_quote_bool(t_ctx *c, char curr);
 void		reset_quote_bool(t_ctx *c);
 int			is_curr_quoted(t_ctx *c);
@@ -149,6 +152,12 @@ void		enverr_pass(t_ctx *c);
 void		envvar_pass(t_ctx *c);
 void		remquote_pass(t_ctx *c);
 
+// Tests
+short		test_quote(t_ctx *c);
+short		test_pipe(t_ctx *c);
+short		test_redir(t_ctx *c);
+void		syntax_err(t_ctx *c, char *token);
+
 /**
  * @brief Error struct
  * @param short type : type of error
@@ -158,6 +167,7 @@ void		remquote_pass(t_ctx *c);
  * @param int code : error code to return
  * @param bool is_file : if given path must be a file or not
  */
+
 typedef struct s_error {
 	short	type;
 	char	*cmd;
@@ -193,10 +203,16 @@ int			b_echo(t_ncommand cmd);
 int			b_ls(t_ctx *c, int cmd);
 void		exit_shell(t_ctx *c, int code);
 
+int			b_export(t_ctx *c, int argc, char **argv);
+void		export_print(t_ctx *c);
+int			b_env(t_ctx *c, int argc, char **argv);
+int			b_unset(t_ctx *c, int argc, char **argv);
+
 // Utils
 void		rl_replace_line(const char *text, int clear_undo);
 char		*get_path(t_ctx *c);
 char		*format_path(t_ctx *c);
+void		err_print(const char *err);
 bool		error_handler(t_ctx *c, t_error err);
 void		gen_prompt(t_ctx *c, const char *path, const char *branch);
 void		gen_sad_prompt(t_ctx *c, const char *path, const char *branch);
@@ -205,9 +221,11 @@ void		init_history(t_ctx *c);
 char		*get_branch(t_ctx *c);
 void		get_weather(t_ctx *c);
 t_list		*create_env(t_ctx *c, char **env);
-char		*get_env_by_key(t_list *head, char *key);
-t_env		*get_env_struct_by_key(t_list *head, char *key);
+// char		*get_env_by_key(t_list *head, char *key);
+// t_env		*get_env_struct_by_key(t_list *head, char *key);
 char		**convert_env(t_ctx *c);
+t_env		*get_env_by_key(t_list *head, char *key);
+t_list		*get_env_list_by_key(t_list *head, char *key);
 void		termios_init(t_ctx *c);
 void		termios_set(t_ctx *c, short mode);
 void		create_error(t_ctx *c, t_error err);

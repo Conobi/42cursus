@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 15:08:40 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 16:49:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  *
  * @param err Error message
  */
-static void	err_print(const char *err)
+void	err_print(const char *err)
 {
 	write(2, err, ft_strlen(err));
 }
@@ -36,7 +36,7 @@ void	create_error(t_ctx *c, t_error err)
 				gb_add(ft_itoa(err.code), &c->gbc, PERM_GB), "\n", RESET),
 			&c->gbc, CMD_GB);
 	write(2, message, ft_strlen(message));
-	if (err.type == ERROR)
+	if (err.type == FATAL)
 		exit_shell(c, err.code);
 }
 

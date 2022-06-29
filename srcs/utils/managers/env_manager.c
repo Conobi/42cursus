@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:20:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/27 19:55:05 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/29 16:47:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_list	*create_env_entry(t_ctx *c, char *entry)
 				ft_strlen(entry) - i - 1), &c->gbc, PERM_GB);
 	if (!new_env->key || !new_env->value) // todo: if an error occurred exit shell with code 12 Cannot allocate memory
 		return (NULL);
-	new_entry = ft_lstnew(new_env);
+	new_entry = gb_add(ft_lstnew(new_env), &c->gbc, PERM_GB);
 	if (!new_entry)
 		return (NULL);
 	return (new_entry);
@@ -48,9 +48,9 @@ t_list	*create_env_entry(t_ctx *c, char *entry)
  *
  * @param head Head of the environment variable list
  * @param key Key to search
- * @return char * Returns env value for the given key, NULL if not found
+ * @return t_env * Returns env struct for the given key, NULL if not found
  */
-char	*get_env_by_key(t_list *head, char *key) // todo: remove this function
+t_env	*get_env_by_key(t_list *head, char *key)
 {
 	t_list	*curr;
 	t_env	*curr_env;
@@ -60,7 +60,7 @@ char	*get_env_by_key(t_list *head, char *key) // todo: remove this function
 	{
 		curr_env = (t_env *)curr->content;
 		if (ft_eq(curr_env->key, key, 0))
-			return (curr_env->value);
+			return (curr_env);
 		curr = curr->next;
 	}
 	return (NULL);
@@ -73,7 +73,7 @@ char	*get_env_by_key(t_list *head, char *key) // todo: remove this function
  * @param key Key to search
  * @return t_env * Returns env struct for the given key, NULL if not found
  */
-t_env	*get_env_struct_by_key(t_list *head, char *key)
+t_list	*get_env_list_by_key(t_list *head, char *key)
 {
 	t_list	*curr;
 	t_env	*curr_env;
@@ -83,7 +83,7 @@ t_env	*get_env_struct_by_key(t_list *head, char *key)
 	{
 		curr_env = (t_env *)curr->content;
 		if (ft_eq(curr_env->key, key, 0))
-			return (curr_env);
+			return (curr);
 		curr = curr->next;
 	}
 	return (NULL);

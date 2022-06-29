@@ -11,5 +11,5 @@ a.out
 checker_*
 *test
 build
-tests
+/tests
 .minishell_history
