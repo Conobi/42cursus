@@ -6,12 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:16:53 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:43:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 18:17:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* --- DEBUG PART --- */
 static void	split_viewer(char **arrstr)
 {
 	int	i;
@@ -24,7 +25,9 @@ static void	split_viewer(char **arrstr)
 		printf("{%d: %s}\n", i, arrstr[i]);
 }
 
-typedef struct s_split
+/* --- END DEBUG PART --- */
+
+typedef struct s_temp
 {
 	char	**new;
 	int		i;
@@ -32,7 +35,7 @@ typedef struct s_split
 	int		k;
 	int		l;
 	int		tokens_nb;
-}	t_split;
+}	t_temp;
 
 static int	is_redir(char c)
 {
@@ -41,43 +44,43 @@ static int	is_redir(char c)
 	return (0);
 }
 
-static void	redir_splitter(t_ctx *c, t_split *s, char **old)
+static void	redir_splitter(t_ctx *c, t_temp *t, char **old)
 {
-	if (s->k)
-		s->new[++s->j] = gb_calloc(3,
+	if (t->k)
+		t->new[++t->j] = gb_calloc(3,
 				sizeof(char), REDIR_GB, &c->gbc);
-	s->new[s->j][0] = old[s->i][s->k];
-	if (old[s->i][s->k + 1] == old[s->i][s->k])
-		s->new[s->j][1] = old[s->i][++s->k];
-	if (old[s->i][s->k + 1])
-		s->new[++s->j] = gb_calloc(ft_strlen(old[s->i]) + 1,
+	t->new[t->j][0] = old[t->i][t->k];
+	if (old[t->i][t->k + 1] == old[t->i][t->k])
+		t->new[t->j][1] = old[t->i][++t->k];
+	if (old[t->i][t->k + 1])
+		t->new[++t->j] = gb_calloc(ft_strlen(old[t->i]) + 1,
 				sizeof(char), REDIR_GB, &c->gbc);
-	s->l = -1;
+	t->l = -1;
 }
 
 char	**split_redir(t_ctx *c, char **old)
 {
-	t_split	s;
+	t_temp	t;
 
-	s = (t_split){0, -1, -1, -1, -1, c->parser.len * 3};
-	s.new = gb_calloc(s.tokens_nb + 1, sizeof(char *), REDIR_GB, &c->gbc);
-	while (old[++s.i])
+	t = (t_temp){0, -1, -1, -1, -1, c->parser.len * 3};
+	t.new = gb_calloc(t.tokens_nb + 1, sizeof(char *), REDIR_GB, &c->gbc);
+	while (old[++t.i])
 	{
-		s.k = -1;
-		s.l = -1;
+		t.k = -1;
+		t.l = -1;
 		reset_quote_bool(c);
-		s.new[++s.j] = gb_calloc(ft_strlen(old[s.i]) + 1,
+		t.new[++t.j] = gb_calloc(ft_strlen(old[t.i]) + 1,
 				sizeof(char), REDIR_GB, &c->gbc);
-		while (old[s.i][++s.k] && ++s.l >= 0)
+		while (old[t.i][++t.k] && ++t.l >= 0)
 		{
-			set_quote_bool(c, old[s.i][s.k]);
-			if (is_redir(old[s.i][s.k]) && !is_curr_quoted(c))
-				redir_splitter(c, &s, old);
+			set_quote_bool(c, old[t.i][t.k]);
+			if (is_redir(old[t.i][t.k]) && !is_curr_quoted(c))
+				redir_splitter(c, &t, old);
 			else
-				s.new[s.j][s.l] = old[s.i][s.k];
+				t.new[t.j][t.l] = old[t.i][t.k];
 		}
 	}
-	split_viewer(s.new);
+	split_viewer(t.new);
 	gb_delete(&c->gbc, QUOTE_GB);
-	return (s.new);
+	return (t.new);
 }

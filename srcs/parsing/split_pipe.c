@@ -6,14 +6,16 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/17 15:59:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 18:03:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Si action == 1, on compte le nombre de pipes,
-// Sinon on compte le nombre de caractères jusqu'au prochain pipe
+/*
+	Si action == 0 on compte le nombre de caractères jusqu'au prochain pipe,
+	Si action == 1, on compte le nombre de pipes.
+*/
 static int	pipe_count(char *cur, const int action)
 {
 	char	squoted;
@@ -53,12 +55,13 @@ static void	cutter_init(t_ctx *c)
 		printf("[0: %d]\n", pipe_count(c->entry, 0));
 }
 
-static char	pipe_quote(t_ctx *c, char curr)
-{
-	return (c->parser.squoted == -1 && c->parser.dquoted == -1 && curr == '|');
-}
-
-// Tant qu'on a pas fini le string, on split à chaque pipe
+/*
+	Coupe la string renvoyée par readline en tableau de strings,
+	correspondant à chaque pipe.
+	Si on trouve un pipe non quoté, on créé une nouvelle string
+	de la taille donnée par pipe_count(0). Sinon, on continue d'ajouter
+	des caractères au string du pipe courant.
+*/
 void	split_pipe(t_ctx *c)
 {
 	char	*cur;
@@ -74,7 +77,7 @@ void	split_pipe(t_ctx *c)
 	while (*cur)
 	{
 		set_quote_bool(c, *cur);
-		if (pipe_quote(c, *cur))
+		if (!is_curr_quoted(c) && *cur == '|')
 		{
 			cur++;
 			c->parser.pipes[++i] = gb_calloc(pipe_count(cur, 0) + 1,
@@ -83,7 +86,7 @@ void	split_pipe(t_ctx *c)
 				printf("[%d: %d]\n", i, pipe_count(cur, 0));
 			j = 0;
 		}
-		if (*cur && !pipe_quote(c, *cur))
+		if (*cur && !(!is_curr_quoted(c) && *cur == '|'))
 			c->parser.pipes[i][j++] = *(cur++);
 	}
 }

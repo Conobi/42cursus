@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:10:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/23 17:32:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 18:09:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_char(char to_find, char *str)
+static int	in_charset(char to_find, char *str)
 {
 	while (*str)
 		if (to_find == *str++)
@@ -30,10 +30,12 @@ static int	wordcount(t_ctx *c, char *str, char *charset)
 	while (*str)
 	{
 		set_quote_bool(c, *str);
-		if (is_char(*str, charset) && !is_curr_quoted(c))
+		if (in_charset(*str, charset) && !is_curr_quoted(c))
 			flag = 1;
-		if (!is_char(*str, charset)
-			|| (is_char(*str, charset) && is_curr_quoted(c)))
+		if (
+			!in_charset(*str, charset)
+			|| (in_charset(*str, charset) && is_curr_quoted(c))
+		)
 		{
 			if (flag)
 				++count;
@@ -63,46 +65,54 @@ static char	*create_word(t_ctx *c, const char *str, int i, int j)
 	return (word);
 }
 
-typedef struct s_split
+typedef struct s_temp
 {
 	char	**arr;
 	int		index;
 	int		j;
 	int		i;
 	int		words;
-}	t_split;
+}	t_temp;
 
-static void	split_quote_builder(t_ctx *c, char *str, t_split *s)
+static void	split_quote_builder(t_ctx *c, char *str, t_temp *t)
 {
-	while (is_char(str[s->i], " \t\n\v\f\r")
-		&& !is_curr_quoted(c) && str[s->i])
-		set_quote_bool(c, str[s->i++]);
-	s->j = s->i;
-	while (str[s->j] && (!is_char(str[s->j], " \t\n\v\f\r")
-			|| (is_char(str[s->j], " \t\n\v\f\r") && is_curr_quoted(c))))
-		set_quote_bool(c, str[s->j++]);
-	s->arr[s->index++] = create_word(c, str, s->i, s->j);
+	while (
+		in_charset(str[t->i], " \t\n\v\f\r")
+		&& !is_curr_quoted(c)
+		&& str[t->i]
+	)
+		set_quote_bool(c, str[t->i++]);
+	t->j = t->i;
+	while (
+		str[t->j]
+		&& (
+			!in_charset(str[t->j], " \t\n\v\f\r")
+			|| (in_charset(str[t->j], " \t\n\v\f\r") && is_curr_quoted(c))
+		)
+	)
+		set_quote_bool(c, str[t->j++]);
+	t->arr[t->index++] = create_word(c, str, t->i, t->j);
 }
 
 char	**split_quote(t_ctx *c, char *str)
 {
-	t_split	s;
+	t_temp	t;
 
-	s = (t_split){0, 0, 0, 0, wordcount(c, str, " \t\n\v\f\r")};
+	t = (t_temp){0, 0, 0, 0, wordcount(c, str, " \t\n\v\f\r")};
 	reset_quote_bool(c);
-	if (s.words && str)
+	if (t.words && str)
 	{
-		s.arr = gb_calloc(sizeof(char *), (s.words + 1), QUOTE_GB, &c->gbc);
-		while (str[s.i] && s.index < s.words)
+		t.arr = gb_calloc(sizeof(char *), (t.words + 1), QUOTE_GB, &c->gbc);
+		while (str[t.i] && t.index < t.words)
 		{
-			split_quote_builder(c, str, &s);
-			if (!str[s.j])
+			split_quote_builder(c, str, &t);
+			if (!str[t.j])
 				break ;
-			s.i = s.j + 1;
+			t.i = t.j + 1;
 		}
 	}
 	else
-		s.arr = gb_calloc(sizeof(char *), 1, QUOTE_GB, &c->gbc);
+		t.arr = gb_calloc(sizeof(char *), 1, QUOTE_GB, &c->gbc);
 	gb_delete(&c->gbc, ENTRY_GB);
-	return (s.arr);
+	return (t.arr);
 }

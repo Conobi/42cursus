@@ -6,27 +6,16 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:21:18 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/17 15:17:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:12:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// typedef struct s_error {
-// 	short	type;
-// 	char	*cmd;
-// 	char	*message;
-// 	char	*path;
-// 	int		code;
-// 	bool	is_file;
-// }	t_error;
-
-// # define OTHR_TK	0
-// # define OUT_TK		1
-// # define IN_TK		2
-// # define APPD_TK	3
-// # define HRDC_TK	4
-
+/*
+	Cette fonction teste si il existe des pipes ne contenant
+	ni argument, ni redirections. Si c'est le cas, on throw une erreur.
+*/
 short	test_pipe(t_ctx *c)
 {
 	int	i;
