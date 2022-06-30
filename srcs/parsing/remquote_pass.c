@@ -6,37 +6,37 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:13:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:15:39 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:50:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef struct s_remquote {
+typedef struct s_temp {
 	char	*ret;
 	char	*var;
 	int		tk_len;
 	int		i;
 	int		j;
-}	t_remquote;
+}	t_temp;
 
 static char	*remquote(t_ctx *c, char *token)
 {
-	t_remquote	r;
+	t_temp	t;
 
-	r = (t_remquote){0, 0, ft_strlen(token), -1, -1};
+	t = (t_temp){0, 0, ft_strlen(token), -1, -1};
 	reset_quote_bool(c);
-	r.ret = gb_calloc(r.tk_len + 1, sizeof(char), CMD4P_GB, &c->gbc);
-	while (token[++r.i])
+	t.ret = gb_calloc(t.tk_len + 1, sizeof(char), CMD4P_GB, &c->gbc);
+	while (token[++t.i])
 	{
-		set_quote_bool(c, token[r.i]);
+		set_quote_bool(c, token[t.i]);
 		if (
-			!((c->parser.dquoted != 1 && token[r.i] == '\'')
-				|| (c->parser.squoted != 1 && token[r.i] == '"'))
+			!((c->parser.dquoted != 1 && token[t.i] == '\'')
+				|| (c->parser.squoted != 1 && token[t.i] == '"'))
 		)
-			r.ret[++r.j] = token[r.i];
+			t.ret[++t.j] = token[t.i];
 	}
-	return (r.ret);
+	return (t.ret);
 }
 
 void	remquote_pass(t_ctx *c)

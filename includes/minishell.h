@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 18:17:57 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 19:59:14 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	g_return;
 # define SHELL_NAME "Minishell"
 
 // To show the printf debug for parsing purpose
-# define PDEBUG	0
+# define PDEBUG	1
 # define EDEBUG	0
 
 //Term colors
@@ -144,6 +144,7 @@ void		split_pipe(t_ctx *c);
 void		set_quote_bool(t_ctx *c, char curr);
 void		reset_quote_bool(t_ctx *c);
 int			is_curr_quoted(t_ctx *c);
+int			token_type(char *str);
 char		**split_quote(t_ctx *c, char *str);
 char		**split_redir(t_ctx *c, char **split);
 t_ncommand	cmd_create(t_ctx *c, char **split);

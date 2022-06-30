@@ -3,41 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   enverr_pass.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:19:06 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 19:59:16 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:46:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef struct s_enverr {
+typedef struct s_temp {
 	char	*ret;
 	char	*var;
 	int		tk_len;
 	int		start_kw;
 	int		end_kw;
-}	t_enverr;
+}	t_temp;
 
 static char	*str_enverr(t_ctx *c, char *token)
 {
-	t_enverr	e;
+	t_temp	t;
 
-	e = (t_enverr){0, 0, ft_strlen(token), -1, -1};
+	t = (t_temp){0, 0, ft_strlen(token), -1, -1};
 	reset_quote_bool(c);
-	while (token[++e.start_kw] && (!ft_eq(&token[e.start_kw], "$?", 1)
+	while (token[++t.start_kw] && (!ft_eq(&token[t.start_kw], "$?", 1)
 			|| c->parser.squoted == 1))
-		set_quote_bool(c, token[e.start_kw]);
-	if (e.start_kw < e.tk_len)
+		set_quote_bool(c, token[t.start_kw]);
+	if (t.start_kw < t.tk_len)
 	{
-		e.end_kw = e.start_kw + 1;
-		token[e.start_kw] = 0;
-		e.var = gb_add(ft_itoa(WEXITSTATUS(g_return)),
+		t.end_kw = t.start_kw + 1;
+		token[t.start_kw] = 0;
+		t.var = gb_add(ft_itoa(g_return),
 				&c->gbc, CMD2P_GB);
-		e.ret = gb_add(ft_aconcat(3, token, e.var, token + e.end_kw + 1),
+		t.ret = gb_add(ft_aconcat(3, token, t.var, token + t.end_kw + 1),
 				&c->gbc, CMD2P_GB);
-		return (e.ret);
+		return (t.ret);
 	}
 	return (gb_add(ft_strdup(token), &c->gbc, CMD2P_GB));
 }
@@ -80,16 +80,3 @@ void	enverr_pass(t_ctx *c)
 						c->cmds[i].redirections[j].arg);
 	}
 }
-
-// Dans la phrase qui contient un mot clé, on :
-// tk_len = ft_strlen(token);
-// - Tant que chr[start_kw] != \0
-// - et que chr[start_kw] n'est pas un $ non quoté, ou un $ double quoté
-// 	et que chr[start_kw + 1] est "a-Z 0-9 _", on continue
-// - end_kw = start_kw - 1
-// - Tant qu'on est "a-Z 0-9 _" on avance dans chr[++end_kw]
-// - Si start_kw != end_kw :
-//		kw = gb_calloc(end_kw - start_kw, sizeof(char), CMD3P_GB,&c->gbc);
-//		ft_strlcpy(kw, token[start_kw + 1], end_kw - start_kw);
-//		token[start_kw] = 0;
-// 		ft_aconcat()

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:49:46 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 15:25:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 19:57:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ static bool	not_identifier(char *str)
 	return (false);
 }
 
+/*
+	Attention ! On ne nettoie rien du tout dans la mémoire à ce
+	moment. C'est le garbage collector qui s'en occupera à la fin de Minishell.
+*/
 static void	unset_env(t_ctx *c, char *key)
 {
 	t_list	*curr_list;
@@ -48,20 +52,16 @@ static void	unset_env(t_ctx *c, char *key)
 	t_env	*curr_env;
 
 	curr_list = c->env;
+	old_list = NULL;
 	while (curr_list->content)
 	{
 		curr_env = (t_env *)curr_list->content;
 		if (ft_eq(curr_env->key, key, 0))
 		{
-			old_list->next = curr_list->next;
-			free(curr_env->key);
-			free(curr_env->value);
-			curr_env->key = NULL;
-			curr_env->value = NULL;
-			curr_env->unset = NULL;
-			free(curr_env);
-			curr_env = NULL;
-			curr_list = old_list;
+			if (old_list)
+				old_list->next = curr_list->next;
+			else
+				c->env = c->env->next;
 		}
 		old_list = curr_list;
 		curr_list = curr_list->next;

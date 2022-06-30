@@ -6,12 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/24 16:49:11 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 18:16:16 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* --- DEBUG PART --- */
 static void	cmd_viewer(t_ncommand *cmd)
 {
 	int	i;
@@ -43,18 +44,20 @@ static void	multi_viewer(char **string, int cnt)
 		printf("{%d: %s}\n", i, string[i]);
 }
 
+/* --- END DEBUG PART --- */
+
 static void	parser_init(t_ctx *c)
 {
 	if (!c->entry
 		|| !ft_strncmp(c->entry, "exit", 5)
-		|| !ft_strncmp(c->entry, "bye", 3))
+	)
 		exit_shell(c, 0);
 	c->parser.len = ft_strlen(c->entry);
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
 }
 
-short	post_cmd_create(t_ctx *c)
+static short	post_cmd_create(t_ctx *c)
 {
 	int	i;
 

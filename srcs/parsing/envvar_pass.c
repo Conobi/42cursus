@@ -3,68 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   envvar_pass.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:11:20 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 19:24:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:48:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef struct s_envvar {
+typedef struct s_temp {
 	char	*ret;
 	char	*var;
 	char	*kw;
 	int		tk_len;
 	int		start_kw;
 	int		end_kw;
-}	t_envvar;
+}	t_temp;
 
-static short	is_envvar(const t_ctx *c, const char *token, const t_envvar e)
+static short	is_envvar(const t_ctx *c, const char *token, const t_temp t)
 {
 	if (c->parser.squoted == 1)
 		return (0);
-	if (token[e.start_kw] == '$'
-		&& (ft_isalnum(token[e.start_kw + 1]) || token[e.start_kw + 1] == '_'))
+	if (token[t.start_kw] == '$'
+		&& (ft_isalnum(token[t.start_kw + 1]) || token[t.start_kw + 1] == '_'))
 		return (1);
 	return (0);
 }
 
-static char	*envvar_builder(t_ctx *c, char *token, t_envvar *e)
+static char	*envvar_builder(t_ctx *c, char *token, t_temp *t)
 {
-	token[e->start_kw] = 0;
-	e->kw = gb_calloc(e->end_kw - e->start_kw + 1,
+	token[t->start_kw] = 0;
+	t->kw = gb_calloc(t->end_kw - t->start_kw + 1,
 			sizeof(char), CMD3P_GB, &c->gbc);
-	ft_strlcpy(e->kw, token + e->start_kw + 1, e->end_kw - e->start_kw);
-	if (get_env_by_key(c->env, e->kw))
-		e->var = gb_add(ft_strdup(
-					get_env_by_key(c->env, e->kw)->value),
+	ft_strlcpy(t->kw, token + t->start_kw + 1, t->end_kw - t->start_kw);
+	if (get_env_by_key(c->env, t->kw))
+		t->var = gb_add(ft_strdup(
+					get_env_by_key(c->env, t->kw)->value),
 				&c->gbc, CMD3P_GB);
 	else
-		e->var = gb_calloc(1, sizeof(char), CMD3P_GB, &c->gbc);
-	e->ret = gb_add(ft_aconcat(3, token, e->var, token + e->end_kw),
+		t->var = gb_calloc(1, sizeof(char), CMD3P_GB, &c->gbc);
+	t->ret = gb_add(ft_aconcat(3, token, t->var, token + t->end_kw),
 			&c->gbc, CMD3P_GB);
-	return (e->ret);
+	return (t->ret);
 }
 
 static char	*str_envvar(t_ctx *c, char *token)
 {
-	t_envvar	e;
+	t_temp	t;
 
-	e = (t_envvar){0, 0, 0, ft_strlen(token), -1, -1};
+	t = (t_temp){0, 0, 0, ft_strlen(token), -1, -1};
 	reset_quote_bool(c);
-	while (token[++e.start_kw] && !is_envvar(c, token, e))
-		set_quote_bool(c, token[e.start_kw]);
-	e.end_kw = e.start_kw;
+	while (token[++t.start_kw] && !is_envvar(c, token, t))
+		set_quote_bool(c, token[t.start_kw]);
+	t.end_kw = t.start_kw;
 	while (
-		token[e.start_kw] && token[++e.end_kw]
-		&& (ft_isalnum(token[e.end_kw]) || token[e.end_kw] == '_'))
+		token[t.start_kw] && token[++t.end_kw]
+		&& (ft_isalnum(token[t.end_kw]) || token[t.end_kw] == '_'))
 		;
 	if (PDEBUG)
-		printf("@@@ %02d %02d %02d @@@\n", e.tk_len, e.start_kw, e.end_kw);
-	if (e.start_kw < e.tk_len - 1)
-		return (envvar_builder(c, token, &e));
+		printf("@@@ %02d %02d %02d @@@\n", t.tk_len, t.start_kw, t.end_kw);
+	if (t.start_kw < t.tk_len - 1)
+		return (envvar_builder(c, token, &t));
 	return (gb_add(ft_strdup(token), &c->gbc, CMD3P_GB));
 }
 

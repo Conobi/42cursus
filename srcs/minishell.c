@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 17:47:03 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 19:59:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,8 @@ int	main(int argc, char **argv, char **env)
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
 		if (!c.entry)
 			exit_shell(&c, 0);
-		parser(&c);
-		if (c.entry && ft_strlen(c.entry) != 0
-			&& c.ncmds > 0 && c.cmds[0].argc > 0)
+		if (parser(&c))
 		{
-			history(&c);
 			exec(&c);
 			if (c.better_prompt)
 				gen_prompt(&c, format_path(&c), get_branch(&c));
@@ -81,5 +78,7 @@ int	main(int argc, char **argv, char **env)
 				gen_sad_prompt(&c, format_path(&c));
 			gb_delete(&c.gbc, CMD_GB);
 		}
+		else
+			g_return = 258;
 	}
 }

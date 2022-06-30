@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:26:47 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/27 19:58:41 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:28:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ int	is_curr_quoted(t_ctx *c)
 		return (0);
 	else
 		return (1);
+}
+
+int	token_type(char *str)
+{
+	if (ft_eq(str, ">", 0))
+		return (OUT_TK);
+	else if (ft_eq(str, "<", 0))
+		return (IN_TK);
+	else if (ft_eq(str, ">>", 0))
+		return (APPD_TK);
+	else if (ft_eq(str, "<<", 0))
+		return (HRDC_TK);
+	return (OTHR_TK);
 }
 
 void	syntax_err(t_ctx *c, char *token)
