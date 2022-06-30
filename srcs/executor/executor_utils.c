@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 19:17:53 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 15:25:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	set_exec_path(t_ctx *c, t_ncommand *cmd)
 		cmd->exec_path = find_exec(c, cmd->argv[0]);
 	if (!cmd->exec_path && !is_builtin(*cmd))
 	{
-		err = ft_aconcat(2, cmd->argv[0], ": command not found\n");
+		err = gb_add(ft_aconcat(2, cmd->argv[0], ": command not found\n"),
+				&c->gbc, CMD_GB);
 		write(2, err, ft_strlen(err));
 		g_return = 127 * 256;
 		return (1);

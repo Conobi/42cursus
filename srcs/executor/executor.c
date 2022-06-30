@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 20:20:01 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 15:23:42 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	exec_child(t_ctx *c, int curr)
 		switch_pipes(in, out);
 		g_return = exec_builtin(c, c->cmds[curr]);
 		dup2(STDIN_FILENO, STDOUT_FILENO);
-		printf("%d\n", g_return);
+		// printf("%d\n", g_return);
 		return ;
 	}
 	c->exec->process[curr] = fork();
@@ -46,7 +46,7 @@ static void	exec_child(t_ctx *c, int curr)
 		close_pipes(c, 2 * c->ncmds);
 		if (WEXITSTATUS(g_return) != 0 && c->ncmds > 1)
 		{
-			printf("error\n");
+			// printf("error\n");
 			exit(1);
 		}
 		exit(execve(c->cmds[curr].exec_path,

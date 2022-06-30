@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 20:01:48 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 15:54:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,12 @@ int	main(int argc, char **argv, char **env)
 	termios_init(&c);
 	while (true)
 	{
-		// printf("%d -> %d\n", g_return, WEXITSTATUS(g_return));
 		termios_set(&c, 0);
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
 		if (!c.entry)
 			exit_shell(&c, 0);
-		parser(&c);
-		if (c.entry && ft_strlen(c.entry) != 0
-			&& c.ncmds > 0 && c.cmds[0].argc > 0)
+		if (parser(&c))
 		{
-			history(&c);
 			exec(&c);
 			if (c.better_prompt)
 				gen_prompt(&c, format_path(&c), get_branch(&c));
@@ -83,5 +79,7 @@ int	main(int argc, char **argv, char **env)
 				gen_sad_prompt(&c, format_path(&c), get_branch(&c));
 			gb_delete(&c.gbc, CMD_GB);
 		}
+		else
+			g_return = 258;
 	}
 }

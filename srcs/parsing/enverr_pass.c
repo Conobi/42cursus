@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enverr_pass.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:19:06 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 19:59:16 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 15:55:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*str_enverr(t_ctx *c, char *token)
 	{
 		e.end_kw = e.start_kw + 1;
 		token[e.start_kw] = 0;
-		e.var = gb_add(ft_itoa(WEXITSTATUS(g_return)),
+		e.var = gb_add(ft_itoa(g_return),
 				&c->gbc, CMD2P_GB);
 		e.ret = gb_add(ft_aconcat(3, token, e.var, token + e.end_kw + 1),
 				&c->gbc, CMD2P_GB);

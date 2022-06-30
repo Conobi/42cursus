@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 19:16:56 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 15:32:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	g_return;
 # define SHELL_NAME "Minishell"
 
 // To show the printf debug for parsing purpose
-# define PDEBUG	0
+# define PDEBUG	1
 # define EDEBUG	0
 
 //Term colors
