@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_handlers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 16:45:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:13:06 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ static void	infile_handler(t_ctx *c, int curr_cmd)
 	while (i < c->cmds[curr_cmd].redc)
 	{
 		if (c->cmds[curr_cmd].redirections[i].type == HRDC_TK)
-			c->cmds[curr_cmd].infile = create_heredoc(c,
-					c->cmds[curr_cmd].redirections[i].arg);
+			c->cmds[curr_cmd].infile = c->cmds[curr_cmd].heredoc;
 		if (c->cmds[curr_cmd].redirections[i].type == IN_TK)
 		{
 			c->cmds[curr_cmd].infile = open(

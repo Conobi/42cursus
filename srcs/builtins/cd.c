@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 15:19:39 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 19:56:41 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int	b_cd(t_ctx *c, char *path)
 	// todo: make a function to change value of env list values
 	// else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
 	// {
-	// 	printf("%s\n", new_path);
+	// 	lenv = get_env_list_by_key(c->env, "OLDPDW");
+	// 	printf("%s\n", (t_env *)(lenv->content)->value);
+	// 	// printf("%s\n", new_path);
 	// }
 	else
 		new_path = path;
@@ -52,7 +54,7 @@ int	b_cd(t_ctx *c, char *path)
 	{
 		if (c->better_prompt)
 			gen_prompt(c, format_path(c), get_branch(c));
-		return (256);
+		return (1);
 	}
 	chdir(new_path);
 	if (c->better_prompt)

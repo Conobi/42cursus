@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 19:16:56 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 18:17:57 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_ncommand {
 	char	*exec_path;
 	int		outfile;
 	int		infile;
+	int		heredoc;
 }	t_ncommand;
 
 typedef struct s_parser {
@@ -124,7 +125,6 @@ typedef struct s_ctx {
 	t_list				*env;
 	t_parser			parser;
 	t_exec				*exec;
-	char				**env_list;
 	bool				better_prompt;
 	char				*prompt;
 	char				*entry;
@@ -132,7 +132,6 @@ typedef struct s_ctx {
 	char				*last_path;
 	char				*last_entry;
 	int					ncmds;
-	int					return_code;
 	int					history_fd;
 }	t_ctx;
 
@@ -167,7 +166,6 @@ void		syntax_err(t_ctx *c, char *token);
  * @param int code : error code to return
  * @param bool is_file : if given path must be a file or not
  */
-
 typedef struct s_error {
 	short	type;
 	char	*cmd;
@@ -188,8 +186,9 @@ void		exec(t_ctx *c);
 void		io_handler(t_ctx *c, int curr, int *in, int *out);
 void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int in, int out);
-int			set_exec_path(t_ctx *c, t_ncommand *cmd);
 char		*find_exec(t_ctx *c, const char *exec_name);
+int			set_exec_path(t_ctx *c, t_ncommand *cmd);
+void		open_heredocs(t_ctx *c);
 int			create_heredoc(t_ctx *c, const char *stop);
 
 // Builtins
@@ -213,7 +212,7 @@ char		*format_path(t_ctx *c);
 void		err_print(const char *err);
 bool		error_handler(t_ctx *c, t_error err);
 void		gen_prompt(t_ctx *c, const char *path, const char *branch);
-void		gen_sad_prompt(t_ctx *c, const char *path, const char *branch);
+void		gen_sad_prompt(t_ctx *c, const char *path);
 void		history(t_ctx *c);
 void		init_history(t_ctx *c);
 char		*get_branch(t_ctx *c);

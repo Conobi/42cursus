@@ -6,11 +6,32 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 20:17:03 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:11:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	open_heredocs(t_ctx *c)
+{
+	int	i;
+	int	j;
+	int	heredoc_fd;
+
+	i = 0;
+	while (i < c->ncmds)
+	{
+		j = 0;
+		while (j < c->cmds[i].redc)
+		{
+			if (c->cmds[i].redirections[j].type == HRDC_TK)
+				heredoc_fd = create_heredoc(c, c->cmds[i].redirections[j].arg);
+			j++;
+		}
+		c->cmds[i].heredoc = heredoc_fd;
+		i++;
+	}
+}
 
 static int	exit_heredoc(int pid, int *fd)
 {

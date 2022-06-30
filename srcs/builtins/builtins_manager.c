@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 19:34:41 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 17:26:45 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ bool	is_builtin(t_ncommand cmd)
 		return (true);
 	if (ft_eq(cmd.argv[0], "exit", 0))
 		return (true);
-	if (ft_eq(cmd.argv[0], "export", 0))
-		return (true);
 	if (ft_eq(cmd.argv[0], "pwd", 0))
 		return (true);
 	if (ft_eq(cmd.argv[0], "echo", 0))
+		return (true);
+	if (ft_eq(cmd.argv[0], "export", 0))
+		return (true);
+	if (ft_eq(cmd.argv[0], "unset", 0))
+		return (true);
+	if (ft_eq(cmd.argv[0], "env", 0))
 		return (true);
 	return (false);
 }
@@ -39,11 +43,15 @@ int	exec_builtin(t_ctx *c, t_ncommand cmd)
 			exit_shell(c, 0);
 		return (0);
 	}
-	if (ft_eq(cmd.argv[0], "export", 0))
-		return (b_export(c, cmd.argc, cmd.argv));
 	if (ft_eq(cmd.argv[0], "pwd", 0))
 		return (b_pwd(c));
 	if (ft_eq(cmd.argv[0], "echo", 0))
 		return (b_echo(cmd));
+	if (ft_eq(cmd.argv[0], "export", 0))
+		return (b_export(c, cmd.argc, cmd.argv));
+	if (ft_eq(cmd.argv[0], "unset", 0))
+		return (b_unset(c, cmd.argc, cmd.argv));
+	if (ft_eq(cmd.argv[0], "env", 0))
+		return (b_env(c, cmd.argc, cmd.argv));
 	return (-1);
 }

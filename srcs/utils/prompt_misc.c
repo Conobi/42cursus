@@ -6,31 +6,16 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 20:01:08 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 18:18:04 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	gen_sad_prompt(t_ctx *c, const char *path, const char *branch)
+void	gen_sad_prompt(t_ctx *c, const char *path)
 {
-	char	*status;
-
 	free(c->prompt);
-	if (WEXITSTATUS(g_return) == 0)
-		status = "✓";
-	else
-		status = gb_add(ft_strjoin("✖ ",
-					gb_add(ft_itoa(WEXITSTATUS(g_return)),
-						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
-	if (branch)
-	{
-		c->prompt = ft_aconcat(10, c->weather_emoji, "  Minishell ", "  ",
-				path, " ", status, " ", " ", branch, " > ");
-		return ;
-	}
-	c->prompt = ft_aconcat(7, c->weather_emoji, "  Minishell ", "  ",
-			path, " ", status, " > ");
+	c->prompt = ft_aconcat(4, "  Minishell ", path, " ", "> ");
 }
 
 /**
@@ -45,12 +30,11 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	char	*status;
 
 	free(c->prompt);
-	printf("prompt -> %d\n", WEXITSTATUS(g_return));
-	if (WEXITSTATUS(g_return) == 0)
+	if (g_return == 0)
 		status = "✓";
 	else
 		status = gb_add(ft_strjoin("✖ ",
-					gb_add(ft_itoa(WEXITSTATUS(g_return)),
+					gb_add(ft_itoa(g_return),
 						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
 	if (branch)
 	{
@@ -91,7 +75,7 @@ void	get_weather(t_ctx *c)
 		close(link[1]);
 		exit(execve(find_exec(c, "curl"),
 				(char *[5]){"curl", "-s",
-				"https://kiyo.ooo/f/meteoshell.php", "-k", 0}, c->env_list));
+				"https://kiyo.ooo/f/meteoshell.php", "-k", 0}, convert_env(c))); // todo: fix if path is unset
 	}
 	else
 	{

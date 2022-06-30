@@ -6,11 +6,23 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 20:20:01 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 19:02:44 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	child_status(int status)
+{
+	if (WIFEXITED(status))
+		g_return = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		g_return = WTERMSIG(status);
+		if (g_return != 131)
+			g_return += 128;
+	}
+}
 
 /**
  * @brief This function executes the child process
@@ -31,7 +43,6 @@ static void	exec_child(t_ctx *c, int curr)
 		switch_pipes(in, out);
 		g_return = exec_builtin(c, c->cmds[curr]);
 		dup2(STDIN_FILENO, STDOUT_FILENO);
-		printf("%d\n", g_return);
 		return ;
 	}
 	c->exec->process[curr] = fork();
@@ -40,15 +51,15 @@ static void	exec_child(t_ctx *c, int curr)
 	if (c->exec->process[curr] == 0)
 	{
 		if (set_exec_path(c, &c->cmds[curr]))
-			exit(1);
+			exit(g_return);
 		io_handler(c, curr, &in, &out);
 		switch_pipes(in, out);
 		close_pipes(c, 2 * c->ncmds);
-		if (WEXITSTATUS(g_return) != 0 && c->ncmds > 1)
-		{
-			printf("error\n");
-			exit(1);
-		}
+		// if (WEXITSTATUS(g_return) != 0 && c->ncmds > 1)
+		// {
+		// 	printf("error\n");
+		// 	exit(1);
+		// }
 		exit(execve(c->cmds[curr].exec_path,
 				c->cmds[curr].argv, convert_env(c)));
 	}
@@ -85,10 +96,12 @@ void	pipe_fd(t_ctx *c)
 void	exec(t_ctx *c)
 {
 	int		i;
+	int		status;
 
 	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
 	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
 	pipe_fd(c);
+	open_heredocs(c);
 	i = 0;
 	while (i < c->ncmds)
 	{
@@ -99,7 +112,12 @@ void	exec(t_ctx *c)
 	close_pipes(c, 2 * c->ncmds);
 	i = -1;
 	while (++i < c->ncmds)
+	{
 		if (!is_builtin(c->cmds[i]))
-			waitpid(c->exec->process[i], &g_return, 0);
+		{
+			waitpid(c->exec->process[i], &status, 0);
+			child_status(status);
+		}
+	}
 	signal(SIGINT, sig_handler);
 }

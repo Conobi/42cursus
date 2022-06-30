@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 20:16:23 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 15:48:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_return = 1 * 256;
+		g_return = 256;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -69,13 +69,12 @@ void	heredoc_sig_handler(int sig)
  */
 void	fork_sig_handler(int sig)
 {
-	if (sig == SIGINT) //todo: return code -> 131
+	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		g_return = 130 * 256;
 		return ;
 	}
-	if (sig == SIGQUIT) //todo: return code -> 131
+	if (sig == SIGQUIT)
 	{
 		write(1, "Quit: 3\n", 10);
 		return ;

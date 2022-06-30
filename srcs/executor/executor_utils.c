@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 19:17:53 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 18:58:16 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,37 @@
  */
 char	*find_exec(t_ctx *c, const char *exec_name)
 {
+	t_env	*env_path;
 	char	**path;
 	char	*exec_path;
 	int		i;
 
-	path = gb_split(getenv("PATH"), ':', &c->gbc, CMD_GB);
+	// todo: not working with ../
+	if (ft_strchr(exec_name, '/'))
+	{
+		if (error_handler(c, (t_error){FILE_ERR, SHELL_NAME, NULL,
+				(char *)exec_name, 1, true}))
+			return (NULL);
+		return ((char *)exec_name);
+	}
+	env_path = get_env_by_key(c->env, "PATH");
+	if (!env_path)
+	{
+		create_error(c, (t_error){WARNING, SHELL_NAME, "No such file or directory", (char *)exec_name, 127, true});
+		return (NULL);
+	}
+	path = gb_split(env_path->value, ':', &c->gbc, CMD_GB);
 	i = 0;
 	while (path[i])
 	{
-		exec_path = gb_add(ft_aconcat(3, path[i], "/", exec_name),
+		exec_path = gb_add(
+				ft_aconcat(3, path[i], "/", exec_name),
 				&c->gbc, CMD_GB);
 		if (access(exec_path, X_OK) == 0)
 			return (exec_path);
 		i++;
 	}
-	exec_path = (char *)exec_name;
-	if (access(exec_path, X_OK) == 0)
-		return (exec_path);
+	create_error(c, (t_error){WARNING, SHELL_NAME, "No such file or directory", (char *)exec_name, 127, true});
 	return (NULL);
 }
 
@@ -78,18 +92,10 @@ void	switch_pipes(int in, int out)
  */
 int	set_exec_path(t_ctx *c, t_ncommand *cmd)
 {
-	char	*err;
-
-	if (c->better_prompt && ft_eq(cmd->argv[0], "ls", 0))
-		cmd->exec_path = find_exec(c, "lsd");
-	if (!cmd->exec_path)
-		cmd->exec_path = find_exec(c, cmd->argv[0]);
+	// if (c->better_prompt && ft_eq(cmd->argv[0], "ls", 0))
+	// 	cmd->exec_path = find_exec(c, "lsd");
+	cmd->exec_path = find_exec(c, cmd->argv[0]);
 	if (!cmd->exec_path && !is_builtin(*cmd))
-	{
-		err = ft_aconcat(2, cmd->argv[0], ": command not found\n");
-		write(2, err, ft_strlen(err));
-		g_return = 127 * 256;
 		return (1);
-	}
 	return (0);
 }

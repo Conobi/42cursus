@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 16:49:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/06/30 19:15:26 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	create_error(t_ctx *c, t_error err)
 {
 	char	*message;
 
-	message = gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.message, ": ",
-				gb_add(ft_itoa(err.code), &c->gbc, PERM_GB), "\n", RESET),
+	g_return = err.code;
+	message = gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ",
+				err.path, ": ", err.message, "\n", RESET),
 			&c->gbc, CMD_GB);
 	write(2, message, ft_strlen(message));
 	if (err.type == FATAL)
@@ -52,29 +53,31 @@ void	create_error(t_ctx *c, t_error err)
 static bool	file_errors(t_ctx *c, t_error err)
 {
 	struct stat	path_stat;
+	int			staterr;
 
-	if (stat(err.path, &path_stat))
-	{
-		err_print(gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.path,
-					": ", strerror(errno), "\n", RESET), &c->gbc, CMD_GB));
-		return (true);
-	}
-	if (!(path_stat.st_mode & S_IRUSR))
-	{
-		err_print(gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.path,
-					": ", strerror(EACCES), "\n", RESET), &c->gbc, CMD_GB));
-		return (true);
-	}
+	staterr = stat(err.path, &path_stat);
 	if (!err.is_file && !S_ISDIR(path_stat.st_mode))
 	{
-		err_print(gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.path,
-					": ", strerror(ENOTDIR), "\n", RESET), &c->gbc, CMD_GB));
+		create_error(c, (t_error){WARNING, err.cmd,
+			strerror(ENOTDIR), err.path, 1, err.is_file});
 		return (true);
 	}
 	if (err.is_file && S_ISDIR(path_stat.st_mode))
 	{
-		err_print(gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ", err.path,
-					": ", strerror(EISDIR), "\n", RESET), &c->gbc, CMD_GB));
+		create_error(c, (t_error){WARNING, err.cmd,
+			strerror(EISDIR), err.path, 126, err.is_file});
+		return (true);
+	}
+	if (staterr)
+	{
+		create_error(c, (t_error){WARNING, err.cmd,
+			strerror(errno), err.path, 127, err.is_file});
+		return (true);
+	}
+	if (!(path_stat.st_mode & S_IRUSR))
+	{
+		create_error(c, (t_error){WARNING, err.cmd,
+			strerror(EACCES), err.path, 126, err.is_file});
 		return (true);
 	}
 	return (false);
