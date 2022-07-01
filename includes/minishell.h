@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 18:14:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 19:46:53 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ char		**split_redir(t_ctx *c, char **split);
 t_ncommand	cmd_create(t_ctx *c, char **split);
 void		enverr_pass(t_ctx *c);
 void		envvar_pass(t_ctx *c);
+void		tilde_pass(t_ctx *c);
 void		remquote_pass(t_ctx *c);
 
 // Tests

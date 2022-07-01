@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 16:30:43 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 19:47:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static short	post_cmd_create(t_ctx *c)
 	envvar_pass(c);
 	if (!test_redir(c))
 		return (0);
+	tilde_pass(c);
 	remquote_pass(c);
 	if (!test_pipe(c))
 		return (0);
