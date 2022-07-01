@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:38:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 17:29:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:03:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,21 @@ static int	print_tk_err(t_ctx *c, char *token)
 	return (0);
 }
 
-// static bool	is_redirection(char *str)
-// {
-// 	if (
-// 		ft_eq(str, ">", 0)
-// 		|| ft_eq(str, "<", 0)
-// 		|| ft_eq(str, ">>", 0)
-// 		|| ft_eq(str, "<<", 0)
-// 	)
-// 		return (true);
-// 	return (false);
-// }
+static void	throw_heredoc_error(t_ctx *c, int i, int j)
+{
+	if (
+		j < c->cmds[i].argc - 1
+		&& token_type(c->cmds[i].argv[j + 1]) > OTHR_TK
+	)
+			c->heredoc_errored = gb_add(
+				ft_strdup(c->cmds[i].argv[j + 1]), &c->gbc, CMD_GB);
+	else if (i < c->ncmds - 1)
+		c->heredoc_errored = gb_add(
+				ft_strdup("|"), &c->gbc, CMD_GB);
+	else
+		c->heredoc_errored = gb_add(
+				ft_strdup("newline"), &c->gbc, CMD_GB);
+}
 
 /*
 	Permet de vérifier la syntaxe des redirections.
@@ -47,11 +51,13 @@ short	test_redir(t_ctx *c)
 		j = -1;
 		while (++j < c->cmds[i].argc)
 		{
-			if (token_type(c->cmds[i].argv[j]) > 0)
+			if (token_type(c->cmds[i].argv[j]) == HRDC_TK)
+				throw_heredoc_error(c, i, j);
+			else if (token_type(c->cmds[i].argv[j]) > OTHR_TK)
 			{
 				if (
 					j < c->cmds[i].argc - 1
-					&& token_type(c->cmds[i].argv[j + 1]) > 0
+					&& token_type(c->cmds[i].argv[j + 1]) > OTHR_TK
 				)
 					return (print_tk_err(c, c->cmds[i].argv[j + 1]));
 				else if (i < c->ncmds - 1)

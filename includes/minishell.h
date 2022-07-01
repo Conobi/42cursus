@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 19:59:14 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 15:22:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	g_return;
 # define SHELL_NAME "Minishell"
 
 // To show the printf debug for parsing purpose
-# define PDEBUG	1
+# define PDEBUG	0
 # define EDEBUG	0
 
 //Term colors
@@ -131,6 +131,7 @@ typedef struct s_ctx {
 	char				*weather_emoji;
 	char				*last_path;
 	char				*last_entry;
+	char				*heredoc_errored;
 	int					ncmds;
 	int					history_fd;
 }	t_ctx;
@@ -189,7 +190,7 @@ void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int in, int out);
 char		*find_exec(t_ctx *c, const char *exec_name);
 int			set_exec_path(t_ctx *c, t_ncommand *cmd);
-void		open_heredocs(t_ctx *c);
+int			open_heredocs(t_ctx *c);
 int			create_heredoc(t_ctx *c, const char *stop);
 
 // Builtins

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 17:11:54 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 15:58:39 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	open_heredocs(t_ctx *c)
+int	open_heredocs(t_ctx *c)
 {
 	int	i;
 	int	j;
@@ -31,6 +31,13 @@ void	open_heredocs(t_ctx *c)
 		c->cmds[i].heredoc = heredoc_fd;
 		i++;
 	}
+	if (c->heredoc_errored)
+	{
+		syntax_err(c, c->heredoc_errored);
+		c->heredoc_errored = 0;
+		return (0);
+	}
+	return (1);
 }
 
 static int	exit_heredoc(int pid, int *fd)

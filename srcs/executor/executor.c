@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 20:00:25 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:01:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,6 @@ static void	exec_child(t_ctx *c, int curr)
 		io_handler(c, curr, &in, &out);
 		switch_pipes(in, out);
 		close_pipes(c, 2 * c->ncmds);
-		// if (WEXITSTATUS(g_return) != 0 && c->ncmds > 1)
-		// {
-		// 	printf("error\n");
-		// 	exit(1);
-		// }
 		exit(execve(c->cmds[curr].exec_path,
 				c->cmds[curr].argv, convert_env(c)));
 	}
@@ -101,7 +96,8 @@ void	exec(t_ctx *c)
 	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
 	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
 	pipe_fd(c);
-	open_heredocs(c);
+	if (!open_heredocs(c))
+		return ;
 	i = 0;
 	while (i < c->ncmds)
 	{

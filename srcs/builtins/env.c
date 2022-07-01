@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:14:38 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 14:48:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:11:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,7 @@
 
 static int	toomany_err(t_ctx *c)
 {
-	err_print(
-		gb_add(
-			ft_aconcat(
-				4,
-				SHELL_NAME,
-				": env: ",
-				strerror(7),
-				"\n"
-				),
-			&c->gbc,
-			CMD_GB
-			)
-		);
+	create_error(c, (t_error){WARNING, SHELL_NAME, strerror(7), "env", 7, 0});
 	return (7);
 }
 

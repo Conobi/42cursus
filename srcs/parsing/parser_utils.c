@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:26:47 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 17:28:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:09:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,12 @@ int	token_type(char *str)
 
 void	syntax_err(t_ctx *c, char *token)
 {
-	err_print(
-		gb_add(
-			ft_aconcat(
-				4,
-				SHELL_NAME,
-				": syntax error near unexpected token `",
-				token,
-				"'\n"
-				),
+	char	*err;
+
+	err = gb_add(
+			ft_aconcat(3, "syntax error near unexpected token `", token, "'"),
 			&c->gbc,
 			CMD_GB
-			)
-		);
+			);
+	create_error(c, (t_error){WARNING, SHELL_NAME, err, NULL, 258, 0});
 }

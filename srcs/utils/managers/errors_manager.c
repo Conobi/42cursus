@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errors_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 19:15:26 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:10:08 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Just a function to print the error message in stderr
- *
- * @param err Error message
- */
-void	err_print(const char *err)
-{
-	write(2, err, ft_strlen(err));
-}
 
 /**
  * @brief Create an error and exit if necessary
@@ -33,9 +23,14 @@ void	create_error(t_ctx *c, t_error err)
 	char	*message;
 
 	g_return = err.code;
-	message = gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ",
-				err.path, ": ", err.message, "\n", RESET),
-			&c->gbc, CMD_GB);
+	if (err.path)
+		message = gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ",
+					err.path, ": ", err.message, "\n", RESET),
+				&c->gbc, CMD_GB);
+	else
+		message = gb_add(ft_aconcat(6, RED_FG, err.cmd, ": ",
+					err.message, "\n", RESET),
+				&c->gbc, CMD_GB);
 	write(2, message, ft_strlen(message));
 	if (err.type == FATAL)
 		exit_shell(c, err.code);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 19:32:33 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:15:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,20 @@
 
 static int	identifier_err(t_ctx *c, char *token)
 {
-	err_print(
-		gb_add(
+	char	*err;
+
+	err = gb_add(
 			ft_aconcat(
-				4,
-				SHELL_NAME,
-				": export: `",
+				3,
+				"`",
 				token,
-				"': not a valid identifier\n"
+				"': not a valid identifier"
 				),
 			&c->gbc,
 			CMD_GB
-			)
+			);
+	create_error(c,
+		(t_error){WARNING, SHELL_NAME, err, "export", 258, 0}
 		);
 	return (1);
 }
