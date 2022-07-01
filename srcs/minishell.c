@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 15:12:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:34:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 		gen_prompt(c, format_path(c), get_branch(c));
 	else
 		gen_sad_prompt(c, format_path(c));
-	c->history_fd = open("./.minishell_history", O_CREAT | O_RDWR, 0000644);
 	c->last_entry = NULL;
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;

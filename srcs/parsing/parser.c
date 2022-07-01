@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 18:16:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:30:43 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ short	parser(t_ctx *c)
 {
 	int	i;
 
-	history(c);
+	if (c->entry)
+		history(c);
 	parser_init(c);
 	if (!test_quote(c))
 		return (0);

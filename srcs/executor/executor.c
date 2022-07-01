@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 16:01:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 19:38:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_status(int status)
+static void	exec_fork(t_ctx *c, int curr, int *in, int *out)
 {
-	if (WIFEXITED(status))
-		g_return = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-	{
-		g_return = WTERMSIG(status);
-		if (g_return != 131)
-			g_return += 128;
-	}
+	if (set_exec_path(c, &c->cmds[curr]))
+		exit(g_return);
+	io_handler(c, curr, in, out);
+	if (*in == -1 || *out == -1)
+		exit(1);
+	switch_pipes(*in, *out);
+	close_pipes(c, 2 * c->ncmds);
+	exit(execve(c->cmds[curr].exec_path,
+			c->cmds[curr].argv, convert_env(c)));
 }
 
 /**
@@ -49,15 +50,7 @@ static void	exec_child(t_ctx *c, int curr)
 	if (c->exec->process[curr] < 0)
 		return (perror("fork"));
 	if (c->exec->process[curr] == 0)
-	{
-		if (set_exec_path(c, &c->cmds[curr]))
-			exit(g_return);
-		io_handler(c, curr, &in, &out);
-		switch_pipes(in, out);
-		close_pipes(c, 2 * c->ncmds);
-		exit(execve(c->cmds[curr].exec_path,
-				c->cmds[curr].argv, convert_env(c)));
-	}
+		exec_fork(c, curr, &in, &out);
 }
 
 /**
@@ -65,7 +58,7 @@ static void	exec_child(t_ctx *c, int curr)
  * in table->pipe_fd
  * @param c Minishell context struct
  */
-void	pipe_fd(t_ctx *c)
+static void	pipe_fd(t_ctx *c)
 {
 	int	i;
 
@@ -83,29 +76,11 @@ void	pipe_fd(t_ctx *c)
 	}
 }
 
-/**
- * @brief This function is the main function of execution
- *
- * @param c Minishell context struct
- */
-void	exec(t_ctx *c)
+static void	wait_forks(t_ctx *c)
 {
-	int		i;
-	int		status;
+	int	i;
+	int	status;
 
-	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
-	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
-	pipe_fd(c);
-	if (!open_heredocs(c))
-		return ;
-	i = 0;
-	while (i < c->ncmds)
-	{
-		if (c->cmds[i].argc < 1)
-			return ;
-		exec_child(c, i++);
-	}
-	close_pipes(c, 2 * c->ncmds);
 	i = -1;
 	while (++i < c->ncmds)
 	{
@@ -115,5 +90,29 @@ void	exec(t_ctx *c)
 			child_status(status);
 		}
 	}
+}
+
+/**
+ * @brief This function is the main function of execution
+ *
+ * @param c Minishell context struct
+ */
+void	exec(t_ctx *c)
+{
+	int		i;
+
+	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
+	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
+	pipe_fd(c);
+	open_heredocs(c);
+	i = 0;
+	while (i < c->ncmds)
+	{
+		if (c->cmds[i].argc < 1)
+			return ;
+		exec_child(c, i++);
+	}
+	close_pipes(c, 2 * c->ncmds);
+	wait_forks(c);
 	signal(SIGINT, sig_handler);
 }

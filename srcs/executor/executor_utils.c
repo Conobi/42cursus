@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 19:59:59 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 18:19:33 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 	char	*exec_path;
 	int		i;
 
-	// todo: not working with ../
 	if (ft_strchr(exec_name, '/'))
 	{
-		if (error_handler(c, (t_error){FILE_ERR, SHELL_NAME, NULL,
+		if (file_errors(c, (t_error){FILE_ERR, SHELL_NAME, NULL,
 				(char *)exec_name, 1, true}))
 			return (NULL);
 		return ((char *)exec_name);
@@ -38,7 +37,8 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 	env_path = get_env_by_key(c->env, "PATH");
 	if (!env_path)
 	{
-		create_error(c, (t_error){WARNING, SHELL_NAME, "No such file or directory", (char *)exec_name, 127, true});
+		create_error(c, (t_error){WARNING, SHELL_NAME,
+			"No such file or directory", (char *)exec_name, 127, true});
 		return (NULL);
 	}
 	path = gb_split(env_path->value, ':', &c->gbc, CMD_GB);
@@ -52,7 +52,8 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 			return (exec_path);
 		i++;
 	}
-	create_error(c, (t_error){WARNING, SHELL_NAME, "No such file or directory", (char *)exec_name, 127, true});
+	create_error(c, (t_error){WARNING, SHELL_NAME,
+		"No such file or directory", (char *)exec_name, 127, true});
 	return (NULL);
 }
 
@@ -98,4 +99,16 @@ int	set_exec_path(t_ctx *c, t_ncommand *cmd)
 	if (!cmd->exec_path && !is_builtin(*cmd))
 		return (1);
 	return (0);
+}
+
+void	child_status(int status)
+{
+	if (WIFEXITED(status))
+		g_return = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		g_return = WTERMSIG(status);
+		if (g_return != 131)
+			g_return += 128;
+	}
 }

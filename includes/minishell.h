@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 15:22:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 18:14:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	g_return;
 
 // Errors
 # define FILE_ERR 	1
-# define FATAL		2
+# define ERROR		2
 # define WARNING	3
 
 typedef struct s_redir {
@@ -192,6 +192,7 @@ char		*find_exec(t_ctx *c, const char *exec_name);
 int			set_exec_path(t_ctx *c, t_ncommand *cmd);
 int			open_heredocs(t_ctx *c);
 int			create_heredoc(t_ctx *c, const char *stop);
+void		child_status(int status);
 
 // Builtins
 bool		is_builtin(t_ncommand cmd);
@@ -211,8 +212,7 @@ int			b_unset(t_ctx *c, int argc, char **argv);
 void		rl_replace_line(const char *text, int clear_undo);
 char		*get_path(t_ctx *c);
 char		*format_path(t_ctx *c);
-void		err_print(const char *err);
-bool		error_handler(t_ctx *c, t_error err);
+bool		file_errors(t_ctx *c, t_error err);
 void		gen_prompt(t_ctx *c, const char *path, const char *branch);
 void		gen_sad_prompt(t_ctx *c, const char *path);
 void		history(t_ctx *c);
@@ -233,5 +233,6 @@ void		create_error(t_ctx *c, t_error err);
 void		fork_sig_handler(int sig);
 void		sig_handler(int sig);
 void		heredoc_sig_handler(int sig);
+void		fork_heredoc_sig_handler(int sig);
 
 #endif

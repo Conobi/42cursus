@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 19:56:41 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 18:13:38 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	b_cd(t_ctx *c, char *path)
 	// }
 	else
 		new_path = path;
-	if (error_handler(c, (t_error){FILE_ERR, "cd", NULL, new_path, 1, false}))
+	if (file_errors(c, (t_error){FILE_ERR, "cd", NULL, new_path, 1, false}))
 	{
 		if (c->better_prompt)
 			gen_prompt(c, format_path(c), get_branch(c));

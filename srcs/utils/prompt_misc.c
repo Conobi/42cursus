@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 16:00:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 18:49:13 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,17 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 			ACC_FG, " ", RESET);
 }
 
+static void	close_get_weather(t_ctx *c, int *link, pid_t pid)
+{
+	int		status;
+
+	close(link[1]);
+	read(link[0], c->weather_emoji, 4);
+	close(link[0]);
+	waitpid(pid, &status, 0);
+	child_status(status);
+}
+
 /**
  * @brief This function is used to get the current weather
  * emoji and display it in the prompt (bcs why not !)
@@ -62,6 +73,7 @@ void	get_weather(t_ctx *c)
 {
 	int		link[2];
 	pid_t	pid;
+	char	*curl;
 
 	if (pipe(link) == -1)
 		return (perror("pipe"));
@@ -73,17 +85,15 @@ void	get_weather(t_ctx *c)
 		dup2 (link[1], STDOUT_FILENO);
 		close(link[0]);
 		close(link[1]);
-		exit(execve(find_exec(c, "curl"),
+		curl = find_exec(c, "curl");
+		if (!curl)
+			exit (127);
+		exit(execve(curl,
 				(char *[5]){"curl", "-s",
-				"https://kiyo.ooo/f/meteoshell.php", "-k", 0}, convert_env(c))); // todo: fix if path is unset
+				"https://kiyo.ooo/f/meteoshell.php", "-k", 0}, convert_env(c)));
 	}
 	else
-	{
-		close(link[1]);
-		read(link[0], c->weather_emoji, 4);
-		close(link[0]);
-		waitpid(pid, &g_return, 0);
-	}
+		close_get_weather(c, link, pid);
 }
 
 /**
