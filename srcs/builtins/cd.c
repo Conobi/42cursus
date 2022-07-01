@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 19:56:41 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 18:30:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,6 @@ int	b_cd(t_ctx *c, char *path)
 		return (0);
 	if (!path || ft_strlen(path) == 0) // todo: check if err after parsing
 		new_path = getenv("HOME");
-	else if (path[0] == '~')
-	{
-		if (path[1] == '/')
-			new_path = gb_add(ft_aconcat(2, getenv("HOME"), path + 1),
-					&c->gbc, CMD_GB);
-		else
-			new_path = getenv("HOME");
-	}
 	// todo: make a function to change value of env list values
 	// else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
 	// {

@@ -53,6 +53,7 @@ SRC			= minishell.c \
 			  parsing/cmd_create.c \
 			  parsing/enverr_pass.c \
 			  parsing/envvar_pass.c \
+			  parsing/tilde_pass.c \
 			  parsing/remquote_pass.c \
 			  parsing/assert/test_quote.c \
 			  parsing/assert/test_pipe.c \

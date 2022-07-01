@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 18:16:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 18:06:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static short	post_cmd_create(t_ctx *c)
 	envvar_pass(c);
 	if (!test_redir(c))
 		return (0);
+	tilde_pass(c);
 	remquote_pass(c);
 	if (!test_pipe(c))
 		return (0);

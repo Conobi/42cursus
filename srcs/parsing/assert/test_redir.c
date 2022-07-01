@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:38:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 16:03:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 16:20:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,19 @@ static void	throw_heredoc_error(t_ctx *c, int i, int j)
 				ft_strdup("newline"), &c->gbc, CMD_GB);
 }
 
+static short	throw_redirection_error(t_ctx *c, int i, int j)
+{
+	if (
+		j < c->cmds[i].argc - 1
+		&& token_type(c->cmds[i].argv[j + 1]) > OTHR_TK
+	)
+		return (print_tk_err(c, c->cmds[i].argv[j + 1]));
+	else if (i < c->ncmds - 1)
+		return (print_tk_err(c, "|"));
+	else
+		return (print_tk_err(c, "newline"));
+}
+
 /*
 	Permet de vérifier la syntaxe des redirections.
 	Si une redirection n'a pas d'argument correct, elle se retrouve dans
@@ -54,17 +67,7 @@ short	test_redir(t_ctx *c)
 			if (token_type(c->cmds[i].argv[j]) == HRDC_TK)
 				throw_heredoc_error(c, i, j);
 			else if (token_type(c->cmds[i].argv[j]) > OTHR_TK)
-			{
-				if (
-					j < c->cmds[i].argc - 1
-					&& token_type(c->cmds[i].argv[j + 1]) > OTHR_TK
-				)
-					return (print_tk_err(c, c->cmds[i].argv[j + 1]));
-				else if (i < c->ncmds - 1)
-					return (print_tk_err(c, "|"));
-				else
-					return (print_tk_err(c, "newline"));
-			}
+				return (throw_redirection_error(c, i, j));
 		}
 	}
 	return (1);

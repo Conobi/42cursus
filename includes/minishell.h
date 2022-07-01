@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 15:22:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/01 18:28:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ char		**split_redir(t_ctx *c, char **split);
 t_ncommand	cmd_create(t_ctx *c, char **split);
 void		enverr_pass(t_ctx *c);
 void		envvar_pass(t_ctx *c);
+void		tilde_pass(t_ctx *c);
 void		remquote_pass(t_ctx *c);
 
 // Tests
