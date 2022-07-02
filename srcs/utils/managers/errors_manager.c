@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 18:44:18 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 14:06:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ void	create_error(t_ctx *c, t_error err)
 		message = gb_add(ft_aconcat(6, RED_FG, err.cmd, ": ",
 					err.message, "\n", RESET),
 				&c->gbc, CMD_GB);
-	write(2, message, ft_strlen(message));
+	if (write(2, message, ft_strlen(message)) == -1)
+	{
+		create_error(c, (t_error){WARNING, "read",
+			strerror(errno), false, errno, false});
+	}
 	if (err.type == ERROR)
 		exit_shell(c, err.code);
 }

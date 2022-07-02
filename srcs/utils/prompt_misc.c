@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 18:49:13 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 14:18:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,11 @@ static void	close_get_weather(t_ctx *c, int *link, pid_t pid)
 	int		status;
 
 	close(link[1]);
-	read(link[0], c->weather_emoji, 4);
+	if (read(link[0], c->weather_emoji, 4) == -1)
+	{
+		create_error(c, (t_error){WARNING, "read",
+			strerror(errno), false, errno, false});
+	}
 	close(link[0]);
 	waitpid(pid, &status, 0);
 	child_status(status);

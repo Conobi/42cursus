@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 17:34:10 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 14:06:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	sig_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_return = 256;
-		write(1, "\n", 1);
+		if (write(1, "\n", 1) == -1)
+			return ;
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
@@ -69,12 +70,14 @@ void	fork_sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
+		if (write(1, "\n", 1) == -1)
+			return ;
 		return ;
 	}
 	if (sig == SIGQUIT)
 	{
-		write(1, "Quit: 3\n", 10);
+		if (write(1, "Quit: 3\n", 9) == -1)
+			return ;
 		return ;
 	}
 }

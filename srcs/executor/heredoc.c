@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 19:38:28 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 14:07:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	open_heredocs(t_ctx *c)
 	int	heredoc_fd;
 
 	i = -1;
+	heredoc_fd = 0;
 	while (++i < c->ncmds)
 	{
 		j = -1;

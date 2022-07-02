@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 19:47:03 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 13:40:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ int	b_cd(t_ctx *c, char *path)
 			gen_prompt(c, format_path(c), get_branch(c));
 		return (1);
 	}
-	chdir(new_path);
+	if (chdir(new_path) == -1)
+		create_error(c, (t_error){WARNING, "cd",
+			strerror(errno), new_path, errno, false});
 	if (c->better_prompt)
 		gen_prompt(c, format_path(c), get_branch(c));
 	return (0);

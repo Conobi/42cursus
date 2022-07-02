@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:14:38 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 16:11:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 13:31:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,10 @@ static void	build_line(t_ctx *c, t_temp *t)
 	t->curr = t->curr->next;
 }
 
-int	b_env(t_ctx *c, int argc, char **argv)
+int	b_env(t_ctx *c, int argc)
 {
 	t_temp	t;
 
-	argv += 0;
 	if (argc != 1)
 		return (toomany_err(c));
 	t.curr = c->env;

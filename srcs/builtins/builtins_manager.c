@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_manager.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:27:31 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/30 17:26:45 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 13:32:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int	exec_builtin(t_ctx *c, t_ncommand cmd)
 	if (ft_eq(cmd.argv[0], "unset", 0))
 		return (b_unset(c, cmd.argc, cmd.argv));
 	if (ft_eq(cmd.argv[0], "env", 0))
-		return (b_env(c, cmd.argc, cmd.argv));
+		return (b_env(c, cmd.argc));
 	return (-1);
 }

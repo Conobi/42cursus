@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 16:34:17 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 14:09:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 {
 	t_env	*shlvl;
 
+	g_return = 0;
 	c->gbc = gb_init();
 	if (!c->gbc)
 		exit_shell(c, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 19:46:53 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/07/02 14:17:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
-
-int	g_return;
+# define ECHOCTL 0001000
 
 # define SHELL_NAME "Minishell"
 
@@ -40,28 +39,28 @@ int	g_return;
 # define EDEBUG	0
 
 //Term colors
-# define RED_FG	"\033[91m"
-# define GRN_FG	"\033[32m"
-# define YEL_FG	"\033[33m"
-# define BLU_FG	"\033[34m"
-# define MAG_FG	"\033[35m"
-# define CYN_FG	"\033[36m"
-# define WHT_FG	"\033[37m"
-# define BLK_FG	"\033[30m"
-# define ACC_FG	"\033[38;2;65;208;117m"
+# define RED_FG	"\001\033[91m\002"
+# define GRN_FG	"\001\033[32m\002"
+# define YEL_FG	"\001\033[33m\002"
+# define BLU_FG	"\001\033[34m\002"
+# define MAG_FG	"\001\033[35m\002"
+# define CYN_FG	"\001\033[36m\002"
+# define WHT_FG	"\001\033[37m\002"
+# define BLK_FG	"\001\033[30m\002"
+# define ACC_FG	"\001\033[38;2;65;208;117m\002"
 
-# define RED_BG	"\033[101m"
-# define GRN_BG	"\033[42m"
-# define YEL_BG	"\033[43m"
-# define BLU_BG	"\033[44m"
-# define MAG_BG	"\033[45m"
-# define CYN_BG	"\033[46m"
-# define WHT_BG	"\033[47m"
-# define BLK_BG	"\033[40m"
-# define ACC_BG	"\033[48;2;65;208;117m"
+# define RED_BG	"\001\033[101m\002"
+# define GRN_BG	"\001\033[42m\002"
+# define YEL_BG	"\001\033[43m\002"
+# define BLU_BG	"\001\033[44m\002"
+# define MAG_BG	"\001\033[45m\002"
+# define CYN_BG	"\001\033[46m\002"
+# define WHT_BG	"\001\033[47m\002"
+# define BLK_BG	"\001\033[40m\002"
+# define ACC_BG	"\001\033[48;2;65;208;117m\002"
 
-# define RESET	"\033[0m"
-# define BOLD	"\033[1m"
+# define RESET	"\001\033[0m\002"
+# define BOLD	"\001\033[1m\002"
 
 # define OTHR_TK	0
 # define OUT_TK		1
@@ -206,7 +205,7 @@ void		exit_shell(t_ctx *c, int code);
 
 int			b_export(t_ctx *c, int argc, char **argv);
 void		export_print(t_ctx *c);
-int			b_env(t_ctx *c, int argc, char **argv);
+int			b_env(t_ctx *c, int argc);
 int			b_unset(t_ctx *c, int argc, char **argv);
 
 // Utils
@@ -235,5 +234,7 @@ void		fork_sig_handler(int sig);
 void		sig_handler(int sig);
 void		heredoc_sig_handler(int sig);
 void		fork_heredoc_sig_handler(int sig);
+
+extern int	g_return;
 
 #endif
