@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:15:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/03/29 19:42:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/12 23:05:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,9 @@ short	meal_checker(t_philo *philo)
 
 void	*routine_handler(void *args)
 {
-	int		i;
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
-	while (!philo->data->threads_ready)
-		;
-	i = 3;
 	while (!death_status(philo))
 	{
 		if (philo->id % 2)
@@ -91,8 +87,8 @@ int	main(int argc, char **argv)
 	if (i)
 		return (i);
 	pthread_mutex_init(&data.lock, NULL);
-	birth(&data);
 	data.start_ts = calc_ts(0);
+	birth(&data);
 	i = -1;
 	while (++i < data.nb_philo)
 	{
@@ -100,7 +96,6 @@ int	main(int argc, char **argv)
 		data.atrium[i].last_meal = data.start_ts;
 		pthread_mutex_unlock(&data.atrium[i].eat_lock);
 	}
-	data.threads_ready = 1;
 	checker_thread(&data);
 	i = -1;
 	while (++i < data.nb_philo)
