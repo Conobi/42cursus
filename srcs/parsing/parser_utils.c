@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:26:47 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 16:09:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:30:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void	set_quote_bool(t_ctx *c, char curr)
 {
-	if (curr == '\'' && c->parser.dquoted == -1)
-		c->parser.squoted *= -1;
-	if (curr == '"' && c->parser.squoted == -1)
-		c->parser.dquoted *= -1;
+	if (curr == '\'' && c->parser.dquoted == false)
+		c->parser.squoted = !c->parser.squoted;
+	if (curr == '"' && c->parser.squoted == false)
+		c->parser.dquoted = !c->parser.dquoted;
 }
 
 void	reset_quote_bool(t_ctx *c)
 {
-	c->parser.squoted = -1;
-	c->parser.dquoted = -1;
+	c->parser.squoted = false;
+	c->parser.dquoted = false;
 }
 
 int	is_curr_quoted(t_ctx *c)
 {
-	if (c->parser.squoted == -1 && c->parser.dquoted == -1)
+	if (c->parser.squoted == false && c->parser.dquoted == false)
 		return (0);
 	else
 		return (1);

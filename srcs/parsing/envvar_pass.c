@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:11:20 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 17:48:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:32:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_temp {
 
 static short	is_envvar(const t_ctx *c, const char *token, const t_temp t)
 {
-	if (c->parser.squoted == 1)
+	if (c->parser.squoted == true)
 		return (0);
 	if (token[t.start_kw] == '$'
 		&& (ft_isalnum(token[t.start_kw + 1]) || token[t.start_kw + 1] == '_'))

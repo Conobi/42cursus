@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 18:03:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:32:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 */
 static int	pipe_count(char *cur, const int action)
 {
-	char	squoted;
-	char	dquoted;
+	bool	squoted;
+	bool	dquoted;
 	int		cnt;
 
-	squoted = -1;
-	dquoted = -1;
+	squoted = false;
+	dquoted = false;
 	cnt = action;
 	while (*cur)
 	{
-		if (*cur == '\'' && dquoted == -1)
-			squoted *= -1;
-		if (*cur == '"' && squoted == -1)
-			dquoted *= -1;
-		if (squoted == -1 && dquoted == -1 && *cur == '|')
+		if (*cur == '\'' && dquoted == false)
+			squoted = !squoted;
+		if (*cur == '"' && squoted == false)
+			dquoted = !dquoted;
+		if (squoted == false && dquoted == false && *cur == '|')
 		{
 			if (!action)
 				break ;

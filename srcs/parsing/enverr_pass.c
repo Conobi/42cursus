@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:19:06 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/02 14:07:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:32:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*str_enverr(t_ctx *c, char *token)
 	t = (t_temp){0, 0, ft_strlen(token), -1, -1};
 	reset_quote_bool(c);
 	while (token[++t.start_kw] && (!ft_eq(&token[t.start_kw], "$?", 1)
-			|| c->parser.squoted == 1))
+			|| c->parser.squoted == true))
 		set_quote_bool(c, token[t.start_kw]);
 	if (t.start_kw < t.tk_len)
 	{
@@ -51,7 +51,7 @@ static short	contains_enverr(t_ctx *c, const char *token)
 	while (token[++i] && token[i + 1])
 	{
 		set_quote_bool(c, token[i]);
-		if (c->parser.squoted == 1)
+		if (c->parser.squoted == true)
 			continue ;
 		if (token[i] == '$'
 			&& token[i + 1] == '?')

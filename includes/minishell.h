@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 15:52:37 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 17:31:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ typedef struct s_ncommand {
 }	t_ncommand;
 
 typedef struct s_parser {
-	char	squoted;
-	char	dquoted;
+	bool	squoted;
+	bool	dquoted;
 	char	**pipes;
 	char	***split;
 	int		pipes_n;
