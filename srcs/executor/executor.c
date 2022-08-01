@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 15:06:05 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 18:38:02 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	exec_fork(t_ctx *c, int curr, int *in, int *out)
 {
 	if (set_exec_path(c, &c->cmds[curr]))
 		exit(g_return);
-	io_handler(c, curr, in, out);
 	if (*in == -1 || *out == -1)
 		exit(1);
 	switch_pipes(*in, *out);
@@ -40,9 +39,9 @@ static void	exec_child(t_ctx *c, int curr)
 		return ;
 	signal(SIGINT, fork_sig_handler);
 	termios_set(c, 1);
+	io_handler(c, curr, &in, &out);
 	if (is_builtin(c->cmds[curr]))
 	{
-		io_handler(c, curr, &in, &out);
 		switch_pipes(in, out);
 		g_return = exec_builtin(c, c->cmds[curr]);
 		dup2(STDIN_FILENO, STDOUT_FILENO);
@@ -86,7 +85,7 @@ static void	wait_forks(t_ctx *c)
 	i = -1;
 	while (++i < c->ncmds)
 	{
-		if (!is_builtin(c->cmds[i]))
+		if (c->cmds[i].argc > 0 && !is_builtin(c->cmds[i]))
 		{
 			waitpid(c->exec->process[i], &status, 0);
 			child_status(status);
@@ -106,9 +105,8 @@ void	exec(t_ctx *c)
 	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
 	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
 	pipe_fd(c);
-	if (!open_heredocs(c)) {
+	if (!open_heredocs(c))
 		return ;
-	}
 	i = 0;
 	while (i < c->ncmds)
 		exec_child(c, i++);

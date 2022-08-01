@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/30 12:50:01 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 18:22:24 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	exit_heredoc(int pid, int *fd)
 
 	waitpid(pid, &status, 0);
 	child_status(status);
-	printf("%d\n", g_return);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	close(fd[1]);

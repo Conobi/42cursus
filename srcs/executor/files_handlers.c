@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/01 19:09:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 18:39:22 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	open_file(t_ctx *c, int curr_cmd, int i)
 			file_errors(c, (t_error){FILE_ERR, SHELL_NAME,
 				NULL, c->cmds[curr_cmd].redirections[i].arg, 1, true});
 	}
-	if (c->cmds[curr_cmd].redirections[i].type == OUT_TK)
+	else if (c->cmds[curr_cmd].redirections[i].type == OUT_TK)
 	{
 		c->cmds[curr_cmd].outfile = open(
 				c->cmds[curr_cmd].redirections[i].arg,
@@ -96,7 +96,7 @@ static void	infile_handler(t_ctx *c, int curr_cmd)
  */
 static void	in_selector(t_ctx *c, int curr, int *in)
 {
-	if (*in == -1)
+	if (c->cmds[curr].infile == -1)
 		*in = -1;
 	else if (c->cmds[curr].infile != -2 && c->cmds[curr].infile != 0)
 		*in = c->cmds[curr].infile;
@@ -115,7 +115,7 @@ static void	in_selector(t_ctx *c, int curr, int *in)
  */
 static void	out_selector(t_ctx *c, int curr, int *out)
 {
-	if (*out == -1)
+	if (c->cmds[curr].outfile == -1)
 		*out = -1;
 	else if (c->cmds[curr].outfile != -2 && c->cmds[curr].outfile != 1)
 		*out = c->cmds[curr].outfile;
