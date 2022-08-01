@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/02 14:07:11 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:06:05 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	exec_child(t_ctx *c, int curr)
 	int		in;
 	int		out;
 
+	if (c->cmds[curr].argc < 1)
+		return ;
 	signal(SIGINT, fork_sig_handler);
 	termios_set(c, 1);
 	if (is_builtin(c->cmds[curr]))
@@ -104,14 +106,12 @@ void	exec(t_ctx *c)
 	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
 	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
 	pipe_fd(c);
-	open_heredocs(c);
+	if (!open_heredocs(c)) {
+		return ;
+	}
 	i = 0;
 	while (i < c->ncmds)
-	{
-		if (c->cmds[i].argc < 1)
-			return ;
 		exec_child(c, i++);
-	}
 	close_pipes(c, 2 * c->ncmds);
 	wait_forks(c);
 	signal(SIGINT, sig_handler);

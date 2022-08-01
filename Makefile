@@ -34,8 +34,10 @@ NAME		= minishell
 LIBFTDIR	= libft
 LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
 
+ifeq ($(OS), Darwin)
 RLINCS		= $(shell brew --prefix readline)/include
 RLLIB		= $(shell brew --prefix readline)/lib
+endif
 
 INC			= minishell.h
 INCDIR		= includes
@@ -95,13 +97,20 @@ $(ODIR)/%.o: $(SDIR)/%.c $(INCS) Makefile
 	@$(call compile_cmd, $(CC) $(CFLAGS) -c $< -o $@)
 
 $(NAME): $(OBJS) $(LIBFT_AR)
-ifndef debug
+ifeq ($(OS), Darwin)
 	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -lreadline -I$(RLINCS) -L$(RLLIB) -o $(NAME))
-	@printf "$(GREEN)Done$(RESET)\n";
-else
-	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -I$(RLINCS) -L$(RLLIB) -fsanitize=address)
-	@printf "$(GREEN)Done debug mode$(RESET)\n";
+else ifeq ($(OS), Linux)
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -lreadline -o $(NAME))
 endif
+	@printf "$(GREEN)Done$(RESET)\n";
+
+debug: $(OBJS) $(LIBFT_AR)
+ifeq ($(OS), Darwin)
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -I$(RLINCS) -L$(RLLIB) -fsanitize=address)
+else ifeq ($(OS), Linux)
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -lreadline -fsanitize=address)
+endif
+	@printf "$(GREEN)Done debug mode$(RESET)\n";
 
 check-and-reinit-submodules:
 	@if git submodule status | egrep -q '^[-]' ; then \

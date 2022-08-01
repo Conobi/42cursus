@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/02 14:17:47 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:52:37 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@
 # include <signal.h>
 # include <dirent.h>
 # include "../libft/libft.h"
+
 // Linux required
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <signal.h>
-# define ECHOCTL 0001000
+# if defined(__linux__)
+#  include <readline/history.h>
+#  include <sys/wait.h>
+
+#  define ECHOCTL 0001000
+# endif
 
 # define SHELL_NAME "Minishell"
 

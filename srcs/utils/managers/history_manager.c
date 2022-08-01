@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:56:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/02 13:44:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:50:08 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ void	init_history(t_ctx *c)
 	close(c->history_fd);
 }
 
+static void	history_write(t_ctx *c)
+{
+	if (write(c->history_fd, c->entry, ft_strlen(c->entry)) == -1)
+	{
+		create_error(c, (t_error){WARNING, "write",
+			strerror(errno), false, errno, false});
+	}
+	if (write(c->history_fd, "\n", 1) == -1)
+	{
+		create_error(c, (t_error){WARNING, "write",
+			strerror(errno), false, errno, false});
+	}
+}
+
 /**
  * @brief This function is used to add a new entry to the history
  *
@@ -67,17 +81,12 @@ void	history(t_ctx *c)
 	c->history_fd = open(
 			gb_add(ft_aconcat(2, home, "/.minishell_history"), &c->gbc, CMD_GB),
 			O_CREAT | O_RDWR | O_APPEND, 0000644);
-	if (write(c->history_fd, c->entry, ft_strlen(c->entry)) == -1)
+	if (c->history_fd < 0)
 	{
-		create_error(c, (t_error){WARNING, "write",
+		create_error(c, (t_error){WARNING, "open",
 			strerror(errno), false, errno, false});
 	}
-	if (write(c->history_fd, "\n", 1) == -1)
-	{
-		create_error(c, (t_error){WARNING, "write",
-			strerror(errno), false, errno, false});
-	}
-	free(c->last_entry);
+	history_write(c);
 	c->last_entry = ft_strdup(c->entry);
 	close(c->history_fd);
 }

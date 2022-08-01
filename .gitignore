@@ -13,3 +13,5 @@ checker_*
 build
 /tests
 .minishell_history
+Dockerfile
+build_docker.sh

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/02 14:09:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:31:37 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		termios_set(&c, 0);
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
+		printf("%s\n", c.entry);
 		if (!c.entry)
 			exit_shell(&c, 0);
 		if (parser(&c))
