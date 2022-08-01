@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:52:33 by conobi            #+#    #+#             */
-/*   Updated: 2022/04/29 18:22:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:39:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	gb_free(t_garbc **curr, t_garbc **prev, t_garbc **head)
 	*curr = NULL;
 }
 
-static int	gb_count(t_garbc **garbcl, const char type)
+static int	gb_count(t_garbc **garbcl, const short type)
 {
 	t_garbc	*curr;
 	int		i;
@@ -39,7 +39,7 @@ static int	gb_count(t_garbc **garbcl, const char type)
 	return (i);
 }
 
-void	gb_delete(t_garbc **garbcl, const char type)
+void	gb_delete(t_garbc **garbcl, const short type)
 {
 	t_garbc	*head;
 	t_garbc	*curr;

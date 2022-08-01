@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:32:40 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/08 18:21:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:50:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -533,7 +533,7 @@ char	*ft_aconcat(int argc, ...);
 typedef struct s_garbc
 {
 	void			*content;
-	char			type;
+	short			type;
 	struct s_garbc	*next;
 }	t_garbc;
 
@@ -553,7 +553,7 @@ t_garbc	*gb_init(void);
  * @param type The type of element allocated
  * @return void* Returns a pointer to the allocated memory.
  */
-void	*gb_add(void *ptr, t_garbc **garbcl, const char type);
+void	*gb_add(void *ptr, t_garbc **garbcl, const short type);
 
 /**
  * @brief Works similarly as the ft_calloc function, but saves the allocated
@@ -568,7 +568,7 @@ void	*gb_add(void *ptr, t_garbc **garbcl, const char type);
  * @param last A pointer to the linked-list, headed to the top of the list.
  * @return void* Returns a pointer to the allocated memory.
  */
-void	*gb_calloc(size_t count, size_t size, const char type, t_garbc **last);
+void	*gb_calloc(size_t count, size_t size, const short type, t_garbc **last);
 
 /**
  * @brief Works similarly as the ft_split function, but saves the allocated
@@ -580,7 +580,7 @@ void	*gb_calloc(size_t count, size_t size, const char type, t_garbc **last);
  * @param type The kind of element to delete. Can be between -128 and 127.
  * @return char Returns an array of strings.
  */
-char	**gb_split(char const *s, char c, t_garbc **garbcl, const char type);
+char	**gb_split(char const *s, char c, t_garbc **garbcl, const short type);
 
 /**
  * @brief Deletes every element of type x in the garbage collector linked-list.
@@ -589,7 +589,7 @@ char	**gb_split(char const *s, char c, t_garbc **garbcl, const char type);
  * @param type The kind of element to delete. Can be between -128 and 127.
  * @return void
  */
-void	gb_delete(t_garbc **garbcl, const char type);
+void	gb_delete(t_garbc **garbcl, const short type);
 
 /**
  * @brief Deallocates all the elements in the linked-list

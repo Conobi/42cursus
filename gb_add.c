@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:33:33 by conobi            #+#    #+#             */
-/*   Updated: 2022/04/29 18:44:13 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:38:38 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*gb_add(void *ptr, t_garbc **garbcl, const char type)
+void	*gb_add(void *ptr, t_garbc **garbcl, const short type)
 {
 	t_garbc	*new;
 

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 12:51:59 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/08 18:17:47 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/01 15:39:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	f_init_it(int *i, int *j, int *k)
 	*k = -1;
 }
 
-char	**gb_split(char const *s, char c, t_garbc **garbcl, const char type)
+char	**gb_split(char const *s, char c, t_garbc **garbcl, const short type)
 {
 	char	**splited;
 	int		i;
