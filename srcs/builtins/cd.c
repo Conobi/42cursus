@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/02 13:40:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 22:42:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,5 @@ int	b_cd(t_ctx *c, char *path)
 	if (chdir(new_path) == -1)
 		create_error(c, (t_error){WARNING, "cd",
 			strerror(errno), new_path, errno, false});
-	if (c->better_prompt)
-		gen_prompt(c, format_path(c), get_branch(c));
 	return (0);
 }
