@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 17:31:41 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 22:16:20 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,6 @@ typedef struct s_ctx {
 	int					history_fd;
 }	t_ctx;
 
-// Utils
-void		exit_shell(t_ctx *c, int code);
-
 // Parsing
 short		parser(t_ctx *c);
 void		split_pipe(t_ctx *c);
@@ -204,7 +201,8 @@ int			b_cd(t_ctx *c, char *path);
 int			b_pwd(t_ctx *c);
 int			b_echo(t_ncommand cmd);
 int			b_ls(t_ctx *c, int cmd);
-void		exit_shell(t_ctx *c, int code);
+int			b_exit(t_ctx *c, t_ncommand cmd);
+void		exit_shell(t_ctx *c, int code, int no_print);
 
 int			b_export(t_ctx *c, int argc, char **argv);
 void		export_print(t_ctx *c);

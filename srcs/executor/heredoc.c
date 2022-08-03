@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 18:22:24 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 22:41:14 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	exit_heredoc(int pid, int *fd)
 
 	waitpid(pid, &status, 0);
 	child_status(status);
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	signal(SIGINT, fork_sig_handler);
+	signal(SIGQUIT, fork_sig_handler);
 	close(fd[1]);
 	if (g_return == 0)
 		return (fd[0]);
@@ -101,11 +101,5 @@ int	open_heredocs(t_ctx *c)
 		}
 		c->cmds[i].heredoc = heredoc_fd;
 	}
-	// if (c->heredoc_errored)
-	// {
-	// 	syntax_err(c, c->heredoc_errored);
-	// 	c->heredoc_errored = NULL;
-	// 	return (0);
-	// }
 	return (1);
 }

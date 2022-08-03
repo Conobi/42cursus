@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 17:43:07 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 22:23:07 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 	g_return = 0;
 	c->gbc = gb_init();
 	if (!c->gbc)
-		exit_shell(c, 1);
+		exit_shell(c, 1, true); //todo: throw error when allocation failed
 	c->env = create_env(c, env);
 	shlvl = get_env_by_key(c->env, "SHLVL"); // todo: fix unset SHLVL
 	shlvl->value = gb_add(ft_itoa(ft_atoi(shlvl->value) + 1), &c->gbc, PERM_GB);
@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **env)
 		termios_set(&c, 0);
 		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
 		if (!c.entry)
-			exit_shell(&c, 0);
+			exit_shell(&c, 0, false);
 		if (parser(&c))
 		{
 			exec(&c);

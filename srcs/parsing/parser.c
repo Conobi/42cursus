@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 19:47:11 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 21:59:59 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ static void	multi_viewer(char **string, int cnt)
 
 static void	parser_init(t_ctx *c)
 {
-	if (!c->entry
-		|| !ft_strncmp(c->entry, "exit", 5)
-	)
-		exit_shell(c, 0);
 	c->parser.len = ft_strlen(c->entry);
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;

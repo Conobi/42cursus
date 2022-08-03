@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 18:31:46 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 22:16:57 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	create_error(t_ctx *c, t_error err)
 			strerror(errno), false, errno, false});
 	}
 	if (err.type == ERROR)
-		exit_shell(c, err.code);
+		exit_shell(c, err.code, true);
 }
 
 /**

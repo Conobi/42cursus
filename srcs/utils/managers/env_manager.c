@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:20:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/06/29 16:47:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 20:57:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	**convert_env(t_ctx *c)
 	while (curr && curr->next)
 	{
 		curr_env = (t_env *)curr->content;
-		if (curr_env->value && !curr_env->unset)
+		if (curr_env->key && curr_env->value && !curr_env->unset)
 		{
 			rtn[i] = gb_add(ft_aconcat(3, curr_env->key, "=", curr_env->value),
 					&c->gbc, CMD_GB);

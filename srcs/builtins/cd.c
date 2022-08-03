@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/02 13:40:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 21:07:35 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,32 @@
 int	b_cd(t_ctx *c, char *path)
 {
 	char	*new_path;
+	t_env	*pwd_env;
 
 	if (c->ncmds > 1)
 		return (0);
 	if (!path || ft_strlen(path) == 0) // todo: check if err after parsing
-		new_path = getenv("HOME");
+		new_path = get_env_by_key(c->env, "HOME")->value;
 	// todo: make a function to change value of env list values
-	// else if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
-	// {
-	// 	lenv = get_env_list_by_key(c->env, "OLDPDW");
-	// 	printf("%s\n", (t_env *)(lenv->content)->value);
-	// 	// printf("%s\n", new_path);
-	// }
+	else if (ft_eq(path, "-", 0))
+	{
+		pwd_env = get_env_by_key(c->env, "OLDPWD");
+		if (!pwd_env)
+		{
+			create_error(c, (t_error){WARNING, "cd",
+				"OLDPWD not set", NULL, 1, false});
+			return (1);
+		}
+		printf("%s\n", pwd_env->value);
+		new_path = pwd_env->value;
+		pwd_env->value = get_path(c);
+	}
 	else
 		new_path = path;
 	if (file_errors(c, (t_error){FILE_ERR, "cd", NULL, new_path, 1, false}))
-	{
-		if (c->better_prompt)
-			gen_prompt(c, format_path(c), get_branch(c));
 		return (1);
-	}
 	if (chdir(new_path) == -1)
 		create_error(c, (t_error){WARNING, "cd",
 			strerror(errno), new_path, errno, false});
-	if (c->better_prompt)
-		gen_prompt(c, format_path(c), get_branch(c));
 	return (0);
 }

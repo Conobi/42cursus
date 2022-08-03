@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/07/02 14:18:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 21:57:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	get_weather(t_ctx *c)
 		close(link[1]);
 		curl = find_exec(c, "curl");
 		if (!curl)
-			exit (127);
+			exit(127);
 		exit(execve(curl,
 				(char *[5]){"curl", "-s",
 				"https://kiyo.ooo/f/meteoshell.php", "-k", 0}, convert_env(c)));

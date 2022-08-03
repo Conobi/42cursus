@@ -64,7 +64,7 @@ SRC			= minishell.c \
 			  builtins/cd.c \
 			  builtins/pwd.c \
 			  builtins/echo.c \
-	 		  builtins/exit_shell.c \
+	 		  builtins/exit.c \
 			  builtins/export.c \
 			  builtins/export_print.c \
 			  builtins/env.c \

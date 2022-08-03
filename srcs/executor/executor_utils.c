@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 18:32:22 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 22:41:26 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void	switch_pipes(int in, int out)
  */
 int	set_exec_path(t_ctx *c, t_ncommand *cmd)
 {
-	// if (c->better_prompt && ft_eq(cmd->argv[0], "ls", 0))
-	// 	cmd->exec_path = find_exec(c, "lsd");
 	cmd->exec_path = find_exec(c, cmd->argv[0]);
 	if (!cmd->exec_path && !is_builtin(*cmd))
 		return (1);
@@ -111,4 +109,6 @@ void	child_status(int status)
 		if (g_return != 131)
 			g_return += 128;
 	}
+	if (EDEBUG)
+		printf("status = %d\n", g_return);
 }

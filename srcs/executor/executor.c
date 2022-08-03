@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 18:38:02 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/03 21:27:30 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ static void	exec_child(t_ctx *c, int curr)
 	if (c->cmds[curr].argc < 1)
 		return ;
 	signal(SIGINT, fork_sig_handler);
+	signal(SIGQUIT, fork_sig_handler);
 	termios_set(c, 1);
 	io_handler(c, curr, &in, &out);
+	if (EDEBUG)
+		printf("in -> %d | out -> %d\n", in, out);
 	if (is_builtin(c->cmds[curr]))
 	{
-		switch_pipes(in, out);
+		dup2(out, STDOUT_FILENO);
 		g_return = exec_builtin(c, c->cmds[curr]);
 		dup2(STDIN_FILENO, STDOUT_FILENO);
 		return ;
