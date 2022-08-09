@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 22:23:07 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 15:15:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->better_prompt = true;
-	if (argc == 2 && ft_atoi(argv[1]) == 0)
+	if (argc >= 2 && ft_eq(argv[1], "safe_prompt", 0))
 		c->better_prompt = false;
 	if (c->better_prompt)
 		get_weather(c);

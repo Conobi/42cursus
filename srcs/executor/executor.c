@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 21:27:30 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 17:17:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,5 @@ void	exec(t_ctx *c)
 	close_pipes(c, 2 * c->ncmds);
 	wait_forks(c);
 	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 }
