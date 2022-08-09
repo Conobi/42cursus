@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:56:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 15:50:08 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 14:17:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	history(t_ctx *c)
 			strerror(errno), false, errno, false});
 	}
 	history_write(c);
-	c->last_entry = ft_strdup(c->entry);
+	gb_delete(&c->gbc, HISTR_GB);
+	c->last_entry = gb_add(ft_strdup(c->entry), &c->gbc, HISTR_GB);
 	close(c->history_fd);
 }

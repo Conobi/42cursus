@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 22:16:20 by abastos          ###   ########lyon.fr   */
+		/*   Updated: 2022/08/09 14:16:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,12 @@
 # define PIPE_GB	3
 # define QUOTE_GB	4
 # define REDIR_GB	5
-# define CMD1P_GB	6
-# define CMD2P_GB	7
-# define CMD3P_GB	8
-# define CMD4P_GB	9
-# define EXPT_PT_GB	10
+# define HISTR_GB	6
+# define CMD1P_GB	7
+# define CMD2P_GB	8
+# define CMD3P_GB	9
+# define CMD4P_GB	10
+# define EXPT_PT_GB	11
 
 // Errors
 # define FILE_ERR 	1
@@ -221,6 +222,7 @@ void		init_history(t_ctx *c);
 char		*get_branch(t_ctx *c);
 void		get_weather(t_ctx *c);
 t_list		*create_env(t_ctx *c, char **env);
+t_list		*create_env_entry(t_ctx *c, char *entry);
 // char		*get_env_by_key(t_list *head, char *key);
 // t_env		*get_env_struct_by_key(t_list *head, char *key);
 char		**convert_env(t_ctx *c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 21:23:32 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 14:58:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ int	b_echo(t_ncommand cmd)
 	if (ft_eq(cmd.argv[1], "-n", 0))
 	{
 		i = 1;
-		if (cmd.argc < 3)
-			return (0);
-		while (ft_eq(cmd.argv[i], "-n", 0))
+		while (i != cmd.argc && ft_eq(cmd.argv[i], "-n", 0))
 			i++;
 		while (i < cmd.argc - 1)
 			printf("%s ", cmd.argv[i++]);
-		printf("%s", cmd.argv[i]);
+		if (i != cmd.argc)
+			printf("%s", cmd.argv[i]);
 	}
 	else
 	{
