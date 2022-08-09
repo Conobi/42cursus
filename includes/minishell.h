@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 22:16:20 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 14:16:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,12 @@
 # define PIPE_GB	3
 # define QUOTE_GB	4
 # define REDIR_GB	5
-# define CMD1P_GB	6
-# define CMD2P_GB	7
-# define CMD3P_GB	8
-# define CMD4P_GB	9
-# define EXPT_PT_GB	10
+# define HISTR_GB	6
+# define CMD1P_GB	7
+# define CMD2P_GB	8
+# define CMD3P_GB	9
+# define CMD4P_GB	10
+# define EXPT_PT_GB	11
 
 // Errors
 # define FILE_ERR 	1
