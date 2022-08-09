@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 22:41:26 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 17:35:37 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,12 @@ void	child_status(int status)
 		g_return = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
+		if (WTERMSIG(status) == 3)
+			if (write(1, "Quit: 3\n", 9) == -1)
+				return ;
+		if (WTERMSIG(status) == 2)
+			if (write(1, "\n", 1) == -1)
+				return ;
 		g_return = WTERMSIG(status);
 		if (g_return != 131)
 			g_return += 128;

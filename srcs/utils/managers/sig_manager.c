@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:59:53 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 12:46:18 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 17:36:44 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_return = 256;
+		g_return = 1;
 		if (write(1, "\n", 1) == -1)
 			return ;
 		rl_replace_line("", 0);
@@ -71,9 +71,5 @@ void	fork_sig_handler(int sig)
 	if (sig == SIGINT)
 		return ;
 	if (sig == SIGQUIT)
-	{
-		if (write(1, "Quit: 3\n", 9) == -1)
-			return ;
 		return ;
-	}
 }
