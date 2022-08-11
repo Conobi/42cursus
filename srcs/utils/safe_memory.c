@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 16:58:32 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:26:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 19:07:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	enomem_error(t_garbc **garbcl)
+void	enomem_error(t_garbc **garbcl)
 {
 	ft_putstr_fd(RED_FG, 2);
 	ft_putstr_fd(SHELL_NAME, 2);

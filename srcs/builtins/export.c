@@ -6,21 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 19:39:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void	multi_viewer(char **string, int cnt)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	printf("Liste des strings: \n");
-// 	while (++i < cnt && string[i])
-// 		printf("{%d: %s}\n", i, string[i]);
-// }
 
 static int	identifier_err(t_ctx *c, char *token)
 {
@@ -63,14 +53,7 @@ void	set_list_entry(t_ctx *c, char *key,
 
 	new = get_env_by_key(c->env, key);
 	new_list = get_env_list_by_key(c->env, key);
-	if (new)
-	{
-		free(new->key);
-		free(new->value);
-		new->key = 0;
-		new->value = 0;
-	}
-	else
+	if (!new)
 		new = sf_calloc(1, sizeof(t_env), PERM_GB, &c->gbc);
 	new->key = sf_add(ft_strdup(key), &c->gbc, PERM_GB);
 	new->value = sf_add(ft_strdup(value), &c->gbc, PERM_GB);

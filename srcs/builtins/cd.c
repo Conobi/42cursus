@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 19:33:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	b_cd(t_ctx *c, char *path)
 	if (!path)
 	{
 		home_env = get_env_by_key(c->env, "HOME");
-		if (!home_env)
+		if (!home_env || !home_env->value)
 		{
 			create_error(c, (t_error){WARNING, "cd",
 				"HOME not set", NULL, 1, false});
@@ -46,7 +46,7 @@ int	b_cd(t_ctx *c, char *path)
 		new_path = get_path(c);
 	else if (ft_eq(path, "-", 0))
 	{
-		if (!pwd_env)
+		if (!pwd_env || !pwd_env->value)
 		{
 			create_error(c, (t_error){WARNING, "cd",
 				"OLDPWD not set", NULL, 1, false});
@@ -59,13 +59,15 @@ int	b_cd(t_ctx *c, char *path)
 		new_path = path;
 	if (file_errors(c, (t_error){FILE_ERR, "cd", NULL, new_path, 1, false}))
 		return (1);
-	if (!pwd_env)
-		ft_lstadd_front(&c->env, create_env_entry(c,
-				sf_add(
-					ft_aconcat(2, "OLDPWD=",
-						getcwd(NULL, 256)), &c->gbc, CMD_GB)));
-	else
-		pwd_env->value = sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB);
+	// if (!pwd_env || !pwd_env->value)
+	// 	ft_lstadd_front(&c->env, create_env_entry(c,
+	// 			sf_add(
+	// 				ft_aconcat(2, "OLDPWD=",
+	// 					getcwd(NULL, 256)), &c->gbc, CMD_GB)));
+	// else
+	// 	pwd_env->value = sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB);
+	set_list_entry(c, "OLDPWD",
+		sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB), false);
 	if (chdir(new_path) == -1)
 		create_error(c, (t_error){WARNING, "cd",
 			strerror(errno), new_path, errno, false});

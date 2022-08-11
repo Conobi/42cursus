@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:24:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 19:27:43 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,8 @@ int			b_exit(t_ctx *c, t_ncommand cmd);
 void		exit_shell(t_ctx *c, int code, int no_print);
 
 int			b_export(t_ctx *c, int argc, char **argv);
+void		set_list_entry(t_ctx *c, char *key,
+				char *value, bool unset);
 void		export_print(t_ctx *c);
 int			b_env(t_ctx *c, int argc);
 int			b_unset(t_ctx *c, int argc, char **argv);
@@ -243,6 +245,7 @@ void		fork_heredoc_sig_handler(int sig);
 void		*sf_add(void *ptr, t_garbc **garbcl, const short type);
 void		*sf_calloc(size_t count, size_t size,
 				const short type, t_garbc **last);
+void		enomem_error(t_garbc **garbcl);
 
 extern int	g_return;
 

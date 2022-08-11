@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 17:02:29 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 18:54:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_temp {
 static char	*str_tilde(t_ctx *c, char *token)
 {
 	t_temp	t;
+	t_env	*home;
 
 	t = (t_temp){0, 0};
 	reset_quote_bool(c);
@@ -28,7 +29,10 @@ static char	*str_tilde(t_ctx *c, char *token)
 		&& (!token[1] || token[1] == '/')
 	)
 	{
-		t.var = get_env_by_key(c->env, "HOME")->value;
+		home = get_env_by_key(c->env, "HOME");
+		t.var = "/";
+		if (home)
+			t.var = home->value;
 		t.ret = sf_add(ft_aconcat(2, t.var, token + 1),
 				&c->gbc, CMD4P_GB);
 		return (t.ret);

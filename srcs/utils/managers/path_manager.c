@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:34:52 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 19:19:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ char	*format_path(t_ctx *c)
 {
 	char	*pwd;
 	char	*home_path;
+	t_env	*home_env;
 	int		home_path_len;
 
 	pwd = get_path(c);
-	if (!get_env_by_key(c->env, "HOME")
-		|| !*get_env_by_key(c->env, "HOME")->value)
+	home_env = get_env_by_key(c->env, "HOME");
+	if (!home_env || !home_env->value)
 		return (pwd);
-	home_path = get_env_by_key(c->env, "HOME")->value;
+	home_path = home_env->value;
 	home_path_len = ft_strlen(home_path);
 	if (home_path_len > 1 && home_path[ft_strlen(home_path) - 1] == '/')
 		home_path_len -= 1;

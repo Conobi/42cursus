@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:23:11 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:37:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 		exit_shell(c, 1, true); //todo: throw error when allocation failed
 	c->env = create_env(c, env);
 	shlvl = get_env_by_key(c->env, "SHLVL");
-	if (!shlvl)
+	if (!shlvl || !shlvl->value)
 		ft_lstadd_front(&c->env, create_env_entry(c, "SHLVL=1"));
 	else
 		shlvl->value = sf_add(ft_itoa(ft_atoi(shlvl->value) + 1), &c->gbc, PERM_GB);

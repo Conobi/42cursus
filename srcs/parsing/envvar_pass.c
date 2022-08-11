@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:11:20 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 19:16:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ static short	is_envvar(const t_ctx *c, const char *token, const t_temp t)
 
 static char	*envvar_builder(t_ctx *c, char *token, t_temp *t)
 {
+	t_env	*keyword;
+
 	token[t->start_kw] = 0;
 	t->kw = sf_calloc(t->end_kw - t->start_kw + 1,
 			sizeof(char), CMD3P_GB, &c->gbc);
 	ft_strlcpy(t->kw, token + t->start_kw + 1, t->end_kw - t->start_kw);
-	if (get_env_by_key(c->env, t->kw))
-		t->var = sf_add(ft_strdup(
-					get_env_by_key(c->env, t->kw)->value),
+	keyword = get_env_by_key(c->env, t->kw);
+	if (keyword)
+		t->var = sf_add(ft_strdup(keyword->value),
 				&c->gbc, CMD3P_GB);
 	else
 		t->var = sf_calloc(1, sizeof(char), CMD3P_GB, &c->gbc);

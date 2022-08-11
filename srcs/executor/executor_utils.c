@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 19:11:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 		return ((char *)exec_name);
 	}
 	env_path = get_env_by_key(c->env, "PATH");
-	if (!env_path)
+	if (!env_path || !env_path->value)
 	{
 		create_error(c, (t_error){WARNING, SHELL_NAME,
 			"No such file or directory", (char *)exec_name, 127, true});
 		return (NULL);
 	}
 	path = gb_split(env_path->value, ':', &c->gbc, CMD_GB);
+	if (!path)
+		enomem_error(&c->gbc);
 	i = 0;
 	while (path[i])
 	{
