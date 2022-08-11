@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/09 15:15:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/09 18:36:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 	if (!c->gbc)
 		exit_shell(c, 1, true); //todo: throw error when allocation failed
 	c->env = create_env(c, env);
-	shlvl = get_env_by_key(c->env, "SHLVL"); // todo: fix unset SHLVL
-	shlvl->value = gb_add(ft_itoa(ft_atoi(shlvl->value) + 1), &c->gbc, PERM_GB);
+	shlvl = get_env_by_key(c->env, "SHLVL");
+	if (!shlvl)
+		ft_lstadd_front(&c->env, create_env_entry(c, "SHLVL=1"));
+	else
+		shlvl->value = gb_add(ft_itoa(ft_atoi(shlvl->value) + 1), &c->gbc, PERM_GB);
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->better_prompt = true;

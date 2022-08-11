@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:19:06 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/01 15:32:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 14:21:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	enverr_pass(t_ctx *c)
 		j = -1;
 		while (++j < c->cmds[i].redc)
 			while (contains_enverr(c, c->cmds[i].redirections[j].arg))
-				c->cmds[i].redirections[j].arg = str_enverr(c,
-						c->cmds[i].redirections[j].arg);
+				if (c->cmds[i].redirections[j].type != HRDC_TK)
+					c->cmds[i].redirections[j].arg = str_enverr(c,
+							c->cmds[i].redirections[j].arg);
 	}
 }

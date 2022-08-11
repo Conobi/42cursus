@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-		/*   Updated: 2022/08/09 14:16:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 16:53:57 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ char		*find_exec(t_ctx *c, const char *exec_name);
 int			set_exec_path(t_ctx *c, t_ncommand *cmd);
 int			open_heredocs(t_ctx *c);
 int			create_heredoc(t_ctx *c, const char *stop);
+char		*heredoc_env_replace(t_ctx *c, const char *str);
 void		child_status(int status);
 
 // Builtins

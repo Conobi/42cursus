@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 22:41:14 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 16:51:08 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static int	exec_heredoc(t_ctx *c, int *fd, const char *stop)
 			exit(0);
 		if (ft_eq(line, stop, 0))
 			exit(0);
-		tmp = ft_strjoin(line, "\n");
+		tmp = gb_add(ft_strjoin(line, "\n"), &c->gbc, CMD_GB);
+		tmp = heredoc_env_replace(c, tmp);
 		ft_putstr_fd(tmp, fd[1]);
-		free(tmp);
 	}
 	exit(0);
 }
