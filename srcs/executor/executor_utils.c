@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/09 17:35:37 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 	i = 0;
 	while (path[i])
 	{
-		exec_path = gb_add(
+		exec_path = sf_add(
 				ft_aconcat(3, path[i], "/", exec_name),
 				&c->gbc, CMD_GB);
 		if (access(exec_path, X_OK) == 0)

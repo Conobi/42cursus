@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:14:38 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/02 13:31:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	build_line(t_ctx *c, t_temp *t)
 	t->curr_env = (t_env *)t->curr->content;
 	if (t->curr_env->key && t->curr_env->value && !t->curr_env->unset)
 	{
-		t->print_list[t->i] = gb_add(
+		t->print_list[t->i] = sf_add(
 				ft_aconcat(5, t->curr_env->key, "=\"",
 					t->curr_env->value, RESET, "\"\n"),
 				&c->gbc, EXPT_PT_GB
@@ -48,7 +48,7 @@ int	b_env(t_ctx *c, int argc)
 		return (toomany_err(c));
 	t.curr = c->env;
 	t.i = 0;
-	t.print_list = gb_calloc(ft_lstsize(c->env) + 1,
+	t.print_list = sf_calloc(ft_lstsize(c->env) + 1,
 			sizeof(char *), EXPT_PT_GB, &c->gbc);
 	while (t.curr->content && t.curr->next->content)
 		build_line(c, &t);

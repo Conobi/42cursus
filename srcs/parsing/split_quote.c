@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:10:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 18:09:33 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*create_word(t_ctx *c, const char *str, int i, int j)
 	int		o;
 
 	o = 0;
-	word = gb_calloc(sizeof(char), (j - i) + 1, QUOTE_GB, &c->gbc);
+	word = sf_calloc(sizeof(char), (j - i) + 1, QUOTE_GB, &c->gbc);
 	if (word == ((void *)0))
 		return ((void *)0);
 	while (i < j)
@@ -102,7 +102,7 @@ char	**split_quote(t_ctx *c, char *str)
 	reset_quote_bool(c);
 	if (t.words && str)
 	{
-		t.arr = gb_calloc(sizeof(char *), (t.words + 1), QUOTE_GB, &c->gbc);
+		t.arr = sf_calloc(sizeof(char *), (t.words + 1), QUOTE_GB, &c->gbc);
 		while (str[t.i] && t.index < t.words)
 		{
 			split_quote_builder(c, str, &t);
@@ -112,7 +112,7 @@ char	**split_quote(t_ctx *c, char *str)
 		}
 	}
 	else
-		t.arr = gb_calloc(sizeof(char *), 1, QUOTE_GB, &c->gbc);
+		t.arr = sf_calloc(sizeof(char *), 1, QUOTE_GB, &c->gbc);
 	gb_delete(&c->gbc, ENTRY_GB);
 	return (t.arr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/09 13:36:19 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	b_cd(t_ctx *c, char *path)
 		return (1);
 	if (!pwd_env)
 		ft_lstadd_front(&c->env, create_env_entry(c,
-				gb_add(
+				sf_add(
 					ft_aconcat(2, "OLDPWD=",
 						getcwd(NULL, 256)), &c->gbc, CMD_GB)));
 	else
-		pwd_env->value = gb_add(getcwd(NULL, 256), &c->gbc, CMD_GB);
+		pwd_env->value = sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB);
 	if (chdir(new_path) == -1)
 		create_error(c, (t_error){WARNING, "cd",
 			strerror(errno), new_path, errno, false});

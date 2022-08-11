@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:56:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/09 14:17:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_history(t_ctx *c)
 		return ;
 	home = get_env_by_key(c->env, "HOME")->value;
 	c->history_fd = open(
-			gb_add(ft_aconcat(2, home, "/.minishell_history"), &c->gbc, CMD_GB),
+			sf_add(ft_aconcat(2, home, "/.minishell_history"), &c->gbc, CMD_GB),
 			O_CREAT | O_RDWR | O_APPEND, 0000644);
 	if (c->history_fd < 0)
 		return ;
@@ -37,7 +37,7 @@ void	init_history(t_ctx *c)
 		entry = ft_gnl(c->history_fd);
 		if (!entry)
 			break ;
-		c->last_entry = gb_add(ft_substr(entry, 0,
+		c->last_entry = sf_add(ft_substr(entry, 0,
 					ft_strlen(entry) - 1), &c->gbc, PERM_GB);
 		new_entry = ft_substr(entry, 0, ft_strlen(entry) - 1);
 		add_history(new_entry);
@@ -79,7 +79,7 @@ void	history(t_ctx *c)
 		return ;
 	home = home_env->value;
 	c->history_fd = open(
-			gb_add(ft_aconcat(2, home, "/.minishell_history"), &c->gbc, CMD_GB),
+			sf_add(ft_aconcat(2, home, "/.minishell_history"), &c->gbc, CMD_GB),
 			O_CREAT | O_RDWR | O_APPEND, 0000644);
 	if (c->history_fd < 0)
 	{
@@ -88,6 +88,6 @@ void	history(t_ctx *c)
 	}
 	history_write(c);
 	gb_delete(&c->gbc, HISTR_GB);
-	c->last_entry = gb_add(ft_strdup(c->entry), &c->gbc, HISTR_GB);
+	c->last_entry = sf_add(ft_strdup(c->entry), &c->gbc, HISTR_GB);
 	close(c->history_fd);
 }

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:13:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 18:06:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*remquote(t_ctx *c, char *token)
 
 	t = (t_temp){0, 0, ft_strlen(token), -1, -1};
 	reset_quote_bool(c);
-	t.ret = gb_calloc(t.tk_len + 1, sizeof(char), CMD_GB, &c->gbc);
+	t.ret = sf_calloc(t.tk_len + 1, sizeof(char), CMD_GB, &c->gbc);
 	while (token[++t.i])
 	{
 		set_quote_bool(c, token[t.i]);

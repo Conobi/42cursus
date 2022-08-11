@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 17:02:29 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 18:25:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ static char	*str_tilde(t_ctx *c, char *token)
 	)
 	{
 		t.var = get_env_by_key(c->env, "HOME")->value;
-		t.ret = gb_add(ft_aconcat(2, t.var, token + 1),
+		t.ret = sf_add(ft_aconcat(2, t.var, token + 1),
 				&c->gbc, CMD4P_GB);
 		return (t.ret);
 	}
-	return (gb_add(ft_strdup(token), &c->gbc, CMD4P_GB));
+	return (sf_add(ft_strdup(token), &c->gbc, CMD4P_GB));
 }
 
 void	tilde_pass(t_ctx *c)

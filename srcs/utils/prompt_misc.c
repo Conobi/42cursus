@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 21:57:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	gen_prompt(t_ctx *c, const char *path, const char *branch)
 	if (g_return == 0)
 		status = "✓";
 	else
-		status = gb_add(ft_strjoin("✖ ",
-					gb_add(ft_itoa(g_return),
+		status = sf_add(ft_strjoin("✖ ",
+					sf_add(ft_itoa(g_return),
 						&c->gbc, CMD_GB)), &c->gbc, CMD_GB);
 	if (branch)
 	{
@@ -115,9 +115,9 @@ char	*get_branch(t_ctx *c)
 	fd = open(".git/HEAD", O_RDWR);
 	if (fd < 0)
 		return (NULL);
-	branch = gb_add(ft_gnl(fd),
+	branch = sf_add(ft_gnl(fd),
 			&c->gbc, CMD_GB);
-	new_branch = gb_add(ft_substr(branch, 16, ft_strlen(branch) - 17),
+	new_branch = sf_add(ft_substr(branch, 16, ft_strlen(branch) - 17),
 			&c->gbc, CMD_GB);
 	close(fd);
 	return (new_branch);

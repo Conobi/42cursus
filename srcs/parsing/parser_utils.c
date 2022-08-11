@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:26:47 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/01 15:30:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	syntax_err(t_ctx *c, char *token)
 {
 	char	*err;
 
-	err = gb_add(
+	err = sf_add(
 			ft_aconcat(3, "syntax error near unexpected token `", token, "'"),
 			&c->gbc,
 			CMD_GB

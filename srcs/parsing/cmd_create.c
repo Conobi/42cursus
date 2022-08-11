@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:42:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/30 17:40:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static void	cmd_create_alg(t_ctx *c, t_temp *t,
 	if (token_type(split[t->i])
 		&& split[t->i + 1] && !token_type(split[t->i + 1]))
 	{
-		cmd->redirections[++t->j].arg = gb_add(ft_strdup(split[t->i + 1]),
+		cmd->redirections[++t->j].arg = sf_add(ft_strdup(split[t->i + 1]),
 				&c->gbc, CMD1P_GB);
 		cmd->redirections[t->j].type = token_type(split[t->i]);
 		t->i++;
 		return ;
 	}
-	cmd->argv[++t->k] = gb_add(ft_strdup(split[t->i]),
+	cmd->argv[++t->k] = sf_add(ft_strdup(split[t->i]),
 			&c->gbc, CMD1P_GB);
 }
 
@@ -53,9 +53,9 @@ t_ncommand	cmd_create(t_ctx *c, char **split)
 	t = (t_temp){-1, -1, -1, -1};
 	while (split[++t.nb_tokens])
 		;
-	cmd.redirections = gb_calloc(t.nb_tokens + 1, sizeof(t_redir),
+	cmd.redirections = sf_calloc(t.nb_tokens + 1, sizeof(t_redir),
 			CMD_GB, &c->gbc);
-	cmd.argv = gb_calloc(t.nb_tokens + 1, sizeof(char *),
+	cmd.argv = sf_calloc(t.nb_tokens + 1, sizeof(char *),
 			CMD_GB, &c->gbc);
 	while (split[++t.i])
 		cmd_create_alg(c, &t, split, &cmd);

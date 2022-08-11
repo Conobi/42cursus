@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/06/29 14:49:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	build_line(t_ctx *c, t_temp *t)
 	t->curr_env = (t_env *)t->curr->content;
 	if (t->curr_env->key && t->curr_env->value && !t->curr_env->unset)
 	{
-		t->print_list[t->i] = gb_add(
+		t->print_list[t->i] = sf_add(
 				ft_aconcat(6, "declare -x ", t->curr_env->key, "=\"",
 					t->curr_env->value, RESET, "\"\n"),
 				&c->gbc, EXPT_PT_GB
@@ -57,7 +57,7 @@ void	build_line(t_ctx *c, t_temp *t)
 	}
 	else if (t->curr_env->key && t->curr_env->unset)
 	{
-		t->print_list[t->i] = gb_add(
+		t->print_list[t->i] = sf_add(
 				ft_aconcat(3, "declare -x ",
 					t->curr_env->key, "\n"), &c->gbc, EXPT_PT_GB);
 		t->i++;
@@ -71,7 +71,7 @@ void	export_print(t_ctx *c)
 
 	t.curr = c->env;
 	t.i = 0;
-	t.print_list = gb_calloc(ft_lstsize(c->env) + 1,
+	t.print_list = sf_calloc(ft_lstsize(c->env) + 1,
 			sizeof(char *), EXPT_PT_GB, &c->gbc);
 	while (t.curr->content && t.curr->next->content)
 		build_line(c, &t);

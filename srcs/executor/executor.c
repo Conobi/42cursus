@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/09 17:17:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	pipe_fd(t_ctx *c)
 {
 	int	i;
 
-	c->exec->pipe_fd = gb_calloc(c->ncmds * 2, sizeof(int), CMD_GB, &c->gbc);
+	c->exec->pipe_fd = sf_calloc(c->ncmds * 2, sizeof(int), CMD_GB, &c->gbc);
 	i = 0;
 	while (i < c->ncmds)
 	{
@@ -105,8 +105,8 @@ void	exec(t_ctx *c)
 {
 	int		i;
 
-	c->exec = gb_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
-	c->exec->process = gb_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
+	c->exec = sf_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
+	c->exec->process = sf_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
 	pipe_fd(c);
 	if (!open_heredocs(c))
 		return ;

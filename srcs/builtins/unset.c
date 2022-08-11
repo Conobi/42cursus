@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:49:46 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 16:15:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	identifier_err(t_ctx *c, char *token)
 {
 	char	*err;
 
-	err = gb_add(
+	err = sf_add(
 			ft_aconcat(
 				3,
 				"`",

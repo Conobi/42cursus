@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:19:06 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 14:21:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static char	*str_enverr(t_ctx *c, char *token)
 	{
 		t.end_kw = t.start_kw + 1;
 		token[t.start_kw] = 0;
-		t.var = gb_add(ft_itoa(g_return),
+		t.var = sf_add(ft_itoa(g_return),
 				&c->gbc, CMD2P_GB);
-		t.ret = gb_add(ft_aconcat(3, token, t.var, token + t.end_kw + 1),
+		t.ret = sf_add(ft_aconcat(3, token, t.var, token + t.end_kw + 1),
 				&c->gbc, CMD2P_GB);
 		return (t.ret);
 	}
-	return (gb_add(ft_strdup(token), &c->gbc, CMD2P_GB));
+	return (sf_add(ft_strdup(token), &c->gbc, CMD2P_GB));
 }
 
 static short	contains_enverr(t_ctx *c, const char *token)

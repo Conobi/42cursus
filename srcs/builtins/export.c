@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:43:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/07/01 16:15:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	identifier_err(t_ctx *c, char *token)
 {
 	char	*err;
 
-	err = gb_add(
+	err = sf_add(
 			ft_aconcat(
 				3,
 				"`",
@@ -71,13 +71,13 @@ void	set_list_entry(t_ctx *c, char *key,
 		new->value = 0;
 	}
 	else
-		new = gb_calloc(1, sizeof(t_env), PERM_GB, &c->gbc);
-	new->key = gb_add(ft_strdup(key), &c->gbc, PERM_GB);
-	new->value = gb_add(ft_strdup(value), &c->gbc, PERM_GB);
+		new = sf_calloc(1, sizeof(t_env), PERM_GB, &c->gbc);
+	new->key = sf_add(ft_strdup(key), &c->gbc, PERM_GB);
+	new->value = sf_add(ft_strdup(value), &c->gbc, PERM_GB);
 	new->unset = unset;
 	if (!new_list)
 	{
-		new_list = gb_add(ft_lstnew(new), &c->gbc, PERM_GB);
+		new_list = sf_add(ft_lstnew(new), &c->gbc, PERM_GB);
 		ft_lstadd_front(&c->env, new_list);
 	}
 }
@@ -89,8 +89,8 @@ static void	split_env_keyval(t_ctx *c, char *str)
 	int		i;
 	int		j;
 
-	key = gb_calloc(ft_strlen(str) + 1, sizeof(char), CMD_GB, &c->gbc);
-	value = gb_calloc(ft_strlen(str) + 1, sizeof(char), CMD_GB, &c->gbc);
+	key = sf_calloc(ft_strlen(str) + 1, sizeof(char), CMD_GB, &c->gbc);
+	value = sf_calloc(ft_strlen(str) + 1, sizeof(char), CMD_GB, &c->gbc);
 	i = -1;
 	j = -1;
 	while (str[++i] && str[i] != '=')

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:34:52 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 21:39:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 char	*get_path(t_ctx *c)
 {
-	return (gb_add(getcwd(NULL, 256), &c->gbc, CMD_GB));
+	return (sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB));
 }
 
 /**
@@ -50,7 +50,7 @@ char	*format_path(t_ctx *c)
 		return ("~/");
 	if (ft_eq(pwd, home_path, 1))
 		return (
-			gb_add(
+			sf_add(
 				ft_aconcat(2, "~/", pwd + home_path_len + 1)
 				, &c->gbc, CMD_GB)
 		);

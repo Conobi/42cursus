@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 16:51:08 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ static int	exec_heredoc(t_ctx *c, int *fd, const char *stop)
 	close(fd[0]);
 	while (true)
 	{
-		line = gb_add(readline(">"), &c->gbc, CMD_GB);
+		line = sf_add(readline(">"), &c->gbc, CMD_GB);
 		if (!line)
 			exit(0);
 		if (ft_eq(line, stop, 0))
 			exit(0);
-		tmp = gb_add(ft_strjoin(line, "\n"), &c->gbc, CMD_GB);
+		tmp = sf_add(ft_strjoin(line, "\n"), &c->gbc, CMD_GB);
 		tmp = heredoc_env_replace(c, tmp);
 		ft_putstr_fd(tmp, fd[1]);
 	}

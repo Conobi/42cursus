@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:37:16 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/01 15:32:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static int	pipe_count(char *cur, const int action)
 static void	cutter_init(t_ctx *c)
 {
 	c->parser.pipes_n = pipe_count(c->entry, 1);
-	c->parser.pipes = gb_calloc(c->parser.pipes_n + 1,
+	c->parser.pipes = sf_calloc(c->parser.pipes_n + 1,
 			sizeof(char *), PIPE_GB, &c->gbc);
-	c->parser.pipes[0] = gb_calloc(pipe_count(c->entry, 0) + 1,
+	c->parser.pipes[0] = sf_calloc(pipe_count(c->entry, 0) + 1,
 			sizeof(char), PIPE_GB, &c->gbc);
 	if (PDEBUG == 1)
 		printf("[0: %d]\n", pipe_count(c->entry, 0));
@@ -80,7 +80,7 @@ void	split_pipe(t_ctx *c)
 		if (!is_curr_quoted(c) && *cur == '|')
 		{
 			cur++;
-			c->parser.pipes[++i] = gb_calloc(pipe_count(cur, 0) + 1,
+			c->parser.pipes[++i] = sf_calloc(pipe_count(cur, 0) + 1,
 					sizeof(char *), PIPE_GB, &c->gbc);
 			if (PDEBUG == 1)
 				printf("[%d: %d]\n", i, pipe_count(cur, 0));

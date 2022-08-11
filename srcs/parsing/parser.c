@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/03 21:59:59 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ short	parser(t_ctx *c)
 	c->ncmds = -1;
 	while (c->parser.pipes[++c->ncmds])
 		;
-	c->cmds = gb_calloc(c->ncmds + 1, sizeof(t_ncommand), CMD_GB, &c->gbc);
+	c->cmds = sf_calloc(c->ncmds + 1, sizeof(t_ncommand), CMD_GB, &c->gbc);
 	i = -1;
 	while (++i < c->ncmds)
 		c->cmds[i] = cmd_create(c, split_redir(c,

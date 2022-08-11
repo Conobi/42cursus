@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 22:16:57 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	create_error(t_ctx *c, t_error err)
 	}
 	g_return = err.code;
 	if (err.path)
-		message = gb_add(ft_aconcat(8, RED_FG, err.cmd, ": ",
+		message = sf_add(ft_aconcat(8, RED_FG, err.cmd, ": ",
 					err.path, ": ", err.message, "\n", RESET),
 				&c->gbc, CMD_GB);
 	else
-		message = gb_add(ft_aconcat(6, RED_FG, err.cmd, ": ",
+		message = sf_add(ft_aconcat(6, RED_FG, err.cmd, ": ",
 					err.message, "\n", RESET),
 				&c->gbc, CMD_GB);
 	if (write(2, message, ft_strlen(message)) == -1)
