@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/09 18:36:56 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:23:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 	if (!shlvl)
 		ft_lstadd_front(&c->env, create_env_entry(c, "SHLVL=1"));
 	else
-		shlvl->value = gb_add(ft_itoa(ft_atoi(shlvl->value) + 1), &c->gbc, PERM_GB);
-	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
-	c->weather_emoji = gb_calloc(5, sizeof(char), PERM_GB, &c->gbc);
+		shlvl->value = sf_add(ft_itoa(ft_atoi(shlvl->value) + 1), &c->gbc, PERM_GB);
+	c->weather_emoji = sf_calloc(5, sizeof(char), PERM_GB, &c->gbc);
 	c->better_prompt = true;
 	if (argc >= 2 && ft_eq(argv[1], "safe_prompt", 0))
 		c->better_prompt = false;
@@ -70,7 +69,7 @@ int	main(int argc, char **argv, char **env)
 	while (true)
 	{
 		termios_set(&c, 0);
-		c.entry = gb_add(readline(c.prompt), &c.gbc, CMD_GB);
+		c.entry = sf_add(readline(c.prompt), &c.gbc, CMD_GB);
 		if (!c.entry)
 			exit_shell(&c, 0, false);
 		if (parser(&c))

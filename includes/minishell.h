@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 16:53:57 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/11 17:24:04 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,11 @@ void		fork_sig_handler(int sig);
 void		sig_handler(int sig);
 void		heredoc_sig_handler(int sig);
 void		fork_heredoc_sig_handler(int sig);
+
+// Safe memory handler
+void		*sf_add(void *ptr, t_garbc **garbcl, const short type);
+void		*sf_calloc(size_t count, size_t size,
+				const short type, t_garbc **last);
 
 extern int	g_return;
 

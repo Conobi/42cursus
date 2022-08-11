@@ -72,6 +72,7 @@ SRC			= minishell.c \
 			  builtins/unset.c \
 			  builtins/builtins_manager.c \
 			  utils/prompt_misc.c \
+			  utils/safe_memory.c \
 			  utils/managers/path_manager.c \
 			  utils/managers/errors_manager.c \
 			  utils/managers/history_manager.c \
