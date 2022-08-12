@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 19:06:17 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/03 22:40:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 02:12:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,31 @@
 
 static int	valid_param(char *s)
 {
-	int	i;
+	int		i;
+	bool	found_digit;
+	bool	not_digit_anymore;
 
 	i = 0;
+	found_digit = false;
+	not_digit_anymore = false;
+	while (s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
+		i++;
+	if (ft_isdigit(s[i]) || (s[i] == '-' && ft_isdigit(s[++i])))
+		found_digit = true;
 	while (s[i])
 	{
-		if (!ft_isdigit(s[i]))
+		if (s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
+			not_digit_anymore = true;
+		else if (
+			(ft_isdigit(s[i]) && not_digit_anymore)
+			|| !(ft_isdigit(s[i]) || s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
+		)
 			return (false);
 		i++;
 	}
-	return (true);
+	if (found_digit)
+		return (true);
+	return (false);
 }
 
 int	b_exit(t_ctx *c, t_ncommand cmd)
