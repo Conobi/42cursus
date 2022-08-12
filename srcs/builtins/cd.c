@@ -6,15 +6,51 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 19:33:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 15:34:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * todo: check with symlink
-*/
+static bool	no_path_manager(t_ctx *c, char **new_path)
+{
+	t_env	*home_env;
+
+	home_env = get_env_by_key(c->env, "HOME");
+	if (!home_env || !home_env->value)
+	{
+		create_error(c, (t_error){WARNING, "cd",
+			"HOME not set", NULL, 1, false});
+		return (false);
+	}
+	*new_path = home_env->value;
+	return (true);
+}
+
+static bool	minus_manager(t_ctx *c, char **new_path)
+{
+	t_env	*pwd_env;
+
+	pwd_env = get_env_by_key(c->env, "OLDPWD");
+	if (!pwd_env || !pwd_env->value)
+	{
+		create_error(c, (t_error){WARNING, "cd",
+			"OLDPWD not set", NULL, 1, false});
+		return (false);
+	}
+	printf("%s\n", pwd_env->value);
+	*new_path = pwd_env->value;
+	return (true);
+}
+
+static void	path_changer(t_ctx *c, char *new_path)
+{
+	set_list_entry(c, "OLDPWD",
+		sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB), false);
+	if (chdir(new_path) == -1)
+		create_error(c, (t_error){WARNING, "cd",
+			strerror(errno), new_path, errno, false});
+}
 
 /**
  * @brief This function is a clone of cd command for builtins
@@ -25,51 +61,26 @@
 int	b_cd(t_ctx *c, char *path)
 {
 	char	*new_path;
-	t_env	*pwd_env;
-	t_env	*home_env;
 
+	new_path = NULL;
 	if (c->ncmds > 1)
 		return (0);
-	pwd_env = get_env_by_key(c->env, "OLDPWD");
 	if (!path)
 	{
-		home_env = get_env_by_key(c->env, "HOME");
-		if (!home_env || !home_env->value)
-		{
-			create_error(c, (t_error){WARNING, "cd",
-				"HOME not set", NULL, 1, false});
+		if (!no_path_manager(c, &new_path))
 			return (1);
-		}
-		new_path = home_env->value;
 	}
 	else if (ft_strlen(path) == 0)
 		new_path = get_path(c);
-	else if (ft_eq(path, "-", 0))
+	else if (path && ft_eq(path, "-", 0))
 	{
-		if (!pwd_env || !pwd_env->value)
-		{
-			create_error(c, (t_error){WARNING, "cd",
-				"OLDPWD not set", NULL, 1, false});
+		if (!minus_manager(c, &new_path))
 			return (1);
-		}
-		printf("%s\n", pwd_env->value);
-		new_path = pwd_env->value;
 	}
 	else
 		new_path = path;
 	if (file_errors(c, (t_error){FILE_ERR, "cd", NULL, new_path, 1, false}))
 		return (1);
-	// if (!pwd_env || !pwd_env->value)
-	// 	ft_lstadd_front(&c->env, create_env_entry(c,
-	// 			sf_add(
-	// 				ft_aconcat(2, "OLDPWD=",
-	// 					getcwd(NULL, 256)), &c->gbc, CMD_GB)));
-	// else
-	// 	pwd_env->value = sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB);
-	set_list_entry(c, "OLDPWD",
-		sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB), false);
-	if (chdir(new_path) == -1)
-		create_error(c, (t_error){WARNING, "cd",
-			strerror(errno), new_path, errno, false});
+	path_changer(c, new_path);
 	return (0);
 }
