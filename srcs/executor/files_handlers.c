@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:55:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/01 18:39:22 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 14:38:08 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	open_file(t_ctx *c, int curr_cmd, int i)
  * @param c Minshell context struct
  * @param curr_cmd Index of current command
  */
-static void	outfile_handler(t_ctx *c, int curr_cmd)
+void	outfile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ static void	outfile_handler(t_ctx *c, int curr_cmd)
  * @param c Minishell context struct
  * @param curr_cmd Index of current command
  */
-static void	infile_handler(t_ctx *c, int curr_cmd)
+void	infile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
@@ -94,7 +94,7 @@ static void	infile_handler(t_ctx *c, int curr_cmd)
  * @param curr Index of current command
  * @param in File descriptor to modify for input
  */
-static void	in_selector(t_ctx *c, int curr, int *in)
+void	in_selector(t_ctx *c, int curr, int *in)
 {
 	if (c->cmds[curr].infile == -1)
 		*in = -1;
@@ -113,7 +113,7 @@ static void	in_selector(t_ctx *c, int curr, int *in)
  * @param curr Index of current command
  * @param out File descriptor to modify for output
  */
-static void	out_selector(t_ctx *c, int curr, int *out)
+void	out_selector(t_ctx *c, int curr, int *out)
 {
 	if (c->cmds[curr].outfile == -1)
 		*out = -1;
@@ -125,12 +125,4 @@ static void	out_selector(t_ctx *c, int curr, int *out)
 		*out = c->exec->pipe_fd[1];
 	else
 		*out = c->exec->pipe_fd[2 * curr + 1];
-}
-
-void	io_handler(t_ctx *c, int curr, int *in, int *out)
-{
-	infile_handler(c, curr);
-	outfile_handler(c, curr);
-	in_selector(c, curr, in);
-	out_selector(c, curr, out);
 }

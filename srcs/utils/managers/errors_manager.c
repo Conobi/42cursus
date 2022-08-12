@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:13:21 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 15:11:34 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,29 @@ void	create_error(t_ctx *c, t_error err)
 		exit_shell(c, err.code, true);
 }
 
+static bool	check_file_errors(t_ctx *c, t_error err, struct stat path_stat)
+{
+	if (!(path_stat.st_mode & S_IRUSR))
+	{
+		create_error(c, (t_error){WARNING, err.cmd,
+			strerror(EACCES), err.path, 126, err.is_file});
+		return (true);
+	}
+	if (!err.is_file && !S_ISDIR(path_stat.st_mode))
+	{
+		create_error(c, (t_error){WARNING, err.cmd,
+			strerror(ENOTDIR), err.path, 1, err.is_file});
+		return (true);
+	}
+	if (err.is_file && S_ISDIR(path_stat.st_mode))
+	{
+		create_error(c, (t_error){WARNING, err.cmd,
+			strerror(EISDIR), err.path, 126, err.is_file});
+		return (true);
+	}
+	return (false);
+}
+
 /**
  * @brief This function check files errors and print an error message
  *
@@ -66,23 +89,5 @@ bool	file_errors(t_ctx *c, t_error err)
 			strerror(errno), err.path, 127, err.is_file});
 		return (true);
 	}
-	if (!(path_stat.st_mode & S_IRUSR))
-	{
-		create_error(c, (t_error){WARNING, err.cmd,
-			strerror(EACCES), err.path, 126, err.is_file});
-		return (true);
-	}
-	if (!err.is_file && !S_ISDIR(path_stat.st_mode))
-	{
-		create_error(c, (t_error){WARNING, err.cmd,
-			strerror(ENOTDIR), err.path, 1, err.is_file});
-		return (true);
-	}
-	if (err.is_file && S_ISDIR(path_stat.st_mode))
-	{
-		create_error(c, (t_error){WARNING, err.cmd,
-			strerror(EISDIR), err.path, 126, err.is_file});
-		return (true);
-	}
-	return (false);
+	return (check_file_errors(c, err, path_stat));
 }

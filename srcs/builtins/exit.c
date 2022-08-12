@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 19:06:17 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 02:12:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 15:15:59 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	b_exit(t_ctx *c, t_ncommand cmd)
 				"too many arguments", NULL, 1, false});
 			return (1);
 		}
-		exit_shell(c, ft_atoi(cmd.argv[1]) % 256, true); // todo: check value, fix negative numbers and max int
+		exit_shell(c, ft_atoi(cmd.argv[1]) % 256, true);
 	}
 	else
 		exit_shell(c, g_return, false);

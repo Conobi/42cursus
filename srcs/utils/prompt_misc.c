@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 15:02:09 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function create a very sad prompt for Minishell.
+ * Please do not use if you are not happy in your life.
+ *
+ * @param c Minishell context struct
+ * @param path New path to display in prompt
+ */
 void	gen_sad_prompt(t_ctx *c, const char *path)
 {
 	free(c->prompt);

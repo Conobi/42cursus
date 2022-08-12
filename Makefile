@@ -39,13 +39,16 @@ RLINCS		= $(shell brew --prefix readline)/include
 RLLIB		= $(shell brew --prefix readline)/lib
 endif
 
-INC			= minishell.h
+INC			= minishell.h \
+			  libs.h \
+			  types.h
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= minishell.c \
 			  executor/executor.c \
 			  executor/executor_utils.c \
+			  executor/executor_utils2.c \
 			  executor/files_handlers.c \
 			  executor/heredoc.c \
 			  executor/heredoc_env.c \

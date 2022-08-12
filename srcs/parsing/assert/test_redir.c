@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:38:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 15:14:49 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ short	test_redir(t_ctx *c)
 		j = -1;
 		while (++j < c->cmds[i].argc)
 		{
-			// if (token_type(c->cmds[i].argv[j]) == HRDC_TK)
-			// 	throw_heredoc_error(c, i, j);
 			if (token_type(c->cmds[i].argv[j]) > OTHR_TK)
 				return (throw_redirection_error(c, i, j));
 		}

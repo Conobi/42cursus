@@ -3,37 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 19:27:43 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 15:27:18 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <fcntl.h>
-# include <errno.h>
-# include <string.h>
-# include <termios.h>
-# include <signal.h>
-# include <dirent.h>
-# include "../libft/libft.h"
-
-// Linux required
-# if defined(__linux__)
-#  include <readline/history.h>
-#  include <sys/wait.h>
-
-#  define ECHOCTL 0001000
-# endif
+# include "types.h"
 
 # define SHELL_NAME "Minishell"
 
@@ -65,6 +45,7 @@
 # define RESET	"\001\033[0m\002"
 # define BOLD	"\001\033[1m\002"
 
+// Token definitions for parsing
 # define OTHR_TK	0
 # define OUT_TK		1
 # define IN_TK		2
@@ -90,54 +71,7 @@
 # define ERROR		2
 # define WARNING	3
 
-typedef struct s_redir {
-	char	*arg;
-	short	type;
-}	t_redir;
-
-typedef struct s_ncommand {
-	int		argc;
-	char	**argv;
-	int		redc;
-	t_redir	*redirections;
-	char	*exec_path;
-	int		outfile;
-	int		infile;
-	int		heredoc;
-}	t_ncommand;
-
-typedef struct s_parser {
-	bool	squoted;
-	bool	dquoted;
-	char	**pipes;
-	char	***split;
-	int		pipes_n;
-	int		len;
-}	t_parser;
-
-typedef struct s_exec {
-	pid_t	*process;
-	int		*pipe_fd;
-}	t_exec;
-
-typedef struct s_ctx {
-	struct s_ncommand	*cmds;
-	struct termios		term;
-	struct termios		base;
-	t_garbc				*gbc;
-	t_list				*env;
-	t_parser			parser;
-	t_exec				*exec;
-	bool				better_prompt;
-	char				*prompt;
-	char				*entry;
-	char				*weather_emoji;
-	char				*last_path;
-	char				*last_entry;
-	char				*heredoc_errored;
-	int					ncmds;
-	int					history_fd;
-}	t_ctx;
+extern int	g_return;
 
 // Parsing
 short		parser(t_ctx *c);
@@ -160,33 +94,8 @@ short		test_pipe(t_ctx *c);
 short		test_redir(t_ctx *c);
 void		syntax_err(t_ctx *c, char *token);
 
-/**
- * @brief Error struct
- * @param short type : type of error
- * @param char *cmd : cmd created error
- * @param char *msg : error message
- * @param char *path : a path to display in error message if needed
- * @param int code : error code to return
- * @param bool is_file : if given path must be a file or not
- */
-typedef struct s_error {
-	short	type;
-	char	*cmd;
-	char	*message;
-	char	*path;
-	int		code;
-	bool	is_file;
-}	t_error;
-
-typedef struct s_env {
-	char	*key;
-	char	*value;
-	bool	unset;
-}	t_env;
-
 // Executor functions
 void		exec(t_ctx *c);
-void		io_handler(t_ctx *c, int curr, int *in, int *out);
 void		close_pipes(t_ctx *c, int pipes);
 void		switch_pipes(int in, int out);
 char		*find_exec(t_ctx *c, const char *exec_name);
@@ -226,14 +135,19 @@ char		*get_branch(t_ctx *c);
 void		get_weather(t_ctx *c);
 t_list		*create_env(t_ctx *c, char **env);
 t_list		*create_env_entry(t_ctx *c, char *entry);
-// char		*get_env_by_key(t_list *head, char *key);
-// t_env		*get_env_struct_by_key(t_list *head, char *key);
 char		**convert_env(t_ctx *c);
 t_env		*get_env_by_key(t_list *head, char *key);
 t_list		*get_env_list_by_key(t_list *head, char *key);
 void		termios_init(t_ctx *c);
 void		termios_set(t_ctx *c, short mode);
 void		create_error(t_ctx *c, t_error err);
+
+// File handlers
+void		io_handler(t_ctx *c, int curr, int *in, int *out);
+void		outfile_handler(t_ctx *c, int curr_cmd);
+void		infile_handler(t_ctx *c, int curr_cmd);
+void		in_selector(t_ctx *c, int curr, int *in);
+void		out_selector(t_ctx *c, int curr, int *out);
 
 // Signal handlers
 void		fork_sig_handler(int sig);
@@ -246,7 +160,5 @@ void		*sf_add(void *ptr, t_garbc **garbcl, const short type);
 void		*sf_calloc(size_t count, size_t size,
 				const short type, t_garbc **last);
 void		enomem_error(t_garbc **garbcl);
-
-extern int	g_return;
 
 #endif

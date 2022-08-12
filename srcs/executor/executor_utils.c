@@ -3,61 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 19:11:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/12 14:25:08 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief This function is used to find an executable in PATH env variable
- * for the given exec_name
- *
- * @param c Minishell context struct
- * @param exec_name executable name to search
- * @return char* Returns the executable path
- */
-char	*find_exec(t_ctx *c, const char *exec_name)
-{
-	t_env	*env_path;
-	char	**path;
-	char	*exec_path;
-	int		i;
-
-	if (ft_strchr(exec_name, '/'))
-	{
-		if (file_errors(c, (t_error){FILE_ERR, SHELL_NAME, NULL,
-				(char *)exec_name, 1, true}))
-			return (NULL);
-		return ((char *)exec_name);
-	}
-	env_path = get_env_by_key(c->env, "PATH");
-	if (!env_path || !env_path->value)
-	{
-		create_error(c, (t_error){WARNING, SHELL_NAME,
-			"No such file or directory", (char *)exec_name, 127, true});
-		return (NULL);
-	}
-	path = gb_split(env_path->value, ':', &c->gbc, CMD_GB);
-	if (!path)
-		enomem_error(&c->gbc);
-	i = 0;
-	while (path[i])
-	{
-		exec_path = sf_add(
-				ft_aconcat(3, path[i], "/", exec_name),
-				&c->gbc, CMD_GB);
-		if (access(exec_path, X_OK) == 0)
-			return (exec_path);
-		i++;
-	}
-	create_error(c, (t_error){WARNING, SHELL_NAME,
-		"No such file or directory", (char *)exec_name, 127, true});
-	return (NULL);
-}
 
 /**
  * @brief This function is used to close all pipes after execution
