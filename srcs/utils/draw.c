@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:44:39 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/15 19:16:30 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/16 19:17:57 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	draw_line(t_ctx *c, t_line line)
 {
@@ -29,8 +29,7 @@ int	draw_line(t_ctx *c, t_line line)
 	pixel_y = line.y;
 	while (pixels)
 	{
-		mlx_pixel_put(c->window->mlx, c->window->id,
-			pixel_x, pixel_y, line.color);
+		pixel_put(c, pixel_x, pixel_y, line.color);
 		pixel_x += delta_x;
 		pixel_y += delta_y;
 		--pixels;
@@ -43,14 +42,14 @@ int	draw_rect(t_ctx *c, t_rect rect)
 	int	i;
 	int	j;
 
-	if (c->window->id == NULL)
+	if (c->window.id == NULL)
 		return (1);
 	i = rect.y;
 	while (i < rect.y + rect.height)
 	{
 		j = rect.x;
 		while (j < rect.x + rect.width)
-			mlx_pixel_put(c->window->mlx, c->window->id, j++, i, rect.color);
+			pixel_put(c, j++, i, rect.color);
 		++i;
 	}
 	return (0);

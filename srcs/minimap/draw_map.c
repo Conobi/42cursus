@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/16 05:33:38 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/16 19:11:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 void	draw_rays(t_ctx *c, t_rmap rmap)
 {
@@ -26,13 +26,14 @@ void	draw_rays(t_ctx *c, t_rmap rmap)
 		if (i % 100 == 0)
 		{
 			draw_line(c, (t_line){
-				c->player->x * rmap.scale + rmap.pos_x,
-				c->player->y * rmap.scale + rmap.pos_y,
-				(c->player->x + cos(ray->angle) * ray->distance) * rmap.scale,
-				(c->player->y + sin(ray->angle) * ray->distance) * rmap.scale,
+				c->player.x * rmap.scale + rmap.pos_x,
+				c->player.y * rmap.scale + rmap.pos_y,
+				(c->player.x + cos(ray->angle) * ray->distance) * rmap.scale,
+				(c->player.y + sin(ray->angle) * ray->distance) * rmap.scale,
 				0xFFFFFF
 			});
-			printf("drawing ray %d | angle -> %f | distance %f\n", i, ray->angle, ray->distance);
+			printf("drawing ray %d | angle -> %f | distance %f\n",
+				i, ray->angle, ray->distance);
 		}
 		i++;
 		head = head->next;
@@ -48,13 +49,13 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 
 	cell_size = CELL_SIZE * rmap.scale;
 	y = 0;
-	while (c->map->raw[y])
+	while (c->map.raw[y])
 	{
 		x = 0;
-		while (c->map->raw[y][x])
+		while (c->map.raw[y][x])
 		{
 			// printf("%c ", c->map[y][x]);
-			if (c->map->raw[y][x] == '1')
+			if (c->map.raw[y][x] == '1')
 			{
 				draw_rect(c, (t_rect){
 					rmap.pos_x + x * cell_size,
@@ -64,7 +65,7 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 					0xFF
 				});
 			}
-			else if (c->map->raw[y][x] == '0' || c->map->raw[y][x] == 'N')
+			else if (c->map.raw[y][x] == '0' || c->map.raw[y][x] == 'N')
 			{
 				draw_rect(c, (t_rect){
 					rmap.pos_x + x * cell_size,
@@ -100,15 +101,15 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 		y++;
 	}
 	draw_line(c, (t_line){
-		c->player->x * rmap.scale + rmap.pos_x,
-		c->player->y * rmap.scale + rmap.pos_y,
-		(c->player->x + cos(c->player->angle) * (PLAYER_SIZE * 2)) * rmap.scale,
-		(c->player->y + sin(c->player->angle) * (PLAYER_SIZE * 2)) * rmap.scale,
+		c->player.x * rmap.scale + rmap.pos_x,
+		c->player.y * rmap.scale + rmap.pos_y,
+		(c->player.x + cos(c->player.angle) * (PLAYER_SIZE * 2)) * rmap.scale,
+		(c->player.y + sin(c->player.angle) * (PLAYER_SIZE * 2)) * rmap.scale,
 		0xFFFFFF
 	});
 	draw_rect(c, (t_rect){
-		rmap.pos_x + c->player->x * rmap.scale - PLAYER_SIZE / 2,
-		rmap.pos_y + c->player->y * rmap.scale - PLAYER_SIZE / 2,
+		rmap.pos_x + c->player.x * rmap.scale - PLAYER_SIZE / 2,
+		rmap.pos_y + c->player.y * rmap.scale - PLAYER_SIZE / 2,
 		PLAYER_SIZE,
 		PLAYER_SIZE,
 		0x03f4fc

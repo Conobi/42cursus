@@ -29,7 +29,7 @@ define compile_cmd
 	exit $$RESULT
 endef
 
-NAME		= cube3d
+NAME		= cub3d
 
 LIBFTDIR	= libft
 LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
@@ -37,16 +37,20 @@ LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
 MLXDIR		= mlx
 MLX_AR		= $(MLXDIR)/libmlx.a
 
-INC			= cube3d.h
+INC			= cub3d.h
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= main.c \
-			  engine/gameloop.c \
+			  initialize.c \
+			  handlers.c \
+			  events_handlers.c \
+			  engine/generator.c \
 			  engine/rays.c \
 			  minimap/draw_map.c \
 			  utils/draw.c \
-			  utils/utils.c
+			  utils/utils.c \
+			  utils/helpers.c
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

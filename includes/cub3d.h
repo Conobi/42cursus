@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d.h                                           :+:      :+:    :+:   */
+/*   cub3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -24,6 +24,7 @@
 
 # define WIN_W 1600
 # define WIN_H 1200
+# define RESOLUTION 1
 # define CELL_SIZE 20
 # define PLAYER_SIZE 8
 # define FOV 60
@@ -50,6 +51,7 @@ typedef struct s_window {
 	void	*id;
 	int		height;
 	int		width;
+	int		res;
 }	t_window;
 
 typedef struct s_player {
@@ -65,10 +67,19 @@ typedef struct map {
 	int		width;
 }	t_map;
 
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_img;
+
 typedef struct s_ctx {
-	t_window	*window;
-	t_player	*player;
-	t_map		*map;
+	t_window	window;
+	t_player	player;
+	t_map		map;
+	t_img		img;
 }	t_ctx;
 
 typedef struct s_rmap {
@@ -112,16 +123,30 @@ typedef struct s_line {
 }	t_line;
 
 // Engine
-void	gameloop(t_ctx *c);
-t_list	*create_rays(t_ctx *c);
+t_list		*create_rays(t_ctx *c);
+int			generate_frame(t_ctx *c);
 
 // Minimap
-void	draw_map(t_ctx *c, t_rmap rmap);
+void		draw_map(t_ctx *c, t_rmap rmap);
+
+// Initialize
+void		init_ctx(t_ctx *c);
 
 // Utils
-int		draw_rect(t_ctx *c, t_rect rect);
-int		draw_line(t_ctx *c, t_line line);
-bool	out_of_bounds(t_ctx *c, double x, double y);
-double	to_radians(int degrees);
+int			draw_rect(t_ctx *c, t_rect rect);
+int			draw_line(t_ctx *c, t_line line);
+bool		out_of_bounds(t_ctx *c, double x, double y);
+double		to_radians(int degrees);
+
+// Helpers
+void		pixel_put(t_ctx *c, int x, int y, int color);
+double long	remap(double long input, double long low, double long high);
+
+// Handlers
+t_img		image_handler(t_ctx *c);
+void		refresh_handler(t_ctx *c);
+
+// Events handlers
+void		event_listener(t_ctx *c);
 
 #endif
