@@ -1,4 +1,4 @@
-cube3d
+cub3d
 **/.DS_Store
 .DS_Store
 *.dSYM
@@ -15,4 +15,3 @@ build
 .minishell_history
 Dockerfile
 build_docker.sh
-libft/
