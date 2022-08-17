@@ -24,14 +24,13 @@
 
 # define WIN_W 1600
 # define WIN_H 1200
-# define RESOLUTION 1
 # define CELL_SIZE 20
 # define PLAYER_SIZE 8
 # define FOV 60
 
 # define PLAYER_SPEED 2
 # define TICK 60
-# define SCALE 2
+# define SCALE 4
 
 // Facing
 # define WEST 1

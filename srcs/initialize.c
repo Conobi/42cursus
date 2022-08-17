@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/16 19:18:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/17 18:38:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	init_ctx(t_ctx *c)
 	c->window.mlx = mlx_init();
 	c->window.height = WIN_H;
 	c->window.width = WIN_W;
-	c->window.res = RESOLUTION;
+	c->window.res = SCALE;
 	c->player.speed = 0;
 	c->player.angle = 0;
 	init_map(c);

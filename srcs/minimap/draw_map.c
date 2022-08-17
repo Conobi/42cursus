@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/16 19:11:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/17 18:28:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	draw_rays(t_ctx *c, t_rmap rmap)
 				c->player.y * rmap.scale + rmap.pos_y,
 				(c->player.x + cos(ray->angle) * ray->distance) * rmap.scale,
 				(c->player.y + sin(ray->angle) * ray->distance) * rmap.scale,
-				0xFFFFFF
+				0xFFFF00
 			});
 			printf("drawing ray %d | angle -> %f | distance %f\n",
 				i, ray->angle, ray->distance);
@@ -62,7 +62,7 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 					rmap.pos_y + y * cell_size,
 					cell_size,
 					cell_size,
-					0xFF
+					0x21D075
 				});
 			}
 			else if (c->map.raw[y][x] == '0' || c->map.raw[y][x] == 'N')
@@ -72,7 +72,7 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 					rmap.pos_y + y * cell_size,
 					cell_size,
 					cell_size,
-					0xFF0000
+					0xFFFFFF
 				});
 			}
 			else
@@ -85,16 +85,26 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 					0x0
 				});
 			}
-			// if (y == c->map->height - 1)
-			// {
-			// 	draw_line(c, (t_line){
-			// 		x * cell_size * rmap.scale + rmap.pos_x,
-			// 		0,
-			// 		x * cell_size * rmap.scale + rmap.pos_x,
-			// 		600,
-			// 		0xFFFFFF
-			// 	});
-			// }
+			if (y == c->map.height - 1)
+			{
+				draw_line(c, (t_line){
+					x * cell_size + rmap.pos_x,
+					0,
+					x * cell_size + rmap.pos_x,
+					c->map.height * cell_size,
+					0x00
+				});
+			}
+			if (x == c->map.width - 1)
+			{
+				draw_line(c, (t_line){
+					0,
+					y * cell_size + rmap.pos_x,
+					c->map.width * cell_size,
+					y * cell_size + rmap.pos_x,
+					0x00
+				});
+			}
 			x++;
 		}
 		// printf("\n");
@@ -105,7 +115,7 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 		c->player.y * rmap.scale + rmap.pos_y,
 		(c->player.x + cos(c->player.angle) * (PLAYER_SIZE * 2)) * rmap.scale,
 		(c->player.y + sin(c->player.angle) * (PLAYER_SIZE * 2)) * rmap.scale,
-		0xFFFFFF
+		0xFF00FF
 	});
 	draw_rect(c, (t_rect){
 		rmap.pos_x + c->player.x * rmap.scale - PLAYER_SIZE / 2,

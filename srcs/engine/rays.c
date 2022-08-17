@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:52:40 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/16 18:24:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/17 18:44:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-typedef struct s_findw {
+typedef struct s_temp {
 	double	part;
 	double	first_y;
 	double	first_x;
@@ -20,110 +20,111 @@ typedef struct s_findw {
 	double	x_a;
 	double	next_x;
 	double	next_y;
-}	t_findw;
+}	t_temp;
 
 double	get_distance(double x1, double y1, double x2, double y2)
 {
 	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
 }
 
-t_ray	*create_ray(t_ctx *c, t_findw *findw, double angle, bool vertically)
+t_ray	*create_ray(t_ctx *c, t_temp *t, double angle, bool is_vertical)
 {
 	t_ray	*new_ray;
 
 	new_ray = malloc(sizeof(t_ray));
 	new_ray->angle = angle;
-	new_ray->distance = get_distance(c->player.x, c->player.y, findw->next_x, findw->next_y);
-	printf("next x: %f | next y: %f | distance: %f\n", findw->next_x, findw->next_y, new_ray->distance);
-	new_ray->vertical = vertically;
+	new_ray->distance = get_distance(c->player.x, c->player.y, t->next_x, t->next_y);
+	printf("next x: %f | next y: %f | distance: %f\n", t->next_x, t->next_y, new_ray->distance);
+	new_ray->vertical = is_vertical;
 	// new_ray->facing = facing_v(); // todo: chect in circle position of the angle
 	return (new_ray);
 }
 
-int	get_cell_y(t_findw *findw, bool vertical)
+int	get_cell_y(t_temp *t, bool vertical)
 {
 	if (!vertical)
 	{
-		if (findw->part)
-			return (floor(findw->next_y / CELL_SIZE) - 1);
+		if (t->part)
+			return (floor(t->next_y / CELL_SIZE) - 1);
 	}
-	return (floor(findw->next_y / CELL_SIZE));
+	return (floor(t->next_y / CELL_SIZE));
 }
 
-int	get_cell_x(t_findw *findw, bool vertical)
+int	get_cell_x(t_temp *t, bool vertical)
 {
 	if (vertical)
 	{
-		if (findw->part)
-			return (floor(findw->next_x / CELL_SIZE));
-		return (floor(findw->next_x / CELL_SIZE) - 1);
+		if (t->part)
+			return (floor(t->next_x / CELL_SIZE));
+		return (floor(t->next_x / CELL_SIZE) - 1);
 	}
-	return (floor(findw->next_x / CELL_SIZE));
+	return (floor(t->next_x / CELL_SIZE));
 }
 
-t_ray	*find_wall(t_ctx *c, t_findw *findw, double angle, bool vertically)
+t_ray	*find_wall(t_ctx *c, t_temp *t, double angle, bool is_vertical)
 {
 	char	wall;
 	int		cell_x;
 	int		cell_y;
 
-	wall = false;
-	findw->next_x = findw->first_x;
-	findw->next_y = findw->first_y;
-	while (wall == '0')
+	wall = 0;
+	t->next_x = t->first_x;
+	t->next_y = t->first_y;
+	while (wall == 0 || wall == '0')
 	{
-		cell_x = get_cell_x(findw, vertically);
-		cell_y = get_cell_y(findw, vertically);
+		cell_x = get_cell_x(t, is_vertical);
+		cell_y = get_cell_y(t, is_vertical);
 		if (out_of_bounds(c, cell_x, cell_y))
 			break ;
 		wall = c->map.raw[cell_y][cell_x];
 		if (wall == '0')
 		{
-			findw->next_x += findw->x_a;
-			findw->next_y += findw->x_a;
+			t->next_x += t->x_a;
+			t->next_y += t->x_a;
 		}
+		// if (t->next_x > c->map.width * c->window.res * CELL_SIZE)
 	}
-	return (create_ray(c, findw, angle, vertically));
+	return (create_ray(c, t, angle, is_vertical));
 }
 
 t_ray	*get_v_col(t_ctx *c, double angle)
 {
-	t_findw	findw;
+	t_temp	t;
 
-	findw.part = abs((int)floor((angle - M_PI / 2) / M_PI) % 2); // facing right
-	if (findw.part)
+	t.part = abs((int)floor((angle - M_PI / 2) / M_PI) % 2); // facing right
+	if (t.part)
 	{
-		findw.first_x = floor(c->player.x / CELL_SIZE) * CELL_SIZE;
-		findw.x_a = CELL_SIZE;
+		t.first_x = floor(c->player.x / CELL_SIZE) * CELL_SIZE;
+		t.x_a = CELL_SIZE;
 	}
 	else
 	{
-		findw.first_x = floor(c->player.x / CELL_SIZE);
-		findw.x_a = -CELL_SIZE;
+		t.first_x = floor(c->player.x / CELL_SIZE);
+		t.x_a = -CELL_SIZE;
 	}
-	findw.first_y = c->player.y + (findw.first_x - c->player.x) / tan(angle);
-	findw.y_a = findw.x_a / tan(angle);
-	return (find_wall(c, &findw, angle, true));
+	t.first_y = c->player.y + (t.first_x - c->player.x) / tan(angle);
+	t.y_a = t.x_a / tan(angle);
+	return (find_wall(c, &t, angle, true));
 }
 
 t_ray	*get_h_col(t_ctx *c, double angle)
 {
-	t_findw	findw;
+	t_temp	t;
 
-	findw.part = abs((int)floor(angle / M_PI) % 2);
-	if (findw.part) // facing up
+	t.part = abs((int)floor(angle / M_PI) % 2);
+	if (t.part) // facing up
 	{
-		findw.first_y = floor(c->player.y / CELL_SIZE) * CELL_SIZE;
-		findw.y_a = -CELL_SIZE;
+		t.first_y = floor(c->player.y / CELL_SIZE) * CELL_SIZE;
+		t.y_a = -CELL_SIZE;
 	}
 	else
 	{
-		findw.first_y = floor(c->player.y / CELL_SIZE);
-		findw.y_a = CELL_SIZE;
+		t.first_y = floor(c->player.y / CELL_SIZE);
+		t.y_a = CELL_SIZE;
 	}
-	findw.first_x = c->player.x + (findw.first_y - c->player.y) / tan(angle);
-	findw.x_a = findw.y_a / tan(angle);
-	return (find_wall(c, &findw, angle, false));
+	t.first_x = c->player.x + (t.first_y - c->player.y) / tan(angle);
+	t.x_a = t.y_a / tan(angle);
+	return (find_wall(c, &t, angle, false));
 }
 
 t_ray	*cast_ray(t_ctx *c, double angle)
