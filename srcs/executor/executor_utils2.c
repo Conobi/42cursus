@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:20:15 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 14:48:44 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/22 16:02:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 	if (path)
 		return (path);
 	create_error(c, (t_error){WARNING, SHELL_NAME,
-		"No such file or directory", (char *)exec_name, 127, true});
+		"command not found", (char *)exec_name, 127, true});
 	return (NULL);
 }
 
