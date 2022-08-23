@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:11:20 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 19:16:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 18:09:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ static char	*envvar_builder(t_ctx *c, char *token, t_temp *t)
 
 	token[t->start_kw] = 0;
 	t->kw = sf_calloc(t->end_kw - t->start_kw + 1,
-			sizeof(char), CMD3P_GB, &c->gbc);
+			sizeof(char), CMD2P_GB, &c->gbc);
 	ft_strlcpy(t->kw, token + t->start_kw + 1, t->end_kw - t->start_kw);
 	keyword = get_env_by_key(c->env, t->kw);
 	if (keyword)
 		t->var = sf_add(ft_strdup(keyword->value),
-				&c->gbc, CMD3P_GB);
+				&c->gbc, CMD2P_GB);
 	else
-		t->var = sf_calloc(1, sizeof(char), CMD3P_GB, &c->gbc);
+		t->var = sf_calloc(1, sizeof(char), CMD2P_GB, &c->gbc);
 	t->ret = sf_add(ft_aconcat(3, token, t->var, token + t->end_kw),
-			&c->gbc, CMD3P_GB);
+			&c->gbc, CMD2P_GB);
 	return (t->ret);
 }
 
@@ -67,7 +67,7 @@ static char	*str_envvar(t_ctx *c, char *token)
 		printf("@@@ %02d %02d %02d @@@\n", t.tk_len, t.start_kw, t.end_kw);
 	if (t.start_kw < t.tk_len - 1)
 		return (envvar_builder(c, token, &t));
-	return (sf_add(ft_strdup(token), &c->gbc, CMD3P_GB));
+	return (sf_add(ft_strdup(token), &c->gbc, CMD2P_GB));
 }
 
 static short	contains_envvar(t_ctx *c, const char *token)
@@ -108,5 +108,4 @@ void	envvar_pass(t_ctx *c)
 					c->cmds[i].redirections[j].arg = str_envvar(c,
 							c->cmds[i].redirections[j].arg);
 	}
-	gb_delete(&c->gbc, CMD2P_GB);
 }

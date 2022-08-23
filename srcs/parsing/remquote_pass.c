@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 18:13:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 18:10:15 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ void	remquote_pass(t_ctx *c)
 			c->cmds[i].redirections[j].arg = remquote(c,
 					c->cmds[i].redirections[j].arg);
 	}
-	gb_delete(&c->gbc, CMD4P_GB);
+	gb_delete(&c->gbc, CMD3P_GB);
 }

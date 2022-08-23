@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 18:11:57 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 18:19:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static short	post_cmd_create(t_ctx *c)
 	int	i;
 
 	gb_delete(&c->gbc, PIPE_GB);
-	enverr_pass(c);
 	envvar_pass(c);
+	enverr_pass(c);
 	if (!test_redir(c))
 		return (0);
 	tilde_pass(c);
