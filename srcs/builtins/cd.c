@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:05:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 15:34:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 14:28:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static bool	minus_manager(t_ctx *c, char **new_path)
 	pwd_env = get_env_by_key(c->env, "OLDPWD");
 	if (!pwd_env || !pwd_env->value)
 	{
-		create_error(c, (t_error){WARNING, "cd",
-			"OLDPWD not set", NULL, 1, false});
+		create_error(c, (t_error){WARNING, SHELL_NAME,
+			"OLDPWD not set", "cd", 1, false});
 		return (false);
 	}
 	printf("%s\n", pwd_env->value);
@@ -50,6 +50,8 @@ static void	path_changer(t_ctx *c, char *new_path)
 	if (chdir(new_path) == -1)
 		create_error(c, (t_error){WARNING, "cd",
 			strerror(errno), new_path, errno, false});
+	set_list_entry(c, "PWD",
+		sf_add(getcwd(NULL, 256), &c->gbc, CMD_GB), false);
 }
 
 /**

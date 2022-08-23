@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_misc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:05:37 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 15:02:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 14:42:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void	gen_sad_prompt(t_ctx *c, const char *path)
 {
 	free(c->prompt);
-	c->prompt = ft_aconcat(4, "Minishell ", path, " ", "> ");
+	c->prompt = ft_aconcat(4, SHELL_NAME, " - ", path, " $> ");
 }
 
 /**
