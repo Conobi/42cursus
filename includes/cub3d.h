@@ -20,17 +20,20 @@
 # include <stdbool.h>
 # include <math.h>
 # include "libft.h"
-# include "../mlx/mlx.h"
+# include "keys.h"
+# include "mlx.h"
 
-# define WIN_W 1600
-# define WIN_H 1200
+# define M_PI 3.14159265358979323846
+
+# define WIN_W 720
+# define WIN_H 480
 # define CELL_SIZE 20
 # define PLAYER_SIZE 8
 # define FOV 60
 
 # define PLAYER_SPEED 2
 # define TICK 60
-# define SCALE 4
+# define SCALE 2
 
 // Facing
 # define WEST 1

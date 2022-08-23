@@ -6,30 +6,30 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:31:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/17 18:44:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/19 20:01:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	display_fps(t_window *window)
-{
-	static clock_t	last_loop = 0;
-	clock_t			this_loop;
-	double			fps;
+// static void	display_fps(t_window *window)
+// {
+// 	static clock_t	last_loop = 0;
+// 	clock_t			this_loop;
+// 	double			fps;
 
-	this_loop = clock();
-	fps = 1000 / (double)(this_loop - last_loop);
-	fps *= 1000;
-	last_loop = this_loop;
-	printf("fps: %f\n", fps);
-	mlx_string_put(window->mlx, window->id, 500, 10, 0xFF0000,
-		ft_strjoin("fps: ", ft_itoa(fps)));
-}
+// 	this_loop = clock();
+// 	fps = 1000 / (double)(this_loop - last_loop);
+// 	fps *= 1000;
+// 	last_loop = this_loop;
+// 	printf("fps: %f\n", fps);
+// 	mlx_string_put(window->mlx, window->id, 500, 10, 0xFF0000,
+// 		ft_strjoin("fps: ", ft_itoa(fps)));
+// }
 
 static void	display_hud(t_ctx *c)
 {
-	display_fps(&(c->window));
+	// display_fps(&(c->window));
 	mlx_string_put(c->window.mlx, c->window.id, 500, 20, 0xFF0000,
 		ft_strjoin("angle: ", ft_itoa(c->player.angle)));
 	mlx_string_put(c->window.mlx, c->window.id, 500, 30, 0xFF0000,
@@ -40,9 +40,6 @@ static void	display_hud(t_ctx *c)
 
 t_img	image_handler(t_ctx *c)
 {
-	int			i;
-
-	i = -1;
 	c->img.img = mlx_new_image(c->window.mlx,
 			c->window.width, c->window.height);
 	c->img.addr = mlx_get_data_addr(c->img.img, &c->img.bits_per_pixel,

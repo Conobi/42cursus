@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/17 18:28:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/19 20:16:04 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 		0xFF00FF
 	});
 	draw_rect(c, (t_rect){
-		rmap.pos_x + c->player.x * rmap.scale - PLAYER_SIZE / 2,
-		rmap.pos_y + c->player.y * rmap.scale - PLAYER_SIZE / 2,
+		rmap.pos_x + c->player.x * rmap.scale - PLAYER_SIZE * 0.5,
+		rmap.pos_y + c->player.y * rmap.scale - PLAYER_SIZE * 0.5,
 		PLAYER_SIZE,
 		PLAYER_SIZE,
 		0x03f4fc
 	});
-	draw_rays(c, rmap);
+	// draw_rays(c, rmap);
 }

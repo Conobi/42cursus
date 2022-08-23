@@ -34,7 +34,12 @@ NAME		= cub3d
 LIBFTDIR	= libft
 LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
 
-MLXDIR		= mlx
+ifeq ($(OS), Darwin)
+MLXDIR		= mlx/opengl
+else ifeq ($(OS), Linux)
+MLXDIR		= mlx/x11
+endif
+
 MLX_AR		= $(MLXDIR)/libmlx.a
 
 INC			= cub3d.h
@@ -62,11 +67,17 @@ CFLAGS		= -Wall -Wextra -Werror -I $(MLXDIR) -I $(INCDIR) -I $(LIBFTDIR) -std=c9
 
 all: mlx libft $(NAME)
 
-libft:
+check-and-reinit-submodules:
+	@if git submodule status | egrep -q '^[-]' ; then \
+			echo "INFO: Need to reinitialize git submodules"; \
+			git submodule update --init --remote; \
+	fi
+
+libft: check-and-reinit-submodules
 	@printf "$(BLUE)compiling $(COMPIL)libft:$(RESET)\n";
 	@make -C $(LIBFTDIR) --no-print-directory
 
-mlx:
+mlx: check-and-reinit-submodules
 	@printf "$(BLUE)compiling $(COMPIL)mlx:$(RESET)\n";
 	@make -C $(MLXDIR) --no-print-directory
 
@@ -76,21 +87,21 @@ $(ODIR)/%.o: $(SDIR)/%.c $(INCS) Makefile
 
 $(NAME): $(OBJS) $(LIBFT_AR) $(MLX_AR)
 ifeq ($(OS), Darwin)
-	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) $(MLX_AR) -g -L $(MLXDIR) -l $(MLXDIR) -framework OpenGL -framework AppKit -o $(NAME))
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) $(MLX_AR) -g -l mlx -L $(MLXDIR) -framework OpenGL -framework AppKit -o $(NAME))
 else ifeq ($(OS), Linux)
-	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME))
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) $(MLX_AR) -l mlx -L $(MLXDIR) -L/usr/lib -I $(MLXDIR) -I/usr/include -lXext -lX11 -lm -lz -o $(NAME))
 endif
 	@printf "$(GREEN)Done$(RESET)\n";
 
 debug: $(OBJS) $(LIBFT_AR)
 ifeq ($(OS), Darwin)
-	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) $(MLX_AR) -g -L $(MLXDIR) -l $(MLXDIR) -framework OpenGL -framework AppKit -o $(NAME) -fsanitize=address)
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) $(MLX_AR) -g -l mlx -L $(MLXDIR) -framework OpenGL -framework AppKit -o $(NAME) -fsanitize=address)
 else ifeq ($(OS), Linux)
-	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR) -o $(NAME) -fsanitize=address)
+	@$(call compile_cmd, $(CC) $(OBJS) $(LIBFT_AR)  $(MLX_AR) -l mlx -L $(MLXDIR) -L/usr/lib -I $(MLXDIR) -I/usr/include -lXext -lX11 -lm -lz -fsanitize=address)
 endif
 	@printf "$(GREEN)Done debug mode$(RESET)\n";
 
-clean:
+clean: check-and-reinit-submodules
 	@printf "$(RED)Deleting build files$(RESET)\n";
 	@rm -rf $(ODIR)
 	@printf "$(RED)Clean libft:$(RESET)\n";

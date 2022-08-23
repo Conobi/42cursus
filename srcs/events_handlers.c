@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/16 19:10:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/19 20:25:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static int	key_press(int keycode, t_ctx *c)
 {
-	if (keycode == MVUP_KEY)
+	if (keycode == KB_W)
 		c->player.speed = PLAYER_SPEED;
-	else if (keycode == DVDW_KEY)
+	else if (keycode == KB_S)
 		c->player.speed = -PLAYER_SPEED;
-	else if (keycode == MVR_KEY)
+	else if (keycode == KB_A)
 		c->player.angle -= to_radians(PLAYER_SPEED + 2);
-	else if (keycode == MVL_KEY)
+	else if (keycode == KB_D)
 		c->player.angle += to_radians(PLAYER_SPEED + 2);
-	else if (keycode == EXIT_KEY)
+	else if (keycode == KB_ESC)
 		exit (0);
 	refresh_handler(c);
 	return (0);
@@ -30,9 +30,9 @@ static int	key_press(int keycode, t_ctx *c)
 
 static int	key_release(int keycode, t_ctx *c)
 {
-	if (keycode == MVUP_KEY)
+	if (keycode == KB_W)
 		c->player.speed = 0;
-	else if (keycode == DVDW_KEY)
+	else if (keycode == KB_S)
 		c->player.speed = 0;
 	refresh_handler(c);
 	return (0);
@@ -40,6 +40,6 @@ static int	key_release(int keycode, t_ctx *c)
 
 void	event_listener(t_ctx *c)
 {
-	mlx_hook(c->window.id, 2, 0, key_press, c);
-	mlx_hook(c->window.id, 3, 0, key_release, c);
+	mlx_hook(c->window.id, 2, 1L, key_press, c);
+	mlx_hook(c->window.id, 3, 1L, key_release, c);
 }

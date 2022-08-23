@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:44:39 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/16 19:17:57 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/19 20:33:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	draw_line(t_ctx *c, t_line line)
 	pixel_y = line.y;
 	while (pixels)
 	{
-		pixel_put(c, pixel_x, pixel_y, line.color);
+		if (pixel_x < c->window.height && pixel_y < c->window.width)
+			pixel_put(c, pixel_x, pixel_y, line.color);
 		pixel_x += delta_x;
 		pixel_y += delta_y;
 		--pixels;
@@ -45,10 +46,10 @@ int	draw_rect(t_ctx *c, t_rect rect)
 	if (c->window.id == NULL)
 		return (1);
 	i = rect.y;
-	while (i < rect.y + rect.height)
+	while (i < rect.y + rect.height && i < c->window.height)
 	{
 		j = rect.x;
-		while (j < rect.x + rect.width)
+		while (j < rect.x + rect.width && j < c->window.width)
 			pixel_put(c, j++, i, rect.color);
 		++i;
 	}

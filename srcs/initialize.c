@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/17 18:38:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/19 19:23:16 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	init_map(t_ctx *c)
 		return ;
 	c->map.raw = load_map(fd);
 	// todo: rewrite in parsing
+	x = 0;
 	y = 0;
 	while (c->map.raw[y])
 	{
