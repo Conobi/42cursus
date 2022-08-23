@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:20:15 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/22 16:02:27 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 19:05:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*find_by_path_env(t_ctx *c, const char *exec_name)
 	int		i;
 
 	env_path = get_env_by_key(c->env, "PATH");
-	if (!env_path || !env_path->value)
+	if (!env_path || !ft_strlen(env_path->value) || !env_path->value)
 	{
 		create_error(c, (t_error){WARNING, SHELL_NAME,
 			"No such file or directory", (char *)exec_name, 127, true});
@@ -52,6 +52,7 @@ static char	*find_by_path_env(t_ctx *c, const char *exec_name)
 char	*find_exec(t_ctx *c, const char *exec_name)
 {
 	char	*path;
+	t_env	*path_env;
 
 	if (ft_strchr(exec_name, '/')
 		|| ft_eq(exec_name, ".", 0) || ft_eq(exec_name, "..", 0))
@@ -64,8 +65,10 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 	path = find_by_path_env(c, exec_name);
 	if (path)
 		return (path);
-	create_error(c, (t_error){WARNING, SHELL_NAME,
-		"command not found", (char *)exec_name, 127, true});
+	path_env = get_env_by_key(c->env, "PATH");
+	if (path_env && path_env->value && ft_strlen(path_env->value))
+		create_error(c, (t_error){WARNING, SHELL_NAME,
+			"command not found", (char *)exec_name, 127, true});
 	return (NULL);
 }
 

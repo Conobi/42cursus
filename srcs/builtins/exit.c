@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 19:06:17 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 15:15:59 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 18:35:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	overflow_atoi(const char *str)
+{
+	int		sign;
+	long	r;
+
+	r = 0;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	sign = 1;
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		r = r * 10 + *str - '0';
+		str++;
+	}
+	return ((int)r * sign);
+}
 
 static int	valid_param(char *s)
 {
@@ -60,7 +84,7 @@ int	b_exit(t_ctx *c, t_ncommand cmd)
 				"too many arguments", NULL, 1, false});
 			return (1);
 		}
-		exit_shell(c, ft_atoi(cmd.argv[1]) % 256, true);
+		exit_shell(c, overflow_atoi(cmd.argv[1]) % 256, true);
 	}
 	else
 		exit_shell(c, g_return, false);

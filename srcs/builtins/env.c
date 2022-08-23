@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:14:38 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/23 18:26:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static void	build_line(t_ctx *c, t_temp *t)
 	if (t->curr_env->key && t->curr_env->value && !t->curr_env->unset)
 	{
 		t->print_list[t->i] = sf_add(
-				ft_aconcat(5, t->curr_env->key, "=\"",
-					t->curr_env->value, RESET, "\"\n"),
+				ft_aconcat(5, t->curr_env->key, "=",
+					t->curr_env->value, RESET, "\n"),
 				&c->gbc, EXPT_PT_GB
 				);
 		t->i++;
