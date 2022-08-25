@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:31:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/19 20:01:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/25 17:43:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 static void	display_hud(t_ctx *c)
 {
+	c += 0;
 	// display_fps(&(c->window));
 	mlx_string_put(c->window.mlx, c->window.id, 500, 20, 0xFF0000,
 		ft_strjoin("angle: ", ft_itoa(c->player.angle)));

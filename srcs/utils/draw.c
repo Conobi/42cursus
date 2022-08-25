@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:44:39 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/19 20:33:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/25 19:18:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	draw_line(t_ctx *c, t_line line)
 	pixel_y = line.y;
 	while (pixels)
 	{
-		if (pixel_x < c->window.height && pixel_y < c->window.width)
+		if (pixel_x < c->window.width && pixel_y < c->window.height)
 			pixel_put(c, pixel_x, pixel_y, line.color);
 		pixel_x += delta_x;
 		pixel_y += delta_y;

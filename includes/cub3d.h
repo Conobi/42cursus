@@ -23,7 +23,9 @@
 # include "keys.h"
 # include "mlx.h"
 
-# define M_PI 3.14159265358979323846
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 
 # define WIN_W 720
 # define WIN_H 480
@@ -82,22 +84,23 @@ typedef struct s_ctx {
 	t_player	player;
 	t_map		map;
 	t_img		img;
+	int			rays_num;
 }	t_ctx;
 
-typedef struct s_rmap {
-	int		pos_x;
-	int		pos_y;
-	int		scale;
-	t_list	*rays;
-}	t_rmap;
-
-// todo: create a chained list of all rays
 typedef struct s_ray {
 	double	angle;
 	double	distance;
 	bool	vertical;
 	int		facing;
 }	t_ray;
+
+typedef struct s_rmap {
+	int		pos_x;
+	int		pos_y;
+	int		scale;
+	t_ray	*rays;
+}	t_rmap;
+
 
 /**
  * @brief Type to create and render a rectangle in the window
@@ -125,7 +128,7 @@ typedef struct s_line {
 }	t_line;
 
 // Engine
-t_list		*create_rays(t_ctx *c);
+t_ray		*create_rays(t_ctx *c);
 int			generate_frame(t_ctx *c);
 
 // Minimap

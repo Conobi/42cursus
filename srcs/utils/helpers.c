@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:33:52 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/16 18:39:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/25 18:36:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	pixel_put(t_ctx *c, int x, int y, int color)
 		j = -1;
 		while (++j < c->window.res)
 		{
-			dst = c->img.addr + ((y + i) * c->img.line_length
+			if ((x + j) < c->window.width && (y + i) < c->window.height)
+				dst = c->img.addr + ((y + i) * c->img.line_length
 					+ (x + j) * (c->img.bits_per_pixel / 8));
 			*(unsigned int *)dst = color;
 		}

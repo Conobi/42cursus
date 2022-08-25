@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/19 19:23:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/25 17:05:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void	init_ctx(t_ctx *c)
 	c->window.res = SCALE;
 	c->player.speed = 0;
 	c->player.angle = 0;
+	c->rays_num = 320;
 	init_map(c);
 }

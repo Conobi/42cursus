@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/19 20:16:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/25 17:07:04 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,23 @@
 
 void	draw_rays(t_ctx *c, t_rmap rmap)
 {
-	t_list	*head;
-	t_ray	*ray;
+	t_ray	ray;
 	int		i;
 
-	head = rmap.rays;
 	i = 0;
-	while (head->next)
+	while (i < c->rays_num)
 	{
-		ray = head->content;
-		if (i % 100 == 0)
-		{
-			draw_line(c, (t_line){
-				c->player.x * rmap.scale + rmap.pos_x,
-				c->player.y * rmap.scale + rmap.pos_y,
-				(c->player.x + cos(ray->angle) * ray->distance) * rmap.scale,
-				(c->player.y + sin(ray->angle) * ray->distance) * rmap.scale,
-				0xFFFF00
-			});
-			printf("drawing ray %d | angle -> %f | distance %f\n",
-				i, ray->angle, ray->distance);
-		}
+		ray = rmap.rays[i];
+		draw_line(c, (t_line){
+			c->player.x * rmap.scale + rmap.pos_x,
+			c->player.y * rmap.scale + rmap.pos_y,
+			(c->player.x + cos(ray.angle) * ray.distance) * rmap.scale,
+			(c->player.y + sin(ray.angle) * ray.distance) * rmap.scale,
+			0xFFFF00
+		});
+		printf("drawing ray %d | angle -> %f | distance %f\n",
+			i, ray.angle, ray.distance);
 		i++;
-		head = head->next;
 	}
 }
 
@@ -124,5 +118,5 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 		PLAYER_SIZE,
 		0x03f4fc
 	});
-	// draw_rays(c, rmap);
+	draw_rays(c, rmap);
 }
