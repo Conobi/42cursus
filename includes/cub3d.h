@@ -27,28 +27,11 @@
 #  define M_PI 3.14159265358979323846
 # endif
 
-# define WIN_W 720
-# define WIN_H 480
-# define CELL_SIZE 20
-# define PLAYER_SIZE 8
-# define FOV 60
-
-# define PLAYER_SPEED 2
-# define TICK 60
-# define SCALE 2
-
 // Facing
 # define WEST 1
 # define EAST 2
 # define NORTH 3
 # define SOUTH 4
-
-// Keybindings
-# define MVUP_KEY 13
-# define DVDW_KEY 1
-# define MVR_KEY 0
-# define MVL_KEY 2
-# define EXIT_KEY 53
 
 typedef struct s_window {
 	void	*mlx;
@@ -61,14 +44,17 @@ typedef struct s_window {
 typedef struct s_player {
 	double		x;
 	double		y;
-	int			speed;
 	double		angle;
+	int			speed;
+	int			size;
+	int			fov;
 }	t_player;
 
 typedef struct map {
 	char	**raw;
 	int		height;
 	int		width;
+	int		cell_size;
 }	t_map;
 
 typedef struct s_img {
@@ -85,6 +71,8 @@ typedef struct s_ctx {
 	t_map		map;
 	t_img		img;
 	int			rays_num;
+	int			target_speed;
+	int			tick;
 }	t_ctx;
 
 typedef struct s_ray {
@@ -138,8 +126,8 @@ void		draw_map(t_ctx *c, t_rmap rmap);
 void		init_ctx(t_ctx *c);
 
 // Utils
-int			draw_rect(t_ctx *c, t_rect rect);
-int			draw_line(t_ctx *c, t_line line);
+void		draw_rect(t_ctx *c, t_rect rect);
+void		draw_line(t_ctx *c, t_line line);
 bool		out_of_bounds(t_ctx *c, double x, double y);
 double		to_radians(int degrees);
 

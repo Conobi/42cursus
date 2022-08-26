@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:31:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/25 17:43:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/26 17:25:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@
 // 		ft_strjoin("fps: ", ft_itoa(fps)));
 // }
 
-static void	display_hud(t_ctx *c)
-{
-	c += 0;
-	// display_fps(&(c->window));
-	mlx_string_put(c->window.mlx, c->window.id, 500, 20, 0xFF0000,
-		ft_strjoin("angle: ", ft_itoa(c->player.angle)));
-	mlx_string_put(c->window.mlx, c->window.id, 500, 30, 0xFF0000,
-		ft_strjoin("x: ", ft_itoa(c->player.x)));
-	mlx_string_put(c->window.mlx, c->window.id, 500, 40, 0xFF0000,
-		ft_strjoin("y: ", ft_itoa(c->player.y)));
-}
+// static void	display_hud(t_ctx *c)
+// {
+// 	c += 0;
+// 	// display_fps(&(c->window));
+// 	mlx_string_put(c->window.mlx, c->window.id, 500, 20, 0xFF0000,
+// 		ft_strjoin("angle: ", ft_itoa(c->player.angle)));
+// 	mlx_string_put(c->window.mlx, c->window.id, 500, 30, 0xFF0000,
+// 		ft_strjoin("x: ", ft_itoa(c->player.x)));
+// 	mlx_string_put(c->window.mlx, c->window.id, 500, 40, 0xFF0000,
+// 		ft_strjoin("y: ", ft_itoa(c->player.y)));
+// }
 
 t_img	image_handler(t_ctx *c)
 {
@@ -46,7 +46,7 @@ t_img	image_handler(t_ctx *c)
 	c->img.addr = mlx_get_data_addr(c->img.img, &c->img.bits_per_pixel,
 			&c->img.line_length, &c->img.endian);
 	generate_frame(c);
-	display_hud(c);
+	// display_hud(c);
 	return (c->img);
 }
 

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/19 20:25:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/26 19:51:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static int	key_press(int keycode, t_ctx *c)
 {
 	if (keycode == KB_W)
-		c->player.speed = PLAYER_SPEED;
+		c->player.speed = c->target_speed;
 	else if (keycode == KB_S)
-		c->player.speed = -PLAYER_SPEED;
+		c->player.speed = -c->target_speed;
 	else if (keycode == KB_A)
-		c->player.angle -= to_radians(PLAYER_SPEED + 2);
+		c->player.angle -= to_radians(c->target_speed + 2);
 	else if (keycode == KB_D)
-		c->player.angle += to_radians(PLAYER_SPEED + 2);
+		c->player.angle += to_radians(c->target_speed + 2);
 	else if (keycode == KB_ESC)
 		exit (0);
 	refresh_handler(c);

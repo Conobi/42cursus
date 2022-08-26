@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/25 17:05:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/26 19:53:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static void	init_map(t_ctx *c)
 		{
 			if (c->map.raw[y][x] == 'N') // just for testing
 			{
-				c->player.x = x * CELL_SIZE;
-				c->player.y = y * CELL_SIZE;
+				c->player.x = x * c->map.cell_size;
+				c->player.y = y * c->map.cell_size;
 			}
 			x++;
 		}
@@ -73,11 +73,16 @@ static void	init_map(t_ctx *c)
 void	init_ctx(t_ctx *c)
 {
 	c->window.mlx = mlx_init();
-	c->window.height = WIN_H;
-	c->window.width = WIN_W;
-	c->window.res = SCALE;
+	c->window.height = 480;
+	c->window.width = 720;
+	c->window.res = 2;
 	c->player.speed = 0;
 	c->player.angle = 0;
+	c->player.size = 8;
+	c->player.fov = 60;
+	c->map.cell_size = 20;
 	c->rays_num = 320;
+	c->target_speed = 2;
+	c->tick = 60;
 	init_map(c);
 }

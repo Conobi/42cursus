@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:52:40 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/25 17:39:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/26 19:56:19 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,31 @@ t_ray	create_ray(t_ctx *c, t_temp *t, double angle, bool is_vertical)
 
 	new_ray.angle = angle;
 	new_ray.distance = get_distance(c->player.x, c->player.y, t->next_x, t->next_y);
-	printf("next x: %f | next y: %f | distance: %f\n", t->next_x, t->next_y, new_ray.distance);
+	// printf("next x: %f | next y: %f | distance: %f\n", t->next_x, t->next_y, new_ray.distance);
 	new_ray.vertical = is_vertical;
 	// new_ray->facing = facing_v(); // todo: chect in circle position of the angle
 	return (new_ray);
 }
 
-int	get_cell_y(t_temp *t, bool vertical)
+int	get_cell_y(t_ctx *c, t_temp *t, bool vertical)
 {
 	if (!vertical)
 	{
 		if (t->part)
-			return (floor(t->next_y / CELL_SIZE) - 1);
+			return (floor(t->next_y / c->map.cell_size) - 1);
 	}
-	return (floor(t->next_y / CELL_SIZE));
+	return (floor(t->next_y / c->map.cell_size));
 }
 
-int	get_cell_x(t_temp *t, bool vertical)
+int	get_cell_x(t_ctx *c, t_temp *t, bool vertical)
 {
 	if (vertical)
 	{
 		if (t->part)
-			return (floor(t->next_x / CELL_SIZE));
-		return (floor(t->next_x / CELL_SIZE) - 1);
+			return (floor(t->next_x / c->map.cell_size));
+		return (floor(t->next_x / c->map.cell_size) - 1);
 	}
-	return (floor(t->next_x / CELL_SIZE));
+	return (floor(t->next_x / c->map.cell_size));
 }
 
 t_ray	find_wall(t_ctx *c, t_temp *t, double angle, bool is_vertical)
@@ -72,8 +72,8 @@ t_ray	find_wall(t_ctx *c, t_temp *t, double angle, bool is_vertical)
 	while ((wall == 0 || wall == '0') && t->next_x < (c->window.width * c->window.width) && t->next_y > (c->window.height * c->window.height))
 	{
 		printf("salut ^^\n");
-		cell_x = get_cell_x(t, is_vertical);
-		cell_y = get_cell_y(t, is_vertical);
+		cell_x = get_cell_x(c, t, is_vertical);
+		cell_y = get_cell_y(c, t, is_vertical);
 		if (out_of_bounds(c, cell_x, cell_y))
 			break ;
 		wall = c->map.raw[cell_y][cell_x];
@@ -103,13 +103,13 @@ t_ray	find_wall(t_ctx *c, t_temp *t, double angle, bool is_vertical)
 // 	t.part = abs((int)floor((angle - M_PI / 2) / M_PI) % 2); // facing right
 // 	if (t.part)
 // 	{
-// 		t.first_x = floor(c->player.x / CELL_SIZE);
-// 		t.x_a = CELL_SIZE;
+// 		t.first_x = floor(c->player.x / c->map.cell_size);
+// 		t.x_a = c->map.cell_size;
 // 	}
 // 	else
 // 	{
-// 		t.first_x = floor(c->player.x / CELL_SIZE);
-// 		t.x_a = -CELL_SIZE;
+// 		t.first_x = floor(c->player.x / c->map.cell_size);
+// 		t.x_a = -c->map.cell_size;
 // 	}
 // 	t.first_y = c->player.y + (t.first_x - c->player.x) / tan(angle);
 // 	t.y_a = t.x_a / tan(angle);
@@ -123,13 +123,13 @@ t_ray	find_wall(t_ctx *c, t_temp *t, double angle, bool is_vertical)
 // 	t.part = abs((int)floor(angle / M_PI) % 2);
 // 	if (t.part) // facing up
 // 	{
-// 		t.first_y = floor(c->player.y / CELL_SIZE) * CELL_SIZE;
-// 		t.y_a = -CELL_SIZE;
+// 		t.first_y = floor(c->player.y / c->map.cell_size) * c->map.cell_size;
+// 		t.y_a = -c->map.cell_size;
 // 	}
 // 	else
 // 	{
-// 		t.first_y = floor(c->player.y / CELL_SIZE);
-// 		t.y_a = CELL_SIZE;
+// 		t.first_y = floor(c->player.y / c->map.cell_size);
+// 		t.y_a = c->map.cell_size;
 // 	}
 // 	t.first_x = c->player.x + (t.first_y - c->player.y) / tan(angle);
 // 	t.x_a = t.y_a / tan(angle);
@@ -142,8 +142,8 @@ t_ray	test_col(t_ctx *c, double angle)
 
 	t.first_x = c->player.x + 100;
 	t.first_y = c->player.y + 100;
-	t.x_a = 20;
-	t.y_a = 20;
+	// t.x_a = 20;
+	// t.y_a = 20;
 	return (find_wall(c, &t, angle, true));
 }
 
@@ -164,8 +164,8 @@ t_ray *create_rays(t_ctx *c)
 	int		i;
 	t_ray	*rays;
 
-	initial_angle = c->player.angle - to_radians(FOV) / 2;
-	angle_step = to_radians(FOV) / c->rays_num;
+	initial_angle = c->player.angle - to_radians(c->player.fov) / 2;
+	angle_step = to_radians(c->player.fov) / c->rays_num;
 	rays = ft_calloc(sizeof(t_ray), c->rays_num + 1);
 	if (!rays)
 		return (NULL);
