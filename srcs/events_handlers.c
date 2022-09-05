@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/26 19:51:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/28 02:18:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ static int	key_release(int keycode, t_ctx *c)
 void	event_listener(t_ctx *c)
 {
 	mlx_hook(c->window.id, 2, 1L, key_press, c);
-	mlx_hook(c->window.id, 3, 1L, key_release, c);
+	mlx_hook(c->window.id, 3, 1L << 1, key_release, c);
 }

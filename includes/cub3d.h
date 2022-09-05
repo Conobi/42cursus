@@ -28,10 +28,15 @@
 # endif
 
 // Facing
-# define WEST 1
+# define NORTH 0
+# define SOUTH 1
 # define EAST 2
-# define NORTH 3
-# define SOUTH 4
+# define WEST 3
+
+# define SWEST 0
+# define SEAST 1
+# define NWEST 2
+# define NEAST 3
 
 typedef struct s_window {
 	void	*mlx;
@@ -79,16 +84,18 @@ typedef struct s_ray {
 	double	angle;
 	double	distance;
 	bool	vertical;
-	int		facing;
+	int		mfacing;
+	int		sfacing;
+	int		final_x;
+	int		final_y;
+	int		id;
 }	t_ray;
 
 typedef struct s_rmap {
 	int		pos_x;
 	int		pos_y;
-	int		scale;
 	t_ray	*rays;
 }	t_rmap;
-
 
 /**
  * @brief Type to create and render a rectangle in the window

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:44:39 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/26 18:29:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/08/26 20:00:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	draw_line(t_ctx *c, t_line line)
 	line = (t_line){
 		normalize_coord(c, line.x, true), normalize_coord(c, line.y, false),
 		normalize_coord(c, line.to_x, true),
-		normalize_coord(c, line.to_y, false), line.color};
+		normalize_coord(c, line.to_y, false), line.color
+	};
 	delta_x = line.to_x - line.x;
 	delta_y = line.to_y - line.y;
 	pixels = sqrt((delta_x * delta_x) + (delta_y * delta_y));
