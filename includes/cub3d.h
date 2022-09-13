@@ -86,6 +86,10 @@ typedef struct s_ray {
 	bool	vertical;
 	int		mfacing;
 	int		sfacing;
+	int		init_x;
+	int		init_y;
+	int		x;
+	int		y;
 	int		final_x;
 	int		final_y;
 	int		id;

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/01 16:17:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/08 17:24:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	draw_rays(t_ctx *c, t_rmap rmap)
 	while (i < c->rays_num)
 	{
 		ray = rmap.rays[i];
-		draw_line(c, (t_line){
-			c->player.x * c->window.res + rmap.pos_x,
-			c->player.y * c->window.res + rmap.pos_y,
-			// ray.final_x * c->window.res + rmap.pos_x,
-			// ray.final_y * c->window.res + rmap.pos_y,
-			(c->player.x + cos(ray.angle) * ray.distance) * c->window.res,
-			(c->player.y + sin(ray.angle) * ray.distance) * c->window.res,
-			0x888800
-		});
+		// draw_line(c, (t_line){
+		// 	c->player.x * c->window.res + rmap.pos_x,
+		// 	c->player.y * c->window.res + rmap.pos_y,
+		// 	// ray.final_x * c->window.res + rmap.pos_x,
+		// 	// ray.final_y * c->window.res + rmap.pos_y,
+		// 	(c->player.x + cos(ray.angle) * ray.distance) * c->window.res,
+		// 	(c->player.y + sin(ray.angle) * ray.distance) * c->window.res,
+		// 	0x888800
+		// });
 		i++;
 	}
 }
