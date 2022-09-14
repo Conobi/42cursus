@@ -80,18 +80,35 @@ typedef struct s_ctx {
 	int			tick;
 }	t_ctx;
 
+// typedef struct s_ray {
+// 	double	angle;
+// 	double	distance;
+// 	bool	vertical;
+// 	int		mfacing;
+// 	int		sfacing;
+// 	int		init_x;
+// 	int		init_y;
+// 	int		x;
+// 	int		y;
+// 	int		final_x;
+// 	int		final_y;
+// 	int		id;
+// }	t_ray;
+
 typedef struct s_ray {
 	double	angle;
+	double	h_distance;
+	double	v_distance;
 	double	distance;
 	bool	vertical;
 	int		mfacing;
 	int		sfacing;
-	int		init_x;
-	int		init_y;
+	int		h_x;
+	int		h_y;
+	int		v_x;
+	int		v_y;
 	int		x;
 	int		y;
-	int		final_x;
-	int		final_y;
 	int		id;
 }	t_ray;
 
