@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:18:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 15:29:50 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/14 18:39:30 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_ncommand {
 	int		outfile;
 	int		infile;
 	int		heredoc;
+	bool	is_builtins;
 }	t_ncommand;
 
 typedef struct s_parser {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/14 19:36:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ static void	exec_child(t_ctx *c, int curr)
 	int		in;
 	int		out;
 
-	if (c->cmds[curr].argc < 1)
-		return ;
 	signal(SIGINT, fork_sig_handler);
 	signal(SIGQUIT, fork_sig_handler);
 	termios_set(c, 1);
 	io_handler(c, curr, &in, &out);
+	if (c->cmds[curr].argc < 1)
+		return ;
 	if (EDEBUG)
 		printf("in -> %d | out -> %d\n", in, out);
-	if (is_builtin(c->cmds[curr]))
+	if (c->cmds[curr].is_builtins)
 	{
 		dup2(out, STDOUT_FILENO);
 		g_return = exec_builtin(c, c->cmds[curr]);
@@ -62,7 +62,7 @@ static void	exec_child(t_ctx *c, int curr)
  * in table->pipe_fd
  * @param c Minishell context struct
  */
-static void	pipe_fd(t_ctx *c)
+static int	pipe_fd(t_ctx *c)
 {
 	int	i;
 
@@ -73,11 +73,12 @@ static void	pipe_fd(t_ctx *c)
 		if (pipe(c->exec->pipe_fd + 2 * i) < 0)
 		{
 			perror("pipe");
-			free(c->exec->pipe_fd);
-			return ;
+			close_pipes(c, 2 * i);
+			return (1);
 		}
 		i++;
 	}
+	return (0);
 }
 
 static void	wait_forks(t_ctx *c)
@@ -107,12 +108,17 @@ void	exec(t_ctx *c)
 
 	c->exec = sf_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
 	c->exec->process = sf_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
-	pipe_fd(c);
+	if (pipe_fd(c))
+		return ;
 	if (!open_heredocs(c))
 		return ;
 	i = 0;
 	while (i < c->ncmds)
+	{
+		if (is_builtin(c->cmds[i]))
+			c->cmds[i].is_builtins = true;
 		exec_child(c, i++);
+	}
 	close_pipes(c, 2 * c->ncmds);
 	wait_forks(c);
 	signal(SIGINT, sig_handler);
