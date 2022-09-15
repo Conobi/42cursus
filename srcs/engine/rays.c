@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:52:40 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/14 20:05:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/15 19:35:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	find_wall_h(t_ctx *c, t_ray *ray)
 	int		computed_y;
 	int		x_factor;
 	int		y_factor;
-	double	tan_y;
+	double	tan_x;
 
-	tan_y = tan(ray->angle);
+	tan_x = tan(ray->angle);
 	computed_x = floor(ray->h_x / c->map.cell_size);
 	computed_y = floor(ray->h_y / c->map.cell_size);
 	printf("[%d, %d], player: (%d, %d) [%d, %d]\n", computed_x, computed_y, (int)c->player.x, (int)c->player.y, (int)floor(c->player.x / c->map.cell_size), (int)floor(c->player.y / c->map.cell_size));
@@ -53,8 +53,9 @@ void	find_wall_h(t_ctx *c, t_ray *ray)
 		&& c->map.raw[computed_y][computed_x] == '0'
 	)
 	{
-		ray->h_y += tan_y * c->map.cell_size * y_factor;
-		ray->h_x += c->map.cell_size * x_factor;
+		// ray->h_x += c->map.cell_size * x_factor;
+		ray->h_x += c->map.cell_size / tan_x * x_factor;
+		ray->h_y += c->map.cell_size * y_factor;
 		// printf("Rayon N°%d [%d,%d] -> ", ray->id, computed_x, computed_y);
 		if (ray->h_x * c->window.res < c->window.width
 			&& ray->h_y * c->window.res < c->window.height)
@@ -105,8 +106,8 @@ void	find_wall_v(t_ctx *c, t_ray *ray)
 		&& c->map.raw[computed_y][computed_x] == '0'
 	)
 	{
-		ray->v_x += tan_x * c->map.cell_size * x_factor;
-		ray->v_y += c->map.cell_size * y_factor;
+		ray->v_x += c->map.cell_size * x_factor;
+		ray->v_y += tan_x * c->map.cell_size * y_factor;
 		// printf("Rayon N°%d [%d,%d] -> ", ray->id, computed_x, computed_y);
 		if (ray->v_x * c->window.res < c->window.width
 			&& ray->v_y * c->window.res < c->window.height)
@@ -204,14 +205,14 @@ t_ray	cast_ray(t_ctx *c, double angle, int id)
 		(ray.h_y - 2) * c->window.res,
 		4,
 		4,
-		0x0000f0
+		0x00d0ff
 	});
 	draw_rect(c, (t_rect){
 		(ray.v_x - 2) * c->window.res,
 		(ray.v_y - 2) * c->window.res,
 		4,
 		4,
-		0x0000f5
+		0x0000ff
 	});
 	find_wall_h(c, &ray);
 	find_wall_v(c, &ray);
