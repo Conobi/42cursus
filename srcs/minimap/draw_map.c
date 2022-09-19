@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/08 17:24:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/19 20:02:38 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,17 @@ void	draw_rays(t_ctx *c, t_rmap rmap)
 	while (i < c->rays_num)
 	{
 		ray = rmap.rays[i];
-		// draw_line(c, (t_line){
-		// 	c->player.x * c->window.res + rmap.pos_x,
-		// 	c->player.y * c->window.res + rmap.pos_y,
-		// 	// ray.final_x * c->window.res + rmap.pos_x,
-		// 	// ray.final_y * c->window.res + rmap.pos_y,
-		// 	(c->player.x + cos(ray.angle) * ray.distance) * c->window.res,
-		// 	(c->player.y + sin(ray.angle) * ray.distance) * c->window.res,
-		// 	0x888800
-		// });
+		draw_line(c, (t_line){
+			c->player.x * c->window.res + rmap.pos_x,
+			c->player.y * c->window.res + rmap.pos_y,
+			(c->player.x + cos(ray.angle) * ray.distance) * c->window.res,
+			(c->player.y + sin(ray.angle) * ray.distance) * c->window.res,
+			0xFF6C34
+		});
 		i++;
 	}
 }
 
-// printf("drawing ray %d | angle -> %f | distance %f\n",
-// 	i, ray.angle, ray.distance);
-
-//todo: add t_rays
 void	draw_map(t_ctx *c, t_rmap rmap)
 {
 	int	x;
@@ -104,7 +98,6 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 			}
 			x++;
 		}
-		// printf("\n");
 		y++;
 	}
 	draw_line(c, (t_line){
@@ -121,6 +114,5 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 		c->player.size,
 		0x03f4fc
 	});
-	printf("Player: [%f, %f] et map: [%d, %d]\n", c->player.x, c->player.y, c->map.height, c->map.width);
 	draw_rays(c, rmap);
 }

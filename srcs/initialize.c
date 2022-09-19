@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/08 18:57:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/19 19:38:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	init_ctx(t_ctx *c)
 	c->player.size = 8;
 	c->player.fov = 60;
 	c->map.cell_size = 20;
-	c->rays_num = 8;
+	c->rays_num = 48;
 	c->target_speed = 2;
 	c->tick = 60;
 	init_map(c);
