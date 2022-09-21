@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:20:15 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/23 19:05:06 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/21 17:55:53 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief This function is used to find command bin file in PATH env variable
+ *
+ * @param c Minishell context struct
+ * @param exec_name Executable name to search
+ * @return char* Return the executable path
+ */
 static char	*find_by_path_env(t_ctx *c, const char *exec_name)
 {
 	t_env	*env_path;
@@ -46,8 +53,8 @@ static char	*find_by_path_env(t_ctx *c, const char *exec_name)
  * or given path for the given exec_name
  *
  * @param c Minishell context struct
- * @param exec_name executable name to search
- * @return char* Returns the executable path
+ * @param exec_name Executable name to search
+ * @return char* Return the executable path
  */
 char	*find_exec(t_ctx *c, const char *exec_name)
 {
@@ -73,6 +80,24 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 }
 
 /**
+ * @brief This function is used to close command fds (in, out and heredocs)
+ *
+ * @param c Minishell context struct
+ * @param curr Index of current command
+ * @param in Pointer to infile fd to close
+ * @param out Pointer to output fd to close
+ */
+void	close_fds(t_ctx *c, int curr, int *in, int *out)
+{
+	if (*in > 0)
+		close(*in);
+	if (*out > 1)
+		close(*out);
+	if (c->cmds[curr].heredoc > 0)
+		close(c->cmds[curr].heredoc);
+}
+
+/**
  * @brief This function is used to determine and set
  * input and output redirection for a command
  *
@@ -80,11 +105,15 @@ char	*find_exec(t_ctx *c, const char *exec_name)
  * @param curr Index of current command
  * @param in Pointer to infile fd to modify for input
  * @param out Pointer to output fd to modify for output
+ * @return Return true if no file errors, false if given file is errored
  */
-void	io_handler(t_ctx *c, int curr, int *in, int *out)
+bool	io_handler(t_ctx *c, int curr, int *in, int *out)
 {
-	infile_handler(c, curr);
-	outfile_handler(c, curr);
+	if (!infile_handler(c, curr))
+		return (false);
+	if (!outfile_handler(c, curr))
+		return (false);
 	in_selector(c, curr, in);
 	out_selector(c, curr, out);
+	return (true);
 }

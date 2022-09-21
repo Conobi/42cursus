@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:38:05 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/12 15:14:49 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/21 16:59:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,6 @@ static int	print_tk_err(t_ctx *c, char *token)
 	syntax_err(c, token);
 	return (0);
 }
-
-// static void	throw_heredoc_error(t_ctx *c, int i, int j)
-// {
-// 	if (
-// 		j < c->cmds[i].argc - 1
-// 		&& token_type(c->cmds[i].argv[j + 1]) > OTHR_TK
-// 	)
-// 			c->heredoc_errored = sf_add(
-// 				ft_strdup(c->cmds[i].argv[j + 1]), &c->gbc, CMD_GB);
-// 	else if (i < c->ncmds - 1)
-// 		c->heredoc_errored = sf_add(
-// 				ft_strdup("|"), &c->gbc, CMD_GB);
-// 	else
-// 		c->heredoc_errored = sf_add(
-// 				ft_strdup("newline"), &c->gbc, CMD_GB);
-// }
 
 static short	throw_redirection_error(t_ctx *c, int i, int j)
 {

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 15:00:16 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/21 16:59:08 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 	c->last_entry = NULL;
 	c->parser.squoted = -1;
 	c->parser.dquoted = -1;
-	c->heredoc_errored = NULL;
 }
 
 /**

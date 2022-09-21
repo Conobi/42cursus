@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/14 19:36:47 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/21 19:54:58 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 static void	exec_fork(t_ctx *c, int curr, int *in, int *out)
 {
 	if (set_exec_path(c, &c->cmds[curr]))
+	{
+		close_fds(c, curr, in, out);
+		close_pipes(c, c->ncmds * 2);
 		exit(g_return);
+	}
 	if (*in == -1 || *out == -1)
+	{
+		close_fds(c, curr, in, out);
+		close_pipes(c, c->ncmds * 2);
 		exit(1);
+	}
 	switch_pipes(*in, *out);
 	close_pipes(c, 2 * c->ncmds);
 	exit(execve(c->cmds[curr].exec_path,
@@ -38,23 +46,30 @@ static void	exec_child(t_ctx *c, int curr)
 	signal(SIGINT, fork_sig_handler);
 	signal(SIGQUIT, fork_sig_handler);
 	termios_set(c, 1);
-	io_handler(c, curr, &in, &out);
-	if (c->cmds[curr].argc < 1)
-		return ;
-	if (EDEBUG)
-		printf("in -> %d | out -> %d\n", in, out);
-	if (c->cmds[curr].is_builtins)
+	if (!io_handler(c, curr, &in, &out))
 	{
-		dup2(out, STDOUT_FILENO);
-		g_return = exec_builtin(c, c->cmds[curr]);
-		dup2(STDIN_FILENO, STDOUT_FILENO);
+		close_fds(c, curr, &in, &out);
 		return ;
 	}
-	c->exec->process[curr] = fork();
-	if (c->exec->process[curr] < 0)
-		return (perror("fork"));
-	if (c->exec->process[curr] == 0)
-		exec_fork(c, curr, &in, &out);
+	if (c->cmds[curr].argc >= 1)
+	{
+		if (c->cmds[curr].is_builtins)
+		{
+			dup2(out, STDOUT_FILENO);
+			g_return = exec_builtin(c, c->cmds[curr]);
+			dup2(STDIN_FILENO, STDOUT_FILENO);
+		}
+		else
+		{
+			c->exec->process[c->exec->curr_process] = fork();
+			if (c->exec->process[c->exec->curr_process] < 0)
+				return (perror("fork"));
+			if (c->exec->process[c->exec->curr_process] == 0)
+				exec_fork(c, curr, &in, &out);
+			c->exec->curr_process += 1;
+		}
+	}
+	close_fds(c, curr, &in, &out);
 }
 
 /**
@@ -62,7 +77,7 @@ static void	exec_child(t_ctx *c, int curr)
  * in table->pipe_fd
  * @param c Minishell context struct
  */
-static int	pipe_fd(t_ctx *c)
+static void	pipe_fd(t_ctx *c)
 {
 	int	i;
 
@@ -73,12 +88,11 @@ static int	pipe_fd(t_ctx *c)
 		if (pipe(c->exec->pipe_fd + 2 * i) < 0)
 		{
 			perror("pipe");
-			close_pipes(c, 2 * i);
-			return (1);
+			close_pipes(c, c->ncmds * 2);
+			exit_shell(c, 1, false);
 		}
 		i++;
 	}
-	return (0);
 }
 
 static void	wait_forks(t_ctx *c)
@@ -86,14 +100,15 @@ static void	wait_forks(t_ctx *c)
 	int	i;
 	int	status;
 
-	i = -1;
-	while (++i < c->ncmds)
+	i = 0;
+	while (i < c->ncmds)
 	{
-		if (c->cmds[i].argc > 0 && !is_builtin(c->cmds[i]))
+		if (i < c->exec->nprocess)
 		{
 			waitpid(c->exec->process[i], &status, 0);
 			child_status(status);
 		}
+		i++;
 	}
 }
 
@@ -107,18 +122,26 @@ void	exec(t_ctx *c)
 	int		i;
 
 	c->exec = sf_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
-	c->exec->process = sf_calloc(c->ncmds, sizeof(pid_t), CMD_GB, &c->gbc);
-	if (pipe_fd(c))
-		return ;
-	if (!open_heredocs(c))
-		return ;
+	c->exec->nprocess = c->ncmds;
 	i = 0;
 	while (i < c->ncmds)
 	{
-		if (is_builtin(c->cmds[i]))
+		if (c->cmds[i].argc > 0 && is_builtin(c->cmds[i]))
+		{
 			c->cmds[i].is_builtins = true;
-		exec_child(c, i++);
+			c->exec->nprocess -= 1;
+		}
+		i++;
 	}
+	c->exec->curr_process = 0;
+	c->exec->process = sf_calloc(c->exec->nprocess,
+			sizeof(pid_t), CMD_GB, &c->gbc);
+	if (!open_heredocs(c))
+		return ;
+	pipe_fd(c);
+	i = 0;
+	while (i < c->ncmds)
+		exec_child(c, i++);
 	close_pipes(c, 2 * c->ncmds);
 	wait_forks(c);
 	signal(SIGINT, sig_handler);

@@ -49,7 +49,8 @@ SRC			= minishell.c \
 			  executor/executor.c \
 			  executor/executor_utils.c \
 			  executor/executor_utils2.c \
-			  executor/files_handlers.c \
+			  executor/outfile_handler.c \
+			  executor/infile_handler.c \
 			  executor/heredoc.c \
 			  executor/heredoc_env.c \
 	 		  parsing/parser.c \

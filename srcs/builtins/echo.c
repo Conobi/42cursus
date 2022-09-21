@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/09 14:58:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/15 18:38:41 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	is_param(char *param)
+{
+	int	i;
+
+	i = 1;
+	if (ft_eq(param, "-n", 1))
+	{
+		while (param[i])
+		{
+			if (param[i] != 'n')
+				return (false);
+			i++;
+		}
+	}
+	else
+		return (false);
+	return (true);
+}
 
 /**
  * @brief This function is a clone of echo command for builtins
@@ -26,15 +45,14 @@ int	b_echo(t_ncommand cmd)
 		printf("\n");
 		return (0);
 	}
-	if (ft_eq(cmd.argv[1], "-n", 0))
+	if (is_param(cmd.argv[1]))
 	{
 		i = 1;
-		while (i != cmd.argc && ft_eq(cmd.argv[i], "-n", 0))
+		while (i != cmd.argc && is_param(cmd.argv[i]))
 			i++;
 		while (i < cmd.argc - 1)
 			printf("%s ", cmd.argv[i++]);
-		if (i != cmd.argc)
-			printf("%s", cmd.argv[i]);
+		printf("%s", cmd.argv[i]);
 	}
 	else
 	{

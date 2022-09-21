@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 15:27:18 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/21 17:57:43 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int			b_echo(t_ncommand cmd);
 int			b_ls(t_ctx *c, int cmd);
 int			b_exit(t_ctx *c, t_ncommand cmd);
 void		exit_shell(t_ctx *c, int code, int no_print);
-
 int			b_export(t_ctx *c, int argc, char **argv);
 void		set_list_entry(t_ctx *c, char *key,
 				char *value, bool unset);
@@ -143,11 +142,12 @@ void		termios_set(t_ctx *c, short mode);
 void		create_error(t_ctx *c, t_error err);
 
 // File handlers
-void		io_handler(t_ctx *c, int curr, int *in, int *out);
-void		outfile_handler(t_ctx *c, int curr_cmd);
-void		infile_handler(t_ctx *c, int curr_cmd);
+bool		io_handler(t_ctx *c, int curr, int *in, int *out);
+bool		outfile_handler(t_ctx *c, int curr_cmd);
+bool		infile_handler(t_ctx *c, int curr_cmd);
 void		in_selector(t_ctx *c, int curr, int *in);
 void		out_selector(t_ctx *c, int curr, int *out);
+void		close_fds(t_ctx *c, int curr, int *in, int *out);
 
 // Signal handlers
 void		fork_sig_handler(int sig);

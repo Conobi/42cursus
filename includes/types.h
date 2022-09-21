@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:18:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/14 18:39:30 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/21 16:59:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_ncommand {
 	int		infile;
 	int		heredoc;
 	bool	is_builtins;
+	bool	errored;
 }	t_ncommand;
 
 typedef struct s_parser {
@@ -42,7 +43,9 @@ typedef struct s_parser {
 }	t_parser;
 
 typedef struct s_exec {
+	int		nprocess;
 	pid_t	*process;
+	int		curr_process;
 	int		*pipe_fd;
 }	t_exec;
 
@@ -60,7 +63,6 @@ typedef struct s_ctx {
 	char				*weather_emoji;
 	char				*last_path;
 	char				*last_entry;
-	char				*heredoc_errored;
 	int					ncmds;
 	int					history_fd;
 }	t_ctx;

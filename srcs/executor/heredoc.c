@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/11 17:29:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/21 19:54:31 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ static int	exec_heredoc(t_ctx *c, int *fd, const char *stop)
 	{
 		line = sf_add(readline(">"), &c->gbc, CMD_GB);
 		if (!line)
-			exit(0);
+			break ;
 		if (ft_eq(line, stop, 0))
-			exit(0);
+			break ;
 		tmp = sf_add(ft_strjoin(line, "\n"), &c->gbc, CMD_GB);
 		tmp = heredoc_env_replace(c, tmp);
 		ft_putstr_fd(tmp, fd[1]);
 	}
+	close(fd[1]);
 	exit(0);
 }
 
@@ -62,7 +63,7 @@ int	create_heredoc(t_ctx *c, const char *stop)
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
-		return (1);
+		return (-2);
 	}
 	signal(SIGINT, fork_sig_handler);
 	signal(SIGQUIT, fork_heredoc_sig_handler);
@@ -70,6 +71,8 @@ int	create_heredoc(t_ctx *c, const char *stop)
 	if (pid == -1)
 	{
 		perror("fork");
+		close(fd[0]);
+		close(fd[1]);
 		return (-2);
 	}
 	if (pid == 0)
@@ -85,19 +88,24 @@ int	open_heredocs(t_ctx *c)
 {
 	int	i;
 	int	j;
+	int	fd_bak;
 	int	heredoc_fd;
 
 	i = -1;
 	heredoc_fd = 0;
+	fd_bak = 0;
 	while (++i < c->ncmds)
 	{
 		j = -1;
 		while (++j < c->cmds[i].redc)
 		{
+			if (fd_bak)
+				close(fd_bak);
 			if (c->cmds[i].redirections[j].type == HRDC_TK)
 				heredoc_fd = create_heredoc(c, c->cmds[i].redirections[j].arg);
 			if (heredoc_fd == -2)
 				return (0);
+			fd_bak = heredoc_fd;
 		}
 		c->cmds[i].heredoc = heredoc_fd;
 	}
