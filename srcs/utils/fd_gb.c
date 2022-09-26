@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   fd_gb.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/25 15:05:01 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/26 19:25:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_fdgbc *fdgb_init(void)
+t_fdgbc	*fdgb_init(void)
 {
-    t_fdgbc *new;
+	t_fdgbc	*new;
 
-    new = ft_calloc(1, sizeof(t_fdgbc));
+	new = ft_calloc(1, sizeof(t_fdgbc));
 	if (!new)
 		return (NULL);
 	new->fd = -1;
@@ -25,14 +25,12 @@ t_fdgbc *fdgb_init(void)
 	return (new);
 }
 
-int    fdgb_add(int fd, t_fdgbc **fdgbcl, const short type)
+int	fdgb_add(int fd, t_fdgbc **fdgbcl, const short type)
 {
-    t_fdgbc	*new;
+	t_fdgbc	*new;
 
-    if (fd < 0)
-    {
-        return (fd);
-    }
+	if (fd < 0)
+		return (fd);
 	new = ft_calloc(1, sizeof(t_fdgbc));
 	if (!new)
 		return (-1);
@@ -54,8 +52,8 @@ void	fdgb_close_all(t_fdgbc **fdgbcl)
 	while (curr)
 	{
 		prev = curr->next;
-        if (curr->fd > 1)
-            close(curr->fd);
+		if (curr->fd > 1)
+			close(curr->fd);
 		free(curr);
 		curr = prev;
 	}

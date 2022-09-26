@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/25 18:13:45 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/26 19:56:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int			open_heredocs(t_ctx *c);
 int			create_heredoc(t_ctx *c, const char *stop);
 char		*heredoc_env_replace(t_ctx *c, const char *str);
 void		child_status(int status);
+void		exec_fork(t_ctx *c, int curr, int *in, int *out);
 
 // Builtins
 bool		is_builtin(t_ncommand cmd);
@@ -148,7 +149,6 @@ bool		outfile_handler(t_ctx *c, int curr_cmd);
 bool		infile_handler(t_ctx *c, int curr_cmd);
 void		in_selector(t_ctx *c, int curr, int *in);
 void		out_selector(t_ctx *c, int curr, int *out);
-void		close_fds(t_ctx *c, int curr);
 
 // Signal handlers
 void		fork_sig_handler(int sig);
@@ -163,8 +163,8 @@ void		*sf_calloc(size_t count, size_t size,
 void		enomem_error(t_garbc **garbcl);
 
 // Fd garbage collector
-t_fdgbc 	*fdgb_init(void);
-int    		fdgb_add(int fd, t_fdgbc **fdgbcl, const short type);
+t_fdgbc		*fdgb_init(void);
+int			fdgb_add(int fd, t_fdgbc **fdgbcl, const short type);
 void		fdgb_close_all(t_fdgbc **fdgbcl);
 void		fdgb_close(t_fdgbc **fdgbcl, const short type);
 

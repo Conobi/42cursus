@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:20:15 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/25 18:14:11 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/26 19:57:05 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,6 @@ char	*find_exec(t_ctx *c, const char *exec_name)
 }
 
 /**
- * @brief This function is used to close command fds (in, out and heredocs)
- *
- * @param c Minishell context struct
- * @param curr Index of current command
- * @param in Pointer to infile fd to close
- * @param out Pointer to output fd to close
- */
-void	close_fds(t_ctx *c, int curr)
-{
-	fdgb_close(&c->fdgbc, CMD_GB);
-	if (c->cmds[curr].heredoc > 0)
-		close(c->cmds[curr].heredoc);
-}
-
-/**
  * @brief This function is used to determine and set
  * input and output redirection for a command
  *
@@ -113,4 +98,18 @@ bool	io_handler(t_ctx *c, int curr, int *in, int *out)
 	in_selector(c, curr, in);
 	out_selector(c, curr, out);
 	return (true);
+}
+
+void	exec_fork(t_ctx *c, int curr, int *in, int *out)
+{
+	if (set_exec_path(c, &c->cmds[curr]))
+	{
+		fdgb_close(&c->fdgbc, CMD_GB);
+		close_pipes(c, c->ncmds * 2);
+		exit(g_return);
+	}
+	switch_pipes(*in, *out);
+	close_pipes(c, 2 * c->ncmds);
+	exit(execve(c->cmds[curr].exec_path,
+			c->cmds[curr].argv, convert_env(c)));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/25 18:26:57 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/26 19:33:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ int	open_heredocs(t_ctx *c)
 		while (++j < c->cmds[i].redc)
 		{
 			if (c->cmds[i].redirections[j].type == HRDC_TK)
-				heredoc_fd = fdgb_add(create_heredoc(c, c->cmds[i].redirections[j].arg),
-				&c->fdgbc, HEREDOCS_GB);
+				heredoc_fd = fdgb_add(
+						create_heredoc(c, c->cmds[i].redirections[j].arg),
+						&c->fdgbc, HEREDOCS_GB);
 			if (heredoc_fd == -2)
 				return (0);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/15 18:38:41 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/26 19:36:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,21 @@ static bool	is_param(char *param)
 	return (true);
 }
 
+static void	param_handler(t_ncommand cmd)
+{
+	int	i;
+
+	i = 1;
+	while (i != cmd.argc && is_param(cmd.argv[i]))
+		i++;
+	if (i != cmd.argc)
+	{
+		while (i < cmd.argc - 1)
+			printf("%s ", cmd.argv[i++]);
+		printf("%s", cmd.argv[i]);
+	}
+}
+
 /**
  * @brief This function is a clone of echo command for builtins
  *
@@ -46,14 +61,7 @@ int	b_echo(t_ncommand cmd)
 		return (0);
 	}
 	if (is_param(cmd.argv[1]))
-	{
-		i = 1;
-		while (i != cmd.argc && is_param(cmd.argv[i]))
-			i++;
-		while (i < cmd.argc - 1)
-			printf("%s ", cmd.argv[i++]);
-		printf("%s", cmd.argv[i]);
-	}
+		param_handler(cmd);
 	else
 	{
 		i = 0;

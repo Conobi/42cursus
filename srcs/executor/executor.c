@@ -3,27 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/25 18:15:26 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/26 19:56:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_fork(t_ctx *c, int curr, int *in, int *out)
+static void	exec_handler(t_ctx *c, int curr, int *in, int *out)
 {
-	if (set_exec_path(c, &c->cmds[curr]))
+	if (c->cmds[curr].is_builtins)
 	{
-		close_fds(c, curr);
-		close_pipes(c, c->ncmds * 2);
-		exit(g_return);
+		dup2(*out, STDOUT_FILENO);
+		g_return = exec_builtin(c, c->cmds[curr]);
+		dup2(STDIN_FILENO, STDOUT_FILENO);
 	}
-	switch_pipes(*in, *out);
-	close_pipes(c, 2 * c->ncmds);
-	exit(execve(c->cmds[curr].exec_path,
-			c->cmds[curr].argv, convert_env(c)));
+	else
+	{
+		c->exec->process[c->exec->curr_process] = fork();
+		if (c->exec->process[c->exec->curr_process] < 0)
+			return (perror("fork"));
+		if (c->exec->process[c->exec->curr_process] == 0)
+			exec_fork(c, curr, in, out);
+		c->exec->curr_process += 1;
+	}
 }
 
 /**
@@ -42,29 +47,13 @@ static void	exec_child(t_ctx *c, int curr)
 	termios_set(c, 1);
 	if (!io_handler(c, curr, &in, &out))
 	{
-		close_fds(c, curr);
+		fdgb_close(&c->fdgbc, CMD_GB);
 		c->cmds[curr].errored = true;
 		return ;
 	}
 	if (c->cmds[curr].argc >= 1)
-	{
-		if (c->cmds[curr].is_builtins)
-		{
-			dup2(out, STDOUT_FILENO);
-			g_return = exec_builtin(c, c->cmds[curr]);
-			dup2(STDIN_FILENO, STDOUT_FILENO);
-		}
-		else
-		{
-			c->exec->process[c->exec->curr_process] = fork();
-			if (c->exec->process[c->exec->curr_process] < 0)
-				return (perror("fork"));
-			if (c->exec->process[c->exec->curr_process] == 0)
-				exec_fork(c, curr, &in, &out);
-			c->exec->curr_process += 1;
-		}
-	}
-	close_fds(c, curr);
+		exec_handler(c, curr, &in, &out);
+	fdgb_close(&c->fdgbc, CMD_GB);
 }
 
 /**
@@ -96,15 +85,17 @@ static void	wait_forks(t_ctx *c)
 	int	status;
 
 	i = 0;
-	while (i < c->exec->nprocess)
+	if (c->cmds[c->ncmds - 1].argc > 0 && !is_builtin(c->cmds[c->ncmds - 1]))
 	{
-		if (!c->cmds[i].errored)
+		while (i < c->ncmds)
 		{
 			waitpid(c->exec->process[i], &status, 0);
 			child_status(status);
+			i++;
 		}
-		i++;
 	}
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 }
 
 /**
@@ -117,16 +108,15 @@ void	exec(t_ctx *c)
 	int		i;
 
 	c->exec = sf_calloc(1, sizeof(t_exec), CMD_GB, &c->gbc);
-	c->exec->nprocess = c->ncmds;
-	i = 0;
-	while (i < c->ncmds)
+	c->exec->nprocess = 0;
+	i = -1;
+	while (++i < c->ncmds)
 	{
-		if (c->cmds[i].argc > 0 && is_builtin(c->cmds[i]))
+		if (c->cmds[i].argc > 0 && !is_builtin(c->cmds[i]))
 		{
-			c->cmds[i].is_builtins = true;
-			c->exec->nprocess -= 1;
+			c->cmds[i].is_builtins = false;
+			c->exec->nprocess++;
 		}
-		i++;
 	}
 	c->exec->curr_process = 0;
 	c->exec->process = sf_calloc(c->exec->nprocess,
@@ -140,6 +130,4 @@ void	exec(t_ctx *c)
 	close_pipes(c, 2 * c->ncmds);
 	fdgb_close(&c->fdgbc, HEREDOCS_GB);
 	wait_forks(c);
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
 }

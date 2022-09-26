@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:42:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/26 16:27:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/26 17:19:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_ncommand	cmd_create(t_ctx *c, char **split)
 	cmd.redc = t.j + 1;
 	cmd.argc = t.k + 1;
 	cmd.exec_path = NULL;
-	cmd.is_builtins = false;
+	cmd.is_builtins = true;
 	cmd.errored = false;
 	gb_delete(&c->gbc, REDIR_GB);
 	return (cmd);
