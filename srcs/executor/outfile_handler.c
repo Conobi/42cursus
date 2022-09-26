@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:06:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 18:07:31 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 14:54:41 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ static bool	out_open(t_ctx *c, int curr_cmd, int i)
 {
 	if (c->cmds[curr_cmd].redirections[i].type == APPD_TK)
 	{
-		c->cmds[curr_cmd].outfile = open(
+		c->cmds[curr_cmd].outfile = fdgb_add(open(
 				c->cmds[curr_cmd].redirections[i].arg,
-				O_CREAT | O_RDWR | O_APPEND, 0000644);
+				O_CREAT | O_RDWR | O_APPEND, 0000644),
+				&c->fdgbc, CMD_GB);
 		if (c->cmds[curr_cmd].outfile < 0)
 		{
 			file_errors(c, (t_error){FILE_ERR, SHELL_NAME,
@@ -37,9 +38,10 @@ static bool	out_open(t_ctx *c, int curr_cmd, int i)
 	}
 	else if (c->cmds[curr_cmd].redirections[i].type == OUT_TK)
 	{
-		c->cmds[curr_cmd].outfile = open(
+		c->cmds[curr_cmd].outfile = fdgb_add(open(
 				c->cmds[curr_cmd].redirections[i].arg,
-				O_CREAT | O_RDWR | O_TRUNC, 0000644);
+				O_CREAT | O_RDWR | O_TRUNC, 0000644),
+				&c->fdgbc, CMD_GB);
 		if (c->cmds[curr_cmd].outfile < 0)
 		{
 			file_errors(c, (t_error){FILE_ERR, SHELL_NAME,

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:20:15 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 17:55:53 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 18:14:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,9 @@ char	*find_exec(t_ctx *c, const char *exec_name)
  * @param in Pointer to infile fd to close
  * @param out Pointer to output fd to close
  */
-void	close_fds(t_ctx *c, int curr, int *in, int *out)
+void	close_fds(t_ctx *c, int curr)
 {
-	if (*in > 0)
-		close(*in);
-	if (*out > 1)
-		close(*out);
+	fdgb_close(&c->fdgbc, CMD_GB);
 	if (c->cmds[curr].heredoc > 0)
 		close(c->cmds[curr].heredoc);
 }

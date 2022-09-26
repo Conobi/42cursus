@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 19:06:17 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/23 18:35:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 14:55:52 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	exit_shell(t_ctx *c, int code, int no_print)
 {
 	if (!no_print)
 		printf("exit\n");
-	close(c->history_fd);
 	gb_clear(&c->gbc);
+	fdgb_close_all(&c->fdgbc);
 	exit(code);
 }

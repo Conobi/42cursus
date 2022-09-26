@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 17:57:43 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 18:13:45 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,24 @@
 # define HRDC_TK	4
 
 // GARBAGE TYPE
-# define PERM_GB	0
-# define CMD_GB		1
-# define ENTRY_GB	2
-# define PIPE_GB	3
-# define QUOTE_GB	4
-# define REDIR_GB	5
-# define HISTR_GB	6
-# define CMD1P_GB	7
-# define CMD2P_GB	8
-# define CMD3P_GB	9
-# define CMD4P_GB	10
-# define EXPT_PT_GB	11
+# define PERM_GB		0
+# define CMD_GB			1
+# define ENTRY_GB		2
+# define PIPE_GB		3
+# define QUOTE_GB		4
+# define REDIR_GB		5
+# define HISTR_GB		6
+# define CMD1P_GB		7
+# define CMD2P_GB		8
+# define CMD3P_GB		9
+# define CMD4P_GB		10
+# define EXPT_PT_GB		11
+# define HEREDOCS_GB	12
 
 // Errors
-# define FILE_ERR 	1
-# define ERROR		2
-# define WARNING	3
+# define FILE_ERR 		1
+# define ERROR			2
+# define WARNING		3
 
 extern int	g_return;
 
@@ -147,7 +148,7 @@ bool		outfile_handler(t_ctx *c, int curr_cmd);
 bool		infile_handler(t_ctx *c, int curr_cmd);
 void		in_selector(t_ctx *c, int curr, int *in);
 void		out_selector(t_ctx *c, int curr, int *out);
-void		close_fds(t_ctx *c, int curr, int *in, int *out);
+void		close_fds(t_ctx *c, int curr);
 
 // Signal handlers
 void		fork_sig_handler(int sig);
@@ -160,5 +161,11 @@ void		*sf_add(void *ptr, t_garbc **garbcl, const short type);
 void		*sf_calloc(size_t count, size_t size,
 				const short type, t_garbc **last);
 void		enomem_error(t_garbc **garbcl);
+
+// Fd garbage collector
+t_fdgbc 	*fdgb_init(void);
+int    		fdgb_add(int fd, t_fdgbc **fdgbcl, const short type);
+void		fdgb_close_all(t_fdgbc **fdgbcl);
+void		fdgb_close(t_fdgbc **fdgbcl, const short type);
 
 #endif

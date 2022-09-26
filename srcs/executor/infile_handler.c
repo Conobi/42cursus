@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:07:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 18:08:03 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 14:54:26 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ bool	in_open(t_ctx *c, int curr_cmd, int i)
 		c->cmds[curr_cmd].infile = c->cmds[curr_cmd].heredoc;
 	if (c->cmds[curr_cmd].redirections[i].type == IN_TK)
 	{
-		c->cmds[curr_cmd].infile = open(
-				c->cmds[curr_cmd].redirections[i].arg, O_RDONLY);
+		c->cmds[curr_cmd].infile = fdgb_add(open(
+				c->cmds[curr_cmd].redirections[i].arg, O_RDONLY),
+				&c->fdgbc, CMD_GB);
 		if (c->cmds[curr_cmd].infile < 0)
 		{
 			file_errors(c, (t_error){FILE_ERR, SHELL_NAME,

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/08/12 14:25:08 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 17:41:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,4 @@ void	child_status(int status)
 		if (g_return != 131)
 			g_return += 128;
 	}
-	if (EDEBUG)
-		printf("status = %d\n", g_return);
 }

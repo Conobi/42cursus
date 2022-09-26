@@ -6,16 +6,17 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 19:54:31 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 18:26:57 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	exit_heredoc(int pid, int *fd)
+static int	exit_heredoc(t_ctx *c, int pid, int *fd)
 {
 	int		status;
 
+	(void)c;
 	waitpid(pid, &status, 0);
 	child_status(status);
 	signal(SIGINT, fork_sig_handler);
@@ -59,7 +60,6 @@ int	create_heredoc(t_ctx *c, const char *stop)
 	pid_t	pid;
 	int		fd[2];
 
-	(void)c;
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
@@ -81,31 +81,27 @@ int	create_heredoc(t_ctx *c, const char *stop)
 		signal(SIGQUIT, heredoc_sig_handler);
 		exec_heredoc(c, fd, stop);
 	}
-	return (exit_heredoc(pid, fd));
+	return (exit_heredoc(c, pid, fd));
 }
 
 int	open_heredocs(t_ctx *c)
 {
 	int	i;
 	int	j;
-	int	fd_bak;
 	int	heredoc_fd;
 
 	i = -1;
 	heredoc_fd = 0;
-	fd_bak = 0;
 	while (++i < c->ncmds)
 	{
 		j = -1;
 		while (++j < c->cmds[i].redc)
 		{
-			if (fd_bak)
-				close(fd_bak);
 			if (c->cmds[i].redirections[j].type == HRDC_TK)
-				heredoc_fd = create_heredoc(c, c->cmds[i].redirections[j].arg);
+				heredoc_fd = fdgb_add(create_heredoc(c, c->cmds[i].redirections[j].arg),
+				&c->fdgbc, HEREDOCS_GB);
 			if (heredoc_fd == -2)
 				return (0);
-			fd_bak = heredoc_fd;
 		}
 		c->cmds[i].heredoc = heredoc_fd;
 	}

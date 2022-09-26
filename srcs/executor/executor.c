@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 19:54:58 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 18:15:26 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,9 @@ static void	exec_fork(t_ctx *c, int curr, int *in, int *out)
 {
 	if (set_exec_path(c, &c->cmds[curr]))
 	{
-		close_fds(c, curr, in, out);
+		close_fds(c, curr);
 		close_pipes(c, c->ncmds * 2);
 		exit(g_return);
-	}
-	if (*in == -1 || *out == -1)
-	{
-		close_fds(c, curr, in, out);
-		close_pipes(c, c->ncmds * 2);
-		exit(1);
 	}
 	switch_pipes(*in, *out);
 	close_pipes(c, 2 * c->ncmds);
@@ -48,7 +42,8 @@ static void	exec_child(t_ctx *c, int curr)
 	termios_set(c, 1);
 	if (!io_handler(c, curr, &in, &out))
 	{
-		close_fds(c, curr, &in, &out);
+		close_fds(c, curr);
+		c->cmds[curr].errored = true;
 		return ;
 	}
 	if (c->cmds[curr].argc >= 1)
@@ -69,7 +64,7 @@ static void	exec_child(t_ctx *c, int curr)
 			c->exec->curr_process += 1;
 		}
 	}
-	close_fds(c, curr, &in, &out);
+	close_fds(c, curr);
 }
 
 /**
@@ -101,9 +96,9 @@ static void	wait_forks(t_ctx *c)
 	int	status;
 
 	i = 0;
-	while (i < c->ncmds)
+	while (i < c->exec->nprocess)
 	{
-		if (i < c->exec->nprocess)
+		if (!c->cmds[i].errored)
 		{
 			waitpid(c->exec->process[i], &status, 0);
 			child_status(status);
@@ -143,6 +138,7 @@ void	exec(t_ctx *c)
 	while (i < c->ncmds)
 		exec_child(c, i++);
 	close_pipes(c, 2 * c->ncmds);
+	fdgb_close(&c->fdgbc, HEREDOCS_GB);
 	wait_forks(c);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);

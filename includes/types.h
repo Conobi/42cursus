@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:18:18 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 16:59:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 18:11:13 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,19 @@ typedef struct s_exec {
 	int		*pipe_fd;
 }	t_exec;
 
+typedef struct s_fdgbc
+{
+	int				fd;
+	int				type;
+	struct s_fdgbc	*next;
+}	t_fdgbc;
+
 typedef struct s_ctx {
 	struct s_ncommand	*cmds;
 	struct termios		term;
 	struct termios		base;
 	t_garbc				*gbc;
+	t_fdgbc				*fdgbc;
 	t_list				*env;
 	t_parser			parser;
 	t_exec				*exec;

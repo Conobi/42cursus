@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:59:50 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/21 16:59:08 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/25 14:47:06 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	ctx_init(t_ctx *c, char **env, int argc, char **argv)
 
 	g_return = 0;
 	c->gbc = gb_init();
+	c->fdgbc = fdgb_init();
 	if (!c->gbc)
 		create_error(c, (t_error){ERROR, SHELL_NAME, strerror(ENOMEM),
 			NULL, ENOMEM, false});

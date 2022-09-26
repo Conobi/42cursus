@@ -77,6 +77,8 @@ SRC			= minishell.c \
 			  builtins/builtins_manager.c \
 			  utils/prompt_misc.c \
 			  utils/safe_memory.c \
+			  utils/fd_gb.c \
+			  utils/fd_gb_close.c \
 			  utils/managers/path_manager.c \
 			  utils/managers/errors_manager.c \
 			  utils/managers/history_manager.c \
