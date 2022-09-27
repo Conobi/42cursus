@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/26 19:56:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 17:22:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ static void	exec_handler(t_ctx *c, int curr, int *in, int *out)
 {
 	if (c->cmds[curr].is_builtins)
 	{
+		if (*in < 0 || *out < 0)
+		{
+			fdgb_close(&c->fdgbc, CMD_GB);
+			close_pipes(c, c->ncmds * 2);
+			g_return = 1;
+			return ;
+		}
 		dup2(*out, STDOUT_FILENO);
 		g_return = exec_builtin(c, c->cmds[curr]);
 		dup2(STDIN_FILENO, STDOUT_FILENO);
@@ -45,12 +52,7 @@ static void	exec_child(t_ctx *c, int curr)
 	signal(SIGINT, fork_sig_handler);
 	signal(SIGQUIT, fork_sig_handler);
 	termios_set(c, 1);
-	if (!io_handler(c, curr, &in, &out))
-	{
-		fdgb_close(&c->fdgbc, CMD_GB);
-		c->cmds[curr].errored = true;
-		return ;
-	}
+	io_handler(c, curr, &in, &out);
 	if (c->cmds[curr].argc >= 1)
 		exec_handler(c, curr, &in, &out);
 	fdgb_close(&c->fdgbc, CMD_GB);
@@ -82,15 +84,20 @@ static void	pipe_fd(t_ctx *c)
 static void	wait_forks(t_ctx *c)
 {
 	int	i;
+	int	j;
 	int	status;
 
 	i = 0;
 	if (c->cmds[c->ncmds - 1].argc > 0 && !is_builtin(c->cmds[c->ncmds - 1]))
 	{
+		j = 0;
 		while (i < c->ncmds)
 		{
-			waitpid(c->exec->process[i], &status, 0);
-			child_status(status);
+			if (!is_builtin(c->cmds[i]))
+			{
+				waitpid(c->exec->process[j++], &status, 0);
+				child_status(status);
+			}
 			i++;
 		}
 	}

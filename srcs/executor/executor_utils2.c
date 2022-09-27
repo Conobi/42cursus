@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:20:15 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/26 19:57:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 15:27:43 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,13 @@ char	*find_exec(t_ctx *c, const char *exec_name)
  * @param curr Index of current command
  * @param in Pointer to infile fd to modify for input
  * @param out Pointer to output fd to modify for output
- * @return Return true if no file errors, false if given file is errored
  */
-bool	io_handler(t_ctx *c, int curr, int *in, int *out)
+void	io_handler(t_ctx *c, int curr, int *in, int *out)
 {
-	if (!infile_handler(c, curr))
-		return (false);
-	if (!outfile_handler(c, curr))
-		return (false);
+	infile_handler(c, curr);
+	outfile_handler(c, curr);
 	in_selector(c, curr, in);
 	out_selector(c, curr, out);
-	return (true);
 }
 
 void	exec_fork(t_ctx *c, int curr, int *in, int *out)
@@ -107,6 +103,12 @@ void	exec_fork(t_ctx *c, int curr, int *in, int *out)
 		fdgb_close(&c->fdgbc, CMD_GB);
 		close_pipes(c, c->ncmds * 2);
 		exit(g_return);
+	}
+	if (*in < 0 || *out < 0)
+	{
+		fdgb_close(&c->fdgbc, CMD_GB);
+		close_pipes(c, c->ncmds * 2);
+		exit(1);
 	}
 	switch_pipes(*in, *out);
 	close_pipes(c, 2 * c->ncmds);

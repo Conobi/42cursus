@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:57:41 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/26 19:56:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 13:42:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,9 @@ void		termios_set(t_ctx *c, short mode);
 void		create_error(t_ctx *c, t_error err);
 
 // File handlers
-bool		io_handler(t_ctx *c, int curr, int *in, int *out);
-bool		outfile_handler(t_ctx *c, int curr_cmd);
-bool		infile_handler(t_ctx *c, int curr_cmd);
+void		io_handler(t_ctx *c, int curr, int *in, int *out);
+void		outfile_handler(t_ctx *c, int curr_cmd);
+void		infile_handler(t_ctx *c, int curr_cmd);
 void		in_selector(t_ctx *c, int curr, int *in);
 void		out_selector(t_ctx *c, int curr, int *out);
 

@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:06:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/26 19:53:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 13:51:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	out_open_appd(t_ctx *c, int curr_cmd, int i)
+static void	out_open_appd(t_ctx *c, int curr_cmd, int i)
 {
 	c->cmds[curr_cmd].outfile = fdgb_add(open(
 				c->cmds[curr_cmd].redirections[i].arg,
@@ -22,12 +22,10 @@ static bool	out_open_appd(t_ctx *c, int curr_cmd, int i)
 	{
 		file_errors(c, (t_error){FILE_ERR, SHELL_NAME,
 			NULL, c->cmds[curr_cmd].redirections[i].arg, 1, true});
-		return (false);
 	}
-	return (true);
 }
 
-static bool	out_open_out(t_ctx *c, int curr_cmd, int i)
+static void	out_open_out(t_ctx *c, int curr_cmd, int i)
 {
 	c->cmds[curr_cmd].outfile = fdgb_add(open(
 				c->cmds[curr_cmd].redirections[i].arg,
@@ -37,9 +35,7 @@ static bool	out_open_out(t_ctx *c, int curr_cmd, int i)
 	{
 		file_errors(c, (t_error){FILE_ERR, SHELL_NAME,
 			NULL, c->cmds[curr_cmd].redirections[i].arg, 1, true});
-		return (false);
 	}
-	return (true);
 }
 
 /**
@@ -48,7 +44,7 @@ static bool	out_open_out(t_ctx *c, int curr_cmd, int i)
  * @param c Minshell context struct
  * @param curr_cmd Index of current command
  */
-bool	outfile_handler(t_ctx *c, int curr_cmd)
+void	outfile_handler(t_ctx *c, int curr_cmd)
 {
 	int	i;
 
@@ -56,7 +52,7 @@ bool	outfile_handler(t_ctx *c, int curr_cmd)
 	if (c->cmds[curr_cmd].redc == 0)
 	{
 		c->cmds[curr_cmd].outfile = 1;
-		return (true);
+		return ;
 	}
 	i = 0;
 	while (i < c->cmds[curr_cmd].redc)
@@ -67,7 +63,6 @@ bool	outfile_handler(t_ctx *c, int curr_cmd)
 			return (out_open_out(c, curr_cmd, i));
 		i++;
 	}
-	return (true);
 }
 
 /**
