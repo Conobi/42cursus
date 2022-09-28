@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/27 17:22:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 18:11:55 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	exec_handler(t_ctx *c, int curr, int *in, int *out)
 {
+	printf("%s in %d out %d\n", c->cmds[curr].argv[0], *in, *out);
 	if (c->cmds[curr].is_builtins)
 	{
 		if (*in < 0 || *out < 0)
@@ -88,15 +89,16 @@ static void	wait_forks(t_ctx *c)
 	int	status;
 
 	i = 0;
-	if (c->cmds[c->ncmds - 1].argc > 0 && !is_builtin(c->cmds[c->ncmds - 1]))
+	if (c->cmds[c->ncmds - 1].argc > 0)
 	{
 		j = 0;
 		while (i < c->ncmds)
 		{
-			if (!is_builtin(c->cmds[i]))
+			if (!c->cmds[i].is_builtins)
 			{
 				waitpid(c->exec->process[j++], &status, 0);
-				child_status(status);
+				if (!c->cmds[c->ncmds - 1].is_builtins)
+					child_status(status);
 			}
 			i++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:55:49 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/27 12:30:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 16:16:56 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	switch_pipes(int in, int out)
 int	set_exec_path(t_ctx *c, t_ncommand *cmd)
 {
 	cmd->exec_path = find_exec(c, cmd->argv[0]);
-	if (!cmd->exec_path && !is_builtin(*cmd))
+	if (!cmd->exec_path && !cmd->is_builtins)
 		return (1);
 	return (0);
 }

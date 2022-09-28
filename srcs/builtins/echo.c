@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 23:12:26 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/26 19:36:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 18:30:02 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,18 @@ static void	param_handler(t_ncommand cmd)
 	if (i != cmd.argc)
 	{
 		while (i < cmd.argc - 1)
-			printf("%s ", cmd.argv[i++]);
-		printf("%s", cmd.argv[i]);
+		{
+			ft_putstr_fd(cmd.argv[i++], 1);
+			ft_putchar_fd(' ', 1);
+		}
+		ft_putstr_fd(cmd.argv[i], 1);
 	}
 }
 
 /**
  * @brief This function is a clone of echo command for builtins
  *
- * @param args Text to print, first args can be -n
+ * @param cmd Command struct
  */
 int	b_echo(t_ncommand cmd)
 {
@@ -57,7 +60,7 @@ int	b_echo(t_ncommand cmd)
 
 	if (cmd.argc < 2)
 	{
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 		return (0);
 	}
 	if (is_param(cmd.argv[1]))
@@ -66,8 +69,12 @@ int	b_echo(t_ncommand cmd)
 	{
 		i = 0;
 		while (++i < cmd.argc - 1)
-			printf("%s ", cmd.argv[i]);
-		printf("%s\n", cmd.argv[i]);
+		{
+			ft_putstr_fd(cmd.argv[i], 1);
+			ft_putchar_fd(' ', 1);
+		}
+		ft_putstr_fd(cmd.argv[i], 1);
+		ft_putchar_fd('\n', 1);
 	}
 	return (0);
 }

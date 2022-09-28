@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   outfile_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:06:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/27 13:51:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 17:59:34 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	out_open_appd(t_ctx *c, int curr_cmd, int i)
+static bool	out_open_appd(t_ctx *c, int curr_cmd, int i)
 {
 	c->cmds[curr_cmd].outfile = fdgb_add(open(
 				c->cmds[curr_cmd].redirections[i].arg,
@@ -22,10 +22,12 @@ static void	out_open_appd(t_ctx *c, int curr_cmd, int i)
 	{
 		file_errors(c, (t_error){FILE_ERR, SHELL_NAME,
 			NULL, c->cmds[curr_cmd].redirections[i].arg, 1, true});
+		return (false);
 	}
+	return (true);
 }
 
-static void	out_open_out(t_ctx *c, int curr_cmd, int i)
+static bool	out_open_out(t_ctx *c, int curr_cmd, int i)
 {
 	c->cmds[curr_cmd].outfile = fdgb_add(open(
 				c->cmds[curr_cmd].redirections[i].arg,
@@ -35,7 +37,9 @@ static void	out_open_out(t_ctx *c, int curr_cmd, int i)
 	{
 		file_errors(c, (t_error){FILE_ERR, SHELL_NAME,
 			NULL, c->cmds[curr_cmd].redirections[i].arg, 1, true});
+		return (false);
 	}
+	return (true);
 }
 
 /**
@@ -49,18 +53,19 @@ void	outfile_handler(t_ctx *c, int curr_cmd)
 	int	i;
 
 	c->cmds[curr_cmd].outfile = -2;
-	if (c->cmds[curr_cmd].redc == 0)
-	{
+	if (c->cmds[curr_cmd].redc >= 0)
 		c->cmds[curr_cmd].outfile = 1;
-		return ;
-	}
 	i = 0;
 	while (i < c->cmds[curr_cmd].redc)
 	{
 		if (c->cmds[curr_cmd].redirections[i].type == APPD_TK)
-			return (out_open_appd(c, curr_cmd, i));
+		{
+			if (!out_open_appd(c, curr_cmd, i))
+				break ;
+		}
 		else if (c->cmds[curr_cmd].redirections[i].type == OUT_TK)
-			return (out_open_out(c, curr_cmd, i));
+			if (!out_open_out(c, curr_cmd, i))
+				break ;
 		i++;
 	}
 }

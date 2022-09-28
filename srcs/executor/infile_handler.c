@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   infile_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 18:07:51 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/27 13:46:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 16:41:57 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	in_open(t_ctx *c, int curr_cmd, int i)
+static bool	in_open(t_ctx *c, int curr_cmd, int i)
 {
 	if (c->cmds[curr_cmd].redirections[i].type == HRDC_TK)
 		c->cmds[curr_cmd].infile = c->cmds[curr_cmd].heredoc;
-	if (c->cmds[curr_cmd].redirections[i].type == IN_TK)
+	else if (c->cmds[curr_cmd].redirections[i].type == IN_TK)
 	{
 		c->cmds[curr_cmd].infile = fdgb_add(open(
 					c->cmds[curr_cmd].redirections[i].arg, O_RDONLY),
@@ -25,8 +25,10 @@ void	in_open(t_ctx *c, int curr_cmd, int i)
 		{
 			file_errors(c, (t_error){FILE_ERR, SHELL_NAME,
 				NULL, c->cmds[curr_cmd].redirections[i].arg, 1, true});
+			return (false);
 		}
 	}
+	return (true);
 }
 
 /**
@@ -48,7 +50,8 @@ void	infile_handler(t_ctx *c, int curr_cmd)
 	i = 0;
 	while (i < c->cmds[curr_cmd].redc)
 	{
-		in_open(c, curr_cmd, i);
+		if (!in_open(c, curr_cmd, i))
+			break ;
 		i++;
 	}
 }
