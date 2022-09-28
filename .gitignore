@@ -15,3 +15,5 @@ build
 .minishell_history
 Dockerfile
 build_docker.sh
+srcs/parsing/parser
+srcs/parsing/map
