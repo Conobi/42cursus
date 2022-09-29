@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:47:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/28 20:04:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 02:13:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,23 @@
 
 void	parse_texture(t_parser *parser_ctx, char *str)
 {
+	parser_ctx->debug += 0;
+	str += 0;
 	return ;
 }
 
 void	parse_color(t_parser *parser_ctx, char *str)
 {
+	parser_ctx->debug += 0;
+	str += 0;
 	return ;
 }
 
 void	parse_ascii_map(t_parser *parser_ctx, char **file, int line)
 {
+	parser_ctx->debug += 0;
+	file += 0;
+	line += 0;
 	return ;
 }
 
@@ -70,5 +77,4 @@ int	main(int argc, char **argv)
 	else
 		printf("---\nMAP MEH\n");
 	free(map_splited);
-
 }

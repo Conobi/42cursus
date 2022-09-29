@@ -6,7 +6,10 @@ INC		=	parser.h
 INCDIR	=	.
 INCS	=	$(addprefix $(INCDIR)/,$(INC))
 
-SRC		=	parser.c
+SRC		=	parser.c \
+			char_split.c \
+			checkers.c \
+			utils.c
 SDIR	=	.
 SRCS	=	$(addprefix $(SDIR)/,$(SRC))
 
@@ -15,7 +18,7 @@ OBJS 	= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -I parser.h -I ../../libft
+CFLAGS = -Wall -Wextra -Werror -g3 -I ../parser -I ../../libft
 
 all : libft $(NAME)
 
