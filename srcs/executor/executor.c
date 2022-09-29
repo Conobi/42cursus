@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:56:06 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/28 18:11:55 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 13:12:59 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	exec_handler(t_ctx *c, int curr, int *in, int *out)
 {
-	printf("%s in %d out %d\n", c->cmds[curr].argv[0], *in, *out);
 	if (c->cmds[curr].is_builtins)
 	{
 		if (*in < 0 || *out < 0)
