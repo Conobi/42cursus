@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 01:14:24 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/29 02:18:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 11:56:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ char	**char_split(char *str, char *charset)
 	int		words;
 
 	words = wordcount(str, charset);
+	index = 0;
 	if (words)
 	{
 		arr = (char **)malloc(sizeof(char *) * (words + 1));
 		if (!str || !arr)
 			return (NULL);
 		i = 0;
-		index = 0;
 		while (index < words)
 		{
 			split_iterate(str, charset, &i, &j);

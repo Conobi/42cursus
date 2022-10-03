@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:47:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/29 02:13:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 15:48:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 void	parse_texture(t_parser *parser_ctx, char *str)
 {
-	parser_ctx->debug += 0;
-	str += 0;
-	return ;
-}
-
-void	parse_color(t_parser *parser_ctx, char *str)
-{
+	printf("<%s> : %sTexture valide !%s\n", str, GRN_TXT, RESET_TXT);
 	parser_ctx->debug += 0;
 	str += 0;
 	return ;
@@ -41,7 +35,9 @@ static bool	map_parser(t_parser *parser_ctx, char **file)
 	line = -1;
 	while (file[++line])
 	{
-		if (is_valid_texture(file[line]))
+		if (file[line] == NULL)
+			continue ;
+		else if (is_valid_texture(file[line]))
 			parse_texture(parser_ctx, file[line]);
 		else if (is_valid_color(file[line]))
 			parse_color(parser_ctx, file[line]);
@@ -50,8 +46,6 @@ static bool	map_parser(t_parser *parser_ctx, char **file)
 			parse_ascii_map(parser_ctx, file, line);
 			break ;
 		}
-		else if (file[line] == NULL)
-			continue ;
 		else
 			return (false);
 	}
@@ -60,14 +54,30 @@ static bool	map_parser(t_parser *parser_ctx, char **file)
 		return (true);
 }
 
+static void	init_parser(t_parser *parser_ctx)
+{
+	parser_ctx->map_size_x = 0;
+	parser_ctx->map_size_y = 0;
+	parser_ctx->f_color = -1;
+	parser_ctx->c_color = -1;
+	parser_ctx->debug = 0;
+	parser_ctx->no_texture = 0;
+	parser_ctx->so_texture = 0;
+	parser_ctx->we_texture = 0;
+	parser_ctx->ea_texture = 0;
+}
+
 int	main(int argc, char **argv)
 {
 	char		*map;
 	char		**map_splited;
 	t_parser	parser_ctx;
 
-	if (argc != 2)
+	init_parser(&parser_ctx);
+	if (argc != 2 || !argv[1])
 		return (print_err(22));
+	if (ft_eq(argv[1], ".cub", 2) < 1)
+		return (print_err(79));
 	printf("------\nMap:\n");
 	map = load_file(argv[1]);
 	map_splited = ft_split(map, '\n');

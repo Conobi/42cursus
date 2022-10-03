@@ -9,7 +9,8 @@ INCS	=	$(addprefix $(INCDIR)/,$(INC))
 SRC		=	parser.c \
 			char_split.c \
 			checkers.c \
-			utils.c
+			utils.c \
+			color_parser.c
 SDIR	=	.
 SRCS	=	$(addprefix $(SDIR)/,$(SRC))
 

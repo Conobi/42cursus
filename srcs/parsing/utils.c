@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:25:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/28 19:29:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 15:53:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,9 @@ int	print_err(int errno)
 	ft_putstr_fd(strerror(errno), 2);
 	ft_putchar_fd('\n', 2);
 	return (errno);
+}
+
+int	rgba2hex(int r, int g, int b, int a)
+{
+	return ((255 - a) << 24 | r << 16 | g << 8 | b);
 }
