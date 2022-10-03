@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:47:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 19:55:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 23:29:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static bool	map_parser(t_parser *parser_ctx, char **file)
 
 static void	init_parser(t_parser *parser_ctx)
 {
+	parser_ctx->file_err = false;
 	parser_ctx->map_size_x = 0;
 	parser_ctx->map_size_y = 0;
 	parser_ctx->f_color = -1;
@@ -68,12 +69,8 @@ int	main(int argc, char **argv)
 	init_parser(&parser_ctx);
 	if (argc != 2 || !argv[1])
 		return (print_err(22));
-	printf("oui %d\n", ft_eq("wow", ".wow", 2));
-	if (1)
-		return (0);
 	if (ft_eq(argv[1], ".cub", 2) < 1)
 		return (print_err(79));
-	printf("oui\n");
 	printf("------\nMap:\n");
 	map = load_file(argv[1]);
 	map_splited = ft_split(map, '\n');

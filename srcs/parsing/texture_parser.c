@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:55:49 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 16:33:37 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 23:26:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_texture	texture_from_file(char *str)
 
 	mlx = mlx_init();
 	img = mlx_xpm_file_to_image(mlx, str, &height, &width);
-	printf("[%s] : (%d, %d) %d\n", str, height, width, (int)img);
+	// printf("[%s] : (%d, %d) %d\n", str, height, width, (int)img);
 	return ((t_texture){img, height, width});
 }
 
@@ -67,7 +67,7 @@ void	parse_texture(t_parser *parser_ctx, char *str)
 			parser_ctx->so_texture = texture_from_file(str_split[1]);
 		else if (ft_eq(str_split[0], "WE", 0))
 			parser_ctx->we_texture = texture_from_file(str_split[1]);
-		else if (ft_eq(str_split[0], "ea", 0))
+		else if (ft_eq(str_split[0], "EA", 0))
 			parser_ctx->ea_texture = texture_from_file(str_split[1]);
 	}
 	free_split(str_split);
