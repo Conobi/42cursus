@@ -6,11 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 01:14:24 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/29 11:56:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 16:15:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "cub3d.h"
 
 static int	is_space(char to_find, char *str)
 {

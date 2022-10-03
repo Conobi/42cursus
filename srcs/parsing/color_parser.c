@@ -6,24 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:22:03 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 15:53:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 16:41:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-
-static bool	free_split(char **str_split)
-{
-	int	i;
-
-	i = -1;
-	if (!str_split)
-		return (false);
-	while (str_split[++i])
-		free(str_split[i]);
-	free(str_split);
-	return (false);
-}
+#include "cub3d.h"
 
 static char	*space_remover(char *str)
 {
@@ -115,11 +102,11 @@ void	parse_color(t_parser *parser_ctx, char *str)
 			if (str[0] == 'F')
 				parser_ctx->f_color = rgba2hex(
 						ft_atoi(str_split[0]), ft_atoi(str_split[1]),
-						ft_atoi(str_split[2]), 256);
+						ft_atoi(str_split[2]), 255);
 			else if (str[0] == 'C')
 				parser_ctx->c_color = rgba2hex(
 						ft_atoi(str_split[0]), ft_atoi(str_split[1]),
-						ft_atoi(str_split[2]), 256);
+						ft_atoi(str_split[2]), 255);
 		}
 		free_split(str_split);
 	}

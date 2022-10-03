@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:48:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 15:53:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 16:22:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,24 @@
 # include <string.h>
 # include "libft.h"
 
+typedef struct s_texture {
+	void	*img;
+	int		height;
+	int		width;
+}	t_texture;
+
 typedef struct s_parser
 {
-	bool	file_err;
-	int		map_size_x;
-	int		map_size_y;
-	int		f_color;
-	int		c_color;
-	int		debug;
-	void	*no_texture;
-	void	*so_texture;
-	void	*we_texture;
-	void	*ea_texture;
+	bool		file_err;
+	int			map_size_x;
+	int			map_size_y;
+	int			f_color;
+	int			c_color;
+	int			debug;
+	t_texture	no_texture;
+	t_texture	so_texture;
+	t_texture	we_texture;
+	t_texture	ea_texture;
 }	t_parser;
 
 # define RED_TXT	"\001\033[91m\002"
@@ -43,11 +49,13 @@ typedef struct s_parser
 
 /* Parser */
 void	parse_color(t_parser *parser_ctx, char *str);
+void	parse_texture(t_parser *parser_ctx, char *str);
 
 /* Parser utils */
 char	*load_file(char *path);
 int		print_err(int errno);
 int		rgba2hex(int r, int g, int b, int a);
+bool	free_split(char **str_split);
 
 /* Parser checker */
 bool	is_valid_texture(char *str);

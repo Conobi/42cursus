@@ -6,11 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:25:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 15:53:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 16:15:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "cub3d.h"
 
 char	*load_file(char *path)
 {
@@ -55,4 +55,17 @@ int	print_err(int errno)
 int	rgba2hex(int r, int g, int b, int a)
 {
 	return ((255 - a) << 24 | r << 16 | g << 8 | b);
+}
+
+bool	free_split(char **str_split)
+{
+	int	i;
+
+	i = -1;
+	if (!str_split)
+		return (false);
+	while (str_split[++i])
+		free(str_split[i]);
+	free(str_split);
+	return (false);
 }

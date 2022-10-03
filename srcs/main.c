@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 19:34:27 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 14:28:43 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	graph_manager(t_ctx *c)
 	mlx_loop(c->window.mlx);
 }
 
-int	main(void)
-{
-	t_ctx	c;
+// int	main(void)
+// {
+// 	t_ctx	c;
 
-	init_ctx(&c);
-	graph_manager(&c);
-}
+// 	init_ctx(&c);
+// 	graph_manager(&c);
+// }

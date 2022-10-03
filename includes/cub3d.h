@@ -21,6 +21,7 @@
 # include <math.h>
 # include "libft.h"
 # include "keys.h"
+# include "parser.h"
 # include "mlx.h"
 
 # ifndef M_PI

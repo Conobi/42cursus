@@ -56,7 +56,13 @@ SRC			= main.c \
 			  minimap/draw_map.c \
 			  utils/draw.c \
 			  utils/utils.c \
-			  utils/helpers.c
+			  utils/helpers.c \
+			  parsing/parser.c \
+			  parsing/char_split.c \
+			  parsing/checkers.c \
+			  parsing/utils.c \
+			  parsing/color_parser.c \
+			  parsing/texture_parser.c
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

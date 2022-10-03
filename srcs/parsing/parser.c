@@ -6,19 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:47:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 15:48:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 19:55:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-
-void	parse_texture(t_parser *parser_ctx, char *str)
-{
-	printf("<%s> : %sTexture valide !%s\n", str, GRN_TXT, RESET_TXT);
-	parser_ctx->debug += 0;
-	str += 0;
-	return ;
-}
+#include "cub3d.h"
 
 void	parse_ascii_map(t_parser *parser_ctx, char **file, int line)
 {
@@ -61,10 +53,10 @@ static void	init_parser(t_parser *parser_ctx)
 	parser_ctx->f_color = -1;
 	parser_ctx->c_color = -1;
 	parser_ctx->debug = 0;
-	parser_ctx->no_texture = 0;
-	parser_ctx->so_texture = 0;
-	parser_ctx->we_texture = 0;
-	parser_ctx->ea_texture = 0;
+	parser_ctx->no_texture = (t_texture){NULL, 0, 0};
+	parser_ctx->so_texture = (t_texture){NULL, 0, 0};
+	parser_ctx->we_texture = (t_texture){NULL, 0, 0};
+	parser_ctx->ea_texture = (t_texture){NULL, 0, 0};
 }
 
 int	main(int argc, char **argv)
@@ -76,8 +68,12 @@ int	main(int argc, char **argv)
 	init_parser(&parser_ctx);
 	if (argc != 2 || !argv[1])
 		return (print_err(22));
+	printf("oui %d\n", ft_eq("wow", ".wow", 2));
+	if (1)
+		return (0);
 	if (ft_eq(argv[1], ".cub", 2) < 1)
 		return (print_err(79));
+	printf("oui\n");
 	printf("------\nMap:\n");
 	map = load_file(argv[1]);
 	map_splited = ft_split(map, '\n');
