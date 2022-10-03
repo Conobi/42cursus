@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:02:20 by conobi            #+#    #+#             */
-/*   Updated: 2022/05/17 17:02:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 23:14:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_eq(const char *a, const char *b, char action)
 {
 	size_t	len_a;
 	size_t	len_b;
-	size_t	i;
+	int		i;
 
 	len_a = ft_strlen(a);
 	len_b = ft_strlen(b);
@@ -39,7 +39,7 @@ int	ft_eq(const char *a, const char *b, char action)
 	if (action == 2)
 	{
 		i = -1;
-		while (++i < len_a - len_b)
+		while (++i < (int)(len_a - len_b) && i >= 0)
 			a++;
 		return (rtn_value(a, b, len_b));
 	}
