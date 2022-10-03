@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/19 20:02:38 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 23:05:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	draw_rays(t_ctx *c, t_rmap rmap)
 	while (i < c->rays_num)
 	{
 		ray = rmap.rays[i];
+		ray.distance += 0;
 		draw_line(c, (t_line){
 			c->player.x * c->window.res + rmap.pos_x,
 			c->player.y * c->window.res + rmap.pos_y,

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:48:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/01 16:17:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/03 22:31:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	move_player(t_ctx *c)
 int	generate_frame(t_ctx *c)
 {
 	move_player(c);
+	printf("---\n");
 	draw_map(c, (t_rmap){0, 0, NULL});
 	return (0);
 }
