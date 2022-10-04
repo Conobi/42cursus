@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:48:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 16:22:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/04 18:18:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # include "libft.h"
 
 typedef struct s_texture {
-	void	*img;
 	int		height;
 	int		width;
+	void	*img;
 }	t_texture;
 
 typedef struct s_parser
@@ -33,6 +33,9 @@ typedef struct s_parser
 	bool		file_err;
 	int			map_size_x;
 	int			map_size_y;
+	int			player_pos_x;
+	int			player_pos_y;
+	int			player_facing;
 	int			f_color;
 	int			c_color;
 	int			debug;
@@ -40,6 +43,7 @@ typedef struct s_parser
 	t_texture	so_texture;
 	t_texture	we_texture;
 	t_texture	ea_texture;
+	int			**map;
 }	t_parser;
 
 # define RED_TXT	"\001\033[91m\002"

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:47:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 23:29:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/04 22:53:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ static bool	map_parser(t_parser *parser_ctx, char **file)
 	line = -1;
 	while (file[++line])
 	{
-		if (file[line] == NULL)
+		if (file[line] == NULL
+			&& parser_ctx->map_size_x <= 0 && parser_ctx->map_size_y <= 0)
 			continue ;
 		else if (is_valid_texture(file[line]))
 			parse_texture(parser_ctx, file[line]);
 		else if (is_valid_color(file[line]))
 			parse_color(parser_ctx, file[line]);
-		else if (file[line] != NULL && is_valid_context(parser_ctx))
+		else if (is_valid_context(parser_ctx))
 		{
 			parse_ascii_map(parser_ctx, file, line);
 			break ;
@@ -49,8 +50,11 @@ static bool	map_parser(t_parser *parser_ctx, char **file)
 static void	init_parser(t_parser *parser_ctx)
 {
 	parser_ctx->file_err = false;
-	parser_ctx->map_size_x = 0;
-	parser_ctx->map_size_y = 0;
+	parser_ctx->map_size_x = -1;
+	parser_ctx->map_size_y = -1;
+	parser_ctx->player_pos_x = -1;
+	parser_ctx->player_pos_y = -1;
+	parser_ctx->player_facing = -1;
 	parser_ctx->f_color = -1;
 	parser_ctx->c_color = -1;
 	parser_ctx->debug = 0;
