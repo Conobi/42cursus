@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:52:40 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/03 23:04:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/04 18:53:20 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	find_wall_h(t_ctx *c, t_ray *ray)
 				2,
 				0x9333ea
 			});
-		printf("Rayon violet N°%d (%d, %d) [%d,%d]\n", ray->id, ray->h_x, ray->h_y, computed_x, computed_y);
+		// printf("Rayon violet N°%d (%d, %d) [%d,%d]\n", ray->id, ray->h_x, ray->h_y, computed_x, computed_y);
 		ray->h_x += c->map.cell_size / tan_x * x_factor;
 		ray->h_y += c->map.cell_size * y_factor;
 		computed_x = floor((ray->h_x - rev) / c->map.cell_size);

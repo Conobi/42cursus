@@ -52,6 +52,7 @@ SRC			= main.c \
 			  events_handlers.c \
 			  engine/generator.c \
 			  engine/rays.c \
+			  engine/render.c \
 			  minimap/draw_map.c \
 			  utils/draw.c \
 			  utils/utils.c \

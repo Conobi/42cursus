@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 22:38:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/04 18:58:09 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ static void	init_map(t_ctx *c)
 void	init_ctx(t_ctx *c)
 {
 	c->window.mlx = mlx_init();
-	c->window.height = 720;
-	c->window.width = 720;
+	c->window.height = 1080 / 2;
+	c->window.width = 1920 / 2;
 	c->window.res = 3;
 	c->player.speed = 0;
 	c->player.angle = 0;
 	c->player.size = 8;
 	c->player.fov = 60;
-	c->map.cell_size = 20;
-	c->rays_num = 48;
+	c->map.cell_size = 10;
+	c->rays_num = 1920 / 2;
 	c->target_speed = 2;
 	c->tick = 60;
 	init_map(c);

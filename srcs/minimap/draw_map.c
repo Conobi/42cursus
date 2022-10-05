@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/03 23:05:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/04 18:59:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@ void	draw_rays(t_ctx *c, t_rmap rmap)
 	int		i;
 
 	i = 0;
-	rmap.rays = create_rays(c);
 	while (i < c->rays_num)
 	{
 		ray = rmap.rays[i];
-		ray.distance += 0;
-		draw_line(c, (t_line){
-			c->player.x * c->window.res + rmap.pos_x,
-			c->player.y * c->window.res + rmap.pos_y,
-			(c->player.x + cos(ray.angle) * ray.distance) * c->window.res,
-			(c->player.y + sin(ray.angle) * ray.distance) * c->window.res,
-			0xFF6C34
-		});
+		if (ray.id % 10 == 0)
+		{
+			draw_line(c, (t_line){
+				c->player.x * c->window.res + rmap.pos_x,
+				c->player.y * c->window.res + rmap.pos_y,
+				(c->player.x + cos(ray.angle) * ray.distance) * c->window.res,
+				(c->player.y + sin(ray.angle) * ray.distance) * c->window.res,
+				0xFF6C34
+			});
+		}
 		i++;
 	}
 }

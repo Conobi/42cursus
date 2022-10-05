@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/09/19 19:43:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/04 18:04:56 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	graph_manager(t_ctx *c)
 {
 	c->window.id = mlx_new_window(c->window.mlx,
-			c->window.width, c->window.height, "enfin, youhou !");
+			c->window.width, c->window.height, "cub3d");
 	c->img = image_handler(c);
 	mlx_put_image_to_window(c->window.mlx, c->window.id, c->img.img, 0, 0);
 	event_listener(c);

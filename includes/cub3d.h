@@ -146,6 +146,7 @@ typedef struct s_line {
 // Engine
 t_ray		*create_rays(t_ctx *c);
 int			generate_frame(t_ctx *c);
+void		render(t_ctx *c, t_ray *rays);
 
 // Minimap
 void		draw_map(t_ctx *c, t_rmap rmap);
@@ -158,6 +159,7 @@ void		draw_rect(t_ctx *c, t_rect rect);
 void		draw_line(t_ctx *c, t_line line);
 bool		out_of_bounds(t_ctx *c, double x, double y);
 double		to_radians(int degrees);
+bool		is_air(t_ctx *c, int computed_x, int computed_y);
 
 // Helpers
 void		pixel_put(t_ctx *c, int x, int y, int color);
