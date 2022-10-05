@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:22:03 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 16:41:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/05 16:39:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static bool	check_color_values(char **str_split)
 		j = -1;
 		while (str_split[i] && str_split[i][++j])
 			if (!ft_isdigit(str_split[i][j]))
-				return (free_split(str_split));
+				return (false);
 		value = ft_atoi(str_split[i]);
-		if (value < 0 || value > 256)
-			return (free_split(str_split));
+		if (value < 0 || value > 255)
+			return (false);
 	}
 	return (true);
 }

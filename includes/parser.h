@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:48:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/04 18:18:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/05 15:05:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # include "libft.h"
 
 typedef struct s_texture {
+	void	*img;
 	int		height;
 	int		width;
-	void	*img;
 }	t_texture;
 
 typedef struct s_parser
@@ -54,6 +54,7 @@ typedef struct s_parser
 /* Parser */
 void	parse_color(t_parser *parser_ctx, char *str);
 void	parse_texture(t_parser *parser_ctx, char *str);
+void	parse_ascii_map(t_parser *parser_ctx, char **file, int line);
 
 /* Parser utils */
 char	*load_file(char *path);

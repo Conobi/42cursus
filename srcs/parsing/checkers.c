@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:24:32 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 23:28:22 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/05 16:43:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ bool	is_valid_context(t_parser *parser_ctx)
 
 bool	is_valid_ascii(t_parser *parser_ctx)
 {
-	parser_ctx->debug += 0;
-	return (true);
+	printf("MAP ASCII:\nSX: %d\nSY: %d\nPX: %d\nPY: %d\n", parser_ctx->map_size_x, parser_ctx->map_size_y, parser_ctx->player_pos_x, parser_ctx->player_pos_y);
+	if (parser_ctx->map_size_x > 0 && parser_ctx->map_size_y > 0
+		&& parser_ctx->player_pos_x > 0 && parser_ctx->player_pos_y > 0)
+		return (true);
+	return (false);
 }

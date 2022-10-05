@@ -62,7 +62,9 @@ SRC			= main.c \
 			  parsing/checkers.c \
 			  parsing/utils.c \
 			  parsing/color_parser.c \
-			  parsing/texture_parser.c
+			  parsing/texture_parser.c \
+			  parsing/map_parser.c \
+			  parsing/split_keep.c
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

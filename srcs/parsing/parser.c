@@ -6,45 +6,41 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:47:22 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/04 22:53:11 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/05 19:29:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	parse_ascii_map(t_parser *parser_ctx, char **file, int line)
+static bool	map_parser(t_parser *parser_ctx, int fd)
 {
-	parser_ctx->debug += 0;
-	file += 0;
-	line += 0;
-	return ;
-}
+	char	*line;
 
-static bool	map_parser(t_parser *parser_ctx, char **file)
-{
-	int		line;
-
-	line = -1;
-	while (file[++line])
+	line = ft_gnl(fd);
+	if (!line)
+		return (false);
+	while (line)
 	{
-		if (file[line] == NULL
+		if (line == NULL
 			&& parser_ctx->map_size_x <= 0 && parser_ctx->map_size_y <= 0)
 			continue ;
-		else if (is_valid_texture(file[line]))
-			parse_texture(parser_ctx, file[line]);
-		else if (is_valid_color(file[line]))
-			parse_color(parser_ctx, file[line]);
-		else if (is_valid_context(parser_ctx))
+		else if (is_valid_texture(line))
+			parse_texture(parser_ctx, line);
+		else if (is_valid_color(line))
+			parse_color(parser_ctx, line);
+		else if (is_valid_context(parser_ctx) && !is_valid_ascii(parser_ctx))
 		{
-			parse_ascii_map(parser_ctx, file, line);
+			printf("Letzgong parsing\n");
+			parse_ascii_map(parser_ctx, fd);
 			break ;
 		}
 		else
-			return (false);
+			break ;
 	}
-	return (false);
+	free(line);
 	if (is_valid_context(parser_ctx) && is_valid_ascii(parser_ctx))
 		return (true);
+	return (false);
 }
 
 static void	init_parser(t_parser *parser_ctx)
