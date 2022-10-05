@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/04 18:58:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/05 20:29:00 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ static void	init_map(t_ctx *c)
 	return ;
 }
 
+void	init_texture(t_ctx *c, t_img *texture, char *path)
+{
+	texture->img = mlx_xpm_file_to_image(c->window.mlx,
+			path, &c->map.cell_size, &c->map.cell_size);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+			&texture->line_length, &texture->endian);
+	texture->height = c->map.cell_size;
+	texture->width = c->map.cell_size;
+}
+
 void	init_ctx(t_ctx *c)
 {
 	c->window.mlx = mlx_init();
@@ -84,5 +94,6 @@ void	init_ctx(t_ctx *c)
 	c->rays_num = 1920 / 2;
 	c->target_speed = 2;
 	c->tick = 60;
+	init_texture(c, &c->wall_north, "./srcs/textures/north.xpm");
 	init_map(c);
 }

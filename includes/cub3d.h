@@ -65,6 +65,8 @@ typedef struct map {
 typedef struct s_img {
 	void	*img;
 	char	*addr;
+	int		width;
+	int		height;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -78,38 +80,19 @@ typedef struct s_ctx {
 	int			rays_num;
 	int			target_speed;
 	int			tick;
+	t_img		wall_north;
+	t_img		wall_south;
+	t_img		wall_east;
+	t_img		wall_west;
 }	t_ctx;
-
-// typedef struct s_ray {
-// 	double	angle;
-// 	double	distance;
-// 	bool	vertical;
-// 	int		mfacing;
-// 	int		sfacing;
-// 	int		init_x;
-// 	int		init_y;
-// 	int		x;
-// 	int		y;
-// 	int		final_x;
-// 	int		final_y;
-// 	int		id;
-// }	t_ray;
 
 typedef struct s_ray {
 	double	angle;
-	double	h_distance;
-	double	v_distance;
 	double	distance;
-	bool	vertical;
-	int		mfacing;
-	int		sfacing;
-	int		h_x;
-	int		h_y;
-	int		v_x;
-	int		v_y;
-	int		x;
-	int		y;
+	int		facing;
 	int		id;
+	bool	is_vertical;
+	int		cell_percent;
 }	t_ray;
 
 typedef struct s_rmap {
@@ -143,6 +126,13 @@ typedef struct s_line {
 	int	color;
 }	t_line;
 
+typedef struct s_rgba {
+	short	red;
+	short	green;
+	short	blue;
+	short	alpha;
+}	t_rgba;
+
 // Engine
 t_ray		*create_rays(t_ctx *c);
 int			generate_frame(t_ctx *c);
@@ -157,9 +147,13 @@ void		init_ctx(t_ctx *c);
 // Utils
 void		draw_rect(t_ctx *c, t_rect rect);
 void		draw_line(t_ctx *c, t_line line);
-bool		out_of_bounds(t_ctx *c, double x, double y);
+bool		out_of_bounds(t_ctx *c, int x, int y);
 double		to_radians(int degrees);
 bool		is_air(t_ctx *c, int computed_x, int computed_y);
+int			get_facing(double angle, bool is_vertical);
+int			view_distance(int color, float correction);
+void		display_fps(t_window window);
+int			get_pixel_color_from_texture(t_img texture, double x, double y);
 
 // Helpers
 void		pixel_put(t_ctx *c, int x, int y, int color);

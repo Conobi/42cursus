@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:31:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/09/19 19:50:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/05 19:34:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	refresh_handler(t_ctx *c)
 	mlx_destroy_image(c->window.mlx, c->img.img);
 	c->img = image_handler(c);
 	mlx_put_image_to_window(c->window.mlx, c->window.id, c->img.img, 0, 0);
+	display_fps(c->window);
 }

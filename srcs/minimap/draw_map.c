@@ -6,34 +6,11 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/04 18:59:27 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/05 15:58:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	draw_rays(t_ctx *c, t_rmap rmap)
-{
-	t_ray	ray;
-	int		i;
-
-	i = 0;
-	while (i < c->rays_num)
-	{
-		ray = rmap.rays[i];
-		if (ray.id % 10 == 0)
-		{
-			draw_line(c, (t_line){
-				c->player.x * c->window.res + rmap.pos_x,
-				c->player.y * c->window.res + rmap.pos_y,
-				(c->player.x + cos(ray.angle) * ray.distance) * c->window.res,
-				(c->player.y + sin(ray.angle) * ray.distance) * c->window.res,
-				0xFF6C34
-			});
-		}
-		i++;
-	}
-}
 
 void	draw_map(t_ctx *c, t_rmap rmap)
 {
@@ -116,5 +93,4 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 		c->player.size,
 		0x03f4fc
 	});
-	draw_rays(c, rmap);
 }

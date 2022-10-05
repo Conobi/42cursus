@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/15 20:52:40 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/04 18:53:20 by abastos          ###   ########lyon.fr   */
+/*   Created: 2022/10/05 14:43:23 by abastos           #+#    #+#             */
+/*   Updated: 2022/10/05 19:23:28 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 double	get_distance(double x1, double y1, double x2, double y2)
 {
 	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
-}
-
-int	get_mfacing(double angle)
-{
-	int	ret;
-
-	ret = 0;
-	if (abs((int)floor(angle / M_PI) % 2)) // facing up
-		ret += 2;
-	if (abs((int)floor((angle - M_PI / 2) / M_PI) % 2)) // facing right
-		ret += 1;
-	return (ret);
 }
 
 bool	is_air(t_ctx *c, int computed_x, int computed_y)
@@ -45,186 +33,162 @@ bool	is_air(t_ctx *c, int computed_x, int computed_y)
 	return (false);
 }
 
-void	find_wall_h(t_ctx *c, t_ray *ray)
+static double	get_h_dist(t_ctx *c, double angle)
 {
-	int		computed_x;
-	int		computed_y;
-	int		x_factor;
-	int		y_factor;
-	int		rev;
-	double	tan_x;
+	int		up;
+	double	first_x;
+	double	first_y;
+	double	x_step;
+	double	y_step;
+	double	next_x;
+	double	next_y;
+	bool	is_wall;
+	int		cell_x;
+	int		cell_y;
 
-	x_factor = 1;
-	y_factor = 1;
-	rev = 0;
-	if (ray->mfacing == NEAST || ray->mfacing == NWEST)
+	up = abs((int)floor(angle / M_PI) % 2);
+	first_y = floor(c->player.y / c->map.cell_size) * c->map.cell_size;
+	if (!up)
+		first_y += c->map.cell_size;
+	first_x = c->player.x + (first_y - c->player.y) / tan(angle);
+	if (!out_of_bounds(c, floor(first_x / c->map.cell_size), floor(first_y / c->map.cell_size)))
 	{
-		x_factor *= -1;
-		y_factor *= -1;
-		rev = 1;
+		draw_rect(c, (t_rect){
+			(first_x) * c->window.res,
+			(first_y) * c->window.res,
+			2,
+			2,
+			0x00d0ff
+		});
 	}
-	tan_x = tan(ray->angle);
-	computed_x = floor((ray->h_x - rev) / c->map.cell_size);
-	computed_y = floor((ray->h_y - rev) / c->map.cell_size);
-	while (is_air(c, computed_x, computed_y))
+	if (up)
+		y_step = -c->map.cell_size;
+	else
+		y_step = c->map.cell_size;
+	x_step = y_step / tan(angle);
+	next_x = first_x;
+	next_y = first_y;
+	is_wall = false;
+	while (!is_wall)
 	{
-		if (ray->h_x * c->window.res < c->window.width
-			&& ray->h_y * c->window.res < c->window.height)
-			draw_rect(c, (t_rect){
-				(ray->h_x - 1) * c->window.res,
-				(ray->h_y - 1) * c->window.res,
-				2,
-				2,
-				0x9333ea
-			});
-		// printf("Rayon violet N°%d (%d, %d) [%d,%d]\n", ray->id, ray->h_x, ray->h_y, computed_x, computed_y);
-		ray->h_x += c->map.cell_size / tan_x * x_factor;
-		ray->h_y += c->map.cell_size * y_factor;
-		computed_x = floor((ray->h_x - rev) / c->map.cell_size);
-		computed_y = floor((ray->h_y - rev) / c->map.cell_size);
+		cell_x = floor(next_x / c->map.cell_size);
+		cell_y = floor(next_y / c->map.cell_size);
+		if (up)
+			cell_y -= 1;
+		if (out_of_bounds(c, cell_x, cell_y))
+			break ;
+		if (c->map.raw[cell_y][cell_x] == '1')
+			is_wall = true;
+		else
+		{
+			next_x += x_step;
+			next_y += y_step;
+		}
 	}
-	// if (ray->h_x * c->window.res < c->window.width
-	// 	&& ray->h_y * c->window.res < c->window.height)
-	// 	draw_rect(c, (t_rect){
-	// 		(ray->h_x - 1) * c->window.res,
-	// 		(ray->h_y - 1) * c->window.res,
-	// 		2,
-	// 		2,
-	// 		0xff00ff
-	// 	});
-	ray->h_distance = get_distance(
-			c->player.x, c->player.y, ray->h_x, ray->h_y);
+	if (!out_of_bounds(c, floor(next_x / c->map.cell_size), floor(next_y / c->map.cell_size)))
+	{
+		draw_rect(c, (t_rect){
+			(next_x) * c->window.res,
+			(next_y) * c->window.res,
+			2,
+			2,
+			0xfff
+		});
+	}
+	return (get_distance(c->player.x, c->player.y, next_x, next_y));
 }
 
-void	find_wall_v(t_ctx *c, t_ray *ray)
+static double	get_v_dist(t_ctx *c, double angle)
 {
-	int		computed_x;
-	int		computed_y;
-	int		x_factor;
-	int		y_factor;
-	int		rev;
-	double	tan_x;
+	int		right;
+	double	first_x;
+	double	first_y;
+	double	x_step;
+	double	y_step;
+	double	next_x;
+	double	next_y;
+	bool	is_wall;
+	int		cell_x;
+	int		cell_y;
 
-	x_factor = 1;
-	y_factor = 1;
-	rev = 0;
-	if (ray->mfacing == SWEST || ray->mfacing == NWEST)
+	right = abs((int)floor((angle - M_PI / 2) / M_PI) % 2);
+	first_x = floor(c->player.x / c->map.cell_size) * c->map.cell_size;
+	if (right)
+		first_x += c->map.cell_size;
+	first_y = c->player.y + (first_x - c->player.x) * tan(angle);
+	if (!out_of_bounds(c, floor(first_x / c->map.cell_size), floor(first_y / c->map.cell_size)))
 	{
-		x_factor *= -1;
-		y_factor *= -1;
-		rev = 1;
+		draw_rect(c, (t_rect){
+			(first_x) * c->window.res,
+			(first_y) * c->window.res,
+			2,
+			2,
+			0xfcba03
+		});
 	}
-	tan_x = tan(ray->angle);
-	computed_x = floor((ray->v_x - rev) / c->map.cell_size);
-	computed_y = floor((ray->v_y - rev) / c->map.cell_size);
-	while (is_air(c, computed_x, computed_y))
+	if (right)
+		x_step = c->map.cell_size;
+	else
+		x_step = -c->map.cell_size;
+	y_step = x_step * tan(angle);
+	next_x = first_x;
+	next_y = first_y;
+	is_wall = false;
+	while (!is_wall)
 	{
-		if (ray->v_x * c->window.res < c->window.width
-			&& ray->v_y * c->window.res < c->window.height)
-			draw_rect(c, (t_rect){
-				(ray->v_x - 1) * c->window.res,
-				(ray->v_y - 1) * c->window.res,
-				2,
-				2,
-				0xfb7185
-			});
-		ray->v_x += c->map.cell_size * x_factor;
-		ray->v_y += tan_x * c->map.cell_size * y_factor;
-		computed_x = floor((ray->v_x - rev) / c->map.cell_size);
-		computed_y = floor((ray->v_y - rev) / c->map.cell_size);
-		// printf("Rayon rose N°%d [%d,%d]\n", ray->id, computed_x, computed_y);
+		cell_x = floor(next_x / c->map.cell_size);
+		if (!right)
+			cell_x -= 1;
+		cell_y = floor(next_y / c->map.cell_size);
+		if (out_of_bounds(c, cell_x, cell_y))
+			break ;
+		if (c->map.raw[cell_y][cell_x] == '1')
+			is_wall = true;
+		else
+		{
+			next_x += x_step;
+			next_y += y_step;
+		}
 	}
-	// if (ray->v_x * c->window.res < c->window.width
-	// 	&& ray->v_y * c->window.res < c->window.height)
-	// 	draw_rect(c, (t_rect){
-	// 		(ray->v_x - 1) * c->window.res,
-	// 		(ray->v_y - 1) * c->window.res,
-	// 		2,
-	// 		2,
-	// 		0xfacc15
-	// 	});
-	ray->v_distance = get_distance(
-			c->player.x, c->player.y, ray->v_x, ray->v_y);
+	if (!out_of_bounds(c, floor(next_x / c->map.cell_size), floor(next_y / c->map.cell_size)))
+	{
+		draw_rect(c, (t_rect){
+			(next_x) * c->window.res,
+			(next_y) * c->window.res,
+			2,
+			2,
+			0xe3fc03
+		});
+	}
+	return (get_distance(c->player.x, c->player.y, next_x, next_y));
 }
 
-typedef struct s_temp {
-	double	h_distance;
-	double	v_distance;
-	int		hor_x_init;
-	int		hor_y_init;
-	int		ver_x_init;
-	int		ver_y_init;
-}	t_temp;
-
-void	init_distance_h(t_ctx *c, t_ray *ray)
-{
-	ray->h_y = floor(c->player.y / c->map.cell_size) * c->map.cell_size;
-	if (ray->mfacing == SWEST || ray->mfacing == SEAST)
-		ray->h_y += c->map.cell_size + 1;
-	ray->h_x = floor(c->player.x + (ray->h_y - c->player.y) / tan(ray->angle));
-	ray->h_distance = get_distance(
-			c->player.x, c->player.y, ray->h_x, ray->h_y);
-}
-
-void	init_distance_v(t_ctx *c, t_ray *ray)
-{
-	ray->v_x = floor(c->player.x / c->map.cell_size) * c->map.cell_size;
-	if (ray->mfacing == SEAST || ray->mfacing == NEAST)
-		ray->v_x += c->map.cell_size;
-	ray->v_y = c->player.y + (ray->v_x - c->player.x) * tan(ray->angle);
-	ray->v_distance = get_distance(
-			c->player.x, c->player.y, ray->v_x, ray->v_y);
-}
-
-t_ray	cast_ray(t_ctx *c, double angle, int id)
+static t_ray	cast_ray(t_ctx *c, double angle, int id)
 {
 	t_ray	ray;
+	double	v_dist;
+	double	h_dist;
 
 	ray.id = id;
 	ray.angle = angle;
-	ray.mfacing = get_mfacing(angle);
-	init_distance_h(c, &ray);
-	init_distance_v(c, &ray);
-	// draw_rect(c, (t_rect){
-	// 	(ray.h_x - 1) * c->window.res,
-	// 	(ray.h_y - 1) * c->window.res,
-	// 	2,
-	// 	2,
-	// 	0x00d0ff
-	// });
-	// draw_rect(c, (t_rect){
-	// 	(ray.v_x - 1) * c->window.res,
-	// 	(ray.v_y - 1) * c->window.res,
-	// 	2,
-	// 	2,
-	// 	0x0000ff
-	// });
-	find_wall_h(c, &ray);
-	find_wall_v(c, &ray);
-	if (ray.h_distance < ray.v_distance)
+	v_dist = get_v_dist(c, angle);
+	h_dist = get_h_dist(c, angle);
+	if (h_dist >= v_dist)
 	{
-		ray.distance = ray.h_distance;
-		ray.x = ray.h_x;
-		ray.y = ray.h_y;
+		ray.distance = v_dist;
+		ray.is_vertical = true;
 	}
 	else
 	{
-		ray.distance = ray.v_distance;
-		ray.x = ray.v_x;
-		ray.y = ray.v_y;
+		ray.distance = h_dist;
+		ray.is_vertical = false;
 	}
-	draw_rect(c, (t_rect){
-		(ray.x - 1) * c->window.res,
-		(ray.y - 1) * c->window.res,
-		2,
-		2,
-		0x0000ff
-	});
+	ray.cell_percent = ray.id % c->map.cell_size;
+	ray.facing = get_facing(angle, ray.is_vertical);
 	return (ray);
 }
 
-
-t_ray *create_rays(t_ctx *c)
+t_ray	*create_rays(t_ctx *c)
 {
 	double	initial_angle;
 	double	angle;
@@ -242,7 +206,6 @@ t_ray *create_rays(t_ctx *c)
 	{
 		angle = initial_angle + angle_step * i;
 		rays[i] = cast_ray(c, angle, i);
-		// printf("Rayon N°%d, j'ai une distance de %fpx\n", i, rays[i].distance);
 	}
 	return (rays);
 }
