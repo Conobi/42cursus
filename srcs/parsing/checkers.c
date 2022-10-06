@@ -6,21 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:24:32 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/05 16:43:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 22:09:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// static void	debug_split(char **split)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (split[++i])
-// 		printf("%s|", split[i]);
-// 	printf("\n");
-// }
 
 bool	is_valid_context(t_parser *parser_ctx)
 {

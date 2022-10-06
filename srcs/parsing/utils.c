@@ -6,18 +6,15 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:25:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/05 16:33:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 21:34:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "parser.h"
 
-char	*load_file(char *path)
+int	load_fd(char *path)
 {
 	int		fd;
-	char	*gnl;
-	char	*tmp;
-	char	*map;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
@@ -25,24 +22,25 @@ char	*load_file(char *path)
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": ", 2);
 		perror(NULL);
-		return (NULL);
+		return (-1);
 	}
-	gnl = ft_gnl(fd);
-	if (!gnl)
-		return (NULL);
-	map = ft_strdup(gnl);
-	while (gnl)
-	{
-		free(gnl);
-		gnl = ft_gnl(fd);
-		if (!gnl)
-			break ;
-		tmp = map;
-		map = ft_strjoin(tmp, gnl);
-		free(tmp);
-	}
-	return (map);
+	return (fd);
 }
+
+// gnl = ft_gnl(fd);
+// if (!gnl)
+// 	return (NULL);
+// map = ft_strdup(gnl);
+// while (gnl)
+// {
+// 	free(gnl);
+// 	gnl = ft_gnl(fd);
+// 	if (!gnl)
+// 		break ;
+// 	tmp = map;
+// 	map = ft_strjoin(tmp, gnl);
+// 	free(tmp);
+// }
 
 int	print_err(int errno)
 {
@@ -68,4 +66,14 @@ bool	free_split(char **str_split)
 		free(str_split[i]);
 	free(str_split);
 	return (false);
+}
+
+char	*nl_remove(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (len >= 1 && str[len - 1] == '\n')
+		str[len - 1] = '\0';
+	return (str);
 }

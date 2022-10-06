@@ -64,7 +64,7 @@ SRC			= main.c \
 			  parsing/color_parser.c \
 			  parsing/texture_parser.c \
 			  parsing/map_parser.c \
-			  parsing/split_keep.c
+			  parsing/unsplitable.c
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

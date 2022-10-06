@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:48:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/05 15:05:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 21:34:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,14 @@ void	parse_texture(t_parser *parser_ctx, char *str);
 void	parse_ascii_map(t_parser *parser_ctx, char **file, int line);
 
 /* Parser utils */
-char	*load_file(char *path);
+int		load_fd(char *path);
 int		print_err(int errno);
 int		rgba2hex(int r, int g, int b, int a);
 bool	free_split(char **str_split);
+char	*nl_remove(char *str);
+
+/* File line spliter */
+char	**unsplitable_file(char *filename);
 
 /* Parser checker */
 bool	is_valid_texture(char *str);

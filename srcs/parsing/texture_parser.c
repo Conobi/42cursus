@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:55:49 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/03 23:26:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 22:38:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_texture	texture_from_file(char *str)
 
 	mlx = mlx_init();
 	img = mlx_xpm_file_to_image(mlx, str, &height, &width);
-	// printf("[%s] : (%d, %d) %d\n", str, height, width, (int)img);
+	free(mlx);
 	return ((t_texture){img, height, width});
 }
 
