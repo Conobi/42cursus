@@ -6,13 +6,13 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 20:28:14 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 01:50:07 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_pixel_color_from_texture(t_img texture, double x, double y)
+int	get_pixel_color_from_texture(t_img texture, int x, int y)
 {
 	if (x >= 0 && x < texture.width
 		&& y >= 0 && y < texture.height)
@@ -27,13 +27,16 @@ void	display_fps(t_window window)
 	clock_t			this_loop;
 	double			fps;
 	char			*tmp;
+	char			*join;
 
 	this_loop = clock();
 	fps = (1000 / (double)(this_loop - last_loop)) * 1000.0;
 	last_loop = this_loop;
 	tmp = ft_itoa(fps);
-	mlx_string_put(window.mlx, window.id, window.width - 60, 15, 0xFF0000,
-		ft_strjoin("fps: ", ft_itoa(fps)));
+	join = ft_strjoin("fps: ", tmp);
+	free(tmp);
+	mlx_string_put(window.mlx, window.id, window.width - 60, 15, 0xFF0000, join);
+	free(join);
 }
 
 int	rgba2hex(t_rgba color)

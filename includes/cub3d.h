@@ -153,7 +153,7 @@ bool		is_air(t_ctx *c, int computed_x, int computed_y);
 int			get_facing(double angle, bool is_vertical);
 int			view_distance(int color, float correction);
 void		display_fps(t_window window);
-int			get_pixel_color_from_texture(t_img texture, double x, double y);
+int			get_pixel_color_from_texture(t_img texture, int x, int y);
 
 // Helpers
 void		pixel_put(t_ctx *c, int x, int y, int color);

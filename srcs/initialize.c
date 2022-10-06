@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/05 20:29:00 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 01:39:01 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ static void	init_map(t_ctx *c)
 
 void	init_texture(t_ctx *c, t_img *texture, char *path)
 {
-	texture->img = mlx_xpm_file_to_image(c->window.mlx,
-			path, &c->map.cell_size, &c->map.cell_size);
-	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
-			&texture->line_length, &texture->endian);
 	texture->height = c->map.cell_size;
 	texture->width = c->map.cell_size;
+	texture->img = mlx_xpm_file_to_image(c->window.mlx,
+			path, &texture->width, &texture->height);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+			&texture->line_length, &texture->endian);
 }
 
 void	init_ctx(t_ctx *c)
@@ -85,12 +85,12 @@ void	init_ctx(t_ctx *c)
 	c->window.mlx = mlx_init();
 	c->window.height = 1080 / 2;
 	c->window.width = 1920 / 2;
-	c->window.res = 3;
+	c->window.res = 1;
 	c->player.speed = 0;
 	c->player.angle = 0;
 	c->player.size = 8;
 	c->player.fov = 60;
-	c->map.cell_size = 10;
+	c->map.cell_size = 16;
 	c->rays_num = 1920 / 2;
 	c->target_speed = 2;
 	c->tick = 60;
