@@ -6,11 +6,26 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/07 14:28:43 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 16:47:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	debug_map(t_ctx *c)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < c->map_size_y)
+	{
+		x = -1;
+		while (++x < c->map_size_x)
+			printf("%d", c->map[y][x]);
+		printf("\n");
+	}
+}
 
 static void	graph_manager(t_ctx *c)
 {
@@ -22,10 +37,79 @@ static void	graph_manager(t_ctx *c)
 	mlx_loop(c->window.mlx);
 }
 
-// int	main(void)
-// {
-// 	t_ctx	c;
+static bool	map_parser(t_ctx *c, char **file)
+{
+	int		line;
 
-// 	init_ctx(&c);
-// 	graph_manager(&c);
-// }
+	line = -1;
+	while (file[++line])
+	{
+		if (file[line] && file[line][0] == '\n'
+			&& c->map_size_x <= 0 && c->map_size_y <= 0)
+			continue ;
+		else if (is_valid_texture(nl_remove(file[line])))
+			parse_texture(c, nl_remove(file[line]));
+		else if (is_valid_color(nl_remove(file[line])))
+			parse_color(c, nl_remove(file[line]));
+		else if (is_valid_context(c))
+		{
+			printf("Letzgong parsing\n");
+			parse_ascii_map(c, file, line);
+			break ;
+		}
+		else
+			return (false);
+	}
+	if (is_valid_context(c) && is_valid_ascii(c))
+		return (true);
+	return (false);
+}
+
+void	free_ctx(t_ctx *c)
+{
+	int	i;
+
+	if (c->map_size_x > 0 || c->map_size_y > 0)
+	{
+		i = -1;
+		while (++i < c->map_size_y)
+			free(c->map[i]);
+		free(c->map);
+		c->map = NULL;
+		c->map_size_x = -1;
+		c->map_size_y = -1;
+	}
+	if (c->no_texture.img)
+		free(c->no_texture.img);
+	if (c->so_texture.img)
+		free(c->so_texture.img);
+	if (c->we_texture.img)
+		free(c->we_texture.img);
+	if (c->ea_texture.img)
+		free(c->ea_texture.img);
+}
+
+int	main(int argc, char **argv)
+{
+	char		**file_arr;
+	t_ctx		c;
+
+	init_parser(&c);
+	init_ctx(&c);
+	if (argc != 2 || !argv[1])
+		return (print_err(22));
+	if (ft_eq(argv[1], ".cub", 2) < 1)
+		return (print_err(79));
+	printf("------\nMap:\n");
+	file_arr = unsplitable_file(argv[1]);
+	if (file_arr && map_parser(&c, file_arr))
+	{
+		printf("---\nMAP OK\n");
+		debug_map(&c);
+		graph_manager(&c);
+	}
+	else
+		printf("---\nMAP MEH\n");
+	free_split(file_arr);
+	free_ctx(&c);
+}

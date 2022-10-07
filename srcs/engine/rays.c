@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:43:23 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 19:23:28 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 15:04:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@ double	get_distance(double x1, double y1, double x2, double y2)
 bool	is_air(t_ctx *c, int computed_x, int computed_y)
 {
 	if (
-		computed_x > 0 && computed_x < c->map.width
-		&& computed_y > 0 && computed_y < c->map.height
-		&& (c->map.raw[computed_y][computed_x] == '0'
-		|| c->map.raw[computed_y][computed_x] == 'N'
-		|| c->map.raw[computed_y][computed_x] == 'S'
-		|| c->map.raw[computed_y][computed_x] == 'W'
-		|| c->map.raw[computed_y][computed_x] == 'E'
-		)
+		computed_x > 0 && computed_x < c->map_size_y
+		&& computed_y > 0 && computed_y < c->map_size_x
+		&& c->map[computed_y][computed_x] == 0
 	)
 		return (true);
 	return (false);
@@ -47,11 +42,11 @@ static double	get_h_dist(t_ctx *c, double angle)
 	int		cell_y;
 
 	up = abs((int)floor(angle / M_PI) % 2);
-	first_y = floor(c->player.y / c->map.cell_size) * c->map.cell_size;
+	first_y = floor(c->player.y / c->cell_size) * c->cell_size;
 	if (!up)
-		first_y += c->map.cell_size;
+		first_y += c->cell_size;
 	first_x = c->player.x + (first_y - c->player.y) / tan(angle);
-	if (!out_of_bounds(c, floor(first_x / c->map.cell_size), floor(first_y / c->map.cell_size)))
+	if (!out_of_bounds(c, floor(first_x / c->cell_size), floor(first_y / c->cell_size)))
 	{
 		draw_rect(c, (t_rect){
 			(first_x) * c->window.res,
@@ -62,22 +57,22 @@ static double	get_h_dist(t_ctx *c, double angle)
 		});
 	}
 	if (up)
-		y_step = -c->map.cell_size;
+		y_step = -c->cell_size;
 	else
-		y_step = c->map.cell_size;
+		y_step = c->cell_size;
 	x_step = y_step / tan(angle);
 	next_x = first_x;
 	next_y = first_y;
 	is_wall = false;
 	while (!is_wall)
 	{
-		cell_x = floor(next_x / c->map.cell_size);
-		cell_y = floor(next_y / c->map.cell_size);
+		cell_x = floor(next_x / c->cell_size);
+		cell_y = floor(next_y / c->cell_size);
 		if (up)
 			cell_y -= 1;
 		if (out_of_bounds(c, cell_x, cell_y))
 			break ;
-		if (c->map.raw[cell_y][cell_x] == '1')
+		if (c->map[cell_y][cell_x] == 1)
 			is_wall = true;
 		else
 		{
@@ -85,7 +80,7 @@ static double	get_h_dist(t_ctx *c, double angle)
 			next_y += y_step;
 		}
 	}
-	if (!out_of_bounds(c, floor(next_x / c->map.cell_size), floor(next_y / c->map.cell_size)))
+	if (!out_of_bounds(c, floor(next_x / c->cell_size), floor(next_y / c->cell_size)))
 	{
 		draw_rect(c, (t_rect){
 			(next_x) * c->window.res,
@@ -112,11 +107,11 @@ static double	get_v_dist(t_ctx *c, double angle)
 	int		cell_y;
 
 	right = abs((int)floor((angle - M_PI / 2) / M_PI) % 2);
-	first_x = floor(c->player.x / c->map.cell_size) * c->map.cell_size;
+	first_x = floor(c->player.x / c->cell_size) * c->cell_size;
 	if (right)
-		first_x += c->map.cell_size;
+		first_x += c->cell_size;
 	first_y = c->player.y + (first_x - c->player.x) * tan(angle);
-	if (!out_of_bounds(c, floor(first_x / c->map.cell_size), floor(first_y / c->map.cell_size)))
+	if (!out_of_bounds(c, floor(first_x / c->cell_size), floor(first_y / c->cell_size)))
 	{
 		draw_rect(c, (t_rect){
 			(first_x) * c->window.res,
@@ -127,22 +122,22 @@ static double	get_v_dist(t_ctx *c, double angle)
 		});
 	}
 	if (right)
-		x_step = c->map.cell_size;
+		x_step = c->cell_size;
 	else
-		x_step = -c->map.cell_size;
+		x_step = -c->cell_size;
 	y_step = x_step * tan(angle);
 	next_x = first_x;
 	next_y = first_y;
 	is_wall = false;
 	while (!is_wall)
 	{
-		cell_x = floor(next_x / c->map.cell_size);
+		cell_x = floor(next_x / c->cell_size);
 		if (!right)
 			cell_x -= 1;
-		cell_y = floor(next_y / c->map.cell_size);
+		cell_y = floor(next_y / c->cell_size);
 		if (out_of_bounds(c, cell_x, cell_y))
 			break ;
-		if (c->map.raw[cell_y][cell_x] == '1')
+		if (c->map[cell_y][cell_x] == 1)
 			is_wall = true;
 		else
 		{
@@ -150,7 +145,7 @@ static double	get_v_dist(t_ctx *c, double angle)
 			next_y += y_step;
 		}
 	}
-	if (!out_of_bounds(c, floor(next_x / c->map.cell_size), floor(next_y / c->map.cell_size)))
+	if (!out_of_bounds(c, floor(next_x / c->cell_size), floor(next_y / c->cell_size)))
 	{
 		draw_rect(c, (t_rect){
 			(next_x) * c->window.res,
@@ -183,7 +178,7 @@ static t_ray	cast_ray(t_ctx *c, double angle, int id)
 		ray.distance = h_dist;
 		ray.is_vertical = false;
 	}
-	ray.cell_percent = ray.id % c->map.cell_size;
+	ray.cell_percent = ray.id % c->cell_size;
 	ray.facing = get_facing(angle, ray.is_vertical);
 	return (ray);
 }

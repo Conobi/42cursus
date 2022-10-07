@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 15:58:27 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 16:38:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 	int	y;
 	int	cell_size;
 
-	cell_size = c->map.cell_size * c->window.res;
+	cell_size = c->cell_size * c->window.res;
 	y = 0;
-	while (c->map.raw[y])
+	while (y < c->map_size_y)
 	{
 		x = 0;
-		while (c->map.raw[y][x])
+		while (x < c->map_size_x)
 		{
-			if (c->map.raw[y][x] == '1')
+			if (c->map[y][x] == 1)
 			{
 				draw_rect(c, (t_rect){
 					rmap.pos_x + x * cell_size,
@@ -35,7 +35,7 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 					0x21D075
 				});
 			}
-			else if (c->map.raw[y][x] == '0' || c->map.raw[y][x] == 'N')
+			else if (c->map[y][x] == 0)
 			{
 				draw_rect(c, (t_rect){
 					rmap.pos_x + x * cell_size,
@@ -45,32 +45,22 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 					0xFFFFFF
 				});
 			}
-			else
-			{
-				draw_rect(c, (t_rect){
-					rmap.pos_x + x * cell_size,
-					rmap.pos_y + y * cell_size,
-					cell_size,
-					cell_size,
-					0x0
-				});
-			}
-			if (y == c->map.height - 1)
+			if (y == c->map_size_y - 1)
 			{
 				draw_line(c, (t_line){
 					x * cell_size + rmap.pos_x,
 					0,
 					x * cell_size + rmap.pos_x,
-					c->map.height * cell_size,
+					c->map_size_y * cell_size,
 					0x00
 				});
 			}
-			if (x == c->map.width - 1)
+			if (x == c->map_size_x - 1)
 			{
 				draw_line(c, (t_line){
 					0,
 					y * cell_size + rmap.pos_x,
-					c->map.width * cell_size,
+					c->map_size_x * cell_size,
 					y * cell_size + rmap.pos_x,
 					0x00
 				});

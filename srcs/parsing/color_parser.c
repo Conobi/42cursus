@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:22:03 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/06 21:34:57 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 14:58:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ bool	is_valid_color(char *str)
 	return (free_split(str_split));
 }
 
-void	parse_color(t_parser *parser_ctx, char *str)
+void	parse_color(t_ctx *c, char *str)
 {
 	char	*unspaced_str;
 	char	**str_split;
@@ -100,13 +100,11 @@ void	parse_color(t_parser *parser_ctx, char *str)
 		if (str_split && check_color_values(str_split))
 		{
 			if (str[0] == 'F')
-				parser_ctx->f_color = rgba2hex(
-						ft_atoi(str_split[0]), ft_atoi(str_split[1]),
-						ft_atoi(str_split[2]), 255);
+				c->f_color = (0 << 24 | ft_atoi(str_split[0]) << 16
+						| ft_atoi(str_split[1]) << 8 | ft_atoi(str_split[2]));
 			else if (str[0] == 'C')
-				parser_ctx->c_color = rgba2hex(
-						ft_atoi(str_split[0]), ft_atoi(str_split[1]),
-						ft_atoi(str_split[2]), 255);
+				c->c_color = (0 << 24 | ft_atoi(str_split[0]) << 16
+						| ft_atoi(str_split[1]) << 8 | ft_atoi(str_split[2]));
 		}
 		free_split(str_split);
 	}

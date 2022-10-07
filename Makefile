@@ -58,12 +58,12 @@ SRC			= main.c \
 			  utils/utils.c \
 			  utils/helpers.c \
 			  parsing/parser.c \
-			  parsing/char_split.c \
 			  parsing/checkers.c \
 			  parsing/utils.c \
 			  parsing/color_parser.c \
 			  parsing/texture_parser.c \
 			  parsing/map_parser.c \
+			  parsing/map_parser_utils.c \
 			  parsing/unsplitable.c
 
 SDIR		= srcs

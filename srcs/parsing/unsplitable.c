@@ -6,11 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:29:07 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/06 22:01:15 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 14:37:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "cub3d.h"
 
 static int	count_file_lines(char *filename)
 {
@@ -72,7 +72,6 @@ char	**unsplitable_file(char *filename)
 	if (!ret)
 		return (NULL);
 	push_lines(filename, ret);
-	printf("nb_lines = %d\n---\n", nb_lines);
 	return (ret);
 }
 

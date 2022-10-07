@@ -19,9 +19,9 @@
 # include <time.h>
 # include <stdbool.h>
 # include <math.h>
+# include <string.h>
 # include "libft.h"
 # include "keys.h"
-# include "parser.h"
 # include "mlx.h"
 
 # ifndef M_PI
@@ -38,6 +38,11 @@
 # define SEAST 1
 # define NWEST 2
 # define NEAST 3
+
+# define RED_TXT	"\001\033[91m\002"
+# define GRN_TXT	"\001\033[32m\002"
+# define RESET_TXT	"\001\033[0m\002"
+# define BOLD_TXT	"\001\033[1m\002"
 
 typedef struct s_window {
 	void	*mlx;
@@ -76,15 +81,21 @@ typedef struct s_img {
 typedef struct s_ctx {
 	t_window	window;
 	t_player	player;
-	t_map		map;
 	t_img		img;
 	int			rays_num;
 	int			target_speed;
 	int			tick;
-	t_img		wall_north;
-	t_img		wall_south;
-	t_img		wall_east;
-	t_img		wall_west;
+	int			cell_size;
+	int			map_size_x;
+	int			map_size_y;
+	int			f_color;
+	int			c_color;
+	int			debug;
+	t_img		no_texture;
+	t_img		so_texture;
+	t_img		we_texture;
+	t_img		ea_texture;
+	int			**map;
 }	t_ctx;
 
 typedef struct s_ray {
@@ -144,6 +155,7 @@ void		draw_map(t_ctx *c, t_rmap rmap);
 
 // Initialize
 void		init_ctx(t_ctx *c);
+void		init_parser(t_ctx *c);
 
 // Utils
 void		draw_rect(t_ctx *c, t_rect rect);
@@ -166,5 +178,34 @@ void		refresh_handler(t_ctx *c);
 
 // Events handlers
 void		event_listener(t_ctx *c);
+
+/*
+		PARSING
+						*/
+
+/* Parser */
+void		parse_color(t_ctx *c, char *str);
+void		parse_texture(t_ctx *c, char *str);
+void		parse_ascii_map(t_ctx *c, char **file, int line);
+
+/* Parser utils */
+int			load_fd(char *path);
+int			print_err(int errno);
+bool		free_split(char **str_split);
+char		*nl_remove(char *str);
+
+/* Map parser utils */
+bool		free_ascii_map(t_ctx *c);
+short		type_of_char(char c);
+void		init_line(t_ctx *c, int *line);
+
+/* File line spliter */
+char		**unsplitable_file(char *filename);
+
+/* Parser checker */
+bool		is_valid_texture(char *str);
+bool		is_valid_color(char *str);
+bool		is_valid_context(t_ctx *c);
+bool		is_valid_ascii(t_ctx *c);
 
 #endif

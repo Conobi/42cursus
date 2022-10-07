@@ -6,72 +6,40 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:56:56 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/06 22:38:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 16:29:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	free_ascii_map(t_parser *parser_ctx)
+static bool	set_map_values(t_ctx *c, const char ch, int y, int x)
 {
-	int	i;
-
-	i = -1;
-	printf("On reset la map !\n");
-	parser_ctx->map_size_x = -1;
-	parser_ctx->map_size_y = -1;
-	parser_ctx->player_pos_x = -1;
-	parser_ctx->player_pos_y = -1;
-	parser_ctx->player_facing = -1;
-	if (parser_ctx->map_size_x > 0 || parser_ctx->map_size_y > 0)
+	if (ch == '0')
+		c->map[y][x] = 0;
+	else if (ch == ' ' || ch == '1')
+		c->map[y][x] = 1;
+	else if ((ch == 'N' || ch == 'S' || ch == 'W' || ch == 'E')
+		&& c->player.x == -1
+		&& c->player.y == -1)
 	{
-		printf("On free la map !\n");
-		while (parser_ctx->map[++i])
-			free(parser_ctx->map[i]);
-		free(parser_ctx->map);
-	}
-	return (false);
-}
-
-short	type_of_char(char c)
-{
-	if (c == '1' || c == ' ')
-		return (0);
-	else if (c == '0')
-		return (1);
-	else if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return (2);
-	return (-1);
-}
-
-bool	set_map_values(t_parser *parser_ctx, const char c, int x, int y)
-{
-	if (c == '0')
-		parser_ctx->map[x][y] = 0;
-	else if (c == ' ' || c == '1')
-		parser_ctx->map[x][y] = 1;
-	else if ((c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		&& parser_ctx->player_pos_x == -1
-		&& parser_ctx->player_pos_y == -1)
-	{
-		parser_ctx->map[x][y] = 0;
-		parser_ctx->player_pos_x = x;
-		parser_ctx->player_pos_y = y;
+		c->map[y][x] = 0;
+		c->player.x = x * c->cell_size + c->cell_size / 2;
+		c->player.y = y * c->cell_size + c->cell_size / 2;
 	}
 	else
-		return (free_ascii_map(parser_ctx));
-	if (c == 'N')
-		parser_ctx->player_facing = NORTH;
-	else if (c == 'S')
-		parser_ctx->player_facing = SOUTH;
-	else if (c == 'W')
-		parser_ctx->player_facing = WEST;
-	else if (c == 'E')
-		parser_ctx->player_facing = EAST;
+		return (free_ascii_map(c));
+	if (ch == 'N')
+		c->player.angle = NORTH;
+	else if (ch == 'S')
+		c->player.angle = SOUTH;
+	else if (ch == 'W')
+		c->player.angle = WEST;
+	else if (ch == 'E')
+		c->player.angle = EAST;
 	return (true);
 }
 
-bool	is_valid_boundary(char **file, int line, int x, int y)
+static bool	is_valid_boundary(char **file, int line, int x, int y)
 {
 	int	len_plus;
 	int	len_minus;
@@ -93,73 +61,69 @@ bool	is_valid_boundary(char **file, int line, int x, int y)
 	return (true);
 }
 
-static bool	init_map_size(t_parser *parser_ctx, char **file, int line)
+static bool	init_map_size(t_ctx *c, char **file, int line)
 {
-	int	y;
+	int	x;
 
-	parser_ctx->map_size_x = 0;
-	parser_ctx->map_size_y = 0;
+	c->map_size_x = 0;
+	c->map_size_y = 0;
 	line--;
 	while (file[++line])
 	{
-		parser_ctx->map_size_x++;
-		y = -1;
+		c->map_size_y++;
+		x = -1;
 		if (!file[line][0] || file[line][0] == '\n')
-			return (free_ascii_map(parser_ctx));
-		while (file[line][++y] && file[line][y] != '\n')
+			return (free_ascii_map(c));
+		while (file[line][++x] && file[line][x] != '\n')
 		{
-			if (type_of_char(file[line][y]) >= 0
-				&& is_valid_boundary(file, line, parser_ctx->map_size_x, y))
+			if (type_of_char(file[line][x]) >= 0
+				&& is_valid_boundary(file, line, c->map_size_x, x))
 			{
-				printf("%c", file[line][y]);
-				if (y > parser_ctx->map_size_y)
-					parser_ctx->map_size_y = y + 1;
+				if (x > c->map_size_x)
+					c->map_size_x = x + 1;
 			}
 			else
-			{
-				return (free_ascii_map(parser_ctx));
-			}
+				return (free_ascii_map(c));
 		}
-		printf(" (%d)\n", parser_ctx->map_size_y);
 	}
+	printf("SX: %d SY: %d\n", c->map_size_x, c->map_size_y);
 	return (true);
 }
 
-bool	free_failed_map_alloc(t_parser *parser_ctx, int x)
+static bool	free_failed_map_alloc(t_ctx *c, int x)
 {
-	parser_ctx->map_size_x = -1;
-	parser_ctx->map_size_y = -1;
-	parser_ctx->player_pos_x = -1;
-	parser_ctx->player_pos_y = -1;
-	parser_ctx->player_facing = -1;
+	c->map_size_x = -1;
+	c->map_size_y = -1;
+	c->player.x = -1;
+	c->player.y = -1;
 	while (--x || x >= 0)
-		free(parser_ctx->map[x]);
+		free(c->map[x]);
 	return (true);
 }
 
-void	parse_ascii_map(t_parser *parser_ctx, char **file, int line)
+void	parse_ascii_map(t_ctx *c, char **file, int line)
 {
 	int	x;
 	int	y;
 
-	x = -1;
-	init_map_size(parser_ctx, file, line);
-	if (parser_ctx->map_size_x > 0 && parser_ctx->map_size_y > 0)
+	y = -1;
+	init_map_size(c, file, line);
+	if (c->map_size_x > 0 && c->map_size_y > 0)
 	{
-		parser_ctx->map = ft_calloc(parser_ctx->map_size_x + 1, sizeof(void *));
-		if (!parser_ctx->map)
+		c->map = ft_calloc(c->map_size_y + 1, sizeof(void *));
+		if (!c->map)
 			return ;
 		line--;
 		while (file[++line] && file[line][0] && file[line][0] != '\n')
 		{
-			parser_ctx->map[++x] = ft_calloc(parser_ctx->map_size_y + 1,
+			c->map[++y] = ft_calloc(c->map_size_x + 1,
 					sizeof(int));
-			if (!parser_ctx->map[x] && free_failed_map_alloc(parser_ctx, x))
+			if (!c->map[y] && free_failed_map_alloc(c, y))
 				return ;
-			ft_memset(parser_ctx->map[x], 1, parser_ctx->map_size_x);
-			y = -1;
-			while (file[line][++y] && file[line][y] != '\n')
-				if (!set_map_values(parser_ctx, file[line][y], x, y))
+			init_line(c, c->map[y]);
+			x = -1;
+			while (file[line][++x] && file[line][x] != '\n')
+				if (!set_map_values(c, file[line][x], y, x))
 					return ;
 		}
 	}

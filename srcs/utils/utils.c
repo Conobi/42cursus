@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/06 01:50:07 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 15:26:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	get_facing(double angle, bool is_vertical)
 
 bool	out_of_bounds(t_ctx *c, int x, int y)
 {
-	return (x < 0 || x >= c->map.width || y < 0 || y >= c->map.height);
+	return (x < 0 || x >= c->map_size_y || y < 0 || y >= c->map_size_x);
 }
 
 double	to_radians(int degrees)

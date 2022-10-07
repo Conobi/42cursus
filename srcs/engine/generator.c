@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:48:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 19:51:05 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 15:01:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	move_player(t_ctx *c)
 
 	new_x = c->player.x + (cos(c->player.angle) * c->player.speed);
 	new_y = c->player.y + (sin(c->player.angle) * c->player.speed);
-	if (!is_air(c, floor(new_x / c->map.cell_size), floor(new_y / c->map.cell_size)))
+	if (!is_air(c, floor(new_x / c->cell_size), floor(new_y / c->cell_size)))
 		return ;
 	c->player.x = new_x;
 	c->player.y = new_y;

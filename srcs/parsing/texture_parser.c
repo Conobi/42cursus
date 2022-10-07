@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:55:49 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/06 22:38:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 15:31:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,18 @@ bool	is_valid_texture(char *str)
 	return (free_split(str_split));
 }
 
-static t_texture	texture_from_file(char *str)
+static t_img	texture_from_file(t_ctx *c, char *str)
 {
-	void	*mlx;
-	void	*img;
-	int		height;
-	int		width;
+	t_img	ret;
 
-	mlx = mlx_init();
-	img = mlx_xpm_file_to_image(mlx, str, &height, &width);
-	free(mlx);
-	return ((t_texture){img, height, width});
+	ret.img = mlx_xpm_file_to_image(c->window.mlx, str,
+			&ret.height, &ret.width);
+	ret.addr = mlx_get_data_addr(ret.img, &ret.bits_per_pixel,
+			&ret.line_length, &ret.endian);
+	return (ret);
 }
 
-void	parse_texture(t_parser *parser_ctx, char *str)
+void	parse_texture(t_ctx *c, char *str)
 {
 	char	**str_split;
 
@@ -62,13 +60,13 @@ void	parse_texture(t_parser *parser_ctx, char *str)
 	)
 	{
 		if (ft_eq(str_split[0], "NO", 0))
-			parser_ctx->no_texture = texture_from_file(str_split[1]);
+			c->no_texture = texture_from_file(c, str_split[1]);
 		else if (ft_eq(str_split[0], "SO", 0))
-			parser_ctx->so_texture = texture_from_file(str_split[1]);
+			c->so_texture = texture_from_file(c, str_split[1]);
 		else if (ft_eq(str_split[0], "WE", 0))
-			parser_ctx->we_texture = texture_from_file(str_split[1]);
+			c->we_texture = texture_from_file(c, str_split[1]);
 		else if (ft_eq(str_split[0], "EA", 0))
-			parser_ctx->ea_texture = texture_from_file(str_split[1]);
+			c->ea_texture = texture_from_file(c, str_split[1]);
 	}
 	free_split(str_split);
 }

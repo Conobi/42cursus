@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/06 01:55:13 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 15:07:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	draw_textures(t_ctx *c, t_ray ray, int x, int y, int wall_height)
 	while (wall_height)
 	{
 		color = view_distance(
-			get_pixel_color_from_texture(c->wall_north, ray.cell_percent, text_y++),
+			get_pixel_color_from_texture(c->no_texture, ray.cell_percent, text_y++),
 			-(ray.distance / 200));
 		pixel_put(c, x, y++, color);
 		--wall_height;
@@ -47,7 +47,7 @@ void	render(t_ctx *c, t_ray *rays)
 	while (i < c->rays_num)
 	{
 		distance = fix_fisheye(rays[i].distance, rays[i].angle, c->player.angle);
-		wall_height = (c->window.width / distance) * c->map.cell_size; // todo: fix big wall size bug when stick on a wall
+		wall_height = (c->window.width / distance) * c->cell_size; // todo: fix big wall size bug when stick on a wall
 		// color = view_distance(0xffffff, -(rays[i].distance / 100));
 		// if (rays[i].facing == NORTH)
 		// 	color = view_distance(0xeb4034, -(rays[i].distance / 100));

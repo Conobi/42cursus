@@ -6,41 +6,42 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:24:32 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/06 22:09:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 16:22:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_valid_context(t_parser *parser_ctx)
+bool	is_valid_context(t_ctx *c)
 {
-	if (!parser_ctx->file_err
-		&& parser_ctx->f_color >= 0
-		&& parser_ctx->c_color >= 0
-		&& parser_ctx->no_texture.img != NULL
-		&& parser_ctx->so_texture.img != NULL
-		&& parser_ctx->we_texture.img != NULL
-		&& parser_ctx->ea_texture.img != NULL)
+	if (c->f_color >= 0
+		&& c->c_color >= 0
+		&& c->no_texture.img != NULL
+		&& c->so_texture.img != NULL
+		&& c->we_texture.img != NULL
+		&& c->ea_texture.img != NULL)
 	{
 		printf("- %sContexte valide%s -\n", GRN_TXT, RESET_TXT);
 		return (true);
 	}
 	printf("- %sContexte invalide%s -\n", RED_TXT, RESET_TXT);
-	printf("F: %04X\nC: %04X\n", parser_ctx->f_color, parser_ctx->c_color);
-	printf("File err: %d\nF: %d\nC: %d\n", !parser_ctx->file_err,
-		parser_ctx->f_color >= 0, parser_ctx->c_color >= 0);
+	printf("F: %04X\nC: %04X\n", c->f_color, c->c_color);
+	printf("F: %d\nC: %d\n",
+		c->f_color >= 0, c->c_color >= 0);
 	printf("NO: %d\nSO: %d\nWE: %d\nEA: %d\n",
-		parser_ctx->no_texture.img != NULL, parser_ctx->so_texture.img != NULL,
-		parser_ctx->we_texture.img != NULL, parser_ctx->ea_texture.img != NULL
+		c->no_texture.img != NULL, c->so_texture.img != NULL,
+		c->we_texture.img != NULL, c->ea_texture.img != NULL
 		);
 	return (false);
 }
 
-bool	is_valid_ascii(t_parser *parser_ctx)
+bool	is_valid_ascii(t_ctx *c)
 {
-	printf("MAP ASCII:\nSX: %d\nSY: %d\nPX: %d\nPY: %d\n", parser_ctx->map_size_x, parser_ctx->map_size_y, parser_ctx->player_pos_x, parser_ctx->player_pos_y);
-	if (parser_ctx->map_size_x > 0 && parser_ctx->map_size_y > 0
-		&& parser_ctx->player_pos_x > 0 && parser_ctx->player_pos_y > 0)
+	printf("MAP ASCII:\nSX: %d\nSY: %d\nPX: %f\nPY: %f\n", c->map_size_x,
+		c->map_size_y, c->player.x,
+		c->player.y);
+	if (c->map_size_x > 0 && c->map_size_y > 0
+		&& c->player.x > 0 && c->player.y > 0)
 		return (true);
 	return (false);
 }
