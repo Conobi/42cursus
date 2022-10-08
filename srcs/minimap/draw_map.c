@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 15:58:27 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/08 22:16:28 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 	int	y;
 	int	cell_size;
 
-	cell_size = c->map.cell_size * c->window.res;
+	cell_size = c->map.cell_map_size * c->window.res;
 	y = 0;
 	while (c->map.raw[y])
 	{

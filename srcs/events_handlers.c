@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/08/28 02:18:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 19:22:21 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static int	key_press(int keycode, t_ctx *c)
 	else if (keycode == KB_S)
 		c->player.speed = -c->target_speed;
 	else if (keycode == KB_A)
-		c->player.angle -= to_radians(c->target_speed + 2);
+		c->player.angle -= to_radians(c->target_speed / 4 + 2);
 	else if (keycode == KB_D)
-		c->player.angle += to_radians(c->target_speed + 2);
+		c->player.angle += to_radians(c->target_speed / 4 + 2);
 	else if (keycode == KB_ESC)
 		exit (0);
 	refresh_handler(c);

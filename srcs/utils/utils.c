@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/06 01:50:07 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 14:11:26 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_rgba	hex2rgba(int color)
 int	view_distance(int color, float correction)
 {
 	t_rgba	s;
+	int		new_color;
 
 	s = hex2rgba(color);
 	if (correction < 0)
@@ -74,7 +75,10 @@ int	view_distance(int color, float correction)
 		s.green = (255 - s.green) * correction + s.green;
 		s.blue = (255 - s.blue) * correction + s.blue;
 	}
-	return (rgba2hex(s)); // todo: fix color overflow
+	new_color = rgba2hex(s);
+	if (new_color < 0)
+		new_color = 0;
+	return (new_color);
 }
 
 int	get_facing(double angle, bool is_vertical)

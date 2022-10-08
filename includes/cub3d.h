@@ -60,6 +60,7 @@ typedef struct map {
 	int		height;
 	int		width;
 	int		cell_size;
+	int		cell_map_size;
 }	t_map;
 
 typedef struct s_img {
@@ -89,10 +90,12 @@ typedef struct s_ctx {
 typedef struct s_ray {
 	double	angle;
 	double	distance;
+	double	x_hit;
+	double	y_hit;
 	int		facing;
 	int		id;
-	bool	is_vertical;
 	int		cell_percent;
+	bool	is_vertical;
 }	t_ray;
 
 typedef struct s_rmap {

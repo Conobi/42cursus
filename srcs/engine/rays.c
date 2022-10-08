@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:43:23 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 19:23:28 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 20:54:43 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ bool	is_air(t_ctx *c, int computed_x, int computed_y)
 	return (false);
 }
 
-static double	get_h_dist(t_ctx *c, double angle)
+static t_ray	get_h_ray(t_ctx *c, double angle, int id)
 {
+	t_ray	ray;
 	int		up;
 	double	first_x;
 	double	first_y;
@@ -46,6 +47,8 @@ static double	get_h_dist(t_ctx *c, double angle)
 	int		cell_x;
 	int		cell_y;
 
+	ray.id = id;
+	ray.angle = angle;
 	up = abs((int)floor(angle / M_PI) % 2);
 	first_y = floor(c->player.y / c->map.cell_size) * c->map.cell_size;
 	if (!up)
@@ -54,8 +57,8 @@ static double	get_h_dist(t_ctx *c, double angle)
 	if (!out_of_bounds(c, floor(first_x / c->map.cell_size), floor(first_y / c->map.cell_size)))
 	{
 		draw_rect(c, (t_rect){
-			(first_x) * c->window.res,
-			(first_y) * c->window.res,
+			(first_x / 5) * c->window.res,
+			(first_y / 5) * c->window.res,
 			2,
 			2,
 			0x00d0ff
@@ -88,18 +91,25 @@ static double	get_h_dist(t_ctx *c, double angle)
 	if (!out_of_bounds(c, floor(next_x / c->map.cell_size), floor(next_y / c->map.cell_size)))
 	{
 		draw_rect(c, (t_rect){
-			(next_x) * c->window.res,
-			(next_y) * c->window.res,
+			(next_x / 5) * c->window.res,
+			(next_y / 5) * c->window.res,
 			2,
 			2,
 			0xfff
 		});
 	}
-	return (get_distance(c->player.x, c->player.y, next_x, next_y));
+	ray.distance = get_distance(c->player.x, c->player.y, next_x, next_y);
+	ray.is_vertical = false;
+	ray.x_hit = next_x;
+	ray.y_hit = next_y;
+	ray.cell_percent = ray.id % c->map.cell_size;
+	ray.facing = get_facing(angle, ray.is_vertical);
+	return (ray);
 }
 
-static double	get_v_dist(t_ctx *c, double angle)
+static t_ray	get_v_ray(t_ctx *c, double angle, int id)
 {
+	t_ray	ray;
 	int		right;
 	double	first_x;
 	double	first_y;
@@ -111,6 +121,8 @@ static double	get_v_dist(t_ctx *c, double angle)
 	int		cell_x;
 	int		cell_y;
 
+	ray.id = id;
+	ray.angle = angle;
 	right = abs((int)floor((angle - M_PI / 2) / M_PI) % 2);
 	first_x = floor(c->player.x / c->map.cell_size) * c->map.cell_size;
 	if (right)
@@ -119,8 +131,8 @@ static double	get_v_dist(t_ctx *c, double angle)
 	if (!out_of_bounds(c, floor(first_x / c->map.cell_size), floor(first_y / c->map.cell_size)))
 	{
 		draw_rect(c, (t_rect){
-			(first_x) * c->window.res,
-			(first_y) * c->window.res,
+			(first_x / 5) * c->window.res,
+			(first_y / 5) * c->window.res,
 			2,
 			2,
 			0xfcba03
@@ -153,39 +165,32 @@ static double	get_v_dist(t_ctx *c, double angle)
 	if (!out_of_bounds(c, floor(next_x / c->map.cell_size), floor(next_y / c->map.cell_size)))
 	{
 		draw_rect(c, (t_rect){
-			(next_x) * c->window.res,
-			(next_y) * c->window.res,
+			(next_x / 5) * c->window.res,
+			(next_y / 5) * c->window.res,
 			2,
 			2,
 			0xe3fc03
 		});
 	}
-	return (get_distance(c->player.x, c->player.y, next_x, next_y));
+	ray.distance = get_distance(c->player.x, c->player.y, next_x, next_y);
+	ray.is_vertical = true;
+	ray.x_hit = next_x;
+	ray.y_hit = next_y;
+	ray.cell_percent = ray.id % c->map.cell_size;
+	ray.facing = get_facing(angle, ray.is_vertical);
+	return (ray);
 }
 
 static t_ray	cast_ray(t_ctx *c, double angle, int id)
 {
-	t_ray	ray;
-	double	v_dist;
-	double	h_dist;
+	t_ray	v_ray;
+	t_ray	h_ray;
 
-	ray.id = id;
-	ray.angle = angle;
-	v_dist = get_v_dist(c, angle);
-	h_dist = get_h_dist(c, angle);
-	if (h_dist >= v_dist)
-	{
-		ray.distance = v_dist;
-		ray.is_vertical = true;
-	}
-	else
-	{
-		ray.distance = h_dist;
-		ray.is_vertical = false;
-	}
-	ray.cell_percent = ray.id % c->map.cell_size;
-	ray.facing = get_facing(angle, ray.is_vertical);
-	return (ray);
+	v_ray = get_v_ray(c, angle, id);
+	h_ray = get_h_ray(c, angle, id);
+	if (h_ray.distance >= v_ray.distance)
+		return (v_ray);
+	return (h_ray);
 }
 
 t_ray	*create_rays(t_ctx *c)

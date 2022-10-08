@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/06 01:55:13 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 20:56:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,22 @@ static double	fix_fisheye(double distance, double angle, double player_angle)
 
 static void	draw_textures(t_ctx *c, t_ray ray, int x, int y, int wall_height)
 {
-	int	text_y;
-	int	color;
+	double	text_y;
+	double	text_x;
+	int		color;
+	int		px;
 
-	text_y = 0;
-	while (wall_height)
+	text_y = c->map.cell_size;
+	text_x = (((int)ray.x_hit + (int)ray.y_hit) % c->map.cell_size);
+	px = 0;
+	while (px++ < wall_height)
 	{
+		text_y -= ((double)c->map.cell_size / wall_height);
 		color = view_distance(
-			get_pixel_color_from_texture(c->wall_north, ray.cell_percent, text_y++),
-			-(ray.distance / 200));
+				get_pixel_color_from_texture(
+					c->wall_north, text_x, text_y),
+				-(ray.distance / (c->map.cell_size * 10)));
 		pixel_put(c, x, y++, color);
-		--wall_height;
 	}
 }
 
@@ -41,24 +46,18 @@ void	render(t_ctx *c, t_ray *rays)
 	int		i;
 	double	distance;
 	int		wall_height;
-	// int		color;
 
 	i = 0;
 	while (i < c->rays_num)
 	{
 		distance = fix_fisheye(rays[i].distance, rays[i].angle, c->player.angle);
-		wall_height = (c->window.width / distance) * c->map.cell_size; // todo: fix big wall size bug when stick on a wall
-		// color = view_distance(0xffffff, -(rays[i].distance / 100));
-		// if (rays[i].facing == NORTH)
-		// 	color = view_distance(0xeb4034, -(rays[i].distance / 100));
-		// else if (rays[i].facing == SOUTH)
-		// 	color = view_distance(0x32a852, -(rays[i].distance / 100));
-		// else if (rays[i].facing == EAST)
-		// 	color = view_distance(0x4287f5, -(rays[i].distance / 100));
-		// draw_rect(c, (t_rect){i, c->window.height / 2 - wall_height / 2, 1, wall_height, color});
-		draw_textures(c, rays[i], i, c->window.height / 2 - wall_height / 2, wall_height);
-		draw_rect(c, (t_rect){i, c->window.height / 2 + wall_height / 2, 1, c->window.height / 2 - wall_height / 2, 0x262626});
-		draw_rect(c, (t_rect){i, 0, 1, c->window.height / 2 - wall_height / 2, 0x262626});
+		wall_height = (c->window.width / distance) * c->map.cell_size;
+		draw_textures(c, rays[i],
+			i, c->window.height / 2 - wall_height / 2, wall_height);
+		draw_rect(c, (t_rect){i, c->window.height / 2 + wall_height / 2,
+			1, c->window.height / 2 - wall_height / 2, 0x262626});
+		draw_rect(c, (t_rect){i, 0, 1,
+			c->window.height / 2 - wall_height / 2, 0x262626});
 		i++;
 	}
 }
