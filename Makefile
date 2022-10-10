@@ -57,7 +57,6 @@ SRC			= main.c \
 			  utils/draw.c \
 			  utils/utils.c \
 			  utils/helpers.c \
-			  parsing/parser.c \
 			  parsing/checkers.c \
 			  parsing/utils.c \
 			  parsing/color_parser.c \

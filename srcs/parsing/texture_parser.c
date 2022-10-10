@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:55:49 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/07 15:31:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/08 22:59:53 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static t_img	texture_from_file(t_ctx *c, char *str)
 
 	ret.img = mlx_xpm_file_to_image(c->window.mlx, str,
 			&ret.height, &ret.width);
+	// if (!texture->img)
+	// 	// todo: throw error or import default texture
 	ret.addr = mlx_get_data_addr(ret.img, &ret.bits_per_pixel,
 			&ret.line_length, &ret.endian);
 	return (ret);

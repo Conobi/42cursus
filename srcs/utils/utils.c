@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/07 15:26:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/09 00:28:21 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_rgba	hex2rgba(int color)
 int	view_distance(int color, float correction)
 {
 	t_rgba	s;
+	int		new_color;
 
 	s = hex2rgba(color);
 	if (correction < 0)
@@ -74,7 +75,10 @@ int	view_distance(int color, float correction)
 		s.green = (255 - s.green) * correction + s.green;
 		s.blue = (255 - s.blue) * correction + s.blue;
 	}
-	return (rgba2hex(s)); // todo: fix color overflow
+	new_color = rgba2hex(s);
+	if (new_color < 0)
+		new_color = 0;
+	return (new_color);
 }
 
 int	get_facing(double angle, bool is_vertical)
@@ -92,7 +96,7 @@ int	get_facing(double angle, bool is_vertical)
 
 bool	out_of_bounds(t_ctx *c, int x, int y)
 {
-	return (x < 0 || x >= c->map_size_y || y < 0 || y >= c->map_size_x);
+	return (x < 0 || x >= c->map_size_x || y < 0 || y >= c->map_size_y);
 }
 
 double	to_radians(int degrees)

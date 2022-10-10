@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/07 16:47:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/09 15:55:21 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	graph_manager(t_ctx *c)
 	c->img = image_handler(c);
 	mlx_put_image_to_window(c->window.mlx, c->window.id, c->img.img, 0, 0);
 	event_listener(c);
+	mlx_mouse_hide(c->window.mlx, c->window.id);
 	mlx_loop(c->window.mlx);
 }
 

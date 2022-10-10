@@ -22,6 +22,8 @@
 # include <string.h>
 # include "libft.h"
 # include "keys.h"
+# include "events.h"
+# include "types.h"
 # include "mlx.h"
 
 # ifndef M_PI
@@ -43,107 +45,6 @@
 # define GRN_TXT	"\001\033[32m\002"
 # define RESET_TXT	"\001\033[0m\002"
 # define BOLD_TXT	"\001\033[1m\002"
-
-typedef struct s_window {
-	void	*mlx;
-	void	*id;
-	int		height;
-	int		width;
-	int		res;
-}	t_window;
-
-typedef struct s_player {
-	double		x;
-	double		y;
-	double		angle;
-	int			speed;
-	int			size;
-	int			fov;
-}	t_player;
-
-typedef struct map {
-	char	**raw;
-	int		height;
-	int		width;
-	int		cell_size;
-}	t_map;
-
-typedef struct s_img {
-	void	*img;
-	char	*addr;
-	int		width;
-	int		height;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_img;
-
-typedef struct s_ctx {
-	t_window	window;
-	t_player	player;
-	t_img		img;
-	int			rays_num;
-	int			target_speed;
-	int			tick;
-	int			cell_size;
-	int			map_size_x;
-	int			map_size_y;
-	int			f_color;
-	int			c_color;
-	int			debug;
-	t_img		no_texture;
-	t_img		so_texture;
-	t_img		we_texture;
-	t_img		ea_texture;
-	int			**map;
-}	t_ctx;
-
-typedef struct s_ray {
-	double	angle;
-	double	distance;
-	int		facing;
-	int		id;
-	bool	is_vertical;
-	int		cell_percent;
-}	t_ray;
-
-typedef struct s_rmap {
-	int		pos_x;
-	int		pos_y;
-	t_ray	*rays;
-}	t_rmap;
-
-/**
- * @brief Type to create and render a rectangle in the window
- * @param x (int) The x coordinate
- * @param y (int) The y coordinate
- * @param width (int) The width of the rectangle to draw
- * @param height (int) The height of the rectangle to draw
- * @param color (int) The color of the rectangle to draw
- */
-typedef struct s_rect
-{
-	int		x;
-	int		y;
-	int		width;
-	int		height;
-	int		color;
-}	t_rect;
-
-typedef struct s_line {
-	int	x;
-	int	y;
-	int	to_x;
-	int	to_y;
-	int	color;
-}	t_line;
-
-typedef struct s_rgba {
-	short	red;
-	short	green;
-	short	blue;
-	short	alpha;
-}	t_rgba;
 
 // Engine
 t_ray		*create_rays(t_ctx *c);
