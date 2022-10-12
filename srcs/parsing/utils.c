@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:25:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/07 14:45:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 17:15:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ int	load_fd(char *path)
 	return (fd);
 }
 
-int	print_err(int errno)
+int	print_err(char *line, char *err, int errno)
 {
 	ft_putstr_fd("cub3D: ", 2);
-	ft_putstr_fd(strerror(errno), 2);
+	if (line)
+	{
+		ft_putstr_fd(line, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putstr_fd(err, 2);
 	ft_putchar_fd('\n', 2);
 	return (errno);
 }

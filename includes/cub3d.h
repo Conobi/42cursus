@@ -91,12 +91,12 @@ void		parse_ascii_map(t_ctx *c, char **file, int line);
 
 /* Parser utils */
 int			load_fd(char *path);
-int			print_err(int errno);
+int			print_err(char *line, char *err, int errno);
 bool		free_split(char **str_split);
 char		*nl_remove(char *str);
 
 /* Map parser utils */
-bool		free_ascii_map(t_ctx *c);
+bool		free_ascii_map(t_ctx *c, bool is_err);
 short		type_of_char(char c);
 void		init_line(t_ctx *c, int *line);
 

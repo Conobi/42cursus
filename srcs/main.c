@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/09 15:55:21 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 18:03:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ static bool	map_parser(t_ctx *c, char **file)
 	line = -1;
 	while (file[++line])
 	{
-		if (file[line] && file[line][0] == '\n'
-			&& c->map_size_x <= 0 && c->map_size_y <= 0)
+		if (file[line][0] == '\n' && c->map_size_x <= 0 && c->map_size_y <= 0)
 			continue ;
 		else if (is_valid_texture(nl_remove(file[line])))
 			parse_texture(c, nl_remove(file[line]));
@@ -54,7 +53,6 @@ static bool	map_parser(t_ctx *c, char **file)
 			parse_color(c, nl_remove(file[line]));
 		else if (is_valid_context(c))
 		{
-			printf("Letzgong parsing\n");
 			parse_ascii_map(c, file, line);
 			break ;
 		}
@@ -94,13 +92,15 @@ int	main(int argc, char **argv)
 {
 	char		**file_arr;
 	t_ctx		c;
+	int			ret;
 
+	ret = 0;
 	init_parser(&c);
 	init_ctx(&c);
 	if (argc != 2 || !argv[1])
-		return (print_err(22));
+		return (print_err(NULL, strerror(22), 22));
 	if (ft_eq(argv[1], ".cub", 2) < 1)
-		return (print_err(79));
+		return (print_err(NULL, strerror(79), 79));
 	printf("------\nMap:\n");
 	file_arr = unsplitable_file(argv[1]);
 	if (file_arr && map_parser(&c, file_arr))
@@ -110,7 +110,8 @@ int	main(int argc, char **argv)
 		graph_manager(&c);
 	}
 	else
-		printf("---\nMAP MEH\n");
+		ret = print_err(argv[1], "Isn't a parsable cub3D context.", 79);
 	free_split(file_arr);
 	free_ctx(&c);
+	return (ret);
 }

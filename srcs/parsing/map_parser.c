@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:56:56 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 15:39:56 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 17:58:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool	set_map_values(t_ctx *c, const char ch, int y, int x)
 		c->player.y = y * c->cell_size + c->cell_size / 2;
 	}
 	else
-		return (free_ascii_map(c));
+		return (free_ascii_map(c, true));
 	if (ch == 'N')
 		c->player.angle = NORTH;
 	else if (ch == 'S')
@@ -72,7 +72,7 @@ static bool	init_map_size(t_ctx *c, char **file, int line)
 	{
 		c->map_size_y++;
 		if (!file[line][0] || file[line][0] == '\n')
-			return (free_ascii_map(c));
+			return (free_ascii_map(c, true));
 		x = -1;
 		while (file[line][++x] && file[line][x] != '\n')
 		{
@@ -83,11 +83,11 @@ static bool	init_map_size(t_ctx *c, char **file, int line)
 					c->map_size_x = x;
 			}
 			else
-				return (free_ascii_map(c));
+				return (free_ascii_map(c, true));
 		}
 	}
 	c->map_size_x++;
-	printf("SX: %d SY: %d\n", c->map_size_x, c->map_size_y);
+	// printf("SX: %d SY: %d\n", c->map_size_x, c->map_size_y);
 	return (true);
 }
 
@@ -97,6 +97,7 @@ static bool	free_failed_map_alloc(t_ctx *c, int x)
 	c->map_size_y = -1;
 	c->player.x = -1;
 	c->player.y = -1;
+	print_err(NULL, strerror(12), 12);
 	while (--x || x >= 0)
 		free(c->map[x]);
 	return (true);

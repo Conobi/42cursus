@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:55:49 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/08 22:59:53 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 17:57:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	is_valid_texture(char *str)
 		free_split(str_split);
 		return (true);
 	}
-	printf("<%s> : %sTexture invalide.%s\n", str, RED_TXT, RESET_TXT);
+	// printf("<%s> : %sTexture invalide.%s\n", str, RED_TXT, RESET_TXT);
 	return (free_split(str_split));
 }
 
@@ -40,12 +40,19 @@ static t_img	texture_from_file(t_ctx *c, char *str)
 {
 	t_img	ret;
 
+	ret.addr = NULL;
+	ret.endian = 0;
+	ret.line_length = 0;
+	ret.bits_per_pixel = 0;
+	ret.height = 0;
+	ret.width = 0;
 	ret.img = mlx_xpm_file_to_image(c->window.mlx, str,
 			&ret.height, &ret.width);
-	// if (!texture->img)
-	// 	// todo: throw error or import default texture
-	ret.addr = mlx_get_data_addr(ret.img, &ret.bits_per_pixel,
-			&ret.line_length, &ret.endian);
+	if (ret.img && ret.height == ret.width)
+		ret.addr = mlx_get_data_addr(ret.img, &ret.bits_per_pixel,
+				&ret.line_length, &ret.endian);
+	else
+		print_err(str, "Is not a working texture file", 5);
 	return (ret);
 }
 
@@ -53,7 +60,7 @@ void	parse_texture(t_ctx *c, char *str)
 {
 	char	**str_split;
 
-	printf("<%s> : %sTexture valide !%s\n", str, GRN_TXT, RESET_TXT);
+	// printf("<%s> : %sTexture valide !%s\n", str, GRN_TXT, RESET_TXT);
 	str_split = ft_split(str, ' ');
 	if (str_split
 		&& str_split[0]
