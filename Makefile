@@ -71,7 +71,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -I $(MLXDIR) -I $(INCDIR) -I $(LIBFTDIR) -std=c99 -O1 -g3
+CFLAGS		= -Wall -Wextra -Werror -I $(MLXDIR) -I $(INCDIR) -I $(LIBFTDIR) -std=c99 -O3 -g3
 
 all: mlx libft $(NAME)
 

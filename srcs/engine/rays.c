@@ -6,11 +6,27 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:43:23 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/09 01:50:40 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 18:09:26 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+typedef struct s_calc
+{
+	double	first_x;
+	double	first_y;
+	double	x_step;
+	double	y_step;
+	double	next_x;
+	double	next_y;
+	bool	is_wall;
+	bool	is_vertical;
+	int		up;
+	int		right;
+	int		cell_x;
+	int		cell_y;
+}	t_calc;
 
 double	get_distance(double x1, double y1, double x2, double y2)
 {
@@ -28,152 +44,85 @@ bool	is_air(t_ctx *c, int computed_x, int computed_y)
 	return (false);
 }
 
-static t_ray	get_h_ray(t_ctx *c, double angle, int id)
+static t_ray	create_ray(t_ctx *c, t_calc calc, double angle, int id)
 {
 	t_ray	ray;
-	int		up;
-	double	first_x;
-	double	first_y;
-	double	x_step;
-	double	y_step;
-	double	next_x;
-	double	next_y;
-	bool	is_wall;
-	int		cell_x;
-	int		cell_y;
 
 	ray.id = id;
 	ray.angle = angle;
-	up = abs((int)floor(angle / M_PI) % 2);
-	first_y = floor(c->player.y / c->cell_size) * c->cell_size;
-	if (!up)
-		first_y += c->cell_size;
-	first_x = c->player.x + (first_y - c->player.y) / tan(angle);
-	if (!out_of_bounds(c, floor(first_x / c->cell_size), floor(first_y / c->cell_size)))
-	{
-		draw_rect(c, (t_rect){
-			(first_x / 5) * c->window.res,
-			(first_y / 5) * c->window.res,
-			2,
-			2,
-			0x00d0ff
-		});
-	}
-	if (up)
-		y_step = -c->cell_size;
-	else
-		y_step = c->cell_size;
-	x_step = y_step / tan(angle);
-	next_x = first_x;
-	next_y = first_y;
-	is_wall = false;
-	while (!is_wall)
-	{
-		cell_x = floor(next_x / c->cell_size);
-		cell_y = floor(next_y / c->cell_size);
-		if (up)
-			cell_y -= 1;
-		if (out_of_bounds(c, cell_x, cell_y))
-			break ;
-		if (c->map[cell_y][cell_x] == 1)
-			is_wall = true;
-		else
-		{
-			next_x += x_step;
-			next_y += y_step;
-		}
-	}
-	if (!out_of_bounds(c, floor(next_x / c->cell_size), floor(next_y / c->cell_size)))
-	{
-		draw_rect(c, (t_rect){
-			(next_x / 5) * c->window.res,
-			(next_y / 5) * c->window.res,
-			2,
-			2,
-			0xfff
-		});
-	}
-	ray.distance = get_distance(c->player.x, c->player.y, next_x, next_y);
-	ray.is_vertical = false;
-	ray.x_hit = next_x;
-	ray.y_hit = next_y;
+	ray.distance = get_distance(c->player.x, c->player.y,
+			calc.next_x, calc.next_y);
+	ray.is_vertical = calc.is_vertical;
+	ray.x_hit = calc.next_x;
+	ray.y_hit = calc.next_y;
 	ray.cell_percent = ray.id % c->cell_size;
 	ray.facing = get_facing(angle, ray.is_vertical);
 	return (ray);
 }
 
-static t_ray	get_v_ray(t_ctx *c, double angle, int id)
+static void	find_wall(t_ctx *c, t_calc *calc)
 {
-	t_ray	ray;
-	int		right;
-	double	first_x;
-	double	first_y;
-	double	x_step;
-	double	y_step;
-	double	next_x;
-	double	next_y;
-	bool	is_wall;
-	int		cell_x;
-	int		cell_y;
-
-	ray.id = id;
-	ray.angle = angle;
-	right = abs((int)floor((angle - M_PI / 2) / M_PI) % 2);
-	first_x = floor(c->player.x / c->cell_size) * c->cell_size;
-	if (right)
-		first_x += c->cell_size;
-	first_y = c->player.y + (first_x - c->player.x) * tan(angle);
-	if (!out_of_bounds(c, floor(first_x / c->cell_size), floor(first_y / c->cell_size)))
+	calc->is_wall = false;
+	while (!calc->is_wall)
 	{
-		draw_rect(c, (t_rect){
-			(first_x / 5) * c->window.res,
-			(first_y / 5) * c->window.res,
-			2,
-			2,
-			0xfcba03
-		});
-	}
-	if (right)
-		x_step = c->cell_size;
-	else
-		x_step = -c->cell_size;
-	y_step = x_step * tan(angle);
-	next_x = first_x;
-	next_y = first_y;
-	is_wall = false;
-	while (!is_wall)
-	{
-		cell_x = floor(next_x / c->cell_size);
-		if (!right)
-			cell_x -= 1;
-		cell_y = floor(next_y / c->cell_size);
-		if (out_of_bounds(c, cell_x, cell_y))
+		calc->cell_x = floor(calc->next_x / c->cell_size);
+		if (calc->is_vertical && !calc->right)
+			calc->cell_x -= 1;
+		calc->cell_y = floor(calc->next_y / c->cell_size);
+		if (!calc->is_vertical && calc->up)
+			calc->cell_y -= 1;
+		if (out_of_bounds(c, calc->cell_x, calc->cell_y))
 			break ;
-		if (c->map[cell_y][cell_x] == 1)
-			is_wall = true;
+		if (c->map[calc->cell_y][calc->cell_x] == 1)
+			calc->is_wall = true;
 		else
 		{
-			next_x += x_step;
-			next_y += y_step;
+			calc->next_x += calc->x_step;
+			calc->next_y += calc->y_step;
 		}
 	}
-	if (!out_of_bounds(c, floor(next_x / c->cell_size), floor(next_y / c->cell_size)))
-	{
-		draw_rect(c, (t_rect){
-			(next_x / 5) * c->window.res,
-			(next_y / 5) * c->window.res,
-			2,
-			2,
-			0xe3fc03
-		});
-	}
-	ray.distance = get_distance(c->player.x, c->player.y, next_x, next_y);
-	ray.is_vertical = true;
-	ray.x_hit = next_x;
-	ray.y_hit = next_y;
-	ray.cell_percent = ray.id % c->cell_size;
-	ray.facing = get_facing(angle, ray.is_vertical);
-	return (ray);
+}
+
+static t_ray	get_h_ray(t_ctx *c, double angle, int id)
+{
+	t_calc	calc;
+
+	calc.is_vertical = false;
+	calc.up = abs((int)floor(angle / M_PI) % 2);
+	calc.first_y = floor(c->player.y / c->cell_size) * c->cell_size;
+	if (!calc.up)
+		calc.first_y += c->cell_size;
+	calc.first_x = c->player.x + (calc.first_y - c->player.y) / tan(angle);
+	if (calc.up)
+		calc.y_step = -c->cell_size;
+	else
+		calc.y_step = c->cell_size;
+	calc.x_step = calc.y_step / tan(angle);
+	calc.next_x = calc.first_x;
+	calc.next_y = calc.first_y;
+	find_wall(c, &calc);
+	return (create_ray(c, calc, angle, id));
+}
+
+static t_ray	get_v_ray(t_ctx *c, double angle, int id)
+{
+	t_calc	calc;
+
+	calc.is_vertical = true;
+	calc.right = abs((int)floor((angle - M_PI / 2) / M_PI) % 2);
+	calc.first_x = floor(c->player.x / c->cell_size) * c->cell_size;
+	if (calc.right)
+		calc.first_x += c->cell_size;
+	calc.first_y = c->player.y + (calc.first_x - c->player.x) * tan(angle);
+	if (calc.right)
+		calc.x_step = c->cell_size;
+	else
+		calc.x_step = -c->cell_size;
+	calc.y_step = calc.x_step * tan(angle);
+	calc.next_x = calc.first_x;
+	calc.next_y = calc.first_y;
+	find_wall(c, &calc);
+	return (create_ray(c, calc, angle, id));
 }
 
 static t_ray	cast_ray(t_ctx *c, double angle, int id)
@@ -199,7 +148,7 @@ t_ray	*create_rays(t_ctx *c)
 	initial_angle = c->player.angle - to_radians(c->player.fov) / 2;
 	angle_step = to_radians(c->player.fov) / c->rays_num;
 	rays = ft_calloc(sizeof(t_ray), c->rays_num + 1);
-	if (!rays)
+	if (!rays) // todo: exit cub
 		return (NULL);
 	i = -1;
 	while (++i < c->rays_num)

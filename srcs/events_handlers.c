@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/09 16:28:36 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 18:06:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ static int	key_press(int keycode, t_ctx *c)
 	else if (keycode == KB_S)
 		c->player.speed = -c->target_speed;
 	else if (keycode == KB_A)
-		c->player.angle -= to_radians(c->target_speed / 4 + 2);
+		printf("A\n"); // todo: move left
 	else if (keycode == KB_D)
+		printf("D\n"); // todo: move right
+	else if (keycode == KB_LEFT)
+		c->player.angle -= to_radians(c->target_speed / 4 + 2);
+	else if (keycode == KB_RIGHT)
 		c->player.angle += to_radians(c->target_speed / 4 + 2);
 	else if (keycode == KB_ESC)
 		exit (0);
@@ -30,7 +34,6 @@ static int	key_press(int keycode, t_ctx *c)
 
 static int	key_release(int keycode, t_ctx *c)
 {
-	printf("%p\n", c);
 	if (keycode == KB_W)
 		c->player.speed = 0;
 	else if (keycode == KB_S)

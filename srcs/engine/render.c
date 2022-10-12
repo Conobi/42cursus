@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/09 15:38:29 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 17:50:13 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,21 @@ static double	fix_fisheye(double distance, double angle, double player_angle)
 
 	diff = angle - player_angle;
 	return (distance * cos(diff));
+}
+
+static t_img	select_texture(t_ctx *c, t_ray ray)
+{
+	t_img	texture;
+
+	if (ray.facing == NORTH)
+		texture = c->no_texture;
+	else if (ray.facing == SOUTH)
+		texture = c->so_texture;
+	else if (ray.facing == EAST)
+		texture = c->ea_texture;
+	else
+		texture = c->we_texture;
+	return (texture);
 }
 
 static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
@@ -35,47 +50,32 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 	while (px++ < wall_height)
 	{
 		text_y -= ((double)c->cell_size / wall_height);
-		color = view_distance(
-				get_pixel_color_from_texture(
-					c->no_texture, text_x, text_y),
-				-(ray.distance / (c->cell_size * 10)));
-		if ((int)text_x % c->cell_size == 0)
-			color = 0xff;
-		pixel_put(c, x, y++, color);
+		if (text_y < 0)
+			text_y = 0;
+		if (y > 0 && px < wall_height)
+		{
+			color = view_distance(
+					get_pixel_color_from_texture(
+						select_texture(c, ray), text_x, text_y),
+					-(ray.distance / (c->cell_size * 10)));
+			pixel_put(c, x, y - 1, color);
+		}
+		y++;
 	}
 }
 
-typedef struct s_elipse
+static void	draw_cursor(t_ctx *c)
 {
-	int	x;
-	int	y;
-	int	width;
-	int	height;
-	int	color;
-	int	modifier;
-}	t_elipse;
-
-void	draw_elipse(t_ctx *c, t_elipse e)
-{
-	int		x;
-	int		y;
-	double	dx;
-	double	dy;
-
-	y = -e.height;
-	while (y++ <= e.height)
-	{
-		x = -e.width;
-		while (x++ <= e.width)
-		{
-			dx = (double)x / (double)e.width;
-			dy = (double)y / (double)e.height;
-			if (dx * dx + dy * dy <= 1)
-				pixel_put(c, e.x + x, e.y + y,
-					view_distance(e.color,
-						e.modifier * ((double)y / (c->cell_size))));
-		}
-	}
+	draw_rect(c, (t_rect){c->window.width / 2,
+		c->window.height / 2, 2, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width / 2 - 10,
+		c->window.height / 2, 5, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width / 2 + 7,
+		c->window.height / 2, 5, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width / 2,
+		c->window.height / 2 - 10, 2, 5, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width / 2,
+		c->window.height / 2 + 7, 2, 5, 0xffffff});
 }
 
 void	render(t_ctx *c, t_ray *rays)
@@ -84,17 +84,18 @@ void	render(t_ctx *c, t_ray *rays)
 	double	distance;
 	int		wall_height;
 
-	draw_elipse(c, (t_elipse){c->window.width / 2, c->window.height + 20,
-		c->window.width, c->window.height / 2, 0xd3d374, 1});
-	draw_elipse(c, (t_elipse){c->window.width / 2, 0,
-		c->window.width, c->window.height / 2, 0xd3d374, -1});
 	i = 0;
 	while (i < c->rays_num)
 	{
-		distance = fix_fisheye(rays[i].distance, rays[i].angle, c->player.angle);
+		distance = fix_fisheye(rays[i].distance,
+				rays[i].angle, c->player.angle);
 		wall_height = (c->window.width / distance) * c->cell_size;
-		(void)wall_height;
 		render_wall(c, rays[i], i, wall_height);
+		draw_rect(c, (t_rect){i, (c->window.height / 2 + wall_height / 2) - 2,
+			1, (c->window.height / 2 - wall_height / 2) + 2, c->f_color});
+		draw_rect(c, (t_rect){i, 0, 1,
+			c->window.height / 2 - wall_height / 2, c->c_color});
 		i++;
 	}
+	draw_cursor(c);
 }
