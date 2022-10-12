@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:56:56 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/07 16:29:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/12 15:39:56 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,22 @@ static bool	init_map_size(t_ctx *c, char **file, int line)
 	while (file[++line])
 	{
 		c->map_size_y++;
-		x = -1;
 		if (!file[line][0] || file[line][0] == '\n')
 			return (free_ascii_map(c));
+		x = -1;
 		while (file[line][++x] && file[line][x] != '\n')
 		{
 			if (type_of_char(file[line][x]) >= 0
 				&& is_valid_boundary(file, line, c->map_size_x, x))
 			{
-				if (x > c->map_size_x)
-					c->map_size_x = x + 1;
+				if (x >= c->map_size_x)
+					c->map_size_x = x;
 			}
 			else
 				return (free_ascii_map(c));
 		}
 	}
+	c->map_size_x++;
 	printf("SX: %d SY: %d\n", c->map_size_x, c->map_size_y);
 	return (true);
 }
