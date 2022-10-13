@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 17:47:53 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 17:39:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void	init_ctx(t_ctx *c)
 	c->cell_size = 640;
 	c->cell_map_size = 10;
 	c->rays_num = c->window.width;
-	c->target_speed = c->cell_size / (c->cell_size / 40);
-	c->turn_speed = c->cell_size / (c->cell_size / 3);
-	c->tick = 60;
+	c->target_speed = 32;
+	c->turn_speed = 2;
 }
 
 void	init_parser(t_ctx *c)

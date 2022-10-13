@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:29:07 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/07 14:37:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 17:44:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,3 @@ char	**unsplitable_file(char *filename)
 	push_lines(filename, ret);
 	return (ret);
 }
-
-/*
-int	main(int argc, char **argv)
-{
-	char	**file_arr;
-	int		i;
-
-	if (argc == 2)
-	{
-		file_arr = unsplitable_file(argv[1]);
-		i = -1;
-		while (file_arr && file_arr[++i])
-			printf("%s", file_arr[i]);
-		free_unsplitable(file_arr);
-	}
-	return (0);
-}
-*/

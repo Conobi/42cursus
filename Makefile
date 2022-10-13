@@ -50,6 +50,7 @@ SRC			= main.c \
 			  initialize.c \
 			  handlers.c \
 			  events_handlers.c \
+			  move_handler.c \
 			  engine/generator.c \
 			  engine/rays.c \
 			  engine/render.c \
@@ -71,7 +72,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -I $(MLXDIR) -I $(INCDIR) -I $(LIBFTDIR) -std=c99 -O3 -g3
+CFLAGS		= -Wall -Wextra -Werror -I $(MLXDIR) -I $(INCDIR) -I $(LIBFTDIR) -std=c99 -O2 -g3
 
 all: mlx libft $(NAME)
 

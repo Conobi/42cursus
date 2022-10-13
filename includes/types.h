@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/09 16:13:42 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 17:27:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ typedef struct s_window {
 	int		res;
 }	t_window;
 
+typedef struct s_ray {
+	double	angle;
+	double	distance;
+	double	x_hit;
+	double	y_hit;
+	int		facing;
+	int		id;
+	int		cell_percent;
+	bool	is_vertical;
+}	t_ray;
+
 typedef struct s_player {
 	double		x;
 	double		y;
@@ -28,6 +39,8 @@ typedef struct s_player {
 	int			speed;
 	int			size;
 	int			fov;
+	char		direction;
+	t_ray		*hitboxes;
 }	t_player;
 
 typedef struct s_img {
@@ -47,7 +60,6 @@ typedef struct s_ctx {
 	int			rays_num;
 	int			target_speed;
 	int			turn_speed;
-	int			tick;
 	int			cell_size;
 	int			cell_map_size;
 	int			map_size_x;
@@ -61,17 +73,6 @@ typedef struct s_ctx {
 	t_img		we_texture;
 	t_img		ea_texture;
 }	t_ctx;
-
-typedef struct s_ray {
-	double	angle;
-	double	distance;
-	double	x_hit;
-	double	y_hit;
-	int		facing;
-	int		id;
-	int		cell_percent;
-	bool	is_vertical;
-}	t_ray;
 
 typedef struct s_rmap {
 	int		pos_x;

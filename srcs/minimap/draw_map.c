@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/12 15:07:13 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 15:06:16 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,54 @@ void	draw_map(t_ctx *c, t_rmap rmap)
 		y++;
 	}
 	draw_line(c, (t_line){
-		c->player.x / (c->cell_size / 10) * c->window.res + rmap.pos_x,
-		c->player.y / (c->cell_size / 10) * c->window.res + rmap.pos_y,
-		(c->player.x / (c->cell_size / 10) + cos(c->player.angle) * (c->player.size * 2)) * c->window.res,
-		(c->player.y / (c->cell_size / 10) + sin(c->player.angle) * (c->player.size * 2)) * c->window.res,
+		c->player.x / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+		c->player.y / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+		(c->player.x / (c->cell_size / c->cell_map_size) + cos(c->player.angle) * (c->player.size * 2)) * c->window.res,
+		(c->player.y / (c->cell_size / c->cell_map_size) + sin(c->player.angle) * (c->player.size * 2)) * c->window.res,
 		0xFF00FF
 	});
 	draw_rect(c, (t_rect){
-		rmap.pos_x + c->player.x / (c->cell_size / 10) * c->window.res - c->player.size * 0.5,
-		rmap.pos_y + c->player.y / (c->cell_size / 10) * c->window.res - c->player.size * 0.5,
+		rmap.pos_x + c->player.x / (c->cell_size / c->cell_map_size) * c->window.res - c->player.size * 0.5,
+		rmap.pos_y + c->player.y / (c->cell_size / c->cell_map_size) * c->window.res - c->player.size * 0.5,
 		c->player.size,
 		c->player.size,
 		0x03f4fc
 	});
+	x = -1;
+	while (++x < 12)
+	{
+		if (x == 11 || x == 0 || x == 1)
+			draw_line(c, (t_line){
+				c->player.x / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.y / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				c->player.hitboxes[x].x_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.hitboxes[x].y_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				0x3255FF
+			});
+		if (x == 2 || x == 3 || x == 4)
+			draw_line(c, (t_line){
+				c->player.x / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.y / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				c->player.hitboxes[x].x_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.hitboxes[x].y_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				0xFF5532
+			});
+		if (x == 5 || x == 6 || x == 7)
+			draw_line(c, (t_line){
+				c->player.x / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.y / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				c->player.hitboxes[x].x_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.hitboxes[x].y_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				0x881099
+			});
+		if (x == 8 || x == 9 || x == 10)
+			draw_line(c, (t_line){
+				c->player.x / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.y / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				c->player.hitboxes[x].x_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_x,
+				c->player.hitboxes[x].y_hit / (c->cell_size / c->cell_map_size) * c->window.res + rmap.pos_y,
+				0x55FF55
+			});
+
+	}
 }

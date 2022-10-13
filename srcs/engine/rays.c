@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:43:23 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/12 18:09:26 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 14:34:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ static t_ray	cast_ray(t_ctx *c, double angle, int id)
 	return (h_ray);
 }
 
-t_ray	*create_rays(t_ctx *c)
+t_ray	*create_rays(t_ctx *c, int fov, int rays_num)
 {
 	double	initial_angle;
 	double	angle;
@@ -145,13 +145,13 @@ t_ray	*create_rays(t_ctx *c)
 	int		i;
 	t_ray	*rays;
 
-	initial_angle = c->player.angle - to_radians(c->player.fov) / 2;
-	angle_step = to_radians(c->player.fov) / c->rays_num;
-	rays = ft_calloc(sizeof(t_ray), c->rays_num + 1);
+	initial_angle = c->player.angle - to_radians(fov) / 2;
+	angle_step = to_radians(fov) / rays_num;
+	rays = ft_calloc(sizeof(t_ray), rays_num + 1);
 	if (!rays) // todo: exit cub
 		return (NULL);
 	i = -1;
-	while (++i < c->rays_num)
+	while (++i < rays_num)
 	{
 		angle = initial_angle + angle_step * i;
 		rays[i] = cast_ray(c, angle, i);

@@ -47,7 +47,7 @@
 # define BOLD_TXT	"\001\033[1m\002"
 
 // Engine
-t_ray		*create_rays(t_ctx *c);
+t_ray		*create_rays(t_ctx *c, int fov, int rays_num);
 int			generate_frame(t_ctx *c);
 void		render(t_ctx *c, t_ray *rays);
 
@@ -79,6 +79,9 @@ void		refresh_handler(t_ctx *c);
 
 // Events handlers
 void		event_listener(t_ctx *c);
+
+// Move handler
+void		move_player(t_ctx *c);
 
 /*
 		PARSING

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 18:06:54 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 19:08:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,31 @@
 static int	key_press(int keycode, t_ctx *c)
 {
 	if (keycode == KB_W)
-		c->player.speed = c->target_speed;
+		c->player.direction = 'U';
 	else if (keycode == KB_S)
-		c->player.speed = -c->target_speed;
+		c->player.direction = 'D';
 	else if (keycode == KB_A)
-		printf("A\n"); // todo: move left
+		c->player.direction = 'L';
 	else if (keycode == KB_D)
-		printf("D\n"); // todo: move right
+		c->player.direction = 'R';
 	else if (keycode == KB_LEFT)
 		c->player.angle -= to_radians(c->target_speed / 4 + 2);
 	else if (keycode == KB_RIGHT)
 		c->player.angle += to_radians(c->target_speed / 4 + 2);
 	else if (keycode == KB_ESC)
 		exit (0);
+	printf("\e[1JDirection: %c\n", c->player.direction);
 	refresh_handler(c);
 	return (0);
 }
 
 static int	key_release(int keycode, t_ctx *c)
 {
-	if (keycode == KB_W)
-		c->player.speed = 0;
-	else if (keycode == KB_S)
+	if (keycode == KB_W
+		|| keycode == KB_S
+		|| keycode == KB_A
+		|| keycode == KB_D
+	)
 		c->player.speed = 0;
 	refresh_handler(c);
 	return (0);
@@ -45,6 +48,7 @@ static int	key_release(int keycode, t_ctx *c)
 static int	mouse_move(int x, int y, t_ctx *c)
 {
 	(void)y;
+	c->player.speed = 0;
 	if (x < c->window.width / 2)
 		c->player.angle -= to_radians(c->turn_speed);
 	else
