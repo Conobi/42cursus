@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/13 19:15:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 19:39:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 	px = 0;
 	while (px++ < wall_height)
 	{
+		if (y > c->window.height)
+			break ;
 		text_y -= ((double)c->cell_size / wall_height);
 		if (text_y < 0)
-			text_y = 0;
+			continue ;
 		if (y > 0 && px < wall_height)
 		{
 			color = view_distance(
