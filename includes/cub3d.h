@@ -111,5 +111,6 @@ bool		is_valid_texture(char *str);
 bool		is_valid_color(char *str);
 bool		is_valid_context(t_ctx *c);
 bool		is_valid_ascii(t_ctx *c);
+bool		are_texture_normalized(t_ctx *c);
 
 #endif

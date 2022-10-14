@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/14 16:32:54 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 18:29:33 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	init_parser(t_ctx *c)
 	c->player.y = -1;
 	c->f_color = -1;
 	c->c_color = -1;
-	c->debug = 0;
 	c->no_texture = (t_img){NULL, NULL, 0, 0, 0, 0, 0};
 	c->so_texture = (t_img){NULL, NULL, 0, 0, 0, 0, 0};
 	c->we_texture = (t_img){NULL, NULL, 0, 0, 0, 0, 0};
