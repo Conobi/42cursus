@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:44:39 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/05 16:44:38 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 20:05:36 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ void	draw_line(t_ctx *c, t_line line)
 
 void	draw_rect(t_ctx *c, t_rect rect)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 
-	i = rect.y;
-	while (i < rect.y + rect.height)
+	y = rect.y;
+	while (y < rect.y + rect.height)
 	{
-		j = rect.x;
-		while (j < rect.x + rect.width)
+		x = rect.x;
+		while (x < rect.x + rect.width)
 		{
-			pixel_put(c, j, i, rect.color);
-			j++;
+			pixel_put(c, x, y, rect.color);
+			x++;
 		}
-		++i;
+		++y;
 	}
 }

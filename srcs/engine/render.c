@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/13 19:39:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 19:39:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 
 	text_y = c->cell_size;
 	text_x = (((int)ray.x_hit + (int)ray.y_hit) % c->cell_size);
-	y = c->window.height / 2 - wall_height / 2;
+	y = c->window.height * 0.5 - wall_height * 0.5;
 	px = 0;
 	while (px++ < wall_height)
 	{
@@ -68,16 +68,16 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 
 static void	draw_cursor(t_ctx *c)
 {
-	draw_rect(c, (t_rect){c->window.width / 2,
-		c->window.height / 2, 2, 2, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2 - 10,
-		c->window.height / 2, 5, 2, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2 + 7,
-		c->window.height / 2, 5, 2, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2,
-		c->window.height / 2 - 10, 2, 5, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2,
-		c->window.height / 2 + 7, 2, 5, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5,
+		c->window.height * 0.5, 2, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5 - 10,
+		c->window.height * 0.5, 5, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5 + 7,
+		c->window.height * 0.5, 5, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5,
+		c->window.height * 0.5 - 10, 2, 5, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5,
+		c->window.height * 0.5 + 7, 2, 5, 0xffffff});
 }
 
 void	render(t_ctx *c, t_ray *rays)
@@ -93,10 +93,10 @@ void	render(t_ctx *c, t_ray *rays)
 				rays[i].angle, c->player.angle);
 		wall_height = (c->window.width / distance) * c->cell_size;
 		render_wall(c, rays[i], i, wall_height);
-		draw_rect(c, (t_rect){i, (c->window.height / 2 + wall_height / 2) - 2,
-			1, (c->window.height / 2 - wall_height / 2) + 2, c->f_color});
+		draw_rect(c, (t_rect){i, (c->window.height * 0.5 + wall_height * 0.5) - 2,
+			1, (c->window.height * 0.5 - wall_height * 0.5) + 2, c->f_color});
 		draw_rect(c, (t_rect){i, 0, 1,
-			c->window.height / 2 - wall_height / 2, c->c_color});
+			c->window.height * 0.5 - wall_height * 0.5, c->c_color});
 		i++;
 	}
 	draw_cursor(c);

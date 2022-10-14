@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:59:54 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/14 18:29:40 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 19:39:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static double	angle_from_facing(t_ctx *c, int facing)
 	int	is_right;
 
 	is_up = abs((int)floor(c->player.angle / M_PI) % 2);
-	is_right = abs((int)floor((c->player.angle - M_PI / 2) / M_PI) % 2);
+	is_right = abs((int)floor((c->player.angle - M_PI * 0.5) / M_PI) % 2);
 	if (is_right && facing == NORTH)
 		return (to_radians(0));
 	else if (is_right && facing == SOUTH)

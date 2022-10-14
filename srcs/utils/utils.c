@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/09 00:28:21 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 20:04:25 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_pixel_color_from_texture(t_img texture, int x, int y)
 	return (0xFFE436);
 }
 
-void	display_fps(t_window window)
+void	display_fps(t_ctx *c)
 {
 	static clock_t	last_loop = 0;
 	clock_t			this_loop;
@@ -35,7 +35,15 @@ void	display_fps(t_window window)
 	tmp = ft_itoa(fps);
 	join = ft_strjoin("fps: ", tmp);
 	free(tmp);
-	mlx_string_put(window.mlx, window.id, window.width - 60, 15, 0xFF0000, join);
+	draw_rect(c, (t_rect){
+		100,
+		100,
+		30,
+		30,
+		0xFFF
+	});
+	mlx_string_put(c->window.mlx, c->window.id,
+		c->window.width - 60, 15, c->f_color, join);
 	free(join);
 }
 
@@ -85,7 +93,7 @@ int	get_facing(double angle, bool is_vertical)
 {
 	if (is_vertical)
 	{
-		if (abs((int)floor((angle - M_PI / 2) / M_PI) % 2))
+		if (abs((int)floor((angle - M_PI * 0.5) / M_PI) % 2))
 			return (EAST);
 		return (WEST);
 	}

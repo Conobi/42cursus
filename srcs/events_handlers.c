@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/14 14:27:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 19:40:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	mouse_move(int x, int y, t_ctx *c)
 {
 	(void)y;
 	c->player.speed = 0;
-	if (x < c->window.width / 2)
+	if (x < c->window.width * 0.5)
 		c->player.angle -= to_radians(c->turn_speed);
 	else
 		c->player.angle += to_radians(c->turn_speed);

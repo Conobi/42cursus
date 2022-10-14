@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:43:23 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/13 14:34:13 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 19:39:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static t_ray	get_v_ray(t_ctx *c, double angle, int id)
 	t_calc	calc;
 
 	calc.is_vertical = true;
-	calc.right = abs((int)floor((angle - M_PI / 2) / M_PI) % 2);
+	calc.right = abs((int)floor((angle - M_PI * 0.5) / M_PI) % 2);
 	calc.first_x = floor(c->player.x / c->cell_size) * c->cell_size;
 	if (calc.right)
 		calc.first_x += c->cell_size;
@@ -145,7 +145,7 @@ t_ray	*create_rays(t_ctx *c, int fov, int rays_num)
 	int		i;
 	t_ray	*rays;
 
-	initial_angle = c->player.angle - to_radians(fov) / 2;
+	initial_angle = c->player.angle - to_radians(fov) * 0.5;
 	angle_step = to_radians(fov) / rays_num;
 	rays = ft_calloc(sizeof(t_ray), rays_num + 1);
 	if (!rays) // todo: exit cub
