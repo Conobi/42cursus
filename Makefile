@@ -42,7 +42,10 @@ endif
 
 MLX_AR		= $(MLXDIR)/libmlx.a
 
-INC			= cub3d.h
+INC			= cub3d.h \
+			  events.h \
+			  keys.h \
+			  types.h
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 

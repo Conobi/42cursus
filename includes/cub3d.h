@@ -52,7 +52,7 @@ int			generate_frame(t_ctx *c);
 void		render(t_ctx *c, t_ray *rays);
 
 // Minimap
-void		draw_map(t_ctx *c, t_rmap rmap);
+void		draw_map(t_ctx *c, int pos_x, int pos_y);
 
 // Initialize
 void		init_ctx(t_ctx *c);
