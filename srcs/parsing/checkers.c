@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:24:32 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 17:59:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 14:42:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,17 @@ bool	is_valid_ascii(t_ctx *c)
 	if (c->map_size_x > 0 && c->map_size_y > 0
 		&& c->player.x > 0 && c->player.y > 0)
 		return (true);
+	return (false);
+}
+
+bool	are_texture_normalized(t_ctx *c)
+{
+	if (
+		c->no_texture.width == c->so_texture.width
+		&& c->so_texture.width == c->we_texture.width
+		&& c->we_texture.width == c->ea_texture.width
+	)
+		return (true);
+	print_err(NULL, "The textures must have the same size.", 5);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/13 19:47:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 14:41:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static bool	map_parser(t_ctx *c, char **file)
 			parse_texture(c, nl_remove(file[line]));
 		else if (is_valid_color(nl_remove(file[line])))
 			parse_color(c, nl_remove(file[line]));
-		else if (is_valid_context(c))
+		else if (is_valid_context(c) && are_texture_normalized(c))
 		{
 			parse_ascii_map(c, file, line);
 			break ;

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:25:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 17:15:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 14:44:12 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	print_err(char *line, char *err, int errno)
 		ft_putstr_fd(line, 2);
 		ft_putstr_fd(": ", 2);
 	}
+	ft_putstr_fd(RED_TXT, 2);
 	ft_putstr_fd(err, 2);
-	ft_putchar_fd('\n', 2);
+	ft_putstr_fd(RESET_TXT, 2);
+	ft_putstr_fd("\n", 2);
 	return (errno);
 }
 
