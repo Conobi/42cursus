@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/13 19:08:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 14:27:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	key_press(int keycode, t_ctx *c)
 		c->player.angle += to_radians(c->target_speed / 4 + 2);
 	else if (keycode == KB_ESC)
 		exit (0);
-	printf("\e[1JDirection: %c\n", c->player.direction);
+	// printf("\e[1JDirection: %c\n", c->player.direction);
 	refresh_handler(c);
 	return (0);
 }
