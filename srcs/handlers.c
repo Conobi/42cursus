@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:31:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/14 20:00:28 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:04:35 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,4 @@ void	refresh_handler(t_ctx *c)
 	mlx_put_image_to_window(c->window.mlx, c->window.id, c->img.img, 0, 0);
 	display_fps(c);
 	mlx_mouse_move(c->window.id, c->window.width * 0.5, c->window.height * 0.5);
-
 }
