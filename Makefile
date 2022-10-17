@@ -56,8 +56,10 @@ SRC			= main.c \
 			  move_handler.c \
 			  engine/generator.c \
 			  engine/rays.c \
+			  engine/rays_utils.c \
 			  engine/render.c \
 			  minimap/draw_map.c \
+			  minimap/draw_map_utils.c \
 			  utils/draw.c \
 			  utils/utils.c \
 			  utils/helpers.c \

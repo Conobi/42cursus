@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/14 14:41:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:25:40 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	graph_manager(t_ctx *c)
 	c->window.id = mlx_new_window(c->window.mlx,
 			c->window.width, c->window.height, "cub3d");
 	c->img = image_handler(c);
-	c->cell_size = c->no_texture.width;
-	c->hitbox_max = c->cell_size / 4;
+	c->hitbox_max = c->cell_size * 0.25;
+	c->target_speed = c->cell_size * 0.15;
 	mlx_put_image_to_window(c->window.mlx, c->window.id, c->img.img, 0, 0);
 	event_listener(c);
 	mlx_mouse_hide(c->window.mlx, c->window.id);

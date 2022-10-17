@@ -47,12 +47,19 @@
 # define BOLD_TXT	"\001\033[1m\002"
 
 // Engine
+double		get_distance(double x1, double y1, double x2, double y2);
+bool		is_air(t_ctx *c, int computed_x, int computed_y);
+t_ray		create_ray(t_ctx *c, t_calc calc, double angle, int id);
+void		find_wall(t_ctx *c, t_calc *calc);
 t_ray		*create_rays(t_ctx *c, int fov, int rays_num);
 int			generate_frame(t_ctx *c);
 void		render(t_ctx *c, t_ray *rays);
 
 // Minimap
 void		draw_map(t_ctx *c, int pos_x, int pos_y);
+void		draw_player(t_ctx *c, t_drawmap draw_map);
+void		draw_grid(t_ctx *c, t_drawmap draw_map);
+void		draw_frame(t_ctx *c, t_drawmap draw_map);
 
 // Initialize
 void		init_ctx(t_ctx *c);
@@ -60,6 +67,7 @@ void		init_parser(t_ctx *c);
 
 // Utils
 void		draw_rect(t_ctx *c, t_rect rect);
+void		draw_rect_dim(t_ctx *c, t_rectdim rect);
 void		draw_line(t_ctx *c, t_line line);
 void		draw_line_gradient(t_ctx *c, t_line line,
 				int from_color, int to_color);

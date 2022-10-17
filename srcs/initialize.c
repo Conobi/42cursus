@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/17 15:05:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:23:51 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	init_ctx(t_ctx *c)
 	c->player.speed = 0;
 	c->player.angle = 0;
 	c->player.fov = 60;
-	c->cell_size = 640;
+	c->cell_size = 0;
 	c->cell_map_size = 20;
 	c->player.size = c->cell_map_size * 0.5;
 	c->rays_num = c->window.width;
-	c->target_speed = 32;
+	c->target_speed = 2;
 	c->turn_speed = 2;
 	c->fog_color = 0x2f2d18;
 }

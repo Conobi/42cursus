@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 14:19:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:28:33 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,6 @@ void	display_fps(t_ctx *c)
 	mlx_string_put(c->window.mlx, c->window.id,
 		c->window.width - 60, 15, c->f_color, join);
 	free(join);
-}
-
-int	view_distance(int color, float correction)
-{
-	t_rgba	s;
-	int		new_color;
-
-	s = hex2rgba(color);
-	if (correction < 0)
-	{
-		correction += 1;
-		s.red *= correction;
-		s.green *= correction;
-		s.blue *= correction;
-	}
-	else
-	{
-		s.red = (255 - s.red) * correction + s.red;
-		s.green = (255 - s.green) * correction + s.green;
-		s.blue = (255 - s.blue) * correction + s.blue;
-	}
-	new_color = rgba2hex(s);
-	if (new_color < 0)
-		new_color = 0;
-	return (new_color);
 }
 
 int	get_facing(double angle, bool is_vertical)

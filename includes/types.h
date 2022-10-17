@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 15:00:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:11:19 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,21 @@ typedef struct s_ctx {
 	t_img		ea_texture;
 }	t_ctx;
 
-typedef struct s_rmap {
-	int		pos_x;
-	int		pos_y;
-	t_ray	*rays;
-}	t_rmap;
+typedef struct s_calc
+{
+	double	first_x;
+	double	first_y;
+	double	x_step;
+	double	y_step;
+	double	next_x;
+	double	next_y;
+	bool	is_wall;
+	bool	is_vertical;
+	int		up;
+	int		right;
+	int		cell_x;
+	int		cell_y;
+}	t_calc;
 
 /**
  * @brief Type to create and render a rectangle in the window
@@ -98,6 +108,19 @@ typedef struct s_rect
 	int		color;
 }	t_rect;
 
+typedef struct s_rectdim
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
+	int	x_min;
+	int	y_min;
+	int	x_max;
+	int	y_max;
+	int	color;
+}	t_rectdim;
+
 typedef struct s_line {
 	int	x;
 	int	y;
@@ -112,5 +135,16 @@ typedef struct s_rgba {
 	short	blue;
 	short	alpha;
 }	t_rgba;
+
+typedef struct s_drawmap
+{
+	int	width;
+	int	height;
+	int	weight;
+	int	pos_x;
+	int	pos_y;
+	int	draw_x;
+	int	draw_y;
+}	t_drawmap;
 
 #endif

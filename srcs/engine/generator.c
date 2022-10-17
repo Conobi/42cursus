@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:48:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 14:25:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:12:00 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	generate_frame(t_ctx *c)
 {
-	t_ray	*rays;
+	t_ray		*rays;
 
 	rays = create_rays(c, c->player.fov, c->rays_num);
 	c->player.hitboxes = create_rays(c, 360, 12);

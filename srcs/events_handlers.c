@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/14 19:40:54 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:30:00 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ static int	key_press(int keycode, t_ctx *c)
 	else if (keycode == KB_D)
 		c->player.direction = 'R';
 	else if (keycode == KB_LEFT)
-		c->player.angle -= to_radians(c->target_speed / 4 + 2);
+		c->player.angle -= to_radians(c->target_speed / 4);
 	else if (keycode == KB_RIGHT)
-		c->player.angle += to_radians(c->target_speed / 4 + 2);
+		c->player.angle += to_radians(c->target_speed / 4);
 	else if (keycode == KB_ESC)
 		exit (0);
-	// printf("\e[1JDirection: %c\n", c->player.direction);
 	refresh_handler(c);
 	return (0);
 }

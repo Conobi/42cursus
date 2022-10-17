@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:55:49 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 17:57:56 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:20:57 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,11 @@ void	parse_texture(t_ctx *c, char *str)
 	)
 	{
 		if (ft_eq(str_split[0], "NO", 0))
+		{
 			c->no_texture = texture_from_file(c, str_split[1]);
+			if (c->no_texture.height == c->no_texture.width)
+				c->cell_size = c->no_texture.width;
+		}
 		else if (ft_eq(str_split[0], "SO", 0))
 			c->so_texture = texture_from_file(c, str_split[1]);
 		else if (ft_eq(str_split[0], "WE", 0))

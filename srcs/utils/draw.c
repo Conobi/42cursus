@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:44:39 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 15:04:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:12:53 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,26 @@ void	draw_line_gradient(
 			);
 		t.pixel_x += t.delta_x;
 		t.pixel_y += t.delta_y;
+	}
+}
+
+void	draw_rect_dim(t_ctx *c, t_rectdim rect)
+{
+	int	x;
+	int	y;
+
+	y = rect.y;
+	while (y < rect.y + rect.height)
+	{
+		x = rect.x;
+		while (x < rect.x + rect.width)
+		{
+			if (x > rect.x_min && x < rect.x_max
+				&& y > rect.y_min && y < rect.y_max)
+				pixel_put(c, x, y, rect.color);
+			x++;
+		}
+		++y;
 	}
 }
 
