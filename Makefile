@@ -61,6 +61,7 @@ SRC			= main.c \
 			  utils/draw.c \
 			  utils/utils.c \
 			  utils/helpers.c \
+			  utils/colors.c \
 			  parsing/checkers.c \
 			  parsing/utils.c \
 			  parsing/color_parser.c \
@@ -75,7 +76,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.c=.o))
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -I $(MLXDIR) -I $(INCDIR) -I $(LIBFTDIR) -std=c99 -O2 -g3
+CFLAGS		= -Wall -Wextra -Werror -I $(MLXDIR) -I $(INCDIR) -I $(LIBFTDIR) -std=c99 -O3
 
 all: mlx libft $(NAME)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/09 00:28:21 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 15:34:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,6 @@ void	display_fps(t_window window)
 	free(tmp);
 	mlx_string_put(window.mlx, window.id, window.width - 60, 15, 0xFF0000, join);
 	free(join);
-}
-
-int	rgba2hex(t_rgba color)
-{
-	return ((255 - color.alpha) << 24 | color.red << 16
-		| color.green << 8 | color.blue);
-}
-
-t_rgba	hex2rgba(int color)
-{
-	t_rgba	ret;
-
-	ret.alpha = ((color >> 24) & 0xff) + 255;
-	ret.red = (color >> 16) & 0xff;
-	ret.green = (color >> 8) & 0xff;
-	ret.blue = color & 0xff;
-	return (ret);
 }
 
 int	view_distance(int color, float correction)

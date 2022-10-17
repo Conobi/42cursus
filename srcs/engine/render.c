@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/13 19:39:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:14:08 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 {
 	double	text_y;
 	double	text_x;
+	double	step;
 	int		y;
 	int		color;
 	int		px;
@@ -46,6 +47,7 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 	text_y = c->cell_size;
 	text_x = (((int)ray.x_hit + (int)ray.y_hit) % c->cell_size);
 	y = c->window.height / 2 - wall_height / 2;
+	step = (float)ray.distance / (c->cell_size * 10);
 	px = 0;
 	while (px++ < wall_height)
 	{
@@ -56,10 +58,16 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 			continue ;
 		if (y > 0 && px < wall_height)
 		{
-			color = view_distance(
-					get_pixel_color_from_texture(
-						select_texture(c, ray), text_x, text_y),
-					-(ray.distance / (c->cell_size * 10)));
+			color = rgba2hex(
+					linear_gradient(
+						hex2rgba(get_pixel_color_from_texture(
+								select_texture(c, ray), text_x, text_y)),
+						(t_rgba){47, 45, 24, 0},
+						step));
+			// color = view_distance(
+			// 		get_pixel_color_from_texture(
+			// 			select_texture(c, ray), text_x, text_y),
+			// 		-(ray.distance / (c->cell_size * 10)));
 			pixel_put(c, x, y - 1, color);
 		}
 		y++;
@@ -89,14 +97,12 @@ void	render(t_ctx *c, t_ray *rays)
 	i = 0;
 	while (i < c->rays_num)
 	{
+		draw_line_gradient(c, (t_line){i, 0, i, c->window.height / 2, 0}, c->c_color, 0x2f2d18);
+		draw_line_gradient(c, (t_line){i, c->window.height / 2, i, c->window.height, 0}, 0x2f2d18, c->f_color);
 		distance = fix_fisheye(rays[i].distance,
 				rays[i].angle, c->player.angle);
 		wall_height = (c->window.width / distance) * c->cell_size;
 		render_wall(c, rays[i], i, wall_height);
-		draw_rect(c, (t_rect){i, (c->window.height / 2 + wall_height / 2) - 2,
-			1, (c->window.height / 2 - wall_height / 2) + 2, c->f_color});
-		draw_rect(c, (t_rect){i, 0, 1,
-			c->window.height / 2 - wall_height / 2, c->c_color});
 		i++;
 	}
 	draw_cursor(c);
