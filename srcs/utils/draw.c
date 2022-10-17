@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:44:39 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 14:19:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:04:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ void	draw_line_gradient(
 	while (++t.i < t.pixels)
 	{
 		pixel_put(c, t.pixel_x, t.pixel_y,
-			rgba2hex(linear_gradient(
-					hex2rgba(from_color),
-					hex2rgba(to_color),
-					(float)t.i / t.pixels
-					)
+			linear_gradient(
+				from_color,
+				to_color,
+				(float)t.i / t.pixels,
+				false
 				)
 			);
 		t.pixel_x += t.delta_x;
@@ -87,6 +87,27 @@ void	draw_rect(t_ctx *c, t_rect rect)
 		while (x < rect.x + rect.width)
 		{
 			pixel_put(c, x, y, rect.color);
+			x++;
+		}
+		++y;
+	}
+}
+
+void	draw_rect_gradient(t_ctx *c, t_rect rect, int from_color, int to_color)
+{
+	int	x;
+	int	y;
+	int	color;
+
+	y = rect.y;
+	while (y < rect.y + rect.height)
+	{
+		color = linear_gradient(from_color, to_color,
+				(float)(y - rect.y) / rect.height, false);
+		x = rect.x;
+		while (x < rect.x + rect.width)
+		{
+			pixel_put(c, x, y, color);
 			x++;
 		}
 		++y;

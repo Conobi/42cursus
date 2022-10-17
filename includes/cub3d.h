@@ -62,7 +62,9 @@ void		init_parser(t_ctx *c);
 void		draw_rect(t_ctx *c, t_rect rect);
 void		draw_line(t_ctx *c, t_line line);
 void		draw_line_gradient(t_ctx *c, t_line line,
-					int from_color, int to_color);
+				int from_color, int to_color);
+void		draw_rect_gradient(t_ctx *c, t_rect rect,
+				int from_color, int to_color);
 bool		out_of_bounds(t_ctx *c, int x, int y);
 double		to_radians(int degrees);
 bool		is_air(t_ctx *c, int computed_x, int computed_y);
@@ -88,7 +90,7 @@ void		move_player(t_ctx *c);
 // Colors
 int			rgba2hex(t_rgba color);
 t_rgba		hex2rgba(int color);
-t_rgba		linear_gradient(t_rgba from, t_rgba to, float step);
+int			linear_gradient(int from, int to, float step, bool srgb);
 
 /*
 		PARSING

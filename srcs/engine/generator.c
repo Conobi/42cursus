@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:48:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 14:16:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:25:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,3 @@ int	generate_frame(t_ctx *c)
 	}
 	return (0);
 }
-
-// int	generate_frame(t_ctx *c)
-// {
-// 	int		x;
-// 	int		y;
-
-// 	y = -1;
-// 	while (++y < c->window.height)
-// 	{
-// 		x = -1;
-// 		while (++x < c->window.width)
-// 		{
-// 			// printf("%f\n", (float)((float)x / c->window.width));
-// 			pixel_put(c, x, y,
-// 				rgba2hex(
-// 					linear_gradient((t_rgba){255, 242, 217, 255}, (t_rgba){123, 200, 151, 255}, (float)x / c->window.width)
-// 				)
-// 			);
-// 		}
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 15:42:02 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/13 19:46:11 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:00:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_ctx {
 	int			map_size_y;
 	int			f_color;
 	int			c_color;
+	int			fog_color;
 	double		hitbox_max;
 	int			**map;
 	t_img		no_texture;

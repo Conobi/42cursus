@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/14 19:39:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:01:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_ctx(t_ctx *c)
 	c->rays_num = c->window.width;
 	c->target_speed = 32;
 	c->turn_speed = 2;
+	c->fog_color = 0x2f2d18;
 }
 
 void	init_parser(t_ctx *c)
