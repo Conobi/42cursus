@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 14:14:08 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:19:12 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 
 	text_y = c->cell_size;
 	text_x = (((int)ray.x_hit + (int)ray.y_hit) % c->cell_size);
-	y = c->window.height / 2 - wall_height / 2;
+	y = c->window.height * 0.5 - wall_height * 0.5;
 	step = (float)ray.distance / (c->cell_size * 10);
 	px = 0;
 	while (px++ < wall_height)
@@ -76,16 +76,16 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 
 static void	draw_cursor(t_ctx *c)
 {
-	draw_rect(c, (t_rect){c->window.width / 2,
-		c->window.height / 2, 2, 2, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2 - 10,
-		c->window.height / 2, 5, 2, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2 + 7,
-		c->window.height / 2, 5, 2, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2,
-		c->window.height / 2 - 10, 2, 5, 0xffffff});
-	draw_rect(c, (t_rect){c->window.width / 2,
-		c->window.height / 2 + 7, 2, 5, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5,
+		c->window.height * 0.5, 2, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5 - 10,
+		c->window.height * 0.5, 5, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5 + 7,
+		c->window.height * 0.5, 5, 2, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5,
+		c->window.height * 0.5 - 10, 2, 5, 0xffffff});
+	draw_rect(c, (t_rect){c->window.width * 0.5,
+		c->window.height * 0.5 + 7, 2, 5, 0xffffff});
 }
 
 void	render(t_ctx *c, t_ray *rays)
@@ -97,8 +97,8 @@ void	render(t_ctx *c, t_ray *rays)
 	i = 0;
 	while (i < c->rays_num)
 	{
-		draw_line_gradient(c, (t_line){i, 0, i, c->window.height / 2, 0}, c->c_color, 0x2f2d18);
-		draw_line_gradient(c, (t_line){i, c->window.height / 2, i, c->window.height, 0}, 0x2f2d18, c->f_color);
+		draw_line_gradient(c, (t_line){i, 0, i, c->window.height * 0.5, 0}, c->c_color, 0x2f2d18);
+		draw_line_gradient(c, (t_line){i, c->window.height * 0.5, i, c->window.height, 0}, 0x2f2d18, c->f_color);
 		distance = fix_fisheye(rays[i].distance,
 				rays[i].angle, c->player.angle);
 		wall_height = (c->window.width / distance) * c->cell_size;

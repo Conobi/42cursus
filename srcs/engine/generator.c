@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:48:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/14 19:17:51 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:16:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ int	generate_frame(t_ctx *c)
 		move_player(c);
 		render(c, rays);
 		free(rays);
-		draw_map(c, (t_rmap){0, 0, NULL});
-		if (c->player.hitboxes)
-			free(c->player.hitboxes);
+		draw_map(c, 25, 25);
 	}
 	return (0);
 }

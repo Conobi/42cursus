@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:56:56 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 17:58:49 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 19:39:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static bool	set_map_values(t_ctx *c, const char ch, int y, int x)
 		&& c->player.y == -1)
 	{
 		c->map[y][x] = 0;
-		c->player.x = x * c->cell_size + c->cell_size / 2;
-		c->player.y = y * c->cell_size + c->cell_size / 2;
+		c->player.x = x * c->cell_size + c->cell_size * 0.5;
+		c->player.y = y * c->cell_size + c->cell_size * 0.5;
 	}
 	else
 		return (free_ascii_map(c, true));
