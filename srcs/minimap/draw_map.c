@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 16:41:55 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/14 19:58:03 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:09:59 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	draw_grid(t_ctx *c, t_drawmap draw_map, int cell_size)
 	int	x;
 	int	y;
 
-	x = -c->player.size * 0.5;
 	y = -c->player.size * 0.5;
 	while (y < draw_map.height)
 	{
@@ -144,14 +143,13 @@ static void	draw_cells(t_ctx *c, t_drawmap draw_map)
 	draw_x = -c->player.size * 0.5;
 	draw_y = -c->player.size * 0.5;
 	y = (int)floor((c->player.y - c->cell_size * 5) / c->cell_size);
-	x = (int)floor((c->player.x - cell_size) / c->cell_size);
 	while (draw_y < draw_map.height)
 	{
 		x = (int)floor((c->player.x - c->cell_size * 5) / c->cell_size);
 		draw_x = -c->player.size * 0.5;
 		while (draw_x < draw_map.width)
 		{
-			if ((x > 0 && y > 0) && (x < c->map_size_x && y < c->map_size_y))
+			if ((x >= 0 && y >= 0) && (x < c->map_size_x && y < c->map_size_y))
 			{
 				if (c->map[y][x] == 1)
 				{
@@ -211,7 +209,7 @@ void	draw_map(t_ctx *c, int pos_x, int pos_y)
 {
 	t_drawmap	draw_map;
 
-	draw_map.height = c->cell_map_size * 15;
+	draw_map.height = c->cell_map_size * 10;
 	draw_map.width = c->cell_map_size * 10;
 	draw_map.weight = 4;
 	draw_map.pos_x = pos_x;
