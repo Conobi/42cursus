@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:31:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/17 14:04:35 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 19:09:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_img	image_handler(t_ctx *c)
 	c->img.addr = mlx_get_data_addr(c->img.img, &c->img.bits_per_pixel,
 			&c->img.line_length, &c->img.endian);
 	generate_frame(c);
+	upscale(c);
 	return (c->img);
 }
 

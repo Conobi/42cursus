@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:47:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/17 15:23:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:47:16 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	init_ctx(t_ctx *c)
 {
 	c->window.mlx = mlx_init();
-	c->window.height = 900;
-	c->window.width = 1440;
-	c->window.res = 1;
+	c->window.height = 1080 / 2;
+	c->window.width = 1920 / 2;
+	c->window.res = 2;
 	c->player.speed = 0;
 	c->player.angle = 0;
 	c->player.fov = 60;
 	c->cell_size = 0;
-	c->cell_map_size = 20;
+	c->cell_map_size = 12;
 	c->player.size = c->cell_map_size * 0.5;
 	c->rays_num = c->window.width;
 	c->target_speed = 2;

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 15:25:40 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:58:34 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	debug_map(t_ctx *c)
 static void	graph_manager(t_ctx *c)
 {
 	c->window.id = mlx_new_window(c->window.mlx,
-			c->window.width, c->window.height, "cub3d");
+			c->window.width * c->window.res, c->window.height * c->window.res, "cub3d");
 	c->img = image_handler(c);
 	c->hitbox_max = c->cell_size * 0.25;
 	c->target_speed = c->cell_size * 0.15;

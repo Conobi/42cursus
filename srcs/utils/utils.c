@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 19:26:16 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 14:28:33 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 18:06:03 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,8 @@ void	display_fps(t_ctx *c)
 	tmp = ft_itoa(fps);
 	join = ft_strjoin("fps: ", tmp);
 	free(tmp);
-	draw_rect(c, (t_rect){
-		100,
-		100,
-		30,
-		30,
-		0xFFF
-	});
 	mlx_string_put(c->window.mlx, c->window.id,
-		c->window.width - 60, 15, c->f_color, join);
+		c->window.width * c->window.res - 70, 15, c->f_color, join);
 	free(join);
 }
 

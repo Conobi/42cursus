@@ -83,6 +83,7 @@ int			get_pixel_color_from_texture(t_img texture, int x, int y);
 
 // Helpers
 void		pixel_put(t_ctx *c, int x, int y, int color);
+void		upscale(t_ctx *c);
 double long	remap(double long input, double long low, double long high);
 
 // Handlers

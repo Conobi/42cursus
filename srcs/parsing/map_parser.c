@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:56:56 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/17 14:15:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 19:33:01 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	set_map_values(t_ctx *c, const char ch, int y, int x)
 	else if (ch == 'W')
 		c->player.angle = to_radians(180);
 	else if (ch == 'E')
-		c->player.angle = 0;
+		c->player.angle = to_radians(1);
 	return (true);
 }
 
