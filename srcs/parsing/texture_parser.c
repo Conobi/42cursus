@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:55:49 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/17 15:20:57 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 16:07:28 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ bool	is_valid_texture(char *str)
 		free_split(str_split);
 		return (true);
 	}
-	// printf("<%s> : %sTexture invalide.%s\n", str, RED_TXT, RESET_TXT);
 	return (free_split(str_split));
 }
 
@@ -60,7 +59,6 @@ void	parse_texture(t_ctx *c, char *str)
 {
 	char	**str_split;
 
-	// printf("<%s> : %sTexture valide !%s\n", str, GRN_TXT, RESET_TXT);
 	str_split = ft_split(str, ' ');
 	if (str_split
 		&& str_split[0]

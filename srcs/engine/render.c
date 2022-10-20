@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 16:08:13 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 16:20:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 		if (text_y < 0)
 			continue ;
 		if (y > 0 && px < wall_height)
-			pixel_put(c, x, y, linear_gradient(
+			pixel_put(c, x, y - 1, linear_gradient(
 					get_pixel_color_from_texture(
 						select_texture(c, ray), text_x, text_y),
 					c->fog_color, step, false));

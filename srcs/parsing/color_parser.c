@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 15:22:03 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/12 17:19:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 16:06:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ bool	is_valid_color(char *str)
 			return (true);
 		}
 	}
-	// printf("<%s> : %sCouleur invalide.%s\n", str, RED_TXT, RESET_TXT);
 	return (free_split(str_split));
 }
 
@@ -89,7 +88,6 @@ void	parse_color(t_ctx *c, char *str)
 	char	**str_split;
 
 	str_split = NULL;
-	// printf("<%s> : %sCouleur valide !%s\n", str, GRN_TXT, RESET_TXT);
 	if (str[0] && str[1] && (str[0] == 'F' || str[0] == 'C') && str[1] == ' ')
 	{
 		unspaced_str = space_remover(str + 1);

@@ -6,31 +6,17 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 15:58:34 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 16:36:13 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	debug_map(t_ctx *c)
-{
-	int	x;
-	int	y;
-
-	y = -1;
-	while (++y < c->map_size_y)
-	{
-		x = -1;
-		while (++x < c->map_size_x)
-			printf("%d", c->map[y][x]);
-		printf("\n");
-	}
-}
-
 static void	graph_manager(t_ctx *c)
 {
 	c->window.id = mlx_new_window(c->window.mlx,
-			c->window.width * c->window.res, c->window.height * c->window.res, "cub3d");
+			c->window.width * c->window.res,
+			c->window.height * c->window.res, "cub3d");
 	c->img = image_handler(c);
 	c->hitbox_max = c->cell_size * 0.25;
 	c->target_speed = c->cell_size * 0.15;
@@ -103,14 +89,9 @@ int	main(int argc, char **argv)
 		return (print_err(NULL, strerror(22), 22));
 	if (ft_eq(argv[1], ".cub", 2) < 1)
 		return (print_err(NULL, strerror(79), 79));
-	printf("------\nMap:\n");
 	file_arr = unsplitable_file(argv[1]);
 	if (file_arr && map_parser(&c, file_arr))
-	{
-		printf("---\nMAP OK\n");
-		debug_map(&c);
 		graph_manager(&c);
-	}
 	else
 		ret = print_err(argv[1], "Isn't a parsable cub3D context.", 79);
 	free_split(file_arr);

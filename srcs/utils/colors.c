@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:04:59 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/17 14:34:21 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 16:10:45 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,5 @@ int	linear_gradient(int from, int to, float step, bool srgb)
 	if (srgb)
 		ret = srgb_companding(ret);
 	ret.alpha = 255;
-	// printf("%d, %d, %d\n", ret.red, ret.green, ret.blue);
 	return (rgba2hex(ret));
 }

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:56:56 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/17 19:33:01 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 16:06:59 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static bool	init_map_size(t_ctx *c, char **file, int line)
 		}
 	}
 	c->map_size_x++;
-	// printf("SX: %d SY: %d\n", c->map_size_x, c->map_size_y);
 	return (true);
 }
 
