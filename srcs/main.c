@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:47:54 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/20 16:36:13 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 18:07:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	print_help(char **argv)
+{
+	printf("\e[92m\e[1mcub3D\e[39m - A 3D map explorer\n\e[0m");
+	printf("\n\e[92m\e[1mUSAGE:\e[0m\n\t%s", argv[0]);
+	printf(" \e[96m\e[4m[your map file with its path]\e[0m\n\n");
+	return (0);
+}
 
 static void	graph_manager(t_ctx *c)
 {
@@ -31,6 +39,7 @@ static bool	map_parser(t_ctx *c, char **file)
 	int		line;
 
 	line = -1;
+	c->window.mlx = mlx_init();
 	while (file[++line])
 	{
 		if (file[line][0] == '\n' && c->map_size_x <= 0 && c->map_size_y <= 0)
@@ -56,6 +65,8 @@ void	free_ctx(t_ctx *c)
 {
 	int	i;
 
+	if (c->window.mlx)
+		free(c->window.mlx);
 	if (c->map_size_x > 0 || c->map_size_y > 0)
 	{
 		i = -1;
@@ -85,7 +96,9 @@ int	main(int argc, char **argv)
 	ret = 0;
 	init_parser(&c);
 	init_ctx(&c);
-	if (argc != 2 || !argv[1])
+	if (argc < 2)
+		return (print_help(argv));
+	else if (argc != 2 || !argv[1])
 		return (print_err(NULL, strerror(22), 22));
 	if (ft_eq(argv[1], ".cub", 2) < 1)
 		return (print_err(NULL, strerror(79), 79));
