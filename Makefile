@@ -29,7 +29,7 @@ define compile_cmd
 	exit $$RESULT
 endef
 
-NAME		= cub3d
+NAME		= cub3D
 
 LIBFTDIR	= libft
 LIBFT_AR	= $(addprefix $(LIBFTDIR)/,libft.a)
