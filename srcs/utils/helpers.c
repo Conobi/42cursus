@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:33:52 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/20 16:19:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 17:21:06 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	upscale_image(t_ctx *c, t_tmp *t)
 		}
 		t->yy++;
 	}
+	t->x++;
 }
 
 void	upscale(t_ctx *c)
@@ -91,11 +92,11 @@ void	upscale(t_ctx *c)
 		while (t.x < c->window.width)
 		{
 			upscale_image(c, &t);
-			t.x++;
 			t.draw_x += c->window.res;
 		}
 		t.draw_y += c->window.res;
 		t.y++;
 	}
+	mlx_destroy_image(c->window.mlx, c->img.img);
 	c->img = t.upscaled;
 }

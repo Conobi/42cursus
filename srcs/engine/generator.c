@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 15:48:12 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/17 15:12:00 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 17:00:10 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ int	generate_frame(t_ctx *c)
 	{
 		move_player(c);
 		render(c, rays);
-		free(rays);
 		draw_map(c, 25, 25);
+		free(rays);
+		free(c->player.hitboxes);
 	}
 	return (0);
 }
