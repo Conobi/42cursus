@@ -6,11 +6,18 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:47:11 by conobi            #+#    #+#             */
-/*   Updated: 2022/10/20 17:30:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 18:37:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	exit_process(t_ctx *c)
+{
+	free_ctx(c);
+	exit(0);
+	return (0);
+}
 
 static int	key_press(int keycode, t_ctx *c)
 {
@@ -27,7 +34,7 @@ static int	key_press(int keycode, t_ctx *c)
 	else if (keycode == KB_RIGHT)
 		c->player.angle += to_radians(c->turn_speed);
 	else if (keycode == KB_ESC)
-		exit (0);
+		exit_process(c);
 	refresh_handler(c);
 	return (0);
 }
@@ -61,4 +68,5 @@ void	event_listener(t_ctx *c)
 	mlx_hook(c->window.id, ON_MOUSEMOVE, 1L << 6, mouse_move, c);
 	mlx_hook(c->window.id, ON_KEYDOWN, 1L, key_press, c);
 	mlx_hook(c->window.id, ON_KEYUP, 1L << 1, key_release, c);
+	mlx_hook(c->window.id, ON_DESTROY, 0L, exit_process, c);
 }

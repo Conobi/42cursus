@@ -61,9 +61,10 @@ void		draw_player(t_ctx *c, t_drawmap draw_map);
 void		draw_grid(t_ctx *c, t_drawmap draw_map);
 void		draw_frame(t_ctx *c, t_drawmap draw_map);
 
-// Initialize
+// Context functions
 void		init_ctx(t_ctx *c);
 void		init_parser(t_ctx *c);
+void		free_ctx(t_ctx *c);
 
 // Utils
 void		draw_rect(t_ctx *c, t_rect rect);
