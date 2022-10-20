@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:01:46 by abastos           #+#    #+#             */
-/*   Updated: 2022/10/20 16:20:54 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 16:45:22 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 	int		y;
 	int		px;
 
-	text_y = c->cell_size;
+	text_y = 0;
 	text_x = (((int)ray.x_hit + (int)ray.y_hit) % c->cell_size);
 	y = c->window.height * 0.5 - wall_height * 0.5;
 	step = (float)ray.distance / (c->cell_size * 10);
@@ -52,8 +52,8 @@ static void	render_wall(t_ctx *c, t_ray ray, int x, int wall_height)
 	{
 		if (y > c->window.height)
 			break ;
-		text_y -= ((double)c->cell_size / wall_height);
-		if (text_y < 0)
+		text_y += ((double)c->cell_size / wall_height);
+		if (text_y > c->cell_size)
 			continue ;
 		if (y > 0 && px < wall_height)
 			pixel_put(c, x, y - 1, linear_gradient(
