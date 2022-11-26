@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 02:44:10 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/26 06:08:30 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/26 23:21:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,31 @@
 class Steps
 {
 	private:
-		/* data */
+		static void prompter (
+			const std::string prompt,
+			PhoneBook book,
+			bool (*manager)(std::string, PhoneBook)
+		);
+
+		static bool command_manager(
+			const std::string input,
+			PhoneBook book
+		);
+
+		static bool add_manager(
+			PhoneBook book
+		);
+
+		static void add_prompter (
+			const std::string prompt,
+			Contact	*new_user,
+			bool (Contact::*manager)(std::string)
+		);
+
 	public:
 		Steps();
 		~Steps();
 
-	static void prompter (
-		const std::string prompt,
-		PhoneBook book,
-		bool (*manager)(std::string, PhoneBook)
-	);
-
-	static bool command_manager(
-		const std::string input,
-		PhoneBook book
-	);
-
-	static bool add_manager(
-		PhoneBook book
-	);
-
-	static void add_prompter (
-		const std::string prompt,
-		Contact	new_user,
-		bool (Contact::*manager)(std::string)
-	);
 };
 
 #endif

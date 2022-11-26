@@ -6,11 +6,14 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 00:41:12 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/26 05:30:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/26 23:22:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
+
+Contact::Contact(): _index(-1) {
+}
 
 Contact::~Contact()
 {
@@ -54,6 +57,22 @@ bool Contact::set_nickname (std::string str) {
 
 std::string Contact::get_nickname (void) const {
 	return (this->_nickname);
+}
+
+std::string Contact::get_name (void) const {
+	if (this->get_nickname().length() > 0)
+		return (
+			this->get_first_name() + " " + this->get_last_name()
+			+ " (" + this->get_nickname() + ")"
+		);
+	else if (this->get_last_name().length() > 0)
+		return (
+			this->get_first_name() + " " + this->get_last_name()
+		);
+	else
+		return (
+			this->get_first_name()
+		);
 }
 
 bool Contact::set_phone_number (std::string str) {

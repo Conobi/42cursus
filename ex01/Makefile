@@ -2,7 +2,8 @@ NAME		= phonebook
 
 INC			= Contact.hpp \
 			  PhoneBook.hpp \
-			  Steps.hpp
+			  Steps.hpp \
+			  helpers.hpp
 INCDIR		= incs
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
