@@ -1,4 +1,3 @@
-megaphone
 **/.DS_Store
 .DS_Store
 *.dSYM
@@ -19,3 +18,5 @@ srcs/parsing/parser
 srcs/parsing/map
 *_backup*
 *_bak*
+megaphone
+phonebook
