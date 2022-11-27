@@ -6,13 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 02:46:04 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/26 23:23:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/27 04:53:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Steps.hpp"
-#include "Contact.hpp"
-#include "helpers.hpp"
+#include "main.hpp"
 
 void Steps::prompter (
 	const std::string prompt,
@@ -23,14 +21,14 @@ void Steps::prompter (
 	std::string input;
 
 	std::cout << GRN_FG << UNDERLINE
-		<< prompt << RESET << GRN_FG << " : " << RESET;
+		<< prompt << RESET << GRN_FG << ": " << RESET;
 	while (std::getline(std::cin, input)) {
 		if (input.length()) {
 			if (!manager(input, book))
 				break ;
 		}
 		std::cout << GRN_FG << UNDERLINE
-			<< prompt << RESET << GRN_FG << " : " << RESET;
+			<< prompt << RESET << GRN_FG << ": " << RESET;
 	}
 	std::cout << std::endl;
 }
@@ -60,14 +58,14 @@ void Steps::add_prompter (
 	std::string input;
 
 	std::cout << CYN_FG << UNDERLINE
-		<< prompt << RESET << CYN_FG << " : " << RESET;
+		<< prompt << RESET << CYN_FG << ": " << RESET;
 	while (std::getline(std::cin, input)) {
 		if (input.length()) {
 			if ((*new_user.*manager)(input))
 				break ;
 		}
 		std::cout << CYN_FG << UNDERLINE
-			<< prompt << RESET << CYN_FG << " : " << RESET;
+			<< prompt << RESET << CYN_FG << ": " << RESET;
 	}
 	std::cout << std::endl;
 }

@@ -6,15 +6,14 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 00:41:08 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/26 21:10:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/27 05:18:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONTACT_HPP
 # define CONTACT_HPP
 
-# include <string>
-# include <iostream>
+# include "main.hpp"
 
 class Contact
 {
@@ -25,7 +24,8 @@ class Contact
 		std::string _nickname;
 		std::string _phone_number;
 		std::string _secret;
-
+		std::string trim(std::string str);
+		bool is_valid_phone_number(std::string str);
 
 	public:
 		Contact ();

@@ -6,21 +6,18 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 02:44:10 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/26 23:21:13 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/27 03:44:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROMPT_HPP
 # define PROMPT_HPP
 
-# include <string>
-# include <iostream>
-# include "PhoneBook.hpp"
-# include "Contact.hpp"
+# include "main.hpp"
 
 class Steps
 {
-	private:
+	public:
 		static void prompter (
 			const std::string prompt,
 			PhoneBook book,
@@ -31,6 +28,7 @@ class Steps
 			const std::string input,
 			PhoneBook book
 		);
+	private:
 
 		static bool add_manager(
 			PhoneBook book

@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PhoneBook.hpp                                      :+:      :+:    :+:   */
+/*   main.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/26 01:08:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/27 03:43:48 by conobi           ###   ########lyon.fr   */
+/*   Created: 2022/11/27 03:41:16 by conobi            #+#    #+#             */
+/*   Updated: 2022/11/27 03:46:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHONEBOOK_HPP
-# define PHONEBOOK_HPP
+#ifndef MAIN_HPP
+# define MAIN_HPP
 
-# include "main.hpp"
+#include <iostream>
+#include <string>
+#include <stdlib.h>
 
-class PhoneBook
-{
-	private:
-		Contact _contacts[9];
-		int _contacts_created;
-		bool _is_full(void);
-		bool _push_up(Contact new_user);
-
-	public:
-		PhoneBook (): _contacts_created(0) {};
-		~PhoneBook ();
-
-		bool add_contact (Contact user);
-		void list_contacts (void) const;
-		void show_user (int index) const;
-};
+#include "Contact.hpp"
+#include "PhoneBook.hpp"
+#include "Steps.hpp"
+#include "helpers.hpp"
 
 #endif
