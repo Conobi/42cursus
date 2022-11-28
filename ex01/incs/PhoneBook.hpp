@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 01:08:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/28 17:03:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/28 19:42:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class PhoneBook
 		bool _command_manager (const std::string input);
 
 	public:
-		PhoneBook (): _contacts_created(0) {};
+		PhoneBook ();
 		~PhoneBook ();
 
 		void prompter (const std::string prompt);

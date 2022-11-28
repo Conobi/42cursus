@@ -6,13 +6,18 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 01:10:53 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/28 17:29:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/28 19:43:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
 
+PhoneBook::PhoneBook(): _contacts_created(0) {
+
+}
+
 PhoneBook::~PhoneBook() {
+
 }
 
 bool PhoneBook::_add_contact (Contact *user) {
