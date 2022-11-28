@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 15:20:29 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/27 04:52:56 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/28 02:15:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int main (void) {
 	PhoneBook book;
 
 	welcome_print();
-	Steps::prompter("Command", book, Steps::command_manager);
+	book.prompter("Command");
 	return (0);
 }

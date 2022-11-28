@@ -2,7 +2,6 @@ NAME		= phonebook
 
 INC			= Contact.hpp \
 			  PhoneBook.hpp \
-			  Steps.hpp \
 			  helpers.hpp \
 			  main.hpp
 INCDIR		= incs
@@ -11,8 +10,7 @@ INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= main.cpp \
 			  PhoneBook.cpp \
-			  Contact.cpp \
-			  Steps.cpp
+			  Contact.cpp
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 

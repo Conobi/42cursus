@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 01:08:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/27 03:43:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/28 03:11:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,38 @@ class PhoneBook
 		Contact _contacts[9];
 		int _contacts_created;
 		bool _is_full(void);
-		bool _push_up(Contact new_user);
+		bool _push_up(Contact *new_user);
+
+		bool _add_contact (Contact *user);
+		bool _list_contacts (void) const;
+		Contact *_find_user (int index);
+		void _show_user (Contact *user) const;
+
+
+		void _add_prompter (
+			const std::string prompt,
+			Contact	*new_user,
+			bool (Contact::*manager)(std::string)
+		);
+
+		void _search_prompter (
+			const std::string prompt
+		);
+
+		bool _add_manager (void);
+
+		bool _search_manager (void);
+
+		bool _command_manager (const std::string input);
+
+
 
 	public:
 		PhoneBook (): _contacts_created(0) {};
 		~PhoneBook ();
 
-		bool add_contact (Contact user);
-		void list_contacts (void) const;
-		void show_user (int index) const;
+		void prompter (const std::string prompt);
+
 };
 
 #endif
