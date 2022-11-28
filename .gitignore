@@ -20,3 +20,5 @@ srcs/parsing/map
 *_bak*
 megaphone
 phonebook
+*.log
+dreamjob
