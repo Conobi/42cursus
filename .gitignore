@@ -18,7 +18,9 @@ srcs/parsing/parser
 srcs/parsing/map
 *_backup*
 *_bak*
+*.replace
 brainz
 morebrainz
 hibrain
 violence
+loser_replace
