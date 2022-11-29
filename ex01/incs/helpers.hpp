@@ -6,12 +6,12 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 22:45:42 by conobi            #+#    #+#             */
-/*   Updated: 2022/11/27 03:44:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/11/29 18:44:04 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AC_HPP
-# define AC_HPP
+#ifndef HELPERS_HPP
+# define HELPERS_HPP
 
 # include "main.hpp"
 
