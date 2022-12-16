@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 18:52:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/12 19:51:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/16 16:52:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class Fixed {
 	private:
 		int _value;
-		static const int _fractional;
+		static const int _fractional = 8;
 
 	public:
 		Fixed(void);
