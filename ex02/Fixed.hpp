@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 18:52:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/16 19:32:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/17 02:41:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ class Fixed {
 
 		Fixed &operator=(const Fixed &rhs);
 		Fixed &operator++();
-		Fixed &operator++(int);
+		Fixed operator++(int);
 		Fixed &operator--();
-		Fixed &operator--(int);
+		Fixed operator--(int);
 
 		Fixed operator+(const Fixed &rhs) const;
 		Fixed operator-(const Fixed &rhs) const;

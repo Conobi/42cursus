@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 18:52:42 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/16 19:34:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/17 02:52:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ Fixed::Fixed(const int val) {
 	std::cout << MAG_FG << ITALIC
 		<< "Int constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
-	this->_value = roundf(val * pow(2, _fractional));
+	this->_value = roundf(val * pow(2, this->_fractional));
 }
 
 Fixed::Fixed(const float val) {
 	std::cout << MAG_FG << ITALIC
 		<< "Float constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
-	this->_value = roundf(val * pow(2, _fractional));
+	this->_value = roundf(val * pow(2, this->_fractional));
 }
 
 Fixed::~Fixed() {
@@ -62,31 +62,23 @@ Fixed &Fixed::operator=(const Fixed &rhs) {
 }
 
 Fixed &Fixed::operator++() {
-	float val;
-
-	val = this->toFloat();
-	val++;
-	this->_value = roundf(val * pow(2, _fractional));
+	this->_value++;
 	return (*this);
 }
 
-Fixed &Fixed::operator++(int) {
+Fixed Fixed::operator++(int) {
 	Fixed tmp(*this);
 
 	operator++();
-	return (tmp);
-}
-
-Fixed &Fixed::operator--() {
-	float val;
-
-	val = this->toFloat();
-	val--;
-	this->_value = roundf(val * pow(2, _fractional));
 	return (*this);
 }
 
-Fixed &Fixed::operator--(int) {
+Fixed &Fixed::operator--() {
+	this->_value--;
+	return (*this);
+}
+
+Fixed Fixed::operator--(int) {
 	Fixed tmp(*this);
 
 	operator--();
@@ -201,28 +193,28 @@ bool Fixed::operator!=(const Fixed &rhs) const {
 	return (val_a != val_b);
 }
 
-static Fixed &Fixed::min(Fixed &a, Fixed &b) {
+Fixed &Fixed::min(Fixed &a, Fixed &b) {
 	if (a < b) {
 		return (a);
 	}
 	return (b);
 }
 
-static const Fixed &Fixed::min(Fixed const &a, Fixed const &b) {
+const Fixed &Fixed::min(Fixed const &a, Fixed const &b) {
 	if (a < b) {
 		return (a);
 	}
 	return (b);
 }
 
-static Fixed &Fixed::max(Fixed &a, Fixed &b) {
+Fixed &Fixed::max(Fixed &a, Fixed &b) {
 	if (a > b) {
 		return (a);
 	}
 	return (b);
 }
 
-static const Fixed &Fixed::max(Fixed const &a, Fixed const &b) {
+const Fixed &Fixed::max(Fixed const &a, Fixed const &b) {
 	if (a > b) {
 		return (a);
 	}
