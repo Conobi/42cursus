@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/19 19:28:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/19 19:38:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@
 
 ClapTrap::ClapTrap() {
 	std::cout << BLU_FG << ITALIC
-		<< "Default constructor " << RESET
+		<< "ClapTrap Default constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &val) {
 	std::cout << MAG_FG << ITALIC
-		<< "Copy constructor " << RESET
+		<< "ClapTrap Copy constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
 	*this = val;
 }
 
 ClapTrap::~ClapTrap() {
 	std::cout << YEL_FG << ITALIC
-	<< "Destructor " << RESET
+	<< "ClapTrap Destructor " << RESET
 	<< ITALIC << "called" << RESET << std::endl;
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &rhs) {
 	std::cout << MAG_FG << ITALIC
-	<< "Copy assignment " << RESET
+	<< "ClapTrap Copy assignment " << RESET
 	<< ITALIC << "operator called" << RESET << std::endl;
 	this->_name = rhs.getName();
 	this->_health = rhs.getHealth();
@@ -53,7 +53,7 @@ ClapTrap::ClapTrap(const std::string name):
 	_damage(1)
 {
 	std::cout << BLU_FG << ITALIC
-		<< "Assignement constructor " << RESET
+		<< "ClapTrap Assignement constructor " << RESET
 		<< ITALIC << "called for " << name
 		<< RESET << std::endl;
 }
