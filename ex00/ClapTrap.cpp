@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/19 19:38:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/19 19:46:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ ClapTrap::ClapTrap(const std::string name):
 	_name(name),
 	_health(10),
 	_energy(10),
-	_damage(1)
+	_damage(0)
 {
 	std::cout << BLU_FG << ITALIC
 		<< "ClapTrap Assignement constructor " << RESET
