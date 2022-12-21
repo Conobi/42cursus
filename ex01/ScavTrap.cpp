@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/19 20:00:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/21 15:14:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ ScavTrap::ScavTrap() {
 		<< ITALIC << "called" << RESET << std::endl;
 }
 
-ScavTrap::ScavTrap(const ScavTrap &val) {
+ScavTrap::ScavTrap(const ScavTrap &val) : ClapTrap(val) {
 	std::cout << MAG_FG << ITALIC
 		<< "ScavTrap Copy constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
