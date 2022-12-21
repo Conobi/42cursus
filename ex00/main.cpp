@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:03 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/19 19:28:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/21 15:25:42 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-int main(void) {
+void testClapTrap() {
 	ClapTrap *squad = new ClapTrap[3];
 
 	squad[0] = ClapTrap("Edouard");
@@ -33,5 +33,10 @@ int main(void) {
 	}
 
 	delete []squad;
+}
+
+int main(void) {
+
+	testClapTrap();
 	return (0);
 }
