@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:35 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/19 19:46:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/21 15:39:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void ClapTrap::takeDamage(unsigned int amount) {
 		this->_health -= amount;
 	}
 	if (this->_health == 0) {
-		std::cout << RED_FG << "ClapTrap " << this->_name
+		std::cout << RED_FG << this->_name
 			<< " is dead!" << RESET << std::endl;
 	}
 }
