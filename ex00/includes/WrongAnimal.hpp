@@ -6,11 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:03:21 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/22 02:05:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/22 02:18:15 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include "polymorphism.hpp"
 
 class WrongAnimal {
 	protected:
