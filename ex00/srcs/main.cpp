@@ -6,11 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:46:44 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/22 02:13:06 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/22 02:25:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "polymorphism.hpp"
+#include "main.hpp"
 
 int main (void) {
 	const Animal *cato;

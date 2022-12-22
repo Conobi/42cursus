@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:49:34 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/22 02:18:08 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/22 02:25:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "polymorphism.hpp"
+#include "main.hpp"
 
 class Animal {
 	protected:

@@ -1,6 +1,6 @@
 NAME		= polymorphism
 
-INC			= polymorphism.hpp \
+INC			= main.hpp \
 			  Animal.hpp \
 			  Cat.hpp \
 			  Dog.hpp \
