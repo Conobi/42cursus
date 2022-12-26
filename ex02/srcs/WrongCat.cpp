@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.cpp                                          :+:      :+:    :+:   */
+/*   WrongCat.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 02:28:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 18:25:02 by conobi           ###   ########lyon.fr   */
+/*   Created: 2022/12/22 01:16:06 by conobi            #+#    #+#             */
+/*   Updated: 2022/12/22 02:25:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,37 @@
 
 /* ORTHODOX FORM COMPLIANCE */
 
-Brain::Brain() {
+WrongCat::WrongCat() {
 	std::cout << BLU_FG << ITALIC
-		<< "Brain Default constructor " << RESET
+		<< "WrongCat Default constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
+	this->_type = "WrongCat";
 }
 
-Brain::Brain(const Brain &val) {
+WrongCat::WrongCat(const WrongCat &val) : WrongAnimal(val) {
 	std::cout << MAG_FG << ITALIC
-		<< "Brain Copy constructor " << RESET
+		<< "WrongCat Copy constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
 	*this = val;
 }
 
-Brain::~Brain() {
+WrongCat::~WrongCat() {
 	std::cout << YEL_FG << ITALIC
-	<< "Brain Destructor " << RESET
+	<< "WrongCat Destructor " << RESET
 	<< ITALIC << "called" << RESET << std::endl;
 }
 
-Brain &Brain::operator=(const Brain &rhs) {
+WrongCat &WrongCat::operator=(const WrongCat &rhs) {
 	std::cout << MAG_FG << ITALIC
-	<< "Brain Copy assignment " << RESET
+	<< "WrongCat Copy assignment " << RESET
 	<< ITALIC << "operator called" << RESET << std::endl;
-	
-	for (size_t i = 0; i < 100; i++) {
-		this->_ideas[i] = rhs.getIdea(i);
-	}	
+	this->_type = rhs.getType();
 	return (*this);
 }
 
-const std::string *Brain::getIdeas() const {
+/* PUBLIC METHOD */
 
-	return (this->_ideas);
-}
+void WrongCat::makeSound() const {
 
-const std::string Brain::getIdea(size_t index) const {
-
-	if (index >= 0 && index < 100)
-		return (this->_ideas[index]);
-	return (NULL);
-}
-
-void Brain::setIdea(size_t index, std::string str) {
-	if (index >= 0 && index < 100)
-		this->_ideas[index] = str;
+	std::cout << "miaou";
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.cpp                                          :+:      :+:    :+:   */
+/*   AAnimal.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 02:28:13 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 18:25:02 by conobi           ###   ########lyon.fr   */
+/*   Created: 2022/12/26 17:10:06 by conobi            #+#    #+#             */
+/*   Updated: 2022/12/26 17:14:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,45 @@
 
 /* ORTHODOX FORM COMPLIANCE */
 
-Brain::Brain() {
+AAnimal::AAnimal() {
 	std::cout << BLU_FG << ITALIC
-		<< "Brain Default constructor " << RESET
+		<< "AAnimal Default constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
+	this->_type = "Animal";
 }
 
-Brain::Brain(const Brain &val) {
+AAnimal::AAnimal(const AAnimal &val) {
 	std::cout << MAG_FG << ITALIC
-		<< "Brain Copy constructor " << RESET
+		<< "AAnimal Copy constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
 	*this = val;
 }
 
-Brain::~Brain() {
+AAnimal::~AAnimal() {
+	this->debugAddresses();
 	std::cout << YEL_FG << ITALIC
-	<< "Brain Destructor " << RESET
+	<< "AAnimal Destructor " << RESET
 	<< ITALIC << "called" << RESET << std::endl;
 }
 
-Brain &Brain::operator=(const Brain &rhs) {
+AAnimal &AAnimal::operator=(const AAnimal &rhs) {
 	std::cout << MAG_FG << ITALIC
-	<< "Brain Copy assignment " << RESET
+	<< "AAnimal Copy assignment " << RESET
 	<< ITALIC << "operator called" << RESET << std::endl;
-	
-	for (size_t i = 0; i < 100; i++) {
-		this->_ideas[i] = rhs.getIdea(i);
-	}	
+	this->_type = rhs.getType();
 	return (*this);
 }
 
-const std::string *Brain::getIdeas() const {
+/* REQUIRED METHOD FOR COPY */
 
-	return (this->_ideas);
+std::string AAnimal::getType() const {
+
+	return (this->_type);
 }
 
-const std::string Brain::getIdea(size_t index) const {
+/* PUBLIC METHOD */
 
-	if (index >= 0 && index < 100)
-		return (this->_ideas[index]);
-	return (NULL);
-}
-
-void Brain::setIdea(size_t index, std::string str) {
-	if (index >= 0 && index < 100)
-		this->_ideas[index] = str;
+void AAnimal::debugAddresses() const {
+	std::cout << "type: " << this->_type << " (" << &(this->_type) << ")" << std::endl;
+	
 }
