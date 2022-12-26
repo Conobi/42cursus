@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:13:44 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 16:41:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/26 18:16:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,15 @@ Dog &Dog::operator=(const Dog &rhs) {
 	<< "Dog Copy assignment " << RESET
 	<< ITALIC << "operator called" << RESET << std::endl;
 	this->_type = rhs.getType();
-	this->_brain = rhs._brain;
+	*(this->_brain) = rhs.getBrain();
 	return (*this);
+}
+
+/* REQUIRED METHOD FOR COPY */
+
+Brain &Dog::getBrain() const {
+
+	return (*this->_brain);
 }
 
 /* PUBLIC METHOD */

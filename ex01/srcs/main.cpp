@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:46:44 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 16:54:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/26 17:57:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ int main (void) {
 	for (size_t i = 0; i < 6; i++) {
 		delete deepcpy[i];
 	}
+
+	std::cout << "------------ 05 ------------" << std::endl;
+
+	const Cat *taro = new Cat;
+	const Cat *taho = new Cat(*taro);
+
+	taro->debugAddresses();
+	taho->debugAddresses();
+
+	delete taho;
+	delete taro;
+
 
 	return (0);
 }

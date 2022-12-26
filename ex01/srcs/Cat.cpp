@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:09:41 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 16:41:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2022/12/26 18:14:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Cat::Cat(const Cat &val) : Animal(val) {
 	std::cout << MAG_FG << ITALIC
 		<< "Cat Copy constructor " << RESET
 		<< ITALIC << "called" << RESET << std::endl;
+	this->_brain = new Brain;
 	*this = val;
 }
 
@@ -42,8 +43,15 @@ Cat &Cat::operator=(const Cat &rhs) {
 	<< "Cat Copy assignment " << RESET
 	<< ITALIC << "operator called" << RESET << std::endl;
 	this->_type = rhs.getType();
-	this->_brain = rhs._brain;
+	*(this->_brain) = rhs.getBrain();
 	return (*this);
+}
+
+/* REQUIRED METHOD FOR COPY */
+
+Brain &Cat::getBrain() const {
+
+	return (*this->_brain);
 }
 
 /* PUBLIC METHOD */
