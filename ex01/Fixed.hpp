@@ -6,15 +6,15 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 18:52:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/16 18:09:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/04 19:51:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <cmath>
 #include <iostream>
 #include <string>
-#include <cmath>
 
 class Fixed {
 	private:

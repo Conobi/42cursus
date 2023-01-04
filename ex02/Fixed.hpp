@@ -6,15 +6,15 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 18:52:50 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/17 02:41:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/04 19:52:06 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <cmath>
 #include <iostream>
 #include <string>
-#include <cmath>
 
 class Fixed {
 	private:
@@ -45,7 +45,6 @@ class Fixed {
 		bool operator<=(const Fixed &rhs) const;
 		bool operator==(const Fixed &rhs) const;
 		bool operator!=(const Fixed &rhs) const;
-
 
 		int getRawBits(void) const;
 		void setRawBits(int const raw);
