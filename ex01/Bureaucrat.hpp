@@ -6,16 +6,16 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:06:19 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/03 15:38:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/05 15:20:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <string>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <string>
 
 #define RED_FG "\001\033[91m\002"
 #define GRN_FG "\001\033[32m\002"
@@ -43,39 +43,43 @@
 #define UNDERLINE "\001\033[4m\002"
 
 class Bureaucrat {
-    private:
-        std::string _name;
-        unsigned short _grade;
-        
-        void _gradeCheck(const unsigned short new_grade);
-    
-    public:
+	private:
+		std::string _name;
+		unsigned short _grade;
+
+		void _gradeCheck(const unsigned short new_grade);
+
+	public:
 		Bureaucrat();
 		Bureaucrat(const Bureaucrat &val);
 		~Bureaucrat();
 		Bureaucrat &operator=(const Bureaucrat &rhs);
-        
-        Bureaucrat(const std::string name, const unsigned short grade);
 
-        std::string getName() const;
-        unsigned short getGrade() const;
-        
-        void increaseGrade();
-        void decreaseGrade();
+		Bureaucrat(const std::string name, const unsigned short grade);
 
-        class GradeTooHighException: public std::exception {
-            public:
-                virtual const char* what() const throw() {
-                    return ("Bureaucrat grade must be a number higher or equal to 1.");
-                }
-        };
+		std::string getName() const;
+		unsigned short getGrade() const;
 
-        class GradeTooLowException: public std::exception {
-            public:
-                virtual const char* what() const throw() {
-                    return ("Bureaucrat grade must be a number less or equal to 150.");
-                }
-        };
+		void increaseGrade();
+		void decreaseGrade();
+
+		class GradeTooHighException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return (
+						"Bureaucrat grade must be a number higher or equal to "
+						"1.");
+				}
+		};
+
+		class GradeTooLowException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return (
+						"Bureaucrat grade must be a number less or equal to "
+						"150.");
+				}
+		};
 };
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &val);
