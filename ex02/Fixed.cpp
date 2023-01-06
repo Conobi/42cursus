@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 18:52:42 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/04 20:01:19 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 17:06:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ Fixed::Fixed(const Fixed &val) {
 Fixed::Fixed(const int val) {
 	std::cout << MAG_FG << ITALIC << "Int constructor " << RESET << ITALIC
 			  << "called" << RESET << std::endl;
-	this->_value = std::roundf(val * std::pow(2, this->_fractional));
+	this->_value = roundf(val * std::pow(2, this->_fractional));
 }
 
 Fixed::Fixed(const float val) {
 	std::cout << MAG_FG << ITALIC << "Float constructor " << RESET << ITALIC
 			  << "called" << RESET << std::endl;
-	this->_value = std::roundf(val * std::pow(2, this->_fractional));
+	this->_value = roundf(val * std::pow(2, this->_fractional));
 }
 
 Fixed::~Fixed() {
