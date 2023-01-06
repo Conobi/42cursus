@@ -6,11 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:59:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/05 15:22:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 18:12:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Form.hpp"
+
+#include "Bureaucrat.hpp"
 
 /* ORTHODOX FORM COMPLIANCE */
 
@@ -40,9 +42,9 @@ Form &Form::operator=(const Form &rhs) {
 Form::Form(const std::string name, const unsigned short grade_to_sign,
 		   const unsigned short grade_to_exec)
 	: _name(name),
-	  _is_signed(false),
 	  _grade_to_sign(grade_to_sign),
-	  _grade_to_exec(grade_to_exec) {
+	  _grade_to_exec(grade_to_exec),
+	  _is_signed(false) {
 	std::cout << BLU_FG << ITALIC << "Form Assignement constructor " << RESET
 			  << ITALIC << "called for " << name << RESET << std::endl;
 
@@ -87,7 +89,13 @@ void Form::_gradeCheck(const unsigned short new_grade) {
 		throw Form::GradeTooLowException();
 }
 
-// STILL NEEDS :
-// - A beSigned() member function on Form
-// - A signForm() member function on Bureaucrat
-// - << operator overload for Form
+/* << OPERATOR OVERLOAD */
+
+std::ostream &operator<<(std::ostream &os, const Form &val) {
+	os << "Form \"" << val.getName() << "\" is "
+	   << (val.isSigned() ? "signed" : "not signed")
+	   << ". The Form needs grade " << val.getGradeToExec()
+	   << " to be executed and grade " << val.getGradeToSign()
+	   << " to be signed.";
+	return (os);
+}

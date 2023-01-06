@@ -6,13 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:44:14 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/05 15:20:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 18:07:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-
-#include <mutex>
 
 /* ORTHODOX FORM COMPLIANCE */
 
@@ -80,6 +78,19 @@ void Bureaucrat::_gradeCheck(const unsigned short new_grade) {
 
 	else if (new_grade > 150)
 		throw Bureaucrat::GradeTooLowException();
+}
+
+/* PUBLIC METHODS */
+
+void Bureaucrat::signForm(Form &Form) {
+	try {
+		Form.beSigned(*this);
+		std::cout << this->getName() << " signed " << Form.getName()
+				  << std::endl;
+	} catch (Form::GradeTooLowException &e) {
+		std::cout << this->getName() << " couldn't sign " << Form.getName()
+				  << " because its grade was too low" << std::endl;
+	}
 }
 
 /* << OPERATOR OVERLOAD */

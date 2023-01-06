@@ -7,7 +7,8 @@ INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 
 SRC			= main.cpp \
-			  Bureaucrat.cpp
+			  Bureaucrat.cpp \
+			  Form.cpp
 SDIR		= .
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 
