@@ -6,13 +6,18 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:46:44 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 17:46:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:11:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
 
-int main (void) {
+#include "AAnimal.hpp"
+#include "Brain.hpp"
+#include "Cat.hpp"
+#include "Dog.hpp"
+
+int main(void) {
 	const AAnimal *AAnimals[6];
 	const AAnimal *softcpy[6];
 

@@ -6,13 +6,19 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:46:44 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/22 02:25:06 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:05:51 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
 
-int main (void) {
+#include "Animal.hpp"
+#include "Cat.hpp"
+#include "Dog.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
+
+int main(void) {
 	const Animal *cato;
 	const Animal *dogo;
 	const Animal *meta;
@@ -45,7 +51,6 @@ int main (void) {
 	std::cout << toca->getType() << ": ";
 	toca->makeSound();
 	std::cout << std::endl;
-
 
 	delete cato;
 	delete dogo;

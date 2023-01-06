@@ -6,19 +6,14 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 02:32:14 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 17:07:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:10:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <string>
 #include <iostream>
-
-#include "Brain.hpp"
-#include "AAnimal.hpp"
-#include "Cat.hpp"
-#include "Dog.hpp"
+#include <string>
 
 #define RED_FG "\001\033[91m\002"
 #define GRN_FG "\001\033[32m\002"

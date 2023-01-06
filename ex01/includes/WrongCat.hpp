@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:16:15 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 16:26:57 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:08:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "WrongAnimal.hpp"
 
-class WrongCat: public WrongAnimal {
+class WrongCat : public WrongAnimal {
 	public:
 		WrongCat();
 		WrongCat(const WrongCat &val);

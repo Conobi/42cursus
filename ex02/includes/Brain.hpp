@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 02:19:25 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 15:16:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:12:57 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,4 @@ class Brain {
 		const std::string *getIdeas() const;
 		const std::string getIdea(size_t index) const;
 		void setIdea(size_t index, std::string str);
-
 };

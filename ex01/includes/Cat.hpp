@@ -6,13 +6,16 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:49:34 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 18:15:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:08:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-class Cat: public Animal {
+#include "Animal.hpp"
+#include "Brain.hpp"
+
+class Cat : public Animal {
 	private:
 		Brain *_brain;
 
@@ -21,10 +24,9 @@ class Cat: public Animal {
 		Cat(const Cat &val);
 		~Cat();
 		Cat &operator=(const Cat &rhs);
-		
+
 		Brain &getBrain() const;
 
 		virtual void makeSound() const;
 		virtual void debugAddresses() const;
-
 };

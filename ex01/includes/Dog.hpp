@@ -6,13 +6,16 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:49:34 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 18:16:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:08:43 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-class Dog: public Animal {
+#include "Animal.hpp"
+#include "Brain.hpp"
+
+class Dog : public Animal {
 	private:
 		Brain *_brain;
 

@@ -18,6 +18,8 @@ build_docker.sh
 *_bak*
 Example_class.cpp
 test.c
+compile_commands.json
+.cache
 polymorphism
 brain
 abstract_brain

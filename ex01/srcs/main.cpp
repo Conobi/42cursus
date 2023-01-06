@@ -6,13 +6,18 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:46:44 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/26 17:57:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 02:08:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
 
-int main (void) {
+#include "Animal.hpp"
+#include "Brain.hpp"
+#include "Cat.hpp"
+#include "Dog.hpp"
+
+int main(void) {
 	const Animal *animals[6];
 	const Animal *softcpy[6];
 	const Animal *deepcpy[6];
@@ -35,7 +40,7 @@ int main (void) {
 	}
 
 	std::cout << "------------ 02 ------------" << std::endl;
-	
+
 	for (size_t i = 0; i < 6; i++) {
 		deepcpy[i] = new Animal(*animals[i]);
 	}
@@ -62,7 +67,6 @@ int main (void) {
 
 	delete taho;
 	delete taro;
-
 
 	return (0);
 }
