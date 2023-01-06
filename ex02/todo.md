@@ -1,0 +1,4 @@
+- [ ] Add a global checker for the right to exec the form, and new errors to throw
+- [ ] Add a `execute(Bureaucrat const & executor) const` method to each of the forms
+- [ ] Create a shitton of tests for the form, and each subforms
+- [ ] Check for the leaks
