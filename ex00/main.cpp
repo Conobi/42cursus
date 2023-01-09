@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:03 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/21 15:25:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 16:43:40 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,15 @@ void testClapTrap() {
 	squad[1] = ClapTrap("Dieumerci");
 	squad[2] = ClapTrap("Bienvenue");
 
-	for (size_t i = 0; i < 12; i++)
-	{
+	// Check the values with Assignement constructor
+	std::cout << squad[0] << std::endl;
+
+	ClapTrap foo = ClapTrap();
+
+	// Check the values with Default constructor
+	std::cout << foo << std::endl;
+
+	for (size_t i = 0; i < 12; i++) {
 		squad[0].attack(squad[2].getName());
 		squad[2].takeDamage(squad[0].getDamage());
 		squad[1].attack(squad[0].getName());
@@ -32,11 +39,10 @@ void testClapTrap() {
 		squad[1].beRepaired(1);
 	}
 
-	delete []squad;
+	delete[] squad;
 }
 
 int main(void) {
-
 	testClapTrap();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:55 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/19 18:58:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 16:41:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ class ClapTrap {
 		unsigned int getEnergy() const;
 		unsigned int getDamage() const;
 };
+
+std::ostream &operator<<(std::ostream &os, const ClapTrap &val);
 
 #define RED_FG "\001\033[91m\002"
 #define GRN_FG "\001\033[32m\002"
