@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 16:00:05 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:08:15 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 15:17:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ class Form {
 		unsigned short getGradeToExec() const;
 		bool isSigned() const;
 
-		void beSigned(Bureaucrat &person);
+		void beSigned(Bureaucrat &Bureaucrat);
 
 		class GradeTooHighException : public std::exception {
 			public:

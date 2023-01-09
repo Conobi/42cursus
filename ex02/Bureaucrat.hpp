@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:06:19 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:23:51 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 15:52:04 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ class Bureaucrat {
 		void increaseGrade();
 		void decreaseGrade();
 
-		void signAForm(AForm &AForm);
+		void signForm(AForm &AForm);
+		void executeForm(AForm &AForm);
 
 		class GradeTooHighException : public std::exception {
 			public:

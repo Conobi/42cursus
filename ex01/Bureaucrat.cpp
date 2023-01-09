@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:44:14 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:07:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 16:16:51 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,26 @@ unsigned short Bureaucrat::getGrade() const {
 
 /* MODIFIERS */
 
+/* MODIFIERS */
+
 void Bureaucrat::increaseGrade() {
-	_gradeCheck(this->getGrade() - 1);
-	this->_grade--;
+	try {
+		_gradeCheck(this->getGrade() - 1);
+		this->_grade--;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
 }
 
 void Bureaucrat::decreaseGrade() {
-	_gradeCheck(this->getGrade() + 1);
-	this->_grade++;
+	try {
+		_gradeCheck(this->getGrade() + 1);
+		this->_grade++;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
 }
 
 /* PRIVATE METHODS */

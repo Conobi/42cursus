@@ -1,14 +1,16 @@
 NAME		= aform
 
 INC			= Bureaucrat.hpp \
-			  AForm.hpp
+			  AForm.hpp \
+			  PresidentialPardonForm.hpp
 INCDIR		= .
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 
 SRC			= main.cpp \
 			  Bureaucrat.cpp \
-			  AForm.cpp
+			  AForm.cpp \
+			  PresidentialPardonForm.cpp
 SDIR		= .
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 

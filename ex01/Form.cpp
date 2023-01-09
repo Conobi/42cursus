@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:59:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:12:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 15:17:24 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ bool Form::isSigned() const {
 
 /* MODIFIERS */
 
-void Form::beSigned(Bureaucrat &person) {
-	if (person.getGrade() > this->getGradeToSign()) {
+void Form::beSigned(Bureaucrat &Bureaucrat) {
+	if (Bureaucrat.getGrade() > this->getGradeToSign()) {
 		throw Form::GradeTooLowException();
 	} else {
 		this->_is_signed = true;

@@ -1,4 +1,5 @@
-- [ ] Add a global checker for the right to exec the form, and new errors to throw
-- [ ] Add a `execute(Bureaucrat const & executor) const` method to each of the forms
+- [x] Add a global checker for the right to exec the form, and new errors to throw
+- [x] Add a `execute(Bureaucrat const & executor) const` method to each of the forms
+- [ ] Remove name to PresidentialPardonForm (?)
 - [ ] Create a shitton of tests for the form, and each subforms
 - [ ] Check for the leaks

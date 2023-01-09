@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 16:00:05 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:26:37 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 16:09:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ class AForm {
 		const unsigned short _grade_to_exec;
 		bool _is_signed;
 
-		void _gradeCheck(const unsigned short new_grade);
+		void _gradeCheck(const unsigned short grade);
+		virtual void _executor() const = 0;
 
 	public:
 		AForm();
 		AForm(const AForm &val);
-		~AForm();
+		virtual ~AForm();
 		AForm &operator=(const AForm &rhs);
 
 		AForm(const std::string name, const unsigned short grade_to_sign,
@@ -44,21 +45,41 @@ class AForm {
 		unsigned short getGradeToExec() const;
 		bool isSigned() const;
 
-		void beSigned(Bureaucrat &person);
+		void beSigned(Bureaucrat &Bureaucrat);
+		void execute(const Bureaucrat &Bureaucrat) const;
 
-		class GradeTooHighException : public std::exception {
-			public:
-				virtual const char *what() const throw() {
-					return ("Form specified grade is out of bound (< 1)");
-				}
-		};
-
-		class GradeTooLowException : public std::exception {
+		class GradeOutOfBoundException : public std::exception {
 			public:
 				virtual const char *what() const throw() {
 					return (
-						"Form specified grade is out of bound (> 150) or "
-						"Bureaucrat's grade isn't high enough.");
+						"Form specified grade is out of bound (< 1 or > 150).");
+				}
+		};
+
+		class SignGradeTooLowException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return (
+						"Bureaucrat's grade isn't high enough to sign this "
+						"Form.");
+				}
+		};
+
+		class ExecGradeTooLowException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return (
+						"Bureaucrat's grade isn't high enough to execute this "
+						"Form.");
+				}
+		};
+
+		class UnsignedFormExecutedException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return (
+						"The Form cannot be executed if it has not been "
+						"signed.");
 				}
 		};
 };

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:59:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:26:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 16:17:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ bool AForm::isSigned() const {
 
 /* MODIFIERS */
 
-void AForm::beSigned(Bureaucrat &person) {
-	if (person.getGrade() > this->getGradeToSign()) {
-		throw AForm::GradeTooLowException();
+void AForm::beSigned(Bureaucrat &Bureaucrat) {
+	if (Bureaucrat.getGrade() > this->getGradeToSign()) {
+		throw AForm::SignGradeTooLowException();
 	} else {
 		this->_is_signed = true;
 	}
@@ -81,12 +81,19 @@ void AForm::beSigned(Bureaucrat &person) {
 
 /* PRIVATE METHODS */
 
-void AForm::_gradeCheck(const unsigned short new_grade) {
-	if (new_grade < 1)
-		throw AForm::GradeTooHighException();
+void AForm::_gradeCheck(const unsigned short grade) {
+	if (grade < 1 || grade > 150)
+		throw AForm::GradeOutOfBoundException();
+}
 
-	else if (new_grade > 150)
-		throw AForm::GradeTooLowException();
+void AForm::execute(const Bureaucrat &Bureaucrat) const {
+	if (Bureaucrat.getGrade() > this->getGradeToSign()) {
+		throw AForm::ExecGradeTooLowException();
+	} else if (!this->isSigned()) {
+		throw AForm::UnsignedFormExecutedException();
+	} else {
+		this->_executor();
+	}
 }
 
 /* << OPERATOR OVERLOAD */

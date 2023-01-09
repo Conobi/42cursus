@@ -6,11 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:44:14 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:23:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 16:20:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+
+#include <exception>
 
 /* ORTHODOX FORM COMPLIANCE */
 
@@ -61,13 +63,23 @@ unsigned short Bureaucrat::getGrade() const {
 /* MODIFIERS */
 
 void Bureaucrat::increaseGrade() {
-	_gradeCheck(this->getGrade() - 1);
-	this->_grade--;
+	try {
+		_gradeCheck(this->getGrade() - 1);
+		this->_grade--;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
 }
 
 void Bureaucrat::decreaseGrade() {
-	_gradeCheck(this->getGrade() + 1);
-	this->_grade++;
+	try {
+		_gradeCheck(this->getGrade() + 1);
+		this->_grade++;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
 }
 
 /* PRIVATE METHODS */
@@ -82,14 +94,25 @@ void Bureaucrat::_gradeCheck(const unsigned short new_grade) {
 
 /* PUBLIC METHODS */
 
-void Bureaucrat::signAForm(AForm &AForm) {
+void Bureaucrat::signForm(AForm &AForm) {
 	try {
 		AForm.beSigned(*this);
 		std::cout << this->getName() << " signed " << AForm.getName()
 				  << std::endl;
-	} catch (AForm::GradeTooLowException &e) {
+	} catch (AForm::SignGradeTooLowException &e) {
 		std::cout << this->getName() << " couldn't sign " << AForm.getName()
 				  << " because its grade was too low" << std::endl;
+	}
+}
+
+void Bureaucrat::executeForm(AForm &AForm) {
+	try {
+		AForm.execute(*this);
+		std::cout << this->getName() << " executed " << AForm.getName()
+				  << std::endl;
+	} catch (std::exception &e) {
+		std::cout << this->getName() << " couldn't execute " << AForm.getName()
+				  << ". " << e.what() << std::endl;
 	}
 }
 
