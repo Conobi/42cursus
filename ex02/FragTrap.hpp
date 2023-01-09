@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:40:59 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/21 15:36:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 17:34:47 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "ClapTrap.hpp"
 
-class FragTrap: public ClapTrap {
+class FragTrap : public ClapTrap {
 	private:
 		/* data */
 	public:

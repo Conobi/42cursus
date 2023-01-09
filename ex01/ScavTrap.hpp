@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:40:59 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/19 20:00:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 17:27:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "ClapTrap.hpp"
 
-class ScavTrap: public ClapTrap {
+class ScavTrap : public ClapTrap {
 	private:
 		/* data */
 	public:

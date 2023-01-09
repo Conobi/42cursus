@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:19:03 by conobi            #+#    #+#             */
-/*   Updated: 2022/12/21 15:26:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 17:37:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,15 @@ void testClapTrap() {
 	squad[1] = ClapTrap("Dieumerci");
 	squad[2] = ClapTrap("Bienvenue");
 
-	for (size_t i = 0; i < 12; i++)
-	{
+	// Check the values with Assignement constructor
+	std::cout << squad[0] << std::endl;
+
+	ClapTrap foo = ClapTrap();
+
+	// Check the values with Default constructor
+	std::cout << foo << std::endl;
+
+	for (size_t i = 0; i < 12; i++) {
 		squad[0].attack(squad[2].getName());
 		squad[2].takeDamage(squad[0].getDamage());
 		squad[1].attack(squad[0].getName());
@@ -32,18 +39,25 @@ void testClapTrap() {
 		squad[1].beRepaired(1);
 	}
 
-	delete []squad;
+	delete[] squad;
 }
 
-void testScavTrap () {
+void testScavTrap() {
 	ScavTrap *squad = new ScavTrap[3];
 
 	squad[0] = ScavTrap("Josiane");
 	squad[1] = ScavTrap("Michelle");
 	squad[2] = ScavTrap("Bertrude");
 
-	for (size_t i = 0; i < 12; i++)
-	{
+	// Check the values with Assignement constructor
+	std::cout << squad[0] << std::endl;
+
+	ClapTrap foo = ScavTrap();
+
+	// Check the values with Default constructor
+	std::cout << foo << std::endl;
+
+	for (size_t i = 0; i < 12; i++) {
 		squad[0].attack(squad[2].getName());
 		squad[2].takeDamage(squad[0].getDamage());
 		squad[1].attack(squad[0].getName());
@@ -59,12 +73,14 @@ void testScavTrap () {
 	squad[1].guardGate();
 	squad[2].guardGate();
 
-	delete []squad;
+	delete[] squad;
 }
 
 int main(void) {
-
+	std::cout << "------------------" << std::endl;
 	testClapTrap();
+	std::cout << "------------------" << std::endl;
 	testScavTrap();
+	std::cout << "------------------" << std::endl;
 	return (0);
 }
