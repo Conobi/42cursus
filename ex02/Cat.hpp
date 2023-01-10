@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:49:34 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 02:12:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 15:38:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Cat : public AAnimal {
 	public:
 		Cat();
 		Cat(const Cat &val);
-		~Cat();
+		virtual ~Cat();
 		Cat &operator=(const Cat &rhs);
 
 		Brain &getBrain() const;
