@@ -6,11 +6,14 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:31:15 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/09 14:49:39 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 02:15:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
+
+#include <fstream>
+#include <sstream>
 
 #include "Bureaucrat.hpp"
 
@@ -82,7 +85,7 @@ static std::string ascii_trees() {
 }
 
 static bool write_file(const std::string filename, const std::string content) {
-	std::ofstream out_file(filename);
+	std::ofstream out_file(filename.c_str());
 
 	if (out_file.is_open()) {
 		out_file << content;

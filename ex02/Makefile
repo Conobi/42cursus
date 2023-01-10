@@ -3,7 +3,8 @@ NAME		= aform
 INC			= Bureaucrat.hpp \
 			  AForm.hpp \
 			  PresidentialPardonForm.hpp \
-			  ShrubberyCreationForm.hpp
+			  ShrubberyCreationForm.hpp \
+			  RobotomyRequestForm.cpp
 INCDIR		= .
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
@@ -12,7 +13,8 @@ SRC			= main.cpp \
 			  Bureaucrat.cpp \
 			  AForm.cpp \
 			  PresidentialPardonForm.cpp \
-			  ShrubberyCreationForm.cpp
+			  ShrubberyCreationForm.cpp \
+			  RobotomyRequestForm.cpp
 SDIR		= .
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 

@@ -6,11 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:41:42 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/09 19:47:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 01:34:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RobotomyRequestForm.hpp"
+
+#include <ctime>
 
 #include "Bureaucrat.hpp"
 
@@ -55,7 +57,18 @@ std::string RobotomyRequestForm::getTarget() const {
 /* OVERRIDING EXECUTOR BASE METHOD */
 
 void RobotomyRequestForm::_executor() const {
+	std::time_t t = std::time(0);
+
 	std::cout << "BRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
 	std::cout << "BRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
 	std::cout << "BRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
+
+	if (t % 2) {
+		std::cout << GRN_FG << BOLD << "SUCCESS: " << RESET << this->getTarget()
+				  << " has been robotomized." << std::endl;
+	} else {
+		std::cout << RED_FG << BOLD << "FAILURE: " << RESET
+				  << "The robotomy of " << this->getTarget()
+				  << " has failed. Oops." << std::endl;
+	}
 }
