@@ -26,7 +26,7 @@ CFLAGS		= -Wall -Wextra -Werror -std=c++98 -g3 -I $(INCDIR)
 
 all: $(NAME)
 
-$(ODIR)/%.o: $(SDIR)/%.cpp $(INCS) Makefile
+$(ODIR)/%.o: $(SRCS) $(INCS) Makefile
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
