@@ -7,7 +7,7 @@ INC			= main.hpp \
 			  WrongAnimal.hpp \
 			  WrongCat.hpp \
 			  Brain.hpp
-INCDIR		= includes
+INCDIR		= .
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 
@@ -16,7 +16,7 @@ SRC			= main.cpp \
 			  Cat.cpp \
 			  Dog.cpp \
 			  Brain.cpp
-SDIR		= srcs
+SDIR		= .
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
 
 ODIR		= build
