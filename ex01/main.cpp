@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:46:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 02:08:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 14:40:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,20 @@ int main(void) {
 
 	for (size_t i = 0; i < 6; i++) {
 		deepcpy[i] = new Animal(*animals[i]);
+		deepcpy[i]->debugAddresses();
 	}
 
 	std::cout << "------------ 03 ------------" << std::endl;
 
 	for (size_t i = 0; i < 6; i++) {
+		animals[i]->debugAddresses();
 		delete animals[i];
 	}
 
 	std::cout << "------------ 04 ------------" << std::endl;
 
 	for (size_t i = 0; i < 6; i++) {
+		deepcpy[i]->debugAddresses();
 		delete deepcpy[i];
 	}
 

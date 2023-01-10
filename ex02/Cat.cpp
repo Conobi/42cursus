@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:09:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 02:11:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 14:43:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ Cat::Cat(const Cat &val) : AAnimal(val) {
 }
 
 Cat::~Cat() {
-	this->debugAddresses();
 	std::cout << YEL_FG << ITALIC << "Cat Destructor " << RESET << ITALIC
 			  << "called" << RESET << std::endl;
 	delete this->_brain;

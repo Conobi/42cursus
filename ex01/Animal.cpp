@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 00:03:54 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 02:21:51 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 14:37:39 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ Animal::Animal(const Animal &val) {
 }
 
 Animal::~Animal() {
-	this->debugAddresses();
 	std::cout << YEL_FG << ITALIC << "Animal Destructor " << RESET << ITALIC
 			  << "called" << RESET << std::endl;
 }

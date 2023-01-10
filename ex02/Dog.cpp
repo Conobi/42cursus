@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:13:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 02:11:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 14:43:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ Dog::Dog(const Dog &val) : AAnimal(val) {
 }
 
 Dog::~Dog() {
-	this->debugAddresses();
 	std::cout << YEL_FG << ITALIC << "Dog Destructor " << RESET << ITALIC
 			  << "called" << RESET << std::endl;
 	delete this->_brain;

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 23:46:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/10 14:00:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 14:47:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main(void) {
 	meta = new Animal();
 	cato = new Cat();
 	dogo = new Dog();
+
 	tema = new WrongAnimal();
 	toca = new WrongCat();
 
