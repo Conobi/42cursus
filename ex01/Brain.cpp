@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 02:28:13 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 02:08:13 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 15:32:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ const std::string *Brain::getIdeas() const {
 const std::string Brain::getIdea(size_t index) const {
 	if (index < 100)
 		return (this->_ideas[index]);
-	return (NULL);
+	return ("");
 }
 
 void Brain::setIdea(size_t index, std::string str) {
