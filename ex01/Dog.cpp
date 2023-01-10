@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:13:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/10 14:37:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 15:22:37 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ Dog::Dog() {
 Dog::Dog(const Dog &val) : Animal(val) {
 	std::cout << MAG_FG << ITALIC << "Dog Copy constructor " << RESET << ITALIC
 			  << "called" << RESET << std::endl;
+	this->_brain = new Brain;
 	*this = val;
 }
 
