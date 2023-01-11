@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:05:08 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/06 18:14:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:08:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int main(int argc, char **argv) {
 		}
 	} else {
 		std::cerr << RED_FG << BOLD << "ERROR: " << RESET
-				  << "An argument is required (Bobby's grade)." << std::endl;
+				  << "An argument is required (grade needed to sign \"Selling "
+					 "John's company\" and \"Accept Devil Cookies\")."
+				  << std::endl;
 		return (1);
 	}
 	return (0);
