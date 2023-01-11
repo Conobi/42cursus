@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:31:15 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/07 16:02:38 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:57:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "Bureaucrat.hpp"
 
 /* ORTHODOX FORM COMPLIANCE */
+
+PresidentialPardonForm::PresidentialPardonForm() {
+	std::cout << BLU_FG << ITALIC
+			  << "PresidentialPardonForm Default constructor " << RESET
+			  << ITALIC << "called" << RESET << std::endl;
+}
 
 PresidentialPardonForm::PresidentialPardonForm(
 	const PresidentialPardonForm &val)

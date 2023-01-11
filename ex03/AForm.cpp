@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:59:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/07 16:17:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:55:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 #include "Bureaucrat.hpp"
 
 /* ORTHODOX FORM COMPLIANCE */
+
+AForm::AForm()
+	: _name("Undefined Form"),
+	  _grade_to_sign(150),
+	  _grade_to_exec(150),
+	  _is_signed(false) {
+	std::cout << BLU_FG << ITALIC << "Form Default constructor " << RESET
+			  << ITALIC << "called" << RESET << std::endl;
+
+	this->_gradeCheck(this->_grade_to_sign);
+	this->_gradeCheck(this->_grade_to_exec);
+}
 
 AForm::AForm(const AForm &val)
 	: _name(val.getName()),
@@ -48,8 +60,8 @@ AForm::AForm(const std::string name, const unsigned short grade_to_sign,
 	std::cout << BLU_FG << ITALIC << "AForm Assignement constructor " << RESET
 			  << ITALIC << "called for " << name << RESET << std::endl;
 
-	_gradeCheck(grade_to_sign);
-	_gradeCheck(grade_to_exec);
+	this->_gradeCheck(grade_to_sign);
+	this->_gradeCheck(grade_to_exec);
 }
 
 /* GETTERS */

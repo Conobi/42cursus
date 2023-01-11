@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 16:00:05 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/07 16:09:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:56:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class Bureaucrat;
 
 class AForm {
 	protected:
+		AForm();
 		const std::string _name;
 		const unsigned short _grade_to_sign;
 		const unsigned short _grade_to_exec;
@@ -32,7 +33,6 @@ class AForm {
 		virtual void _executor() const = 0;
 
 	public:
-		AForm();
 		AForm(const AForm &val);
 		virtual ~AForm();
 		AForm &operator=(const AForm &rhs);

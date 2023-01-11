@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:41:42 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/10 01:34:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:57:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 #include "Bureaucrat.hpp"
 
 /* ORTHODOX FORM COMPLIANCE */
+
+RobotomyRequestForm::RobotomyRequestForm() {
+	std::cout << BLU_FG << ITALIC << "RobotomyRequestForm Default constructor "
+			  << RESET << ITALIC << "called" << RESET << std::endl;
+}
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &val)
 	: AForm(val), _target(val.getTarget()) {

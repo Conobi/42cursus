@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:59:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/07 15:17:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:27:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 #include "Bureaucrat.hpp"
 
 /* ORTHODOX FORM COMPLIANCE */
+
+Form::Form()
+	: _name("Undefined Form"),
+	  _grade_to_sign(150),
+	  _grade_to_exec(150),
+	  _is_signed(false) {
+	std::cout << BLU_FG << ITALIC << "Form Default constructor " << RESET
+			  << ITALIC << "called" << RESET << std::endl;
+
+	_gradeCheck(this->_grade_to_sign);
+	_gradeCheck(this->_grade_to_exec);
+}
 
 Form::Form(const Form &val)
 	: _name(val.getName()),

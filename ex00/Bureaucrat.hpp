@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:06:19 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/05 15:20:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:48:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@
 
 class Bureaucrat {
 	private:
+		Bureaucrat();
 		std::string _name;
 		unsigned short _grade;
 
 		void _gradeCheck(const unsigned short new_grade);
 
 	public:
-		Bureaucrat();
 		Bureaucrat(const Bureaucrat &val);
 		~Bureaucrat();
 		Bureaucrat &operator=(const Bureaucrat &rhs);

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 16:00:05 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/09 19:55:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:35:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class Bureaucrat;
 
 class Form {
 	private:
+		Form();
 		const std::string _name;
 		const unsigned short _grade_to_sign;
 		const unsigned short _grade_to_exec;
@@ -31,7 +32,6 @@ class Form {
 		void _gradeCheck(const unsigned short new_grade);
 
 	public:
-		Form();
 		Form(const Form &val);
 		~Form();
 		Form &operator=(const Form &rhs);

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:44:14 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/07 16:20:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:50:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 
 /* ORTHODOX FORM COMPLIANCE */
 
-Bureaucrat::Bureaucrat() {
+Bureaucrat::Bureaucrat() : _name("Undefined name"), _grade(150) {
 	std::cout << BLU_FG << ITALIC << "Bureaucrat Default constructor " << RESET
 			  << ITALIC << "called" << RESET << std::endl;
+	this->_gradeCheck(this->_grade);
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &val) {
@@ -47,7 +48,7 @@ Bureaucrat::Bureaucrat(const std::string name, const unsigned short grade)
 	std::cout << BLU_FG << ITALIC << "Bureaucrat Assignement constructor "
 			  << RESET << ITALIC << "called for " << name << RESET << std::endl;
 
-	_gradeCheck(grade);
+	this->_gradeCheck(grade);
 	this->_grade = grade;
 }
 
@@ -64,7 +65,7 @@ unsigned short Bureaucrat::getGrade() const {
 
 void Bureaucrat::increaseGrade() {
 	try {
-		_gradeCheck(this->getGrade() - 1);
+		this->_gradeCheck(this->getGrade() - 1);
 		this->_grade--;
 	} catch (std::exception &e) {
 		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
@@ -74,7 +75,7 @@ void Bureaucrat::increaseGrade() {
 
 void Bureaucrat::decreaseGrade() {
 	try {
-		_gradeCheck(this->getGrade() + 1);
+		this->_gradeCheck(this->getGrade() + 1);
 		this->_grade++;
 	} catch (std::exception &e) {
 		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
