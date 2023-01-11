@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:02:43 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/10 20:02:41 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 16:29:42 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ class Intern {
 	private:
 		static const int _nb_forms = 3;
 		int _strtoFormId(std::string form_name);
+
+		AForm *_makePresidentialPardonForm(std::string target);
+		AForm *_makeShruberryCreationForm(std::string target);
+		AForm *_makeRobotomyRequestForm(std::string target);
 
 	public:
 		Intern();

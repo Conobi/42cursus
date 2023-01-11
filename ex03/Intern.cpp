@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:07:51 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/11 16:23:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 18:27:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ Intern &Intern::operator=(const Intern &rhs) {
 	return (*this);
 }
 
+/* PRIVATE METHODS */
+
 int Intern::_strtoFormId(std::string form_name) {
 	std::string form_str_list[] = {"presidential pardon", "shrubbery creation",
 								   "robotomy request"};
@@ -48,30 +50,29 @@ int Intern::_strtoFormId(std::string form_name) {
 	return (-1);
 }
 
-AForm *Intern::makeForm(std::string form_name, std::string target) {
-	AForm *Form;
-	int id;
+AForm *Intern::_makePresidentialPardonForm(std::string target) {
+	return (new PresidentialPardonForm(target));
+}
 
-	id = this->_strtoFormId(form_name);
+AForm *Intern::_makeShruberryCreationForm(std::string target) {
+	return (new ShrubberyCreationForm(target));
+}
+
+AForm *Intern::_makeRobotomyRequestForm(std::string target) {
+	return (new RobotomyRequestForm(target));
+}
+
+AForm *Intern::makeForm(std::string form_name, std::string target) {
+	AForm *(Intern::*_func_arr[3])(std::string) = {
+		&Intern::_makePresidentialPardonForm,
+		&Intern::_makeShruberryCreationForm, &Intern::_makeRobotomyRequestForm};
+	int id = this->_strtoFormId(form_name);
 
 	std::cout << "Intern creates " << form_name << std::endl;
 
-	switch (id) {
-		case 0:
-			Form = new PresidentialPardonForm(target);
-			break;
-		case 1:
-			Form = new ShrubberyCreationForm(target);
-			break;
-
-		case 2:
-			Form = new RobotomyRequestForm(target);
-			break;
-
-		default:
-			throw Intern::NoFormFoundException();
-			break;
+	if (id >= 0) {
+		return ((this->*_func_arr[id])(target));
 	}
-
-	return (Form);
+	throw Intern::NoFormFoundException();
+	return (NULL);
 }
