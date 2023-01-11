@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:07:51 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/10 20:03:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:02:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ Intern::~Intern() {
 Intern &Intern::operator=(const Intern &rhs) {
 	std::cout << MAG_FG << ITALIC << "Intern Copy assignment " << RESET
 			  << ITALIC << "operator called" << RESET << std::endl;
+	(void)rhs;
 	return (*this);
 }
 
 int Intern::_strtoFormId(std::string form_name) {
-	const std::string form_str_list[this->_nb_forms]{
-		"presidential pardon", "shrubbery creation", "robotomy request"};
+	std::string form_str_list[] = {"presidential pardon", "shrubbery creation",
+								   "robotomy request"};
 
 	for (int i = 0; i < this->_nb_forms; i++) {
 		if (form_name == form_str_list[i])
@@ -52,6 +53,8 @@ AForm *Intern::makeForm(std::string form_name, std::string target) {
 	int id;
 
 	id = this->_strtoFormId(form_name);
+
+	std::cout << "Intern creates " << form_name << std::endl;
 
 	switch (id) {
 		case 0:
@@ -69,4 +72,6 @@ AForm *Intern::makeForm(std::string form_name, std::string target) {
 			throw Intern::NoFormFoundException();
 			break;
 	}
+
+	return (Form);
 }

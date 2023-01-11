@@ -6,77 +6,75 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:05:08 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/10 01:41:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:01:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AForm.hpp"
-#include "Bureaucrat.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "ShrubberyCreationForm.hpp"
+#include "Intern.hpp"
 
-static void testsPresidentialPardonForm(Bureaucrat &john, Bureaucrat &theo,
-										Bureaucrat &bobby) {
-	AForm *pardon_form;
+static void testsSingleForm(Bureaucrat &john, Bureaucrat &theo,
+							Bureaucrat &bobby, AForm &AForm) {
+	john.executeForm(AForm);
+	theo.executeForm(AForm);
+	bobby.executeForm(AForm);
 
-	pardon_form = new class PresidentialPardonForm("Sorry", "bobby");
+	bobby.signForm(AForm);
+	theo.signForm(AForm);
+	john.signForm(AForm);
 
-	john.executeForm(*pardon_form);
-	theo.executeForm(*pardon_form);
-	bobby.executeForm(*pardon_form);
-
-	bobby.signForm(*pardon_form);
-	theo.signForm(*pardon_form);
-	john.signForm(*pardon_form);
-
-	john.executeForm(*pardon_form);
-	theo.executeForm(*pardon_form);
-	bobby.executeForm(*pardon_form);
-
-	delete pardon_form;
+	john.executeForm(AForm);
+	theo.executeForm(AForm);
+	bobby.executeForm(AForm);
 }
 
-static void testsShrubberyCreationForm(Bureaucrat &john, Bureaucrat &theo,
-									   Bureaucrat &bobby) {
-	AForm *pardon_form;
+static void testsIntern(Bureaucrat &john, Bureaucrat &theo, Bureaucrat &bobby) {
+	Intern poupi;
+	AForm *test0;
+	AForm *test1;
+	AForm *test2;
+	AForm *test3;
 
-	pardon_form = new class ShrubberyCreationForm("Oak", "lumberjack");
+	std::cout << "------------------" << std::endl;
+	try {
+		test0 = poupi.makeForm("presidential pardon", "bobby");
+		testsSingleForm(john, theo, bobby, *test0);
+		delete test0;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
 
-	john.executeForm(*pardon_form);
-	theo.executeForm(*pardon_form);
-	bobby.executeForm(*pardon_form);
+	std::cout << "------------------" << std::endl;
+	try {
+		test1 = poupi.makeForm("robotomy request", "victimos");
+		testsSingleForm(john, theo, bobby, *test1);
+		delete test1;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
+	std::cout << "------------------" << std::endl;
 
-	bobby.signForm(*pardon_form);
-	theo.signForm(*pardon_form);
-	john.signForm(*pardon_form);
+	try {
+		test2 = poupi.makeForm("shrubbery creation", "lumberjack");
+		testsSingleForm(john, theo, bobby, *test2);
+		delete test2;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
 
-	john.executeForm(*pardon_form);
-	theo.executeForm(*pardon_form);
-	bobby.executeForm(*pardon_form);
-
-	delete pardon_form;
-}
-
-static void testsRobotomyRequestForm(Bureaucrat &john, Bureaucrat &theo,
-									 Bureaucrat &bobby) {
-	AForm *pardon_form;
-
-	pardon_form = new class RobotomyRequestForm("Dr. Weirdos", "Victimos");
-
-	john.executeForm(*pardon_form);
-	theo.executeForm(*pardon_form);
-	bobby.executeForm(*pardon_form);
-
-	bobby.signForm(*pardon_form);
-	theo.signForm(*pardon_form);
-	john.signForm(*pardon_form);
-
-	john.executeForm(*pardon_form);
-	theo.executeForm(*pardon_form);
-	bobby.executeForm(*pardon_form);
-
-	delete pardon_form;
+	std::cout << "------------------" << std::endl;
+	try {
+		test3 = poupi.makeForm("form that doesn't exist", "foobar");
+		testsSingleForm(john, theo, bobby, *test3);
+		delete test3;
+	} catch (std::exception &e) {
+		std::cerr << RED_FG << BOLD << "ERROR: " << RESET << e.what()
+				  << std::endl;
+	}
+	std::cout << "------------------" << std::endl;
 }
 
 int main(void) {
@@ -84,13 +82,7 @@ int main(void) {
 	Bureaucrat theo("Theo", 42);
 	Bureaucrat bobby("Bobby", 64);
 
-	std::cout << "------------------" << std::endl;
-	testsPresidentialPardonForm(john, theo, bobby);
-	std::cout << "------------------" << std::endl;
-	testsShrubberyCreationForm(john, theo, bobby);
-	std::cout << "------------------" << std::endl;
-	testsRobotomyRequestForm(john, theo, bobby);
-	std::cout << "------------------" << std::endl;
+	testsIntern(john, theo, bobby);
 
 	return (0);
 }
