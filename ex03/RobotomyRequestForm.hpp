@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:41:47 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/11 15:57:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 16:20:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class RobotomyRequestForm : public AForm {
 		virtual ~RobotomyRequestForm();
 		RobotomyRequestForm &operator=(const RobotomyRequestForm &rhs);
 
-		RobotomyRequestForm(const std::string name, const std::string target);
+		RobotomyRequestForm(const std::string target);
 
 		std::string getTarget() const;
 };

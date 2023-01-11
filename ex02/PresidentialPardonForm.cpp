@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 15:31:15 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/11 15:57:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 16:20:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(
 
 /* ASSIGNEMENT CONSTRUCTOR */
 
-PresidentialPardonForm::PresidentialPardonForm(const std::string name,
-											   const std::string target)
-	: AForm(name, 25, 5), _target(target) {
+PresidentialPardonForm::PresidentialPardonForm(const std::string target)
+	: AForm("presidential pardon", 25, 5), _target(target) {
 	std::cout << BLU_FG << ITALIC
 			  << "PresidentialPardonForm Assignement constructor " << RESET
-			  << ITALIC << "called for " << name << RESET << std::endl;
+			  << ITALIC << "called for " << this->getName() << RESET
+			  << std::endl;
 }
 
 /* GETTERS */

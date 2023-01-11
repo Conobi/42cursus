@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:05:08 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/11 15:09:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 16:21:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static void testsPresidentialPardonForm(Bureaucrat &john, Bureaucrat &theo,
 										Bureaucrat &bobby) {
 	AForm *pardon_form;
 
-	pardon_form =
-		new class PresidentialPardonForm("presidential pardon", "bobby");
+	pardon_form = new class PresidentialPardonForm("bobby");
 
 	john.executeForm(*pardon_form);
 	theo.executeForm(*pardon_form);
@@ -42,8 +41,7 @@ static void testsShrubberyCreationForm(Bureaucrat &john, Bureaucrat &theo,
 									   Bureaucrat &bobby) {
 	AForm *pardon_form;
 
-	pardon_form =
-		new class ShrubberyCreationForm("shrubbery creation", "lumberjack");
+	pardon_form = new class ShrubberyCreationForm("lumberjack");
 
 	john.executeForm(*pardon_form);
 	theo.executeForm(*pardon_form);
@@ -64,7 +62,7 @@ static void testsRobotomyRequestForm(Bureaucrat &john, Bureaucrat &theo,
 									 Bureaucrat &bobby) {
 	AForm *pardon_form;
 
-	pardon_form = new class RobotomyRequestForm("robotomy request", "Victimos");
+	pardon_form = new class RobotomyRequestForm("Victimos");
 
 	john.executeForm(*pardon_form);
 	theo.executeForm(*pardon_form);

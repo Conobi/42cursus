@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:41:42 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/11 15:57:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 16:20:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(
 
 /* ASSIGNEMENT CONSTRUCTOR */
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string name,
-										 const std::string target)
-	: AForm(name, 25, 5), _target(target) {
+RobotomyRequestForm::RobotomyRequestForm(const std::string target)
+	: AForm("robotomy request", 25, 5), _target(target) {
 	std::cout << BLU_FG << ITALIC
 			  << "RobotomyRequestForm Assignement constructor " << RESET
-			  << ITALIC << "called for " << name << RESET << std::endl;
+			  << ITALIC << "called for " << this->getName() << RESET << std::endl;
 }
 
 /* GETTERS */

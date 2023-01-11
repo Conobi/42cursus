@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:07:51 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/11 15:02:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 16:23:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ AForm *Intern::makeForm(std::string form_name, std::string target) {
 
 	switch (id) {
 		case 0:
-			Form = new PresidentialPardonForm(form_name, target);
+			Form = new PresidentialPardonForm(target);
 			break;
 		case 1:
-			Form = new ShrubberyCreationForm(form_name, target);
+			Form = new ShrubberyCreationForm(target);
 			break;
 
 		case 2:
-			Form = new RobotomyRequestForm(form_name, target);
+			Form = new RobotomyRequestForm(target);
 			break;
 
 		default:

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:46:39 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/11 15:57:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 16:21:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class ShrubberyCreationForm : public AForm {
 		virtual ~ShrubberyCreationForm();
 		ShrubberyCreationForm &operator=(const ShrubberyCreationForm &rhs);
 
-		ShrubberyCreationForm(const std::string name, const std::string target);
+		ShrubberyCreationForm(const std::string target);
 
 		std::string getTarget() const;
 };
