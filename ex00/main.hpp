@@ -6,12 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:13:00 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/12 16:15:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/13 13:09:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <sstream>

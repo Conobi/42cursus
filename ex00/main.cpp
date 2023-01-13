@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:14:08 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/12 20:26:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/13 13:20:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,27 @@ static unsigned short detectType(const std::string str) {
 	return (0);
 }
 
-static void printAsChar(std::string str) {
-	char val = str[0];
-
+static void printer(double val) {
 	std::cout << "char: ";
-	if (static_cast<int>(val) < 0)
+	if (static_cast<int>(val) < 0 || static_cast<int>(val) > 127)
 		std::cout << RED_FG << "impossible" << RESET << std::endl;
 	else if (static_cast<int>(val) >= 0 && static_cast<int>(val) <= 31)
 		std::cout << YEL_FG << "Non displayable" << RESET << std::endl;
 	else
 		std::cout << "'" << static_cast<char>(val) << "'" << std::endl;
-
-	std::cout << "int: " << static_cast<int>(val) << std::endl
-			  << "float: " << std::fixed << std::setprecision(1)
+	if (val == val && !std::isinf(val))
+		std::cout << "int: " << static_cast<int>(val) << std::endl;
+	else
+		std::cout << "int: " << RED_FG << "impossible" << RESET << std::endl;
+	std::cout << "float: " << std::fixed << std::setprecision(1)
 			  << static_cast<float>(val) << "f" << std::endl
 			  << "double: " << static_cast<double>(val) << std::endl;
+}
+
+static void printAsChar(std::string str) {
+	char val = str[0];
+
+	printer(static_cast<double>(val));
 }
 
 static void printAsInt(std::string str) {
@@ -81,37 +87,23 @@ static void printAsInt(std::string str) {
 
 	ss >> val;
 
-	std::cout << "char: ";
-	if (static_cast<int>(val) < 0)
-		std::cout << RED_FG << "impossible" << RESET << std::endl;
-	else if (static_cast<int>(val) >= 0 && static_cast<int>(val) <= 31)
-		std::cout << YEL_FG << "Non displayable" << RESET << std::endl;
-	else
-		std::cout << "'" << static_cast<char>(val) << "'" << std::endl;
-
-	std::cout << "int: " << static_cast<int>(val) << std::endl
-			  << "float: " << std::fixed << std::setprecision(1)
-			  << static_cast<float>(val) << "f" << std::endl
-			  << "double: " << static_cast<double>(val) << std::endl;
+	printer(static_cast<double>(val));
 }
 
 static void printAsFloat(std::string str) {
-	std::stringstream ss(str.substr(1, str.length() - 1));
+	std::stringstream ss(str.substr(0, str.length() - 1));
 	float val;
 
 	ss >> val;
-	std::cout << "char: ";
-	if (static_cast<int>(val) < 0)
-		std::cout << RED_FG << "impossible" << RESET << std::endl;
-	else if (static_cast<int>(val) >= 0 && static_cast<int>(val) <= 31)
-		std::cout << YEL_FG << "Non displayable" << RESET << std::endl;
-	else
-		std::cout << "'" << static_cast<char>(val) << "'" << std::endl;
+	printer(static_cast<double>(val));
+}
 
-	std::cout << "int: " << static_cast<int>(val) << std::endl
-			  << "float: " << std::fixed << std::setprecision(1)
-			  << static_cast<float>(val) << "f" << std::endl
-			  << "double: " << static_cast<double>(val) << std::endl;
+static void printAsDouble(std::string str) {
+	std::stringstream ss(str);
+	double val;
+
+	ss >> val;
+	printer(static_cast<double>(val));
 }
 
 static void unprintable() {
@@ -138,9 +130,9 @@ int main(int argc, char **argv) {
 				case 3:
 					printAsFloat(argv[1]);
 					break;
-				// case 4:
-				//     printAsDouble(argv[1]);
-				//     break;
+				case 4:
+					printAsDouble(argv[1]);
+					break;
 				default:
 					unprintable();
 					break;
