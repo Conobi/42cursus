@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:00:19 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/15 17:36:53 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 15:54:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ class Array {
 		}
 
 		T &operator[](std::size_t index) {
-			std::cout << index << std::endl;
 			if (index >= this->size())
 				throw Array::OutOfRangeIndexException();
 			return (this->_arr_ptr[index]);

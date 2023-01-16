@@ -12,7 +12,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.cpp=.o))
 CC			= c++
-CFLAGS		= -Wall -Wextra -Werror -std=c++98 -I $(INCDIR)
+CFLAGS		= -Wall -Wextra -Werror -std=c++98 -g3 -I $(INCDIR)
 
 all: $(NAME)
 
