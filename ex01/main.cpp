@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:03:10 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/17 17:58:39 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 14:13:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@ static void testsAlot(std::size_t val) {
 
 	srand(time(0));
 	for (size_t i = 0; i < val; i++) sp.addNumber(rand());
+
+	std::cout << "shortest: " << sp.shortestSpan() << std::endl;
+	std::cout << "longest:  " << sp.longestSpan() << std::endl;
+}
+
+static void testsArray() {
+	std::vector<int> vec(20000, 200);
+
+	vec[200] = 80;
+	vec[0] = 30;
+	vec[8000] = 5;
+
+	Span sp = Span(20000);
+
+	sp.addNumbers(&vec[0], vec.size());
 
 	std::cout << "shortest: " << sp.shortestSpan() << std::endl;
 	std::cout << "longest:  " << sp.longestSpan() << std::endl;
@@ -77,6 +92,8 @@ int main() {
 	testsSubject();
 	std::cout << "--- Test with 10 000 values ---" << std::endl;
 	testsAlot(10000);
+	std::cout << "--- Test with array as entry ---" << std::endl;
+	testsArray();
 	testsLimitCases();
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:47:29 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/17 17:57:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 14:06:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ void Span::addNumber(const int val) {
 
 	vec.insert(std::upper_bound(vec.begin(), vec.end(), val), val);
 }
+
+/* MEMBER FUNCTIONS */
+void Span::addNumbers(const int val[], const std::size_t size) {
+	for (size_t i = 0; i < size; i++) {
+		this->addNumber(val[i]);
+	}
+}
+
 
 long long Span::longestSpan() {
 	if (this->_arr.size() <= 1)

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:39:24 by conobi            #+#    #+#             */
-/*   Updated: 2023/01/17 17:39:06 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 14:02:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Span {
 		Span(const std::size_t size);
 
 		void addNumber(const int val);
+		void addNumbers(const int val[], const std::size_t size);
 		long long shortestSpan();
 		long long longestSpan();
 
