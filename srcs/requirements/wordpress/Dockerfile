@@ -21,8 +21,10 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 WORKDIR /var/www
 RUN chmod u=rwX,g=srX,o=rX -R . && \
-	chown www-data:www-data -R .
+	chown www-data:www-data -R . && \
+	mkdir -p /run/php
 COPY ./scripts/entrypoint.sh /entrypoint.sh
+COPY ./config/php-www.conf /etc/php/7.3/fpm/pool.d/www.conf
 USER www-data
 RUN wp --info && \
 	mkdir wordpress && \
@@ -34,5 +36,8 @@ RUN wp --info && \
 		--dbuser=$DB_USER \
 		--dbpass=$DB_PASSWORD
 
+EXPOSE 9000
+
 WORKDIR /var/www/wordpress
+USER root
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]

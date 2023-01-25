@@ -11,6 +11,10 @@ services:
         - DB_PASSWORD=${DB_PASSWORD:?err}
     networks:
       - network-wp
+    volumes:
+      - wp-db:/var/lib/mysql
+    ports:
+      - "3306"
   wordpress-wp:
     container_name: wordpress-wp
     image: wordpress-wp
@@ -30,8 +34,30 @@ services:
       - mariadb-wp
     networks:
       - network-wp
+    ports:
+      - "9000"
     env_file:
       - .env
-
+    volumes:
+      - wp-data:/var/www/wordpress
+  nginx-wp:
+    container_name: nginx-wp
+    image: nginx-wp
+    depends_on:
+      - wordpress-wp
+    build:
+      context: ./requirements/nginx
+      args:
+        - WP_HOST=wordpress-wp
+    volumes:
+      - wp-data:/var/www/wordpress
+    networks:
+      - network-wp
+    ports:
+      - "443:443"
 networks:
   network-wp:
+
+volumes:
+  wp-data:
+  wp-db:
