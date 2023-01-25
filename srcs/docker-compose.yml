@@ -14,7 +14,7 @@ services:
     volumes:
       - wp-db:/var/lib/mysql
     ports:
-      - "3306"
+      - 3306
   wordpress-wp:
     container_name: wordpress-wp
     image: wordpress-wp
@@ -35,7 +35,7 @@ services:
     networks:
       - network-wp
     ports:
-      - "9000"
+      - 9000
     env_file:
       - .env
     volumes:
@@ -54,7 +54,7 @@ services:
     networks:
       - network-wp
     ports:
-      - "443:443"
+      - 443:443
 networks:
   network-wp:
 

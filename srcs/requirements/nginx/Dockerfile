@@ -14,6 +14,6 @@ RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=42 School/CN=tjolive
 RUN sed -i "s/HOSTNAME_PLACEHOLDER/${WP_HOST}/g" /etc/nginx/sites-enabled/default
 COPY config/ssl_dhparam /etc/nginx/dhparam
 
-EXPOSE 443
+EXPOSE 443 9000
 
 ENTRYPOINT [ "nginx", "-g", "daemon off;"]

@@ -10,4 +10,4 @@ then
 		--admin_password="$WP_ADMIN_PASSWORD"
 fi
 
-php-fpm7.3 --nodaemonize
+php-fpm7.3 --nodaemonize --fpm-config /etc/php/7.3/fpm/php-fpm.conf
