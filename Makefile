@@ -31,12 +31,14 @@ endef
 
 NAME		= ircserv
 
-INC			= irc.hpp
+INC			= irc.hpp \
+Server.hpp \
 
 INCDIR	= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
-SRC			= main.cpp
+SRC			= main.cpp \
+server/Server.cpp \
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

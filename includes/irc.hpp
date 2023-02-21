@@ -24,5 +24,11 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cerrno>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
 
 using namespace std;
+
+int guard(int n, char *proccess);
