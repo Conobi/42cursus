@@ -1,0 +1,22 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I",
+      "includes",
+      "-std=c++98",
+      "-O1",
+      "-g3",
+      "-c",
+      "-o",
+      "build/Linux/main.o",
+      "srcs/main.cpp"
+    ],
+    "directory": "/nfs/homes/abastos/Documents/irc",
+    "file": "/nfs/homes/abastos/Documents/irc/srcs/main.cpp",
+    "output": "/nfs/homes/abastos/Documents/irc/build/Linux/main.o"
+  }
+]
