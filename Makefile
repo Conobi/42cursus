@@ -32,13 +32,18 @@ endef
 NAME		= ircserv
 
 INC			= irc.hpp \
-Server.hpp \
+			  Server.hpp \
+			  Socket.hpp \
+			  SystemException.hpp
 
-INCDIR	= includes
+INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
 
 SRC			= main.cpp \
-server/Server.cpp \
+			  server/Server.cpp \
+			  server/Server_utils.cpp \
+			  socket/Socket.cpp \
+			  client/Client.cpp
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
@@ -46,7 +51,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.cpp=.o))
 CC			= c++
-CFLAGS	= -Wall -Wextra -Werror -I $(INCDIR) -std=c++98 -O1 -g3
+CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -std=c++98 -O1 -g3
 
 all: $(NAME)
 

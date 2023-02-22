@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 00:03:10 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/22 02:07:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 19:31:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include "SystemException.hpp"
 #include "irc.hpp"
 
 class Socket {
@@ -34,7 +35,7 @@ class Socket {
 
 	public:
 		Socket(const int domain, const int type, const int protocol);
-		~Socket();
+		~Socket() throw();
 
 		void bindAddress(const in_addr_t addr, const uint port);
 		void bindAddress(const uint port);
@@ -44,6 +45,26 @@ class Socket {
 		int sock_fd();
 		int epoll_fd();
 
-		static int epollAdd(int epoll_fd, int fd, uint32_t events);
-		static int epollDelete(int epoll_fd, int fd);
+		static void epollAdd(int epoll_fd, int fd, uint32_t events);
+		static void epollDelete(int epoll_fd, int fd);
+
+		class SocketCreationException : public SystemException {
+			public:
+				SocketCreationException(const string &msg);
+		};
+
+		class BindException : public SystemException {
+			public:
+				BindException(const string &msg);
+		};
+
+		class UndefinedFdException : public SystemException {
+			public:
+				UndefinedFdException(const string &msg);
+		};
+
+		class EpollCtlException : public SystemException {
+			public:
+				EpollCtlException(const string &msg);
+		};
 };

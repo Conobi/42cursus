@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/22 02:26:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 18:37:49 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@ Server::Server(const int port, const string password)
 
 Server::~Server() {
 	cout << FYEL("Server destructor called.") << endl;
+	log("Stopping the server...", false);
+	Socket::epollDelete(this->_socket.epoll_fd(), this->_socket.sock_fd());
 }
 
 void Server::_eventLoop() {
+	log("Starting to listen", false);
+	while (!this->_stop) {
+	}
 }

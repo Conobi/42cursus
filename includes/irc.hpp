@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:30:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/21 23:46:55 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 16:01:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,5 @@
 #include <string>
 
 using namespace std;
+
+#include "SystemException.hpp"

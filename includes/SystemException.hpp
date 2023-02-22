@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server_utils.cpp                                   :+:      :+:    :+:   */
+/*   SystemException.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/21 23:12:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/22 14:50:42 by conobi           ###   ########lyon.fr   */
+/*   Created: 2023/02/22 15:54:20 by conobi            #+#    #+#             */
+/*   Updated: 2023/02/22 18:12:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cstdlib>
+#pragma once
 
-#include "Server.hpp"
+#include <exception>
+#include <string>
 
-void Server::log(const string &msg, const bool &verbose_only) {
-	string verbose_mode = static_cast<string>(getenv("VERBOSE"));
-	if ((verbose_only && (verbose_mode == "true" || verbose_mode == "1")) ||
-		!verbose_only) {
-		time_t now = time(0);
-		char *dt = ctime(&now);
-		cout << "[" << dt << "] " << msg << endl;
-	}
-}
+using namespace std;
+
+class SystemException : public exception {
+	private:
+		using exception::what;
+		const char* _message;
+
+	public:
+		SystemException(const string& msg) : _message(msg.c_str()) {
+		}
+
+		virtual const char* what() const throw() {
+			return _message;
+		}
+};

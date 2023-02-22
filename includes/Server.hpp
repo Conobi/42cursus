@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/22 02:28:07 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/22 14:42:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <ctime>
 
 #include "Socket.hpp"
 #include "irc.hpp"
@@ -37,4 +39,6 @@ class Server {
 	public:
 		Server(const int port, const string password);
 		~Server();
+
+		static void log(const string &msg, const bool &verbose_only);
 };
