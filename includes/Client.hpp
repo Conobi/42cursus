@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.hpp                                         :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/22 02:28:07 by conobi           ###   ########lyon.fr   */
+/*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
+/*   Updated: 2023/02/21 23:59:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <stdint.h>
-#include <sys/types.h>
 #include <unistd.h>
 
-#include "Socket.hpp"
 #include "irc.hpp"
 
-class Server {
+class Client {
 	private:
-		Server();
+		Client();
 
-		Socket _socket;
-
-		bool _stop;
-		ushort _port;
-		string _password;
-
-		int _guard(int code, const char *process);
-		void _eventLoop();
-		void _acceptNewClient();
-		void _handleClientEvent(int client_fd, uint32_t revents);
+		int _fd;
+		string _ip;
+		unsigned int _port;
 
 	public:
-		Server(const int port, const string password);
-		~Server();
+		Client(int fd, string ip, unsigned int port);
+		~Client();
 };

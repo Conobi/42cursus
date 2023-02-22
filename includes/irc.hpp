@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:30:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/21 19:30:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/21 23:46:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-// Term syntaxe
+// Term syntax
 #define RST "\x1B[0m"
 #define KRED "\x1B[31m"
 #define KGRN "\x1B[32m"
