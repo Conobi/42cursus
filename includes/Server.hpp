@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 01:20:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 02:27:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 
 #include <ctime>
 
+#include "Logger.hpp"
 #include "Socket.hpp"
 #include "irc.hpp"
 
+class Logger;
 class Socket;
 
 class Server {
@@ -33,6 +35,8 @@ class Server {
 		ushort _port;
 		string _password;
 
+		Logger &_logger;
+
 		int _guard(int code, const char *process);
 		void _eventLoop();
 		void _acceptNewClient();
@@ -41,6 +45,4 @@ class Server {
 	public:
 		Server(const int port, const string password);
 		~Server();
-
-		static void log(const string &msg, const bool &verbose_only);
 };

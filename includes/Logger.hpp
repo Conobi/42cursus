@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   irc.hpp                                            :+:      :+:    :+:   */
+/*   Logger.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/21 19:30:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 02:36:08 by conobi           ###   ########lyon.fr   */
+/*   Created: 2023/02/23 02:07:26 by conobi            #+#    #+#             */
+/*   Updated: 2023/02/23 03:12:13 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+using namespace std;
 
 // Term syntax
 #define RST "\x1B[0m"
@@ -35,13 +45,23 @@
 #define BOLD(x) "\x1B[1m" x RST
 #define UNDL(x) "\x1B[4m" x RST
 
-#include <cerrno>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <string>
+class Logger {
+	private:
+		Logger();
 
-using namespace std;
+		string _class_name;
+
+		void _format(ostream &os, const string &msg, const char *dt,
+					 const ushort &level);
+		void _print(ostream &os, const string &msg, const bool &verbose_only,
+					const ushort &level);
+
+	public:
+		Logger(const string &class_name);
+		~Logger();
+
+		void log(const string &msg, const bool &verbose_only);
+		void info(const string &msg, const bool &verbose_only);
+		void warn(const string &msg, const bool &verbose_only);
+		void err(const string &msg);
+};

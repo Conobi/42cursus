@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 00:03:10 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 01:55:56 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 02:28:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#include "Server.hpp"
+#include "Logger.hpp"
 #include "irc.hpp"
+
+class Logger;
 
 class Socket {
 	private:
@@ -34,6 +36,7 @@ class Socket {
 		string _ip;
 		struct sockaddr_in _sock_addr;
 		struct _cli_addr;
+		Logger &_logger;
 
 	public:
 		Socket(const int domain, const int type, const int protocol);

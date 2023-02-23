@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: conobi                                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/23 02:53:01 by conobi            #+#    #+#             */
+/*   Updated: 2023/02/23 03:14:15 by conobi           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Logger.hpp"
 #include "Server.hpp"
 #include "irc.hpp"
 
@@ -16,22 +29,26 @@ int parsePort(const string port) {
 		throw out_of_range("Port must be in 1-65535");
 	}
 
-	return intPort;
+	return (intPort);
 }
 
 int main(int ac, char **av) {
+	Logger &_logger = *(new Logger("Main"));
+
 	if (ac != 3) {
-		cerr << FRED("ERROR: ") << "usage: ./ircserv  <port> <password>"
-			 << endl;
-		return 1;
+		_logger.err("usage: ./ircserv  <port> <password>");
+		delete &_logger;
+		return (1);
 	}
 	try {
 		int port = parsePort(av[1]);
 
 		Server(port, av[2]);
 	} catch (const exception &e) {
-		cerr << FRED("ERROR: ") << e.what() << endl;
-		return 1;
+		_logger.err(e.what());
+		delete &_logger;
+		return (1);
 	}
-	return 0;
+	delete &_logger;
+	return (0);
 }

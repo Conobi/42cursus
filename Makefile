@@ -33,7 +33,8 @@ NAME		= ircserv
 
 INC			= irc.hpp \
 			  Server.hpp \
-			  Socket.hpp
+			  Socket.hpp \
+			  Logger.hpp
 
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
@@ -42,7 +43,8 @@ SRC			= main.cpp \
 			  server/Server.cpp \
 			  server/Server_utils.cpp \
 			  socket/Socket.cpp \
-			  client/Client.cpp
+			  client/Client.cpp \
+			  logger/Logger.cpp
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

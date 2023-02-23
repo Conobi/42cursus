@@ -6,18 +6,20 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 00:02:53 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 01:56:56 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 02:50:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Socket.hpp"
 
 Socket::Socket(const int domain, const int type, const int protocol)
-	: _port(0), _sock_fd(-1), _epoll_fd(-1), _ip("") {
+	: _port(0),
+	  _sock_fd(-1),
+	  _epoll_fd(-1),
+	  _ip(""),
+	  _logger(*new Logger("Socket")) {
 	int setsock_ret;
 	int opt = 1;
-
-	Server::log(FBLU("Socket initialization constructor called."), true);
 
 	bzero(&(this->_sock_addr), sizeof(this->_sock_addr));
 
@@ -42,7 +44,7 @@ Socket::Socket(const int domain, const int type, const int protocol)
 }
 
 Socket::~Socket() throw() {
-	Server::log(FYEL("Socket destructor called."), true);
+	delete &this->_logger;
 
 	if (this->_epoll_fd >= 0) {
 		if (close(this->_epoll_fd) < 0) {
