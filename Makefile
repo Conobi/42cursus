@@ -42,6 +42,7 @@ INCS		= $(addprefix $(INCDIR)/,$(INC))
 SRC			= main.cpp \
 			  server/Server.cpp \
 			  server/Server_utils.cpp \
+			  server/Server_epoll.cpp \
 			  socket/Socket.cpp \
 			  client/Client.cpp \
 			  logger/Logger.cpp

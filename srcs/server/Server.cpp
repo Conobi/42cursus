@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 02:51:06 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 03:51:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ void Server::_eventLoop() {
 	_logger.log(ss.str(), false);
 
 	while (!this->_stop) {
-		if (!std::getline(std::cin, cin_line)) {
-			_logger.log("CTRL+D detected. Stopping the server...", false);
-			this->_stop = true;
-		}
+		this->_epollHandler();
 	}
 }
