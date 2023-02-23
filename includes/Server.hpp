@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/22 14:42:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 01:20:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 #include "Socket.hpp"
 #include "irc.hpp"
 
+class Socket;
+
 class Server {
 	private:
 		Server();
 
-		Socket _socket;
+		Socket &_socket;
 
 		bool _stop;
 		ushort _port;

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/22 18:46:58 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 00:51:42 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 #include <cstring>
 #include <sstream>
-
-#include "SystemException.hpp"
+#include <stdexcept>
 
 Client::Client(int fd, string ip, unsigned int port)
 	: _fd(fd), _ip(ip), _port(port) {
@@ -27,7 +26,7 @@ Client::~Client() {
 	if (close(_fd) < -1) {
 		stringstream err_msg;
 		err_msg << "Cannot close client fd. close(): " << strerror(errno);
-		throw SystemException(err_msg.str());
+		throw runtime_error(err_msg.str());
 	}
 	Server::log(FBLU("Client destructor called."), true);
 }

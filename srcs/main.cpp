@@ -21,7 +21,7 @@ int parsePort(const string port) {
 
 int main(int ac, char **av) {
 	if (ac != 3) {
-		cerr << FRED(BOLD("Error: usage: ./ircserv  <port> <password>"))
+		cerr << FRED("ERROR: ") << "usage: ./ircserv  <port> <password>"
 			 << endl;
 		return 1;
 	}

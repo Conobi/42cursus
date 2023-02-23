@@ -33,8 +33,7 @@ NAME		= ircserv
 
 INC			= irc.hpp \
 			  Server.hpp \
-			  Socket.hpp \
-			  SystemException.hpp
+			  Socket.hpp
 
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
