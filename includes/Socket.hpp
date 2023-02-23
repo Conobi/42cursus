@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 00:03:10 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 02:28:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 17:14:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <unistd.h>
 
 #include "Logger.hpp"
+#include "Utils.hpp"
 #include "irc.hpp"
 
 class Logger;
@@ -47,10 +48,10 @@ class Socket {
 		int createEpollFd();
 		void listenTo(int max_connections);
 
-		int sock_fd();
-		int epoll_fd();
-		string ip();
-		ushort port();
+		int sock_fd() const;
+		int epoll_fd() const;
+		string ip() const;
+		ushort port() const;
 
 		static void epollAdd(int epoll_fd, int fd, uint32_t events);
 		static void epollDelete(int epoll_fd, int fd);

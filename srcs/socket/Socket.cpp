@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 00:02:53 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 02:50:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 16:47:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ Socket::Socket(const int domain, const int type, const int protocol)
 		setsock_ret = setsockopt(this->_sock_fd, SOL_SOCKET, SO_REUSEADDR, &opt,
 								 sizeof(int));
 		if (setsock_ret < 0) {
-			stringstream err_msg;
-			err_msg << "Could not init socket settings. setsockopt(): "
-					<< strerror(errno);
-			throw runtime_error(err_msg.str());
+			throw runtime_error(
+				"Could not init socket settings. setsockopt(): " +
+				Utils::valToString(strerror(errno)));
 		}
 		this->_type = type;
 		this->_protocol = protocol;
 		this->_sock_addr.sin_family = domain;
+
 	} else {
-		stringstream err_msg;
-		err_msg << "Could not create socket. socket(): " << strerror(errno);
-		throw runtime_error(err_msg.str());
+		throw runtime_error("Could not create socket. socket(): " +
+							Utils::valToString(strerror(errno)));
 	}
 }
 
@@ -48,40 +47,39 @@ Socket::~Socket() throw() {
 
 	if (this->_epoll_fd >= 0) {
 		if (close(this->_epoll_fd) < 0) {
-			stringstream err_msg;
-			err_msg << "Could not close the epoll_fd. close(): "
-					<< strerror(errno);
-			throw runtime_error(err_msg.str());
+			throw runtime_error("Could not close the epoll_fd. close(): " +
+								Utils::valToString(strerror(errno)));
 		}
 	}
 	if (this->_sock_fd >= 0) {
 		if (close(this->_sock_fd) < 0) {
-			stringstream err_msg;
-			err_msg << "Could not close the sock_fd. close(): "
-					<< strerror(errno);
-			throw runtime_error(err_msg.str());
+			throw runtime_error("Could not close the sock_fd. close(): " +
+								Utils::valToString(strerror(errno)));
 		}
 	}
 }
 
 void Socket::bindAddress(const in_addr_t addr, const ushort port) {
+	int bind_ret;
+
 	this->_sock_addr.sin_addr.s_addr = addr;
 	this->_sock_addr.sin_port = htons(port);
 	this->_ip = inet_ntoa(this->_sock_addr.sin_addr);
 	this->_port = port;
 
-	if (bind(this->_sock_fd, (const struct sockaddr *)&this->_sock_addr,
-			 sizeof(this->_sock_addr)) < 0) {
-		if (errno == EADDRINUSE) {
-			stringstream err_msg;
-			err_msg << this->_ip << ":" << this->_port << " is already in use.";
-			throw runtime_error(err_msg.str());
+	bind_ret = bind(this->_sock_fd, (const struct sockaddr *)&this->_sock_addr,
+					sizeof(this->_sock_addr));
 
+	if (bind_ret < 0) {
+		if (errno == EADDRINUSE) {
+			throw runtime_error(this->_ip + ":" +
+								Utils::valToString(this->_port) +
+								" is already in use.");
 		} else {
-			stringstream err_msg;
-			err_msg << "Could not bind the socket to " << this->_ip << ":"
-					<< this->_port << ". bind(): " << strerror(errno);
-			throw runtime_error(err_msg.str());
+			throw runtime_error(
+				"Could not bind the socket to " + this->_ip + ":" +
+				Utils::valToString(this->_port) +
+				". bind(): " + Utils::valToString(strerror(errno)));
 		}
 	}
 }
@@ -92,44 +90,40 @@ void Socket::bindAddress(const uint port) {
 
 int Socket::createEpollFd() {
 	if ((this->_epoll_fd = epoll_create(255)) < 0) {
-		stringstream err_msg;
-		err_msg << "Could not create the epoll_fd. epoll_create(): "
-				<< strerror(errno);
-		throw runtime_error(err_msg.str());
+		throw runtime_error("Could not create the epoll_fd. epoll_create(): " +
+							Utils::valToString(strerror(errno)));
 	}
 	return (this->_epoll_fd);
 }
 
 void Socket::listenTo(int max_connections) {
 	if (listen(this->_sock_fd, max_connections) < 0) {
-		stringstream err_msg;
-		err_msg << "listen(): " << strerror(errno);
-		throw runtime_error(err_msg.str());
+		throw runtime_error("listen(): " + Utils::valToString(strerror(errno)));
 	}
 }
 
-int Socket::sock_fd() {
+int Socket::sock_fd() const {
 	if (this->_sock_fd < 0) {
 		throw logic_error("The socket file descriptor is undefined.");
 	}
 	return (this->_sock_fd);
 }
 
-int Socket::epoll_fd() {
+int Socket::epoll_fd() const {
 	if (this->_epoll_fd < 0) {
 		throw logic_error("The epoll file descriptor is undefined.");
 	}
 	return (this->_epoll_fd);
 }
 
-string Socket::ip() {
+string Socket::ip() const {
 	if (this->_ip.empty()) {
 		throw logic_error("The socket ip is undefined.");
 	}
 	return (this->_ip);
 }
 
-ushort Socket::port() {
+ushort Socket::port() const {
 	if (this->_port == 0) {
 		throw logic_error("The socket port is undefined.");
 	}
@@ -144,16 +138,14 @@ void Socket::epollAdd(int epoll_fd, int fd, uint32_t events) {
 	ep_event.data.fd = fd;
 
 	if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &ep_event) < 0) {
-		stringstream err_msg;
-		err_msg << "epoll_ctl(... EPOLL_CTL_ADD...): " << strerror(errno);
-		throw runtime_error(err_msg.str());
+		throw runtime_error("epoll_ctl(... EPOLL_CTL_ADD...): " +
+							Utils::valToString(strerror(errno)));
 	}
 }
 
 void Socket::epollDelete(int epoll_fd, int fd) {
 	if (epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, NULL) < 0) {
-		stringstream err_msg;
-		err_msg << "epoll_ctl(... EPOLL_CTL_DEL...): " << strerror(errno);
-		throw runtime_error(err_msg.str());
+		throw runtime_error("epoll_ctl(... EPOLL_CTL_DEL...): " +
+							Utils::valToString(strerror(errno)));
 	}
 }

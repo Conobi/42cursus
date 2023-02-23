@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 02:07:26 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 03:12:13 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 17:01:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,18 @@ class Logger {
 		string _class_name;
 
 		void _format(ostream &os, const string &msg, const char *dt,
-					 const ushort &level);
+					 const ushort &level) const;
 		void _print(ostream &os, const string &msg, const bool &verbose_only,
-					const ushort &level);
+					const ushort &level) const;
 
 	public:
 		Logger(const string &class_name);
 		~Logger();
+		Logger(const Logger &val);
+		Logger &operator=(const Logger &rhs);
 
-		void log(const string &msg, const bool &verbose_only);
-		void info(const string &msg, const bool &verbose_only);
-		void warn(const string &msg, const bool &verbose_only);
-		void err(const string &msg);
+		void log(const string &msg, const bool &verbose_only) const;
+		void info(const string &msg, const bool &verbose_only) const;
+		void warn(const string &msg, const bool &verbose_only) const;
+		void err(const string &msg) const;
 };

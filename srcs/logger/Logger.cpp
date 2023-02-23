@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 02:07:13 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 03:30:03 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 17:06:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,29 @@
 
 #include <ostream>
 
-Logger::Logger(const string &class_name) : _class_name(class_name) {
-	stringstream ss;
-
-	ss << KBLU << class_name << " constructor called." << RST;
-	this->log(ss.str(), true);
+Logger::~Logger() {
+	this->log(KYEL + this->_class_name + " destructor called." + RST, true);
 }
 
-Logger::~Logger() {
-	stringstream ss;
+Logger::Logger(const Logger &val) {
+	*this = val;
+	this->log(KBLU + this->_class_name + " copy constructor called." + RST,
+			  true);
+}
 
-	ss << KYEL << this->_class_name << " destructor called." << RST;
-	this->log(ss.str(), true);
+Logger &Logger::operator=(const Logger &rhs) {
+	this->_class_name = rhs._class_name;
+	this->log(KGRE + this->_class_name + " assignation operator called." + RST,
+			  true);
+	return *this;
+}
+
+Logger::Logger(const string &class_name) : _class_name(class_name) {
+	this->log(KBLU + class_name + " constructor called." + RST, true);
 }
 
 void Logger::_format(ostream &os, const string &msg, const char *dt,
-					 const ushort &level) {
+					 const ushort &level) const {
 	string level_str;
 	stringstream color_class;
 
@@ -59,7 +66,7 @@ void Logger::_format(ostream &os, const string &msg, const char *dt,
 }
 
 void Logger::_print(ostream &os, const string &msg, const bool &verbose_only,
-					const ushort &level) {
+					const ushort &level) const {
 	bool verbose_mode = false;
 	const char *env_value = getenv("VERBOSE");
 
@@ -79,18 +86,18 @@ void Logger::_print(ostream &os, const string &msg, const bool &verbose_only,
 	}
 }
 
-void Logger::log(const string &msg, const bool &verbose_only) {
+void Logger::log(const string &msg, const bool &verbose_only) const {
 	this->_print(cout, msg, verbose_only, 0);
 }
 
-void Logger::info(const string &msg, const bool &verbose_only) {
+void Logger::info(const string &msg, const bool &verbose_only) const {
 	this->_print(cout, msg, verbose_only, 1);
 }
 
-void Logger::warn(const string &msg, const bool &verbose_only) {
+void Logger::warn(const string &msg, const bool &verbose_only) const {
 	this->_print(cout, msg, verbose_only, 2);
 }
 
-void Logger::err(const string &msg) {
+void Logger::err(const string &msg) const {
 	this->_print(cerr, msg, false, 3);
 }

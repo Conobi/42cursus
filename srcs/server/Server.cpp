@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 03:51:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 17:08:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 #include "Socket.hpp"
 
-Server::Server(const int port, const string password)
-	: _socket(*(new Socket(AF_INET, SOCK_STREAM, 0))),
+Server::Server(const ushort port, const string password)
+	: _logger(*(new Logger("Server"))),
+	  _socket(*(new Socket(AF_INET, SOCK_STREAM, 0))),
 	  _stop(false),
 	  _port(port),
-	  _password(password),
-	  _logger(*(new Logger("Server"))) {
+	  _password(password) {
 	// Create socket connection with ipv4 protocol
 	this->_socket.bindAddress(port);
 	this->_socket.createEpollFd();

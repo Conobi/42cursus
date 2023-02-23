@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:30:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 02:36:08 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 16:33:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include "Utils.hpp"
 
 using namespace std;

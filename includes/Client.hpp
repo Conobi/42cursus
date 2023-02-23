@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 02:28:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 17:00:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,22 @@ class Client {
 
 		int _fd;
 		string _ip;
-		unsigned int _port;
+		ushort _port;
 
 		Logger &_logger;
 
 	public:
-		Client(int fd, string ip, unsigned int port);
 		~Client();
+		Client(const Client &val);
+		Client &operator=(const Client &rhs);
+
+		Client(int fd, string ip, unsigned int port);
+
+		bool operator==(const int &fd) const {
+			return this->fd() == fd;
+		}
+
+		int fd() const;
+		string ip() const;
+		ushort port() const;
 };

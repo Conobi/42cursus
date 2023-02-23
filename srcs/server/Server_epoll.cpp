@@ -6,9 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 03:44:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 04:14:26 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/23 16:48:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 #include <sstream>
 #include <stdexcept>
@@ -39,9 +43,8 @@ void Server::_epollHandler() {
 			_logger.info("epoll_wait() has been interrupted", false);
 			return;
 		}
-		stringstream err_msg;
-		err_msg << "epoll_wait(): " << strerror(errno);
-		throw runtime_error(err_msg.str());
+		throw runtime_error("epoll_wait(): " +
+							Utils::valToString(strerror(errno)));
 	}
 }
 
@@ -51,7 +54,7 @@ void Server::_epollFdHandler(const int ready_fds, struct epoll_event events[]) {
 
 		// If a new client try to connect to us
 		if (client_fd == this->_socket.sock_fd()) {
-			this->_acceptNewClient(client_fd);
+			this->_acceptNewClient();
 
 			continue;
 		}
