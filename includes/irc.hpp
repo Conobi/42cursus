@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:30:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 16:33:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 01:18:00 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@
 #include <string>
 
 #include "Utils.hpp"
+#include "unistd.h"
 
 using namespace std;

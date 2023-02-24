@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 16:48:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 01:44:38 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,19 @@ void Server::_handleClientEvent(int client_fd, uint32_t revents) {
 	Client &client = this->_findClient(client_fd);
 
 	if (revents & EPOLLIN || revents & EPOLLPRI) {
-		// this->_handleClientRead(client);
+		string client_input = client.readInput();
+
+		if (!client_input.empty())
+			_logger.log("Client " + client.ip() + ":" +
+							Utils::valToString(client.port()) + " said: \"" +
+							client_input + "\"",
+						false);
+
 	} else if (revents & EPOLLOUT) {
+		_logger.info("Write handler", true);
 		// this->_handleClientWrite(client);
 	} else if (revents & EPOLLERR || revents & EPOLLHUP) {
+		_logger.info("Error handler", true);
 		// Remove the client from the vector
 		this->_clients.erase(
 			remove(this->_clients.begin(), this->_clients.end(), client_fd),

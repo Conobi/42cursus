@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 03:44:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 16:48:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 00:58:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdexcept>
 
 #include "Server.hpp"
+#include "Utils.hpp"
 
 void Server::_epollHandler() {
 	int ep_value;
@@ -28,13 +29,10 @@ void Server::_epollHandler() {
 
 	ep_value = epoll_wait(this->_socket.epoll_fd(), events, maxevents, timeout);
 
-	if (!std::getline(std::cin, cin_line)) {
-		_logger.log("CTRL+D detected. Stopping the server...", false);
-		this->_stop = true;
-	}
-
 	// No events within [timeout] ms
 	if (ep_value == 0) {
+		// _logger.info("No event within " + Utils::valToString(timeout) + "
+		// ms.", 			 true);
 		return;
 	}
 
@@ -46,6 +44,8 @@ void Server::_epollHandler() {
 		throw runtime_error("epoll_wait(): " +
 							Utils::valToString(strerror(errno)));
 	}
+
+	this->_epollFdHandler(ep_value, events);
 }
 
 void Server::_epollFdHandler(const int ready_fds, struct epoll_event events[]) {

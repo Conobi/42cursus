@@ -48,6 +48,7 @@ SRC			= main.cpp \
 			  server/Server_clients.cpp \
 			  socket/Socket.cpp \
 			  client/Client.cpp \
+			  client/Client_input.cpp \
 			  logger/Logger.cpp \
 			  utils/Utils.cpp
 

@@ -6,13 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 17:00:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 01:30:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <unistd.h>
+#include <sys/socket.h>
 
 #include "Logger.hpp"
 #include "Server.hpp"
@@ -44,4 +44,6 @@ class Client {
 		int fd() const;
 		string ip() const;
 		ushort port() const;
+
+		string readInput();
 };
