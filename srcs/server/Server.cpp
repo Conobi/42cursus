@@ -6,19 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 00:43:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 02:46:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
-
-#include <netinet/in.h>
-#include <signal.h>
-#include <sys/epoll.h>
-#include <sys/socket.h>
-
-#include "Socket.hpp"
-#include "Utils.hpp"
 
 Server::Server(const ushort port, const string password)
 	: _logger(*(new Logger("Server"))),
@@ -37,20 +29,21 @@ Server::Server(const ushort port, const string password)
 
 Server::~Server() {
 	_logger.log("Stopping the server...", false);
-	delete &this->_logger;
 	Socket::epollDelete(this->_socket.epoll_fd(), this->_socket.sock_fd());
 	delete &(this->_socket);
+	delete &this->_logger;
 }
 
 void Server::_startServer() {
-	stringstream ss;
-	string cin_line;
+	const int maxevents = 32;
+	struct epoll_event events[maxevents];
 
-	ss << "Starting to listen on " << this->_socket.ip() << ":"
-	   << this->_socket.port();
-	_logger.log(ss.str(), false);
+	bzero(&events, sizeof(events));
+	_logger.log("Starting to listen on " + this->_socket.ip() + ":" +
+					Utils::valToString(this->_socket.port()),
+				false);
 
 	while (!this->_stop) {
-		this->_epollHandler();
+		this->_epollHandler(3200, events, maxevents);
 	}
 }

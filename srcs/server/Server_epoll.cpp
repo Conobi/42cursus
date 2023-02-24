@@ -6,26 +6,15 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 03:44:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 00:58:55 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 02:45:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <unistd.h>
-
-#include <sstream>
-#include <stdexcept>
-
 #include "Server.hpp"
-#include "Utils.hpp"
 
-void Server::_epollHandler() {
+void Server::_epollHandler(const int timeout, struct epoll_event events[],
+						   const int maxevents) {
 	int ep_value;
-	int timeout = 3000;
-	int maxevents = 32;
-	string cin_line;
-	struct epoll_event events[maxevents];
 
 	ep_value = epoll_wait(this->_socket.epoll_fd(), events, maxevents, timeout);
 

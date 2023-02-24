@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 00:02:53 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 16:47:25 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 02:43:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ Socket::Socket(const int domain, const int type, const int protocol)
 }
 
 Socket::~Socket() throw() {
-	delete &this->_logger;
-
 	if (this->_epoll_fd >= 0) {
 		if (close(this->_epoll_fd) < 0) {
 			throw runtime_error("Could not close the epoll_fd. close(): " +
@@ -57,6 +55,7 @@ Socket::~Socket() throw() {
 								Utils::valToString(strerror(errno)));
 		}
 	}
+	delete &this->_logger;
 }
 
 void Socket::bindAddress(const in_addr_t addr, const ushort port) {

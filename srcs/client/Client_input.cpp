@@ -6,14 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:09:42 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 01:45:21 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 02:55:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdexcept>
-
 #include "Client.hpp"
-#include "Utils.hpp"
 
 string Client::readInput() {
 	const unsigned int MAX_BUF_LENGTH = 1024;

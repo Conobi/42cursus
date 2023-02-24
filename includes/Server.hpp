@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 17:50:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 02:58:20 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ class Server {
 		ushort _port;
 		string _password;
 
-		void _epollHandler();
+		void _epollHandler(const int timeout, struct epoll_event events[],
+						   const int maxevents);
 		void _epollFdHandler(const int ready_fds, struct epoll_event events[]);
 		void _startServer();
 
@@ -52,6 +53,9 @@ class Server {
 		Client &_findClient(int client_fd);
 		void _acceptNewClient();
 		void _handleClientEvent(int client_fd, uint32_t revents);
+		void _closeClient(const Client &client);
+
+		void _handleClientRead(Client &client);
 
 	public:
 		Server(const ushort port, const string password);

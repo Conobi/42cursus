@@ -6,16 +6,14 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 02:07:13 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/23 17:06:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/02/24 02:45:37 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Logger.hpp"
 
-#include <ostream>
-
 Logger::~Logger() {
-	this->log(KYEL + this->_class_name + " destructor called." + RST, true);
+	this->log(KYEL + this->_class_name + " has been destroyed." + RST, true);
 }
 
 Logger::Logger(const Logger &val) {

@@ -46,6 +46,7 @@ SRC			= main.cpp \
 			  server/Server_utils.cpp \
 			  server/Server_epoll.cpp \
 			  server/Server_clients.cpp \
+			  server/Server_read.cpp \
 			  socket/Socket.cpp \
 			  client/Client.cpp \
 			  client/Client_input.cpp \
