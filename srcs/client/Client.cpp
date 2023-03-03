@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 02:45:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/03 15:28:14 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,20 @@ string Client::ip() const {
 
 ushort Client::port() const {
 	return this->_port;
+}
+
+string Client::nick() const {
+	return this->_nick;
+}
+
+string Client::username() const {
+	return this->_username;
+}
+
+void Client::setNick(const string &nick) {
+	this->_nick = nick;
+}
+
+void Client::setUsername(const string &username) {
+	this->_username = username;
 }

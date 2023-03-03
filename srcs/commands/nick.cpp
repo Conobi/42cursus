@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils.hpp                                          :+:      :+:    :+:   */
+/*   nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 16:30:22 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/03 15:56:11 by abastos          ###   ########lyon.fr   */
+/*   Created: 2023/03/02 16:49:43 by abastos           #+#    #+#             */
+/*   Updated: 2023/03/03 16:01:22 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "Command.hpp"
 
-#include <sstream>
-#include <string>
+/**
+ * NICK <nickname>
+ * Reply:
+ *  - ERR_NONICKNAMEGIVEN (431)
+ *  - ERR_ERRONEUSNICKNAME (432)
+ *  - ERR_NICKNAMEINUSE (433)
+ *  - ERR_NICKCOLLISION (436)
+ *
+ */
 
-namespace Utils {
-template <typename T>
-std::string valToString(T value) {
-	std::ostringstream ss;
-
-	ss << value;
-	return ss.str();
+void nickCommand(Client &client, const string &arg) {
+  (void)arg;
+  // todo: check if the nickname is valid
+  client.setNick("test");
 }
-}  // namespace Utils

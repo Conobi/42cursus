@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 02:46:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/02 17:04:34 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+#include "CommandManager.hpp"
 
 Server::Server(const ushort port, const string password)
 	: _logger(*(new Logger("Server"))),
 	  _socket(*(new Socket(AF_INET, SOCK_STREAM, 0))),
-	  _stop(false),
+	  _commandManager(*(new CommandManager())),
+		_stop(false),
 	  _port(port),
 	  _password(password) {
 	// Create socket connection with ipv4 protocol
@@ -32,6 +34,7 @@ Server::~Server() {
 	Socket::epollDelete(this->_socket.epoll_fd(), this->_socket.sock_fd());
 	delete &(this->_socket);
 	delete &this->_logger;
+	delete &this->_commandManager;
 }
 
 void Server::_startServer() {

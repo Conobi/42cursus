@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 01:30:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/03 15:28:18 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ class Client {
 		int _fd;
 		string _ip;
 		ushort _port;
+		string _nick;
+		string _username;
 
 		Logger &_logger;
 
@@ -44,6 +46,13 @@ class Client {
 		int fd() const;
 		string ip() const;
 		ushort port() const;
+		string nick() const;
+		string username() const;
+
+		void setNick(const string &nick);
+		void setUsername(const string &username);
 
 		string readInput();
+		void sendMessage(const string &message) const;
+		void sendMessage(const string &message, const string &target) const;
 };

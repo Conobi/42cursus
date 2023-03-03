@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:30:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 01:18:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/02 16:53:40 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <fcntl.h>
 
 #include "Utils.hpp"
 #include "unistd.h"

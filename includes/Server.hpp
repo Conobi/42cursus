@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 02:58:20 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/02 17:59:55 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <vector>
 
 #include "Client.hpp"
+#include "CommandManager.hpp"
 #include "Logger.hpp"
 #include "Socket.hpp"
 #include "Utils.hpp"
@@ -30,6 +31,7 @@
 class Logger;
 class Socket;
 class Client;
+class CommandManager;
 
 class Server {
 	private:
@@ -38,7 +40,9 @@ class Server {
 		Logger &_logger;
 
 		Socket &_socket;
-		std::vector<Client> _clients;
+		vector<Client> _clients;
+
+		CommandManager &_commandManager;
 
 		bool _stop;
 		ushort _port;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Logger.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 02:07:13 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 02:45:37 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/03 15:35:48 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void Logger::_format(ostream &os, const string &msg, const char *dt,
 	string level_str;
 	stringstream color_class;
 
-	color_class << left << setw(14);
+	color_class << left << setw(20);
 	switch (level) {
 		case 1:
 			level_str = FBLU("INFO: ");
