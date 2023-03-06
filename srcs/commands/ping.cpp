@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:49:15 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/03 16:01:31 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 16:28:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
  * send a pong message to the client
  */
 
-void pingCommand(Client &client, const string &arg) {
-  (void)arg;
-  // todo: parse arg an send a pong message to the client with the correct token
-  client.sendMessage("PONG localhost\r\n");
+void Command::ping(Server &server, Client &client, const Input &input) {
+	// todo: parse arg an send a pong message to the client with the correct
+	// token
+	client.sendMessage("PONG localhost\r\n");
 }

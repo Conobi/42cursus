@@ -3,26 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/02 17:59:55 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 16:26:03 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <stdint.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <algorithm>
-#include <ctime>
-#include <vector>
-
 #include "Client.hpp"
-#include "CommandManager.hpp"
 #include "Logger.hpp"
 #include "Socket.hpp"
 #include "Utils.hpp"
@@ -31,7 +27,8 @@
 class Logger;
 class Socket;
 class Client;
-class CommandManager;
+class Command;
+class Input;
 
 class Server {
 	private:
@@ -42,7 +39,7 @@ class Server {
 		Socket &_socket;
 		vector<Client> _clients;
 
-		CommandManager &_commandManager;
+		map<string, void (*)(Client &, Server &, const Input &)> _commands;
 
 		bool _stop;
 		ushort _port;

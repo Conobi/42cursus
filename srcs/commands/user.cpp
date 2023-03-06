@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:57:59 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/03 16:04:04 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/06 16:27:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
  * after this command if the client is registered this sends a welcome message
  */
 
-void userCommand(Client &client, const string &arg) {
-  (void)arg;
-  // todo: check if the client is already registered
-  client.setUsername("test");
-  client.sendMessage(rpl::welcome("irc.com", client.nick()));
+void Command::user(Server &server, Client &client, const Input &input) {
+	// todo: check if the client is already registered
+	client.setUsername("test");
+	client.sendMessage(rpl::welcome("irc.com", client.nick()));
 }
