@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/07 18:58:39 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 18:16:27 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 #include <unistd.h>
 
 #include "Client.hpp"
+#include "Input.hpp"
 #include "Logger.hpp"
 #include "Socket.hpp"
 #include "Utils.hpp"
-#include "Input.hpp"
 #include "irc.hpp"
 
 class Logger;
@@ -62,4 +62,7 @@ class Server {
 	public:
 		Server(const ushort port, const string password);
 		~Server();
+
+		string &password() { return _password; }
+		const string &password() const { return _password; }
 };

@@ -60,6 +60,7 @@ SRC			= main.cpp \
 				commands/nick.cpp \
 				commands/ping.cpp \
 				commands/user.cpp \
+				commands/pass.cpp \
 
 CMDS		=
 
@@ -69,7 +70,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.cpp=.o))
 CC			= c++
-CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -std=c++98 -O1 -g3
+CFLAGS		= -Wall -Wextra -Werror -Wno-error=exceptions -I $(INCDIR) -std=c++98 -O1 -g3
 
 all: $(NAME)
 

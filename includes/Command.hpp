@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:00:34 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/06 16:27:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 17:50:30 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ class Command {
 		static void nick(Server &server, Client &client, const Input &input);
 		static void ping(Server &server, Client &client, const Input &input);
 		static void user(Server &server, Client &client, const Input &input);
+		static void pass(Server &server, Client &client, const Input &input);
 };
