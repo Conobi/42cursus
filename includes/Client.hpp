@@ -6,13 +6,14 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 01:55:16 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 14:02:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <sys/socket.h>
+#include <unistd.h>
 
 #include "Logger.hpp"
 #include "Server.hpp"
@@ -53,6 +54,6 @@ class Client {
 		void setUsername(const string &username);
 
 		string readInput();
-		void sendMessage(const string &message) const;
-		void sendMessage(const string &message, const string &target) const;
+		void sendMessage(const string message) const;
+		void sendMessage(const string message, const string &target) const;
 };

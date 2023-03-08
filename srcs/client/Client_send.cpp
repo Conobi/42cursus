@@ -6,13 +6,15 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:37:16 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/08 01:58:42 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 13:11:22 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
 
-void Client::sendMessage(const string &message) const {
+void Client::sendMessage(const string message) const {
+
+
   // Check if client is still connected
   if (fcntl(this->_fd, F_GETFD) != -1 || errno != EBADF) {
 

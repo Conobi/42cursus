@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:32:17 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 00:34:37 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 13:23:24 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ vector<string> splitByToken(string input, const string &delimiter) {
 	while ((pos = input.find(delimiter)) != string::npos) {
     token = input.substr(0, pos);
     res.push_back(token);
-    input.erase(0, pos + delimiter.length());
+		input = input.substr(pos + delimiter.length());
 	}
 	res.push_back(input);
 	return res;

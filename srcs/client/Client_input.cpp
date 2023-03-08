@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   Client_input.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:09:42 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 02:55:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 14:16:10 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
 
 string Client::readInput() {
-	const unsigned int MAX_BUF_LENGTH = 1024;
-	std::vector<char> buffer(MAX_BUF_LENGTH);
-	std::string input = "";
+	const unsigned int MAX_BUF_LENGTH = 512;
+	vector<char> buffer(MAX_BUF_LENGTH);
+	string input = "";
 	ssize_t bytes_received = 0;
 
 	// Append the read buffer to the string
@@ -31,7 +31,7 @@ string Client::readInput() {
 		}
 
 		if (bytes_received > 0)
-			input.append(buffer.begin(), buffer.end());
+			input.append(buffer.begin(), buffer.begin() + bytes_received);
 	} while (bytes_received == MAX_BUF_LENGTH);
 
 	return (input);
