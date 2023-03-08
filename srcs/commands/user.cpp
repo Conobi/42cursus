@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:57:59 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/06 16:27:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/08 02:11:11 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 void Command::user(Server &server, Client &client, const Input &input) {
 	// todo: check if the client is already registered
-	client.setUsername("test");
-	client.sendMessage(rpl::welcome("irc.com", client.nick()));
+	client.setUsername(input.parameters()[0]);
+	(void)server;
+	client.sendMessage(rpl::welcome("irc@example.com", client.nick()));
 }

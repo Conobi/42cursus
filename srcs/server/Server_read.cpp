@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server_read.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:53:50 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/06 18:48:39 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/07 18:58:51 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ void Server::_handleClientRead(Client &client) {
 						Utils::valToString(client.port()) + " said: \"" +
 						client_input + "\"",
 					false);
-		// todo: execute command based on input parsing
+		if (this->_commands[input.command()]) {
+			this->_commands[input.command()](*this, client, input);
+		} else {
+			_logger.warn("Unknown command \"" + input.command() + "\"",
+						 false);
+			// todo: send an rpl_unknowncommand message
+		}
 	} else
 		this->_closeClient(client);
 }

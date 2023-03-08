@@ -39,7 +39,7 @@ INC			= irc.hpp \
 			  Utils.hpp \
 				rpl.hpp \
 				Command.hpp \
-				CommandManager.hpp \
+				Input.hpp \
 
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
@@ -56,8 +56,7 @@ SRC			= main.cpp \
 				client/Client_send.cpp \
 			  logger/Logger.cpp \
 			  utils/Utils.cpp \
-				commands/Command.cpp \
-				commands/CommandManager.cpp \
+				input/Input.cpp \
 				commands/nick.cpp \
 				commands/ping.cpp \
 				commands/user.cpp \
