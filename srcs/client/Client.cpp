@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/03 15:28:14 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 01:01:36 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,16 @@ void Client::setNick(const string &nick) {
 
 void Client::setUsername(const string &username) {
 	this->_username = username;
+}
+
+bool Client::operator==(const int &fd) const {
+	return this->fd() == fd;
+}
+
+bool Client::operator==(const Client &client) const {
+	return this->fd() == client.fd();
+}
+
+bool Client::operator==(const string &nick) const {
+	return this->nick() == nick;
 }

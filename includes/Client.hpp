@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 14:02:11 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 01:28:18 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ class Client {
 
 		Client(int fd, string ip, unsigned int port);
 
-		bool operator==(const int &fd) const {
-			return this->fd() == fd;
-		}
-
 		int fd() const;
 		string ip() const;
 		ushort port() const;
@@ -56,4 +52,8 @@ class Client {
 		string readInput();
 		void sendMessage(const string message) const;
 		void sendMessage(const string message, const string &target) const;
+
+		bool operator==(const int &fd) const;
+		bool operator==(const Client &client) const;
+		bool operator==(const string &nick) const;
 };
