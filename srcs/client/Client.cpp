@@ -66,11 +66,11 @@ const string &Client::username() const {
 	return this->_username;
 }
 
-authStatus &Client::authStatus() {
+status &Client::authStatus() {
 	return this->_authStatus;
 }
 
-const authStatus &Client::authStatus() const {
+const status &Client::authStatus() const {
 	return this->_authStatus;
 }
 

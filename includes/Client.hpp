@@ -19,7 +19,7 @@
 #include "Server.hpp"
 #include "irc.hpp"
 
-enum authStatus { UNREGISTERED, AUTHENTICATED, REGISTERED };
+enum status { UNREGISTERED, AUTHENTICATED, REGISTERED };
 
 class Logger;
 
@@ -32,7 +32,7 @@ class Client {
 		ushort _port;
 		string _nick;
 		string _username;
-		authStatus _authStatus;
+		status _authStatus;
 
 		Logger &_logger;
 
@@ -51,8 +51,8 @@ class Client {
 		const string &nick() const;
 		string &username();
 		const string &username() const;
-		authStatus &authStatus();
-		const enum authStatus &authStatus() const;
+		status &authStatus();
+		const enum status &authStatus() const;
 
 		string readInput();
 		void sendMessage(const string message) const;

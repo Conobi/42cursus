@@ -15,12 +15,13 @@
 #include <sstream>
 #include <string>
 
-namespace Utils {
-template <typename T>
-std::string valToString(T value) {
-	std::ostringstream ss;
+class Utils {
+	public:
+		template <typename T>
+		static std::string valToString(T value) {
+			std::ostringstream ss;
 
-	ss << value;
-	return ss.str();
-}
-}  // namespace Utils
+			ss << value;
+			return ss.str();
+		}
+};

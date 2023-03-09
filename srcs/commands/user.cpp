@@ -29,7 +29,7 @@ void Command::user(Server &server, Client &client, const Input &input) {
 	// todo: check if the client is already registered
 	client.username() = input.parameters()[0];
 	(void)server;
-	if (client.registered()) {
-		registerUser(client);
-	}
+	// if (client.authStatus() == status::AUTHENTICATED) {
+	// 	registerUser(client);
+	// }
 }
