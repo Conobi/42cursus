@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 18:16:27 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:00:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "Channel.hpp"
 #include "Client.hpp"
 #include "Input.hpp"
 #include "Logger.hpp"
@@ -30,6 +31,7 @@ class Socket;
 class Client;
 class Command;
 class Input;
+class Channel;
 
 class Server {
 	private:
@@ -39,6 +41,7 @@ class Server {
 
 		Socket &_socket;
 		vector<Client> _clients;
+		vector<Channel> _channels;
 
 		map<string, void (*)(Server &, Client &, const Input &)> _commands;
 
@@ -62,6 +65,8 @@ class Server {
 	public:
 		Server(const ushort port, const string password);
 		~Server();
+
+		const string ip() const;
 
 		string &password() { return _password; }
 		const string &password() const { return _password; }

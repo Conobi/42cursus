@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:54 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 02:23:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 20:02:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,22 @@
 // A channel contains a TOPIC
 // Warning: What to do when the OP leaves the channel?
 
+enum ChannelRole {
+	ROLE_NONE = 0,
+	ROLE_OP = 1,
+	ROLE_VOICE = 2,
+	ROLE_HALFOP = 3,
+	ROLE_USER = 4
+};
+
+class Client;
+
 class Channel {
 	private:
 		Channel();
 
-		map<Client, int> _users;
+		string _name;
+		map<Client, ChannelRole> _clients;
 
 		vector<Client> _invite_list;
 		string _password;
@@ -36,7 +47,7 @@ class Channel {
 		uint _max_slots;
 		string _topic;
 
-		bool _invite_list_mode;
+		bool _invite_mode;
 		bool _password_mode;
 		bool _ban_list_mode;
 		bool _slot_mode;
@@ -52,16 +63,52 @@ class Channel {
 
 		void clientJoin(const Client &client);
 		void clientLeave(const Client &client);
-		void setRole(const Client &client, const uint &role);
 
-		void setTopic(const Client &client, const string &topic);
+		const ChannelRole &getRole(const Client &client) const;
+		void setRole(const Client &client, const ChannelRole &role);
 
-		void setMode(const Client &client, const string &modestring);
+		void inviteClient(const Client &client);
+		void uninviteClient(const Client &client);
 
-		void sendMessage(const Client &sender, const uint &role,
-						 const string &message);
+		void banClient(const Client &client);
+		void unbanClient(const Client &client);
 
-		bool containsClient(const Client &client);
+		bool isInvited(const Client &client) const;
+		bool isBanned(const Client &client) const;
+		bool isConnected(const Client &client) const;
+		bool isOp(const Client &client) const;
 
 		static bool isValidChannelName(const string &channel_name);
+
+		bool &invite_mode() { return _invite_mode; }
+		const bool &invite_mode() const { return _invite_mode; }
+
+		bool &ban_list_mode() { return _ban_list_mode; }
+		const bool &ban_list_mode() const { return _ban_list_mode; }
+
+		bool &password_mode() { return _password_mode; }
+		const bool &password_mode() const { return _password_mode; }
+
+		string &password() { return _password; }
+		const string &password() const { return _password; }
+
+		string &topic() { return _topic; }
+		const string &topic() const { return _topic; }
+
+		bool &protected_topic() { return _protected_topic; }
+		const bool &protected_topic() const { return _protected_topic; }
+
+		bool &external_message_mode() { return _external_message_mode; }
+		const bool &external_message_mode() const {
+			return _external_message_mode;
+		}
+
+		bool &slot_mode() { return _slot_mode; }
+		const bool &slot_mode() const { return _slot_mode; }
+
+		uint &max_slots() { return _max_slots; }
+		const uint &max_slots() const { return _max_slots; }
+
+		bool operator==(const string &name) const;
+		bool operator==(const Channel &channel) const;
 };

@@ -37,9 +37,10 @@ INC			= irc.hpp \
 			  Logger.hpp \
 			  Client.hpp \
 			  Utils.hpp \
-				rpl.hpp \
-				Command.hpp \
-				Input.hpp \
+			  rpl.hpp \
+			  Command.hpp \
+			  Channel.hpp \
+			  Input.hpp
 
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
@@ -53,16 +54,15 @@ SRC			= main.cpp \
 			  socket/Socket.cpp \
 			  client/Client.cpp \
 			  client/Client_input.cpp \
-				client/Client_send.cpp \
+			  client/Client_send.cpp \
+			  channel/Channel.cpp \
 			  logger/Logger.cpp \
 			  utils/Utils.cpp \
-				input/Input.cpp \
-				commands/nick.cpp \
-				commands/ping.cpp \
-				commands/user.cpp \
-				commands/pass.cpp \
-
-CMDS		=
+			  input/Input.cpp \
+			  commands/nick.cpp \
+			  commands/ping.cpp \
+			  commands/user.cpp \
+			  commands/pass.cpp
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))

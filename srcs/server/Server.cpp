@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 17:50:19 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 18:06:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,8 @@ void Server::_startServer() {
 		this->_epollHandler(3200, events, maxevents);
 	}
 }
+
+const string Server::ip() const {
+		string ip = _socket.ip();
+		return ip;
+};

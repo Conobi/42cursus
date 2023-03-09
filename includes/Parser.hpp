@@ -1,13 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils.cpp                                          :+:      :+:    :+:   */
+/*   Parser.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 16:29:26 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 18:49:01 by conobi           ###   ########lyon.fr   */
+/*   Created: 2023/03/09 18:27:41 by conobi            #+#    #+#             */
+/*   Updated: 2023/03/09 18:48:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Utils.hpp"
+#pragma once
+
+#include "irc.hpp"
+
+class Parser {
+	public:
+		static vector<string> parseCommas(string comma_string);
+};

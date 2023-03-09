@@ -6,14 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:30:22 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 01:27:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 18:26:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <sstream>
-#include <string>
+#include "irc.hpp"
 
 class Utils {
 	public:

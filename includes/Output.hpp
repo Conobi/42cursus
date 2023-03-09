@@ -1,13 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils.cpp                                          :+:      :+:    :+:   */
+/*   Output.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 16:29:26 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 18:49:01 by conobi           ###   ########lyon.fr   */
+/*   Created: 2023/03/09 17:21:16 by conobi            #+#    #+#             */
+/*   Updated: 2023/03/09 18:21:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Utils.hpp"
+#pragma once
+
+#include "irc.hpp"
+#include "Client.hpp"
+#include "Server.hpp"
+
+class Output {
+	private:
+		Output();
+		string _output;
+
+	public:
+		Output(Server &server, Client *sender, string &cmd, string &args);
+		Output(Server &server, Client *sender, string &cmd, vector<string> &args);
+		~Output();
+
+		operator string() const {
+			return this->_output;
+		}
+
+};
