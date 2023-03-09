@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:00:34 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 17:50:30 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 13:25:54 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "Client.hpp"
 #include "Input.hpp"
 #include "Server.hpp"
+#include "errors.hpp"
 #include "irc.hpp"
 
 class Server;

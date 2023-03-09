@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 01:01:36 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 13:49:09 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ Client::~Client() {
 	delete &this->_logger;
 }
 
-Client::Client(const Client &val) : _logger(*(new Logger(val._logger))) {
+Client::Client(const Client &val)
+	: _authStatus(UNREGISTERED), _logger(*(new Logger(val._logger))) {
 	*this = val;
 }
 
@@ -49,20 +50,28 @@ ushort Client::port() const {
 	return this->_port;
 }
 
-string Client::nick() const {
+string &Client::nick() {
 	return this->_nick;
 }
 
-string Client::username() const {
+const string &Client::nick() const {
+	return this->_nick;
+}
+
+string &Client::username() {
 	return this->_username;
 }
 
-void Client::setNick(const string &nick) {
-	this->_nick = nick;
+const string &Client::username() const {
+	return this->_username;
 }
 
-void Client::setUsername(const string &username) {
-	this->_username = username;
+authStatus &Client::authStatus() {
+	return this->_authStatus;
+}
+
+const authStatus &Client::authStatus() const {
+	return this->_authStatus;
 }
 
 bool Client::operator==(const int &fd) const {

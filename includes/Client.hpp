@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 01:28:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 13:49:59 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include "Server.hpp"
 #include "irc.hpp"
 
+enum authStatus { UNREGISTERED, AUTHENTICATED, REGISTERED };
+
 class Logger;
 
 class Client {
@@ -30,6 +32,7 @@ class Client {
 		ushort _port;
 		string _nick;
 		string _username;
+		authStatus _authStatus;
 
 		Logger &_logger;
 
@@ -43,11 +46,13 @@ class Client {
 		int fd() const;
 		string ip() const;
 		ushort port() const;
-		string nick() const;
-		string username() const;
 
-		void setNick(const string &nick);
-		void setUsername(const string &username);
+		string &nick();
+		const string &nick() const;
+		string &username();
+		const string &username() const;
+		authStatus &authStatus();
+		const enum authStatus &authStatus() const;
 
 		string readInput();
 		void sendMessage(const string message) const;

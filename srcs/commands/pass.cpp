@@ -6,12 +6,11 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:50:47 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/08 18:45:06 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 13:43:16 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Command.hpp"
-#include "errors.hpp"
 
 /**
  * PASS <password>
@@ -23,7 +22,9 @@
 
 void Command::pass(Server &server, Client &client, const Input &input) {
 	if (server.password() != input.parameters()[0]) {
-		client.sendMessage(error::passwdmismatch(input.parameters()[0]));
-		client.sendMessage("ERROR :Wrong password\r\n");
+		client.sendMessage(Error::passwdmismatch(input.parameters()[0]));
+		client.sendMessage("Error :Authentication failed\r\n");
+		return;
 	}
+	client.registered() = true;
 }

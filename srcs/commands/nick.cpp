@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:49:43 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/07 20:01:56 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/09 13:28:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@
 void Command::nick(Server &server, Client &client, const Input &input) {
 	// todo: check if the nickname is valid
 	(void)server;
-	client.setNick(input.parameters()[0]);
+	client.nick() = input.parameters()[0];
 }
