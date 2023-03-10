@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:30:56 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 18:21:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 15:23:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ Output::Output(Server &server, Client *sender, string &cmd, string &args)
 	string source = "";
 
 	if (sender && sender->authStatus() == REGISTERED) {
-		source = ":" + sender->nick() + "!" + sender->username() + "/" + server.ip();
+		source =
+			":" + sender->nick() + "!" + sender->username() + "/" + server.ip();
 	} else {
 		source = ":" + server.ip();
 	}
@@ -26,10 +27,12 @@ Output::Output(Server &server, Client *sender, string &cmd, string &args)
 					(cmd.empty() ? "" : cmd + " ") + args + "\r\n";
 }
 
-Output::Output(Server &server, Client *sender, string &cmd, vector<string>&args) : _output("") {
+Output::Output(Server &server, Client *sender, string &cmd,
+			   vector<string> &args)
+	: _output("") {
 	string args_concat = "";
 
-	for(vector<string>::iterator it = args.begin(); it != args.end(); ++it) {
+	for (vector<string>::iterator it = args.begin(); it != args.end(); ++it) {
 		if (it == args.end() - 1)
 			args_concat += ":" + *it;
 		else

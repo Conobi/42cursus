@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 13:49:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 15:17:02 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,8 @@ bool Client::operator==(const Client &client) const {
 
 bool Client::operator==(const string &nick) const {
 	return this->nick() == nick;
+}
+
+bool Client::operator<(const Client &rhs) const {
+	return this->fd() < rhs.fd();
 }

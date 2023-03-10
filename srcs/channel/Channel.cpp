@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 20:03:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 15:27:37 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ Channel::Channel(const string &name, Client &op, const string &key)
 	  _secret_mode(false),
 	  _protected_topic(false),
 	  _external_message_mode(true),
-	  _logger(*(new Logger("Channel"))) {
+	  _logger("Channel") {
 	if (!isValidChannelName(name)) {
 		throw runtime_error(
 			"Invalid channel name given to Channel constructor.");
@@ -36,7 +36,6 @@ Channel::Channel(const string &name, Client &op, const string &key)
 }
 
 Channel::~Channel() {
-	delete &this->_logger;
 }
 
 void Channel::clientJoin(const Client &client) {

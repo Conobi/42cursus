@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 19:04:08 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 15:16:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ class Client {
 		bool operator==(const int &fd) const;
 		bool operator==(const Client &client) const;
 		bool operator==(const string &nick) const;
+		bool operator<(const Client &rhs) const;
 };
