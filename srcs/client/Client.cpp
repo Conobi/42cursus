@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/10 15:17:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 13:16:12 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ Client::~Client() {
 }
 
 Client::Client(const Client &val)
-	: _authStatus(UNREGISTERED), _logger(*(new Logger(val._logger))) {
+	: _authStatus(UNAUTHENTICATED), _logger(*(new Logger(val._logger))) {
 	*this = val;
 }
 

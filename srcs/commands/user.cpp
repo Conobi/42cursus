@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:57:59 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/09 13:37:05 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/11 17:00:51 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,24 @@
  * after this command if the client is registered this sends a welcome message
  */
 
-static void registerUser(Client &client) {
-	client.sendMessage(Rpl::welcome("irc@example.com", client.nick()));
+static void registerUser(Server &server, Client &client) {
+	client.sendMessage(Output(server, &client, "001 " + client.nick(), ":Welcome to the Internet Relay Network " + client.nick()));
 }
 
 void Command::user(Server &server, Client &client, const Input &input) {
 	// todo: check if the client is already registered
+	if (input.parameters().size() < 4) {
+		client.sendMessage(Error::needmoreparams(input.command()));
+		return;
+	}
+
+	if (client.authStatus() == REGISTERED) {
+		client.sendMessage(Error::alreadyregistered());
+		return;
+	}
+
 	client.username() = input.parameters()[0];
-	(void)server;
-	// if (client.authStatus() == status::AUTHENTICATED) {
-	// 	registerUser(client);
-	// }
+	if (client.authStatus() == AUTHENTICATED) {
+		registerUser(server, client);
+	}
 }

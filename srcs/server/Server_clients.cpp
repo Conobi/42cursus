@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/03 16:07:56 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 12:43:18 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,6 @@ Client &Server::_findClient(int client_fd) {
 	return (*client);
 }
 
-void Server::_closeClient(const Client &client) {
-	_logger.log("Client " + client.ip() + ":" +
-					Utils::valToString(client.port()) +
-					" has closed its connection.",
-				false);
-
-	this->_clients.erase(
-		remove(this->_clients.begin(), this->_clients.end(), client.fd()),
-		this->_clients.end());
-}
-
 void Server::_handleClientEvent(int client_fd, uint32_t revents) {
 	Client &client = this->_findClient(client_fd);
 
@@ -98,10 +87,23 @@ void Server::_handleClientEvent(int client_fd, uint32_t revents) {
 	} else if (revents & EPOLLERR || revents & EPOLLHUP) {
 		_logger.info("Error handler", true);
 
-		this->_closeClient(client);
+		this->closeClient(client);
 	} else {
 		throw runtime_error("Unexpected event on client " + client.ip() + ":" +
 							Utils::valToString(client.port()) +
 							". revents: " + Utils::valToString(revents));
 	}
+}
+
+void Server::closeClient(const Client &client) {
+	_logger.log("Client " + client.ip() + ":" +
+					Utils::valToString(client.port()) +
+					" has closed its connection.",
+				false);
+
+	// Remove the client from all channels
+
+	this->_clients.erase(
+		remove(this->_clients.begin(), this->_clients.end(), client.fd()),
+		this->_clients.end());
 }

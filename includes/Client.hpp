@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/10 15:16:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 13:20:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include "Channel.hpp"
 #include "Logger.hpp"
 #include "Server.hpp"
 #include "irc.hpp"
 
-enum status { UNREGISTERED, AUTHENTICATED, REGISTERED };
+enum status { UNAUTHENTICATED, AUTHENTICATED, REGISTERED, ERRORED };
 
 class Channel;
 class Logger;
@@ -56,8 +57,8 @@ class Client {
 		const enum status &authStatus() const;
 
 		string readInput();
-		void sendMessage(const string message) const;
-		void sendMessage(const string message, const string &target) const;
+		void sendMessage(const string &message) const;
+		void sendMessage(const string &message, const string &target) const;
 
 		bool operator==(const int &fd) const;
 		bool operator==(const Client &client) const;

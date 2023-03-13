@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:14:05 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 18:02:05 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 15:27:50 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "Logger.hpp"
 #include "irc.hpp"
+#include "Parser.hpp"
 
 class Input {
 	private:

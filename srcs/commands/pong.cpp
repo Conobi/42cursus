@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Output.hpp                                         :+:      :+:    :+:   */
+/*   pong.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 17:21:16 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/11 17:13:22 by abastos          ###   ########lyon.fr   */
+/*   Created: 2023/03/11 16:40:48 by abastos           #+#    #+#             */
+/*   Updated: 2023/03/11 16:51:22 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "Command.hpp"
 
-#include "Client.hpp"
-#include "Server.hpp"
-#include "irc.hpp"
+void Command::pong(Server &server, Client &client, const Input &input) {
+	if (input.parameters().size() < 1) {
+		client.sendMessage(Error::needmoreparams(input.command()));
+		return;
+	}
 
-class Output {
-	private:
-		Output();
-		string _output;
+	string origin = input.parameters()[0];
 
-	public:
-		Output(Server &server, Client *sender, const string &cmd, const string &args);
-		Output(Server &server, Client *sender, const string &cmd, vector<string> &args);
-		~Output();
-
-		operator string() const {
-			return this->_output;
-		}
-};
+	if (origin.empty()) {
+		// client.sendMessage(Error::noorigin());
+		return;
+	}
+  (void)server;
+}

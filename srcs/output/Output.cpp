@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Output.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:30:56 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/10 15:23:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 15:35:42 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Output.hpp"
 
-Output::Output(Server &server, Client *sender, string &cmd, string &args)
+Output::Output(Server &server, Client *sender, const string &cmd, const string &args)
 	: _output("") {
 	string source = "";
 
@@ -27,9 +27,7 @@ Output::Output(Server &server, Client *sender, string &cmd, string &args)
 					(cmd.empty() ? "" : cmd + " ") + args + "\r\n";
 }
 
-Output::Output(Server &server, Client *sender, string &cmd,
-			   vector<string> &args)
-	: _output("") {
+Output::Output(Server &server, Client *sender, const string &cmd, vector<string>&args) : _output("") {
 	string args_concat = "";
 
 	for (vector<string>::iterator it = args.begin(); it != args.end(); ++it) {
@@ -41,3 +39,5 @@ Output::Output(Server &server, Client *sender, string &cmd,
 
 	Output(server, sender, cmd, args_concat);
 }
+
+Output::~Output() {}

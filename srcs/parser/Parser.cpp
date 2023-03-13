@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:27:00 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 18:48:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/10 15:41:15 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,15 @@ vector<string> Parser::parseCommas(string comma_string) {
 	strings_array.push_back(comma_string);
 
 	return strings_array;
+}
+
+bool Parser::isNickValid(const string &nick) {
+	string charset = " ,*?!@$:.#&";
+	if (nick.empty())
+		return false;
+	for (size_t i = 0; i < nick.size(); i++) {
+		if (charset.find(nick[i]) != string::npos)
+			return false;
+	}
+	return true;
 }

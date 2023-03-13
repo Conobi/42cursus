@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 20:00:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 13:19:09 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "Channel.hpp"
+// #include "Channel.hpp"
 #include "Client.hpp"
 #include "Input.hpp"
 #include "Logger.hpp"
@@ -58,7 +58,6 @@ class Server {
 		Client &_findClient(int client_fd);
 		void _acceptNewClient();
 		void _handleClientEvent(int client_fd, uint32_t revents);
-		void _closeClient(const Client &client);
 
 		void _handleClientRead(Client &client);
 
@@ -70,4 +69,8 @@ class Server {
 
 		string &password() { return _password; }
 		const string &password() const { return _password; }
+
+		const vector<Client> &clients() const { return _clients; }
+
+		void closeClient(const Client &client);
 };

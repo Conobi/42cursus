@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:49:15 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/09 13:28:11 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/11 16:59:10 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,17 @@
  */
 
 void Command::ping(Server &server, Client &client, const Input &input) {
-	// todo: parse arg an send a pong message to the client with the correct
-	// token
-	(void)server;
-	string message("PONG " + input.parameters()[0] + "\r\n");
-	client.sendMessage(message);
+	if (input.parameters().size() < 1) {
+		client.sendMessage(Error::needmoreparams(input.command()));
+		return;
+	}
+
+	string origin = input.parameters()[0];
+
+	if (origin.empty()) {
+		// client.sendMessage(Error::noorigin());
+		return;
+	}
+
+	client.sendMessage(Output(server, &client, "PONG", origin));
 }

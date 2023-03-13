@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 18:06:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/11 16:46:26 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ Server::Server(const ushort port, const string password)
 	this->_commands["NICK"] = &Command::nick;
 	this->_commands["USER"] = &Command::user;
 	this->_commands["PING"] = &Command::ping;
+	this->_commands["PONG"] = &Command::pong;
 	this->_commands["PASS"] = &Command::pass;
+	this->_commands["QUIT"] = &Command::quit;
 
 	this->_startServer();
 }

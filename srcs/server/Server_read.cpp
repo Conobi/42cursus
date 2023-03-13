@@ -6,12 +6,11 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:53:50 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 14:39:35 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/11 17:03:55 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
-// #include "rpl.hpp"
 
 void Server::_handleClientRead(Client &client) {
 	string client_input = client.readInput();
@@ -31,12 +30,11 @@ void Server::_handleClientRead(Client &client) {
 			if (this->_commands[input.command()]) {
 				this->_commands[input.command()](*this, client, input);
 			} else {
+				// todo: send error message to client
 				_logger.warn("Unknown command \"" + input.command() + "\"",
 							false);
 			}
 		} else
-			this->_closeClient(client);
+			this->closeClient(client);
 	}
-
-
 }
