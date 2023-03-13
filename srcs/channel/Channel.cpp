@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/10 15:27:37 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 14:45:04 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,16 @@ void Channel::unbanClient(const Client &client) {
 							" not banned from channel " + this->_name);
 	}
 	list.erase(it);
+}
+
+void Channel::broadcastMessage(const string &message, const ChannelRole &role) {
+	// C++98 style for loop
+	for (map<Client, ChannelRole>::iterator it = this->_clients.begin();
+		 it != this->_clients.end(); it++) {
+		if (it->second >= role) {
+			it->first.sendMessage(message);
+		}
+	}
 }
 
 bool Channel::isInvited(const Client &client) const {

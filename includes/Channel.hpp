@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:54 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/10 15:30:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/13 14:44:57 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "Client.hpp"
 #include "Logger.hpp"
+#include "Output.hpp"
 #include "Utils.hpp"
 #include "irc.hpp"
 
@@ -72,6 +73,8 @@ class Channel {
 
 		void banClient(const Client &client);
 		void unbanClient(const Client &client);
+
+		void broadcastMessage(const string &message, const ChannelRole &role);
 
 		bool isInvited(const Client &client) const;
 		bool isBanned(const Client &client) const;
