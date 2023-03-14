@@ -6,12 +6,11 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:57:59 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/11 17:00:51 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 16:08:05 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Command.hpp"
-#include "rpl.hpp"
 
 /**
  * USER <username> 0 * <realname>
@@ -21,24 +20,20 @@
  * after this command if the client is registered this sends a welcome message
  */
 
-static void registerUser(Server &server, Client &client) {
-	client.sendMessage(Output(server, &client, "001 " + client.nick(), ":Welcome to the Internet Relay Network " + client.nick()));
-}
-
 void Command::user(Server &server, Client &client, const Input &input) {
 	// todo: check if the client is already registered
 	if (input.parameters().size() < 4) {
-		client.sendMessage(Error::needmoreparams(input.command()));
+		client.sendMessage(Output(server, &client, "461 " + input.command(), "Not enough parameters"));
 		return;
 	}
 
 	if (client.authStatus() == REGISTERED) {
-		client.sendMessage(Error::alreadyregistered());
+		client.sendMessage(Output(server, &client, "462", "You are already registered"));
 		return;
 	}
 
 	client.username() = input.parameters()[0];
-	if (client.authStatus() == AUTHENTICATED) {
-		registerUser(server, client);
+	if (!client.nick().empty()) {
+		client.registerUser(server);
 	}
 }

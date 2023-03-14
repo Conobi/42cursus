@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:27:00 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/10 15:41:15 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 15:45:09 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool Parser::isNickValid(const string &nick) {
 	if (nick.empty())
 		return false;
 	for (size_t i = 0; i < nick.size(); i++) {
-		if (charset.find(nick[i]) != string::npos)
+		if (!isalnum(nick[i]) && charset.find(nick[i]) != string::npos)
 			return false;
 	}
 	return true;

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:49:43 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/11 16:00:37 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 16:05:21 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,24 @@
  */
 void Command::nick(Server &server, Client &client, const Input &input) {
 	if (input.parameters().size() < 1) {
-		client.sendMessage(Error::nonicknamegiven());
+		client.sendMessage(Output(server, &client, "431", "No nickname given"));
 		return;
 	}
 
 	string nick = input.parameters()[0];
 
 	if (!Parser::isNickValid(nick)) {
-		client.sendMessage(Error::oneusnickname(nick));
+		client.sendMessage(Output(server, &client, "432 " + nick, "Erroneous nickname"));
 		return;
 	}
 
-	// if (client == nick) {
-	// 	client.sendMessage(Error::nicknameinuse(nick));
-	// 	if (client.authStatus() != REGISTERED)
-	// 		client.authStatus() = ERRORED;
-	// 	return;
-	// }
-
-	for (size_t i = 0; i < server.clients().size(); i++) {
-		cout << "nick: " << server.clients()[i].nick() << endl;
-		if (server.clients()[i] == nick) {
-			client.sendMessage(Error::nicknameinuse(nick));
-			return;
-		}
+	if (find(server.clients().begin(), server.clients().end(), nick) != server.clients().end()) {
+		client.sendMessage(Output(server, &client, "433 " + nick, "Nickname is already in use"));
+		return;
 	}
 
 	client.nick() = nick;
+	if (!client.username().empty()) {
+		client.registerUser(server);
+	}
 }

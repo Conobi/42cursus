@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:49:15 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/11 16:59:10 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 16:06:47 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void Command::ping(Server &server, Client &client, const Input &input) {
 	if (input.parameters().size() < 1) {
-		client.sendMessage(Error::needmoreparams(input.command()));
+		client.sendMessage(Output(server, &client, "461 " + input.command(), "Not enough parameters"));
 		return;
 	}
 

@@ -38,7 +38,6 @@ INC			= irc.hpp \
 			  Client.hpp \
 				Channel.hpp \
 			  Utils.hpp \
-			  rpl.hpp \
 			  Command.hpp \
 			  Input.hpp \
 				Output.hpp \
@@ -64,7 +63,6 @@ SRC			= main.cpp \
 				output/Output.cpp \
 			  commands/nick.cpp \
 			  commands/ping.cpp \
-				commands/pong.cpp \
 			  commands/user.cpp \
 			  commands/pass.cpp \
 				commands/quit.cpp \

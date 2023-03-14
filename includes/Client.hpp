@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/13 13:20:17 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 15:55:46 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "Logger.hpp"
 #include "Server.hpp"
 #include "irc.hpp"
+#include "Output.hpp"
 
 enum status { UNAUTHENTICATED, AUTHENTICATED, REGISTERED, ERRORED };
 
@@ -59,6 +60,8 @@ class Client {
 		string readInput();
 		void sendMessage(const string &message) const;
 		void sendMessage(const string &message, const string &target) const;
+
+		void registerUser(Server &server);
 
 		bool operator==(const int &fd) const;
 		bool operator==(const Client &client) const;
