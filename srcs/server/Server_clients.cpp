@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 14:51:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 15:07:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ void Server::closeClient(const Client &client) {
 					" has closed its connection.",
 				false);
 
-	// Remove the client from all channels
+	// Todo: Remove the client from all channels
+
 	fd = client.fd();
 
 	this->_clients.erase(

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server_read.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:53:50 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/11 17:03:55 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 15:21:41 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 void Server::_handleClientRead(Client &client) {
 	string client_input = client.readInput();
 
+	if (client_input.empty()) {
+		this->closeClient(client);
+		return;
+	}
 	// Cut each individual command by \r\n
 	while (client_input.find("\r\n") != string::npos) {
 		string command = client_input.substr(0, client_input.find("\r\n"));
@@ -32,7 +36,7 @@ void Server::_handleClientRead(Client &client) {
 			} else {
 				// todo: send error message to client
 				_logger.warn("Unknown command \"" + input.command() + "\"",
-							false);
+							 false);
 			}
 		} else
 			this->closeClient(client);
