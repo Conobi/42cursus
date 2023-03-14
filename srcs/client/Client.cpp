@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/13 13:16:12 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 14:43:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
 
 Client::~Client() {
-	if (close(this->fd()) < -1) {
-		throw runtime_error("Cannot close client fd. close(): " +
-							Utils::valToString(strerror(errno)));
-	}
 	delete &this->_logger;
 }
 
@@ -35,7 +31,10 @@ Client &Client::operator=(const Client &rhs) {
 }
 
 Client::Client(int fd, string ip, unsigned int port)
-	: _fd(fd), _ip(ip), _port(port), _logger(*(new Logger("Client"))) {
+	: _fd(fd),
+	  _ip(ip),
+	  _port(port),
+	  _logger(*(new Logger("Client [" + Utils::valToString(fd) + "]"))) {
 }
 
 int Client::fd() const {

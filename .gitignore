@@ -7,7 +7,6 @@ a.out
 *.code-workspace
 *.a
 *.o
-.vscode
 checker_*
 *test
 .cache

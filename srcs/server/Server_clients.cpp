@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Server_clients.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/13 12:43:18 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 14:51:23 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
 Client &Server::_createNewClient() {
-	Client *new_client;
-
 	int client_fd;
 	ushort client_port;
 	string client_ip;
@@ -36,17 +34,14 @@ Client &Server::_createNewClient() {
 	client_ip = inet_ntoa(addr.sin_addr);
 	client_port = ntohs(addr.sin_port);
 
-	new_client = new Client(client_fd, client_ip, client_port);
+	Socket::epollAdd(this->_socket.epoll_fd(), client_fd, EPOLLIN | EPOLLPRI);
 
-	return (*new_client);
+	this->_clients.push_back(Client(client_fd, client_ip, client_port));
+	return (this->_clients.back());
 }
 
 void Server::_acceptNewClient() {
 	Client &new_client = this->_createNewClient();
-
-	Socket::epollAdd(this->_socket.epoll_fd(), new_client.fd(),
-					 EPOLLIN | EPOLLPRI);
-	this->_clients.push_back(new_client);
 
 	_logger.log("Client " + new_client.ip() + ":" +
 					Utils::valToString(new_client.port()) +
@@ -96,14 +91,22 @@ void Server::_handleClientEvent(int client_fd, uint32_t revents) {
 }
 
 void Server::closeClient(const Client &client) {
+	int fd;
+
 	_logger.log("Client " + client.ip() + ":" +
 					Utils::valToString(client.port()) +
 					" has closed its connection.",
 				false);
 
 	// Remove the client from all channels
+	fd = client.fd();
 
 	this->_clients.erase(
-		remove(this->_clients.begin(), this->_clients.end(), client.fd()),
+		remove(this->_clients.begin(), this->_clients.end(), client),
 		this->_clients.end());
+
+	if (close(fd) < -1) {
+		throw runtime_error("Cannot close client fd. close(): " +
+							Utils::valToString(strerror(errno)));
+	}
 }
