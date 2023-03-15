@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:37:27 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 04:02:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 14:08:38 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void Command::join(Server &server, Client &client, const Input &input) {
 			continue;
 		}
 
-		if (!chan->password_mode() && !key.empty() &&
-			!chan->password().empty() && chan->password() != key) {
+		if ((chan->password_mode() && key.empty()) ||
+			(chan->password_mode() && chan->password() != key)) {
 			client.sendMessage(Output(server, &client, "475 " + channel_name,
 									  ":Cannot join channel (+k)"));
 			continue;
