@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 03:06:10 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 04:07:42 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void Channel::clientLeave(const Client &client) {
 							this->_name);
 		return;
 	}
+	// todo: fix this, it's not working
 	this->_clients.erase(client);
 }
 

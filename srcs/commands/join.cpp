@@ -6,11 +6,12 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:37:27 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 02:53:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 04:02:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Command.hpp"
+#include "Server.hpp"
 
 void Command::join(Server &server, Client &client, const Input &input) {
 	vector<string> channels;
@@ -41,43 +42,52 @@ void Command::join(Server &server, Client &client, const Input &input) {
 		vector<Channel>::iterator it = find(
 			server.channels().begin(), server.channels().end(), channel_name);
 
-		Channel &chan = server.channels().back();
+		Channel *chan = &server.channels().back();
 
 		// If channel doesn't exist, create it
 		if ((server.channels().size() == 0 || it == server.channels().end()) &&
 			channel_name[0] == '#') {
-			server.channels().push_back(
-				*(new Channel(channel_name, client, key)));
-			chan = server.channels().back();
-		} else if (server.channels().size() > 0) {
+			Channel *new_chan = new Channel(channel_name, client, key);
+
+			server.channels().push_back(*new_chan);
+			chan = &server.channels().back();
+
+			client.sendMessage(
+				Output(server, &client, "JOIN " + channel_name, ""));
+
+			continue;
+
+		} else if (server.channels().size() > 0 &&
+				   it == server.channels().end() && channel_name[0] != '#') {
 			client.sendMessage(Output(server, &client, "403 " + channel_name,
 									  ":No such channel"));
 			continue;
-		} else {
-			chan = *it;
-		}
-		cout << "Number of channels: " << server.channels().size() << endl;
 
-		if (chan.isBanned(client)) {
+		} else {
+			chan = &*it;
+		}
+
+		if (chan->isBanned(client)) {
 			client.sendMessage(Output(server, &client, "474 " + channel_name,
 									  ":Cannot join channel (+b)"));
 			continue;
 		}
 
-		if (chan.invite_mode() && !chan.isInvited(client)) {
+		if (chan->invite_mode() && !chan->isInvited(client)) {
 			client.sendMessage(Output(server, &client, "473 " + channel_name,
 									  ":Cannot join channel (+i)"));
 			continue;
 		}
 
-		if (!chan.password_mode() && !key.empty() && chan.password() != key) {
+		if (!chan->password_mode() && !key.empty() &&
+			!chan->password().empty() && chan->password() != key) {
 			client.sendMessage(Output(server, &client, "475 " + channel_name,
 									  ":Cannot join channel (+k)"));
 			continue;
 		}
 
-		chan.clientJoin(client);
-		chan.broadcastMessage(
+		chan->clientJoin(client);
+		chan->broadcastMessage(
 			Output(server, &client, "JOIN " + channel_name, ""), ROLE_NONE);
 	}
 }

@@ -51,6 +51,7 @@ SRC			= main.cpp \
 			  server/Server_epoll.cpp \
 			  server/Server_clients.cpp \
 			  server/Server_read.cpp \
+			  server/Server_channels.cpp \
 			  socket/Socket.cpp \
 			  client/Client.cpp \
 			  client/Client_input.cpp \
@@ -66,7 +67,8 @@ SRC			= main.cpp \
 			  commands/user.cpp \
 			  commands/pass.cpp \
 			  commands/quit.cpp \
-			  commands/join.cpp
+			  commands/join.cpp \
+			  commands/part.cpp
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
