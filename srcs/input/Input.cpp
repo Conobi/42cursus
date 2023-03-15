@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Input.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:32:17 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 13:23:24 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 20:11:54 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,15 @@ vector<string> splitByToken(string input, const string &delimiter) {
 	vector<string> res;
 
 	while ((pos = input.find(delimiter)) != string::npos) {
-    token = input.substr(0, pos);
-    res.push_back(token);
+		token = input.substr(0, pos);
+		res.push_back(token);
 		input = input.substr(pos + delimiter.length());
 	}
 	res.push_back(input);
 	return res;
 }
 
-enum DecoderState
-{
-	PREFIX,
-	COMMAND,
-	PARAMETER
-};
+enum DecoderState { PREFIX, COMMAND, PARAMETER };
 
 Input::Input(const string &input) : _logger("Input") {
 	// todo: Build the input here, and check for errors
@@ -42,7 +37,7 @@ Input::Input(const string &input) : _logger("Input") {
 		result.erase(pos, 2);
 	}
 
-	this->_logger.log("Input: " + result, false);
+	this->_logger.log("input  : " + result, true);
 
 	string::size_type trail = result.find(" :");
 	bool hasTrail = trail != string::npos;
@@ -63,7 +58,7 @@ Input::Input(const string &input) : _logger("Input") {
 
 	for (size_t i = 0; i < inputSplit.size(); i++) {
 		switch (state) {
-			case  PREFIX:
+			case PREFIX:
 			case COMMAND: {
 				bool isPrefix = inputSplit[i][0] == ':';
 				if (isPrefix && first) {
@@ -88,12 +83,16 @@ Input::Input(const string &input) : _logger("Input") {
 	if (!afterTrail.empty()) {
 		this->_parameters.push_back(afterTrail);
 	}
-	cout << "prefix: " << prefix << endl;
-	cout << "command: " << this->_command << endl;
-	cout << "parameters: " << endl;
+
+	this->_logger.log("prefix : " + prefix, true);
+	this->_logger.log("cmd    : " + this->_command, true);
+	this->_logger.log("params : " + this->_command, true);
 	for (size_t i = 0; i < this->_parameters.size(); i++) {
-		cout << "parameters[" << i << "]: " << this->_parameters[i] << endl;
+		this->_logger.log(
+			"       - [" + Utils::valToString(i) + "]: " + this->_parameters[i],
+			true);
 	}
 }
 
-Input::~Input() {}
+Input::~Input() {
+}

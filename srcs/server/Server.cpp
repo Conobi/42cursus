@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 16:07:05 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 20:14:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+
 #include "Command.hpp"
 
 Server::Server(const ushort port, const string password)
 	: _logger(*(new Logger("Server"))),
 	  _socket(*(new Socket(AF_INET, SOCK_STREAM, 0))),
-		_stop(false),
+	  _stop(false),
 	  _port(port),
 	  _password(password) {
 	// Create socket connection with ipv4 protocol
@@ -32,6 +33,7 @@ Server::Server(const ushort port, const string password)
 	this->_commands["PING"] = &Command::ping;
 	this->_commands["PASS"] = &Command::pass;
 	this->_commands["QUIT"] = &Command::quit;
+	this->_commands["JOIN"] = &Command::join;
 
 	this->_startServer();
 }
@@ -58,6 +60,6 @@ void Server::_startServer() {
 }
 
 const string Server::ip() const {
-		string ip = _socket.ip();
-		return ip;
+	string ip = _socket.ip();
+	return ip;
 };

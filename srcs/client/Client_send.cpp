@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client_send.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:37:16 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/11 16:06:11 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 20:13:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void Client::sendMessage(const string &message) const {
 			return;
 		}
 
-		this->_logger.log("Message sent to client " + this->_ip + ":" +
+		this->_logger.log("Message sent to " + this->_ip + ":" +
 							  Utils::valToString(this->_port) + " \"" +
-							  message.c_str() + "\"",
+							  message.substr(0, message.size() - 2) + "\"",
 						  false);
 		return;
 	}

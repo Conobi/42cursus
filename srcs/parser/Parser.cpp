@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:27:00 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 15:45:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 20:50:22 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ bool Parser::isNickValid(const string &nick) {
 		return false;
 	for (size_t i = 0; i < nick.size(); i++) {
 		if (!isalnum(nick[i]) && charset.find(nick[i]) != string::npos)
+			return false;
+	}
+	return true;
+}
+
+bool Parser::isChannelValid(const string &channel) {
+	string charset = " ,*?!@$:.#&";
+	if (channel.empty())
+		return false;
+	if (channel[0] != '#' && channel[0] != '&')
+		return false;
+	for (size_t i = 1; i < channel.size(); i++) {
+		if (!isalnum(channel[i]) && charset.find(channel[i]) != string::npos)
 			return false;
 	}
 	return true;

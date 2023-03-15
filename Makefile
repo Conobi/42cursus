@@ -36,11 +36,11 @@ INC			= irc.hpp \
 			  Socket.hpp \
 			  Logger.hpp \
 			  Client.hpp \
-				Channel.hpp \
+			  Channel.hpp \
 			  Utils.hpp \
 			  Command.hpp \
 			  Input.hpp \
-				Output.hpp \
+			  Output.hpp
 
 INCDIR		= includes
 INCS		= $(addprefix $(INCDIR)/,$(INC))
@@ -55,17 +55,18 @@ SRC			= main.cpp \
 			  client/Client.cpp \
 			  client/Client_input.cpp \
 			  client/Client_send.cpp \
-				channel/Channel.cpp \
+			  channel/Channel.cpp \
 			  logger/Logger.cpp \
 			  utils/Utils.cpp \
 			  input/Input.cpp \
-				parser/Parser.cpp \
-				output/Output.cpp \
+			  parser/Parser.cpp \
+			  output/Output.cpp \
 			  commands/nick.cpp \
 			  commands/ping.cpp \
 			  commands/user.cpp \
 			  commands/pass.cpp \
-				commands/quit.cpp \
+			  commands/quit.cpp \
+			  commands/join.cpp
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
@@ -73,7 +74,7 @@ SRCS		= $(addprefix $(SDIR)/,$(SRC))
 ODIR		= build/$(OS)
 OBJS 		= $(patsubst $(SDIR)/%,$(ODIR)/%,$(SRCS:.cpp=.o))
 CC			= c++
-CFLAGS	= -Wall -Wextra -Werror -I $(INCDIR) -std=c++98 -O1 -g3
+CFLAGS		= -Wall -Wextra -Werror -I $(INCDIR) -std=c++98 -g3
 
 all: $(NAME)
 

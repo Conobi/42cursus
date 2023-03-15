@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 15:55:46 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 20:44:39 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 #include "Channel.hpp"
 #include "Logger.hpp"
+#include "Output.hpp"
 #include "Server.hpp"
 #include "irc.hpp"
-#include "Output.hpp"
 
 enum status { UNAUTHENTICATED, AUTHENTICATED, REGISTERED, ERRORED };
 
@@ -37,7 +37,7 @@ class Client {
 		string _username;
 		status _authStatus;
 
-		Logger &_logger;
+		Logger _logger;
 
 	public:
 		~Client();

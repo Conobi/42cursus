@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/13 13:19:09 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/14 18:41:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-// #include "Channel.hpp"
+#include "Channel.hpp"
 #include "Client.hpp"
 #include "Input.hpp"
 #include "Logger.hpp"
@@ -67,10 +67,13 @@ class Server {
 
 		const string ip() const;
 
-		string &password() { return _password; }
 		const string &password() const { return _password; }
+		string &password() { return _password; }
 
 		const vector<Client> &clients() const { return _clients; }
+
+		const vector<Channel> &channels() const { return _channels; }
+		vector<Channel> &channels() { return _channels; }
 
 		void closeClient(const Client &client);
 };

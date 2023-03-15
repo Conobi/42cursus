@@ -6,11 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:54 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/13 14:44:57 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 02:15:30 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include <vector>
 
 #include "Client.hpp"
 #include "Logger.hpp"
@@ -59,8 +61,11 @@ class Channel {
 		Logger _logger;
 
 	public:
-		Channel(const string &name, Client &op, const string &key);
+		Channel(const Channel &val);
+		Channel &operator=(const Channel &rhs);
 		~Channel();
+
+		Channel(const string &name, Client &op, const string &key);
 
 		void clientJoin(const Client &client);
 		void clientLeave(const Client &client);
@@ -81,36 +86,46 @@ class Channel {
 		bool isConnected(const Client &client) const;
 		bool isOp(const Client &client) const;
 
-		static bool isValidChannelName(const string &channel_name);
+		const string &name() const { return _name; }
+		string &name() { return _name; }
 
-		bool &invite_mode() { return _invite_mode; }
+		const map<Client, ChannelRole> &clients() const { return _clients; }
+		map<Client, ChannelRole> &clients() { return _clients; }
+
+		// const vector<Client> &invite_list() const { return _invite_list; }
+		// vector<Client> &invite_list() { return _invite_list; }
+
+		// const vector<Client> &ban_list() const { return _ban_list; }
+		// vector<Client> &ban_list() { return _ban_list; }
+
 		const bool &invite_mode() const { return _invite_mode; }
+		bool &invite_mode() { return _invite_mode; }
 
-		bool &ban_list_mode() { return _ban_list_mode; }
 		const bool &ban_list_mode() const { return _ban_list_mode; }
+		bool &ban_list_mode() { return _ban_list_mode; }
 
-		bool &password_mode() { return _password_mode; }
 		const bool &password_mode() const { return _password_mode; }
+		bool &password_mode() { return _password_mode; }
 
-		string &password() { return _password; }
 		const string &password() const { return _password; }
+		string &password() { return _password; }
 
-		string &topic() { return _topic; }
 		const string &topic() const { return _topic; }
+		string &topic() { return _topic; }
 
-		bool &protected_topic() { return _protected_topic; }
 		const bool &protected_topic() const { return _protected_topic; }
+		bool &protected_topic() { return _protected_topic; }
 
-		bool &external_message_mode() { return _external_message_mode; }
 		const bool &external_message_mode() const {
 			return _external_message_mode;
 		}
+		bool &external_message_mode() { return _external_message_mode; }
 
-		bool &slot_mode() { return _slot_mode; }
 		const bool &slot_mode() const { return _slot_mode; }
+		bool &slot_mode() { return _slot_mode; }
 
-		uint &max_slots() { return _max_slots; }
 		const uint &max_slots() const { return _max_slots; }
+		uint &max_slots() { return _max_slots; }
 
 		bool operator==(const string &name) const;
 		bool operator==(const Channel &channel) const;

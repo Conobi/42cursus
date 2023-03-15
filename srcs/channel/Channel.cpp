@@ -6,33 +6,47 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 12:37:47 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 03:06:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
 
-#include <algorithm>
-#include <stdexcept>
-#include <vector>
-
 Channel::Channel(const string &name, Client &op, const string &key)
-	: _password(key),
-	  _max_slots(0),
-	  _invite_mode(false),
+	: _name(name),
+	  _password(key),
 	  _password_mode(!key.empty()),
-	  _ban_list_mode(false),
-	  _slot_mode(false),
-	  _secret_mode(false),
-	  _protected_topic(false),
-	  _external_message_mode(true),
 	  _logger("Channel") {
-	if (!isValidChannelName(name)) {
+	if (!Parser::isChannelValid(name)) {
 		throw runtime_error(
 			"Invalid channel name given to Channel constructor.");
 	}
-	_name = name;
 	clientJoin(op);
+	this->_clients[op] = ROLE_OP;
+}
+
+Channel::Channel(const Channel &rhs) : _logger(rhs._logger) {
+	*this = rhs;
+}
+
+Channel &Channel::operator=(const Channel &rhs) {
+	if (this != &rhs) {
+		this->_name = rhs._name;
+		this->_clients = rhs._clients;
+		this->_invite_list = rhs._invite_list;
+		this->_password = rhs._password;
+		this->_ban_list = rhs._ban_list;
+		this->_max_slots = rhs._max_slots;
+		this->_topic = rhs._topic;
+		this->_invite_mode = rhs._invite_mode;
+		this->_password_mode = rhs._password_mode;
+		this->_ban_list_mode = rhs._ban_list_mode;
+		this->_slot_mode = rhs._slot_mode;
+		this->_secret_mode = rhs._secret_mode;
+		this->_protected_topic = rhs._protected_topic;
+		this->_external_message_mode = rhs._external_message_mode;
+	}
+	return *this;
 }
 
 Channel::~Channel() {
@@ -150,17 +164,6 @@ bool Channel::isConnected(const Client &client) const {
 
 bool Channel::isOp(const Client &client) const {
 	return this->getRole(client) == ROLE_OP;
-}
-
-bool Channel::isValidChannelName(const string &channel_name) {
-	if (channel_name.empty() || channel_name[0] != '#')
-		return false;
-	for (size_t i = 1; i < channel_name.size(); i++) {
-		if (channel_name[i] == ' ' || channel_name[i] == '\a' ||
-			channel_name[i] == '\x7' || channel_name[i] == ',')
-			return false;
-	}
-	return true;
 }
 
 bool Channel::operator==(const string &name) const {
