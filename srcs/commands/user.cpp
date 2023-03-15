@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:57:59 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/14 16:08:05 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 14:13:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 void Command::user(Server &server, Client &client, const Input &input) {
 	// todo: check if the client is already registered
 	if (input.parameters().size() < 4) {
-		client.sendMessage(Output(server, &client, "461 " + input.command(), "Not enough parameters"));
+		client.sendMessage(Output(server, &client, "461", input.command() + " :Not enough parameters"));
 		return;
 	}
 
