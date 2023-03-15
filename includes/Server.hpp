@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 03:31:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 16:17:28 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ class Server {
 		vector<Channel> &channels() { return _channels; }
 
 		Channel *getChannel(const string &channel_name);
+		Client *getClient(const string &client_nick);
 
 		void closeClient(const Client &client);
 };

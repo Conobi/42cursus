@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:21:16 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/13 14:54:18 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 16:59:43 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ class Output {
 		string _output;
 
 	public:
-		Output(Server &server, Client *sender, const string &cmd,
+		Output(const Server &server, const Client *sender, const string &cmd,
+			   const Client *client_arg, const string &args);
+		Output(const Server &server, const Client *sender, const string &cmd,
 			   const string &args);
-		Output(Server &server, Client *sender, const string &cmd,
-			   vector<string> &args);
+		// Output(Server &server, Client *sender, const string &cmd,
+		// 	   vector<string> &args);
 		~Output();
 
 		operator string() const { return this->_output; }

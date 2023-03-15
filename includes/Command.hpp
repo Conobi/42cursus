@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:00:34 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 03:33:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 17:06:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ class Command {
 		static void quit(Server &server, Client &client, const Input &input);
 		static void join(Server &server, Client &client, const Input &input);
 		static void part(Server &server, Client &client, const Input &input);
+		static void privmsg(Server &server, Client &client, const Input &input);
 };

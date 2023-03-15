@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 03:34:04 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 17:07:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ Server::Server(const ushort port, const string password)
 	this->_commands["QUIT"] = &Command::quit;
 	this->_commands["JOIN"] = &Command::join;
 	this->_commands["PART"] = &Command::part;
+	this->_commands["PRIVMSG"] = &Command::privmsg;
 
 	this->_startServer();
 }

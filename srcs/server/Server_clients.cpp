@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 15:07:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 16:17:50 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,13 @@ void Server::closeClient(const Client &client) {
 		throw runtime_error("Cannot close client fd. close(): " +
 							Utils::valToString(strerror(errno)));
 	}
+}
+
+Client *Server::getClient(const string &client_nick) {
+	for (vector<Client>::iterator it = this->_clients.begin();
+		 it != this->_clients.end(); it++) {
+		if ((*it).nick() == client_nick)
+			return &*it;
+	}
+	return NULL;
 }

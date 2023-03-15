@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:54 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 03:35:00 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 17:12:55 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ class Channel {
 		void banClient(const Client &client);
 		void unbanClient(const Client &client);
 
-		void broadcastMessage(const string &message, const ChannelRole &role);
+		void broadcastMessage(const Client *sender, const string &message,
+							  const ChannelRole &role);
 
 		bool isInvited(const Client &client) const;
 		bool isBanned(const Client &client) const;

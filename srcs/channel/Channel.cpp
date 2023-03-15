@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 04:07:42 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 18:23:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,14 @@ void Channel::clientJoin(const Client &client) {
 }
 
 void Channel::clientLeave(const Client &client) {
-	if (this->_clients.find(client) == this->_clients.end()) {
+	map<Client, ChannelRole>::iterator it = this->_clients.find(client);
+	if (it == this->_clients.end()) {
 		throw runtime_error("Client " + client.nick() + " not in channel " +
 							this->_name);
 		return;
 	}
 	// todo: fix this, it's not working
-	this->_clients.erase(client);
+	this->_clients.erase(it);
 }
 
 const ChannelRole &Channel::getRole(const Client &client) const {
@@ -131,11 +132,12 @@ void Channel::unbanClient(const Client &client) {
 	list.erase(it);
 }
 
-void Channel::broadcastMessage(const string &message, const ChannelRole &role) {
+void Channel::broadcastMessage(const Client *sender, const string &message,
+							   const ChannelRole &role) {
 	// C++98 style for loop
 	for (map<Client, ChannelRole>::iterator it = this->_clients.begin();
 		 it != this->_clients.end(); it++) {
-		if (it->second >= role) {
+		if ((!sender || !(it->first == *sender)) && it->second >= role) {
 			it->first.sendMessage(message);
 		}
 	}

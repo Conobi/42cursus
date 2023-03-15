@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 01:15:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 17:05:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,27 @@ void Client::registerUser(Server &server) {
 	if (this->_authStatus == REGISTERED) {
 		this->_logger.info("User already registered", false);
 		this->sendMessage(
-			Output(server, this, "462", ":You may not reregister"));
+			Output(server, this, "462", this, ":You may not reregister"));
 		return;
 	}
 	if (this->_authStatus == UNAUTHENTICATED) {
 		this->_logger.log("User not authenticated", false);
 		this->sendMessage(
-			Output(server, this, "451", ":You have not registered"));
+			Output(server, this, "451", this, ":You have not registered"));
 		return;
 	}
 	this->_authStatus = REGISTERED;
 	this->sendMessage(
-		Output(server, this, "001 " + this->_nick,
+		Output(server, this, "001", this,
 			   ":Welcome to the Internet Relay Network " + this->_nick));
 	// todo: maybe add some server info
 	this->sendMessage(
-		Output(server, this, "002 " + this->_nick,
+		Output(server, this, "002", this,
 			   ":Your host is " + server.ip() + ", running version 0.1"));
-	this->sendMessage(Output(server, this, "003 " + this->_nick,
+	this->sendMessage(Output(server, this, "003", this,
 							 ":This server was created 2023-02-21"));
-	this->sendMessage(Output(server, this, "004 " + this->_nick,
-							 server.ip() + " 0.1 oOr RO"));
+	this->sendMessage(
+		Output(server, this, "004", this, server.ip() + " 0.1 oOr RO"));
 	this->_logger.info("User registered", false);
 }
 
