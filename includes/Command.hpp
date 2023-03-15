@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:00:34 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 03:33:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 13:25:52 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ class Command {
 		static void quit(Server &server, Client &client, const Input &input);
 		static void join(Server &server, Client &client, const Input &input);
 		static void part(Server &server, Client &client, const Input &input);
+		static void mode(Server &server, Client &client, const Input &input);
 };
