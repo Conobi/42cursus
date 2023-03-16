@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:16:25 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/15 18:17:26 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/15 19:05:00 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ void Command::quit(Server &server, Client &client, const Input &input) {
 		 it != server.channels().end(); it++) {
 		if (it->clients().find(client) != it->clients().end()) {
       it->clientLeave(client);
-      it->broadcastMessage(Output(server, &client, "QUIT", message), ROLE_NONE);
+      it->broadcastMessage(NULL, Output(server, &client, "QUIT", message), ROLE_NONE);
     }
 	}
 
-  client.sendMessage(Output(server, &client, "QUIT", message));
+  client.sendMessage(Output(server, &client, "ERROR",
+				   "Closing Link: " + client.ip() + " (Disconnected by client)"));
 
   server.closeClient(client);
 }

@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:04 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/15 17:57:59 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/16 16:54:22 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void Command::mode(Server &server, Client &client, const Input &input) {
 
   bool toSet = mode[0] == '+';
   bool modeChanged = false;
+  size_t paramIndex = 2;
 
   for (size_t i = 1; i < mode.size(); i++) {
     switch (mode[i]) {
@@ -83,18 +84,45 @@ void Command::mode(Server &server, Client &client, const Input &input) {
         break;
       }
       case 'k': {
+        if (toSet == true) {
+          if (input.parameters().size() <= paramIndex) {
+            client.sendMessage(Output(server, &client, "696", client.nick() + " " + target + " " + mode[i] + " empty :is not a valid key"));
+            break;
+          }
+
+          channel->password() = input.parameters()[paramIndex];
+        }
+
         channel->password_mode() = toSet;
         modeChanged = true;
+        paramIndex += 1;
         break;
       }
       case 'o': {
+        if (input.parameters().size() <= paramIndex) {
+          client.sendMessage(Output(server, &client, "696", client.nick() + " " + target + " " + mode[i] + " empty :is not a valid key"));
+          break;
+        }
 
+        Client *targetClient = server.getClient(input.parameters()[paramIndex]);
+
+        if (!targetClient) {
+          client.sendMessage(Output(server, &client, "401", client.nick() + " " + input.parameters()[paramIndex] + " :No such nick"));
+          break;
+        }
+
+        ChannelRole role = toSet ? ROLE_OP : ROLE_NONE;
+
+        channel->setRole(*targetClient, role);
+        channel->broadcastMessage(NULL, Output(server, &client, "MODE", channel->name() + " " + mode[0] + mode[i] + " " + input.parameters()[paramIndex]), ROLE_NONE);
+        paramIndex += 1;
+        break;
       }
       default:
         client.sendMessage(Output(server, &client, "472", client.nick() + " " + mode[i] + " :is unknown mode char to me"));
     }
   }
   if (modeChanged) {
-    channel->broadcastMessage(Output(server, &client, "", "MODE " + target + " " + mode[0] + cleanByTokens(mode, "ik")), ROLE_NONE);
+    channel->broadcastMessage(NULL, Output(server, &client, "MODE", target + " " + mode[0] + cleanByTokens(mode, "ik")), ROLE_NONE);
   }
 }
