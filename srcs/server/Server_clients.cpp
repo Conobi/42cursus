@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 16:17:50 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/19 23:52:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,28 @@ void Server::closeClient(const Client &client) {
 					" has closed its connection.",
 				false);
 
-	// Todo: Remove the client from all channels
+	for (vector<Channel>::iterator channel = this->channels().begin();
+		 channel != this->channels().end(); channel++) {
+		if (channel->clients().find(client) != channel->clients().end()) {
+			channel->clientLeave(client);
+			this->_logger.info("Client " + client.nick() + " has left " +
+								   channel->name() + " (connection closed).",
+							   false);
+			channel->broadcastMessage(
+				NULL,
+				Output(*this, &client, "QUIT",
+					   ":Connection closed by the client"),
+				ROLE_NONE);
+			if (channel->clients().size() == 0) {
+				this->_logger.info("Channel " + channel->name() +
+									   " is now empty. Deleting it.",
+								   false);
+				this->channels().erase(find(this->channels().begin(),
+											this->channels().end(), *channel));
+				channel = this->channels().begin();
+			}
+		}
+	}
 
 	fd = client.fd();
 

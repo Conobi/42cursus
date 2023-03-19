@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 18:44:43 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/19 22:37:44 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ Server::Server(const ushort port, const string password)
 	// Create socket connection with ipv4 protocol
 	this->_socket.bindAddress(port);
 	this->_socket.createEpollFd();
+	// todo: add as a global constant
 	this->_socket.listenTo(9999);
 	Socket::epollAdd(this->_socket.epoll_fd(), this->_socket.sock_fd(),
 					 EPOLLIN | EPOLLPRI);
@@ -37,6 +38,7 @@ Server::Server(const ushort port, const string password)
 	this->_commands["PART"] = &Command::part;
 	this->_commands["PRIVMSG"] = &Command::privmsg;
 	this->_commands["MODE"] = &Command::mode;
+	this->_commands["KICK"] = &Command::kick;
 
 	this->_startServer();
 }
@@ -49,6 +51,7 @@ Server::~Server() {
 }
 
 void Server::_startServer() {
+	// todo: add as a global constant
 	const int maxevents = 32;
 	struct epoll_event events[maxevents];
 
@@ -58,6 +61,7 @@ void Server::_startServer() {
 				false);
 
 	while (!this->_stop) {
+		// todo: add as a global constant
 		this->_epollHandler(3200, events, maxevents);
 	}
 }

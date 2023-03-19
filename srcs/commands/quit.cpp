@@ -3,33 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:16:25 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/15 19:05:00 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/19 23:51:46 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Command.hpp"
 
 void Command::quit(Server &server, Client &client, const Input &input) {
-  string message = "Quit: ";
+	string message = "Quit: ";
 
-  if (input.parameters().size() == 1) {
-    message.append(input.parameters()[0]);
-  }
-
-  // todo: maybe change this for loop
-  for (vector<Channel>::iterator it = server.channels().begin();
-		 it != server.channels().end(); it++) {
-		if (it->clients().find(client) != it->clients().end()) {
-      it->clientLeave(client);
-      it->broadcastMessage(NULL, Output(server, &client, "QUIT", message), ROLE_NONE);
-    }
+	if (input.parameters().size() == 1) {
+		message.append(input.parameters()[0]);
 	}
 
-  client.sendMessage(Output(server, &client, "ERROR",
-				   "Closing Link: " + client.ip() + " (Disconnected by client)"));
+	for (vector<Channel>::iterator channel = server.channels().begin();
+		 channel != server.channels().end(); channel++) {
+		if (channel->clients().find(client) != channel->clients().end()) {
+			channel->clientLeave(client);
+			channel->broadcastMessage(
+				NULL, Output(server, &client, "QUIT", ":" + message),
+				ROLE_NONE);
+			if (channel->clients().size() == 0) {
+				server.channels().erase(find(server.channels().begin(),
+											 server.channels().end(),
+											 *channel));
+				channel = server.channels().begin();
+			}
+		}
+	}
 
-  server.closeClient(client);
+	client.sendMessage(
+		Output(server, &client, "ERROR",
+			   "Closing Link: " + client.ip() + " (Disconnected by client)"));
+
+	server.closeClient(client);
 }
