@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:30:22 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 18:26:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/20 14:40:43 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,15 @@ class Utils {
 
 			ss << value;
 			return ss.str();
+		}
+
+		static std::string toLower(std::string str) {
+			std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+			return str;
+		}
+
+		static std::string toUpper(std::string str) {
+			std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+			return str;
 		}
 };

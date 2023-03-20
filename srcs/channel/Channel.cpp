@@ -6,11 +6,13 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 18:23:59 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/20 15:40:59 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Channel.hpp"
+
+#include <cctype>
 
 Channel::Channel(const string &name, Client &op, const string &key)
 	: _name(name),
@@ -59,6 +61,13 @@ void Channel::clientJoin(const Client &client) {
 		return;
 	}
 	this->_clients[client] = ROLE_NONE;
+
+	// Remove client from invite list if he was invited
+	vector<Client>::iterator it =
+		find(this->_invite_list.begin(), this->_invite_list.end(), client);
+	if (it != this->_invite_list.end()) {
+		this->_invite_list.erase(it);
+	}
 }
 
 void Channel::clientLeave(const Client &client) {
@@ -170,9 +179,11 @@ bool Channel::isOp(const Client &client) const {
 }
 
 bool Channel::operator==(const string &name) const {
-	return (this->_name == name ? true : false);
+	return (Utils::toLower(this->_name) == Utils::toLower(name) ? true : false);
 }
 
 bool Channel::operator==(const Channel &channel) const {
-	return (this->_name == channel._name ? true : false);
+	return (Utils::toLower(this->_name) == Utils::toLower(channel._name)
+				? true
+				: false);
 }

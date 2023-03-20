@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 17:05:32 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/20 14:44:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ bool Client::operator==(const Client &client) const {
 }
 
 bool Client::operator==(const string &nick) const {
-	return this->nick() == nick;
+	return Utils::toLower(this->nick()) == Utils::toLower(nick);
 }
 
 bool Client::operator<(const Client &rhs) const {

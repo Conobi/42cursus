@@ -6,12 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:37:27 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 18:32:21 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/20 15:09:52 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Command.hpp"
-#include "Server.hpp"
 
 void Command::join(Server &server, Client &client, const Input &input) {
 	vector<string> channels;
