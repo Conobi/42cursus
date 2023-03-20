@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/19 22:37:44 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/20 01:21:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ Server::Server(const ushort port, const string password)
 	this->_commands["PRIVMSG"] = &Command::privmsg;
 	this->_commands["MODE"] = &Command::mode;
 	this->_commands["KICK"] = &Command::kick;
+	this->_commands["NAMES"] = &Command::names;
 
 	this->_startServer();
 }

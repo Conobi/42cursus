@@ -71,7 +71,8 @@ SRC			= main.cpp \
 			  commands/part.cpp \
 			  commands/privmsg.cpp \
 			  commands/mode.cpp \
-			  commands/kick.cpp
+			  commands/kick.cpp \
+			  commands/names.cpp
 
 SDIR		= srcs
 SRCS		= $(addprefix $(SDIR)/,$(SRC))
