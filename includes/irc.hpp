@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:30:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/09 00:50:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 16:57:39 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 #define BOLD(x) "\x1B[1m" x RST
 #define UNDL(x) "\x1B[4m" x RST
 
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <stdint.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include <algorithm>
 #include <cerrno>
 #include <cstdio>
@@ -49,6 +55,5 @@
 #include <vector>
 
 #include "Utils.hpp"
-#include "unistd.h"
 
 using namespace std;

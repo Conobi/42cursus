@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:53:50 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 15:21:41 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 17:06:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void Server::_handleClientRead(Client &client) {
 		this->closeClient(client);
 		return;
 	}
+
 	// Cut each individual command by \r\n
 	while (client_input.find("\r\n") != string::npos) {
 		string command = client_input.substr(0, client_input.find("\r\n"));
@@ -34,7 +35,9 @@ void Server::_handleClientRead(Client &client) {
 			if (this->_commands[input.command()]) {
 				this->_commands[input.command()](*this, client, input);
 			} else {
-				// todo: send error message to client
+				client.sendMessage(
+					Output(*this, &client, "421", &client,
+						   input.command() + " :Unknown command"));
 				_logger.warn("Unknown command \"" + input.command() + "\"",
 							 false);
 			}

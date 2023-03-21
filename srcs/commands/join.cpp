@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:37:27 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/20 15:09:52 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 17:09:05 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,21 @@ void Command::join(Server &server, Client &client, const Input &input) {
 		if (chan->isConnected(client)) {
 			client.sendMessage(
 				Output(server, &client, "443", &client,
-					   channel_name + " :is already on channel"));
+					   chan->name() + " :is already on channel"));
 			continue;
 		}
 
 		if (chan->isBanned(client)) {
 			client.sendMessage(
 				Output(server, &client, "474", &client,
-					   channel_name + " :Cannot join channel (+b)"));
+					   chan->name() + " :Cannot join channel (+b)"));
 			continue;
 		}
 
 		if (chan->invite_mode() && !chan->isInvited(client)) {
 			client.sendMessage(
 				Output(server, &client, "473", &client,
-					   channel_name + " :Cannot join channel (+i)"));
+					   chan->name() + " :Cannot join channel (+i)"));
 			continue;
 		}
 
@@ -90,13 +90,13 @@ void Command::join(Server &server, Client &client, const Input &input) {
 			(chan->password_mode() && chan->password() != key)) {
 			client.sendMessage(
 				Output(server, &client, "475", &client,
-					   channel_name + " :Cannot join channel (+k)"));
+					   chan->name() + " :Cannot join channel (+k)"));
 			continue;
 		}
 
 		chan->clientJoin(client);
 		chan->broadcastMessage(
-			NULL, Output(server, &client, "JOIN " + channel_name, ""),
+			NULL, Output(server, &client, "JOIN " + chan->name(), ""),
 			ROLE_NONE);
 	}
 }

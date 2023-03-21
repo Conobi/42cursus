@@ -6,25 +6,23 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 16:17:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 17:39:14 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <fcntl.h>
-#include <netinet/in.h>
-#include <stdint.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #include "Channel.hpp"
 #include "Client.hpp"
+#include "Command.hpp"
 #include "Input.hpp"
 #include "Logger.hpp"
 #include "Socket.hpp"
 #include "Utils.hpp"
 #include "irc.hpp"
+
+const int MAX_USERS = 9999;
+const int MAX_EVENTS = 32;
 
 class Logger;
 class Socket;
@@ -48,6 +46,7 @@ class Server {
 		bool _stop;
 		ushort _port;
 		string _password;
+		string _creation_date;
 
 		void _epollHandler(const int timeout, struct epoll_event events[],
 						   const int maxevents);
@@ -65,6 +64,8 @@ class Server {
 		Server(const ushort port, const string password);
 		~Server();
 
+		const string &creationDate() const { return _creation_date; }
+
 		const string ip() const;
 
 		const string &password() const { return _password; }
@@ -77,6 +78,8 @@ class Server {
 
 		Channel *getChannel(const string &channel_name);
 		Client *getClient(const string &client_nick);
+
+		const Logger &logger() const { return _logger; }
 
 		void closeClient(const Client &client);
 };

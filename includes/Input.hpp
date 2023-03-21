@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   Input.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:14:05 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/10 15:27:50 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 16:29:25 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "Logger.hpp"
-#include "irc.hpp"
 #include "Parser.hpp"
+#include "irc.hpp"
 
 class Input {
 	private:
 		string _tags;	  // No strong parsing rule here
 		string _command;  // valid IRC command OR rpl numeric
 		vector<string> _parameters;
-
-		Logger _logger;
 
 	public:
 		Input(const string &input);

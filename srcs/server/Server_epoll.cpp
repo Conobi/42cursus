@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 03:44:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/02/24 02:45:55 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 17:03:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void Server::_epollHandler(const int timeout, struct epoll_event events[],
 
 	ep_value = epoll_wait(this->_socket.epoll_fd(), events, maxevents, timeout);
 
-	// No events within [timeout] ms
 	if (ep_value == 0) {
-		// _logger.info("No event within " + Utils::valToString(timeout) + "
-		// ms.", 			 true);
 		return;
 	}
 

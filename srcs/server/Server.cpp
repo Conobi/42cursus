@@ -6,25 +6,31 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/20 15:17:48 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 17:39:31 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
-
-#include "Command.hpp"
 
 Server::Server(const ushort port, const string password)
 	: _logger(*(new Logger("Server"))),
 	  _socket(*(new Socket(AF_INET, SOCK_STREAM, 0))),
 	  _stop(false),
 	  _port(port),
-	  _password(password) {
+	  _password(password),
+	  _creation_date("") {
+	time_t now = time(0);
+	char *dt = ctime(&now);
+
+	if (dt) {
+		dt[strlen(dt) - 1] = '\0';
+	}
+	this->_creation_date = dt;
+
 	// Create socket connection with ipv4 protocol
 	this->_socket.bindAddress(port);
 	this->_socket.createEpollFd();
-	// todo: add as a global constant
-	this->_socket.listenTo(9999);
+	this->_socket.listenTo(MAX_USERS);
 	Socket::epollAdd(this->_socket.epoll_fd(), this->_socket.sock_fd(),
 					 EPOLLIN | EPOLLPRI);
 
@@ -41,6 +47,7 @@ Server::Server(const ushort port, const string password)
 	this->_commands["KICK"] = &Command::kick;
 	this->_commands["NAMES"] = &Command::names;
 	this->_commands["INVITE"] = &Command::invite;
+	this->_commands["CAP"] = &Command::cap;
 
 	this->_startServer();
 }
@@ -53,9 +60,7 @@ Server::~Server() {
 }
 
 void Server::_startServer() {
-	// todo: add as a global constant
-	const int maxevents = 32;
-	struct epoll_event events[maxevents];
+	struct epoll_event events[MAX_EVENTS];
 
 	bzero(&events, sizeof(events));
 	_logger.log("Starting to listen on " + this->_socket.ip() + ":" +
@@ -63,8 +68,7 @@ void Server::_startServer() {
 				false);
 
 	while (!this->_stop) {
-		// todo: add as a global constant
-		this->_epollHandler(3200, events, maxevents);
+		this->_epollHandler(3200, events, MAX_EVENTS);
 	}
 }
 

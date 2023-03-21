@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:32:17 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 20:11:54 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 16:30:01 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ vector<string> splitByToken(string input, const string &delimiter) {
 
 enum DecoderState { PREFIX, COMMAND, PARAMETER };
 
-Input::Input(const string &input) : _logger("Input") {
+Input::Input(const string &input) {
 	// todo: Build the input here, and check for errors
 
 	string result = input;
@@ -36,8 +36,6 @@ Input::Input(const string &input) : _logger("Input") {
 	if (pos != std::string::npos) {
 		result.erase(pos, 2);
 	}
-
-	this->_logger.log("input  : " + result, true);
 
 	string::size_type trail = result.find(" :");
 	bool hasTrail = trail != string::npos;
@@ -82,15 +80,6 @@ Input::Input(const string &input) : _logger("Input") {
 	}
 	if (!afterTrail.empty()) {
 		this->_parameters.push_back(afterTrail);
-	}
-
-	this->_logger.log("prefix : " + prefix, true);
-	this->_logger.log("cmd    : " + this->_command, true);
-	this->_logger.log("params : " + this->_command, true);
-	for (size_t i = 0; i < this->_parameters.size(); i++) {
-		this->_logger.log(
-			"       - [" + Utils::valToString(i) + "]: " + this->_parameters[i],
-			true);
 	}
 }
 

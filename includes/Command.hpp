@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:00:34 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/20 15:11:28 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 17:27:11 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ class Client;
 class Channel;
 
 class Command {
+	private:
+		static void registerUser(Server &server, Client &client);
+
 	public:
 		static void nick(Server &server, Client &client, const Input &input);
 		static void ping(Server &server, Client &client, const Input &input);
@@ -37,4 +40,5 @@ class Command {
 		static void kick(Server &server, Client &client, const Input &input);
 		static void names(Server &server, Client &client, const Input &input);
 		static void invite(Server &server, Client &client, const Input &input);
+		static void cap(Server &server, Client &client, const Input &input);
 };

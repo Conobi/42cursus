@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/14 20:44:39 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 17:33:45 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ class Client {
 		string readInput();
 		void sendMessage(const string &message) const;
 		void sendMessage(const string &message, const string &target) const;
-
-		void registerUser(Server &server);
 
 		bool operator==(const int &fd) const;
 		bool operator==(const Client &client) const;
