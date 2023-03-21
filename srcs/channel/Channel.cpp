@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 16:19:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 18:30:35 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void Channel::clientLeave(const Client &client) {
 		return;
 	}
 	this->_clients.erase(it);
-	(void)this->_clients;
 }
 
 const ChannelRole &Channel::getRole(const Client &client) const {

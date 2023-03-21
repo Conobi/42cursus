@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/19 23:52:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 20:51:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,12 @@ void Server::closeClient(const Client &client) {
 				this->_logger.info("Channel " + channel->name() +
 									   " is now empty. Deleting it.",
 								   false);
+				// An iterator to the last element of the vector if there is one
+				vector<Channel>::iterator last_channel = channel;
+				advance(last_channel, -1);
 				this->channels().erase(find(this->channels().begin(),
 											this->channels().end(), *channel));
-				channel = this->channels().begin();
+				channel = last_channel;
 			}
 		}
 	}

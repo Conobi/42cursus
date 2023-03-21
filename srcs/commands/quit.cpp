@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:16:25 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/19 23:51:46 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 20:54:12 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void Command::quit(Server &server, Client &client, const Input &input) {
 				NULL, Output(server, &client, "QUIT", ":" + message),
 				ROLE_NONE);
 			if (channel->clients().size() == 0) {
+				vector<Channel>::iterator last_channel = channel;
+				advance(last_channel, -1);
 				server.channels().erase(find(server.channels().begin(),
 											 server.channels().end(),
 											 *channel));
-				channel = server.channels().begin();
+				channel = last_channel;
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 23:26:11 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 17:33:40 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 18:35:53 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ Client &Client::operator=(const Client &rhs) {
 		this->_nick = rhs.nick();
 		this->_username = rhs.username();
 		this->_authStatus = rhs.authStatus();
+		this->_logger = rhs._logger;
 	}
 	return *this;
 }

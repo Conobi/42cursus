@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Client_input.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:09:42 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/08 14:16:10 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 18:38:07 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
 
 string Client::readInput() {
-	const unsigned int MAX_BUF_LENGTH = 512;
+	const uint MAX_BUF_LENGTH = 512;
 	vector<char> buffer(MAX_BUF_LENGTH);
 	string input = "";
 	ssize_t bytes_received = 0;
