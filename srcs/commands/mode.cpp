@@ -6,7 +6,7 @@
 /*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:04 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/16 16:54:22 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/22 05:25:05 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static string createModeString(const Channel *channel) {
     modeString += "k";
   }
 
-  // todo: idk if this is the right way to do it if there are no modes
   return modeString.size() > 2 ? modeString : "";
 }
 

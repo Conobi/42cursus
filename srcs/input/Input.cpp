@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Input.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:32:17 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 16:30:01 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/22 05:25:17 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ vector<string> splitByToken(string input, const string &delimiter) {
 enum DecoderState { PREFIX, COMMAND, PARAMETER };
 
 Input::Input(const string &input) {
-	// todo: Build the input here, and check for errors
-
 	string result = input;
 	size_t pos = result.find("\r\n");
 	if (pos != std::string::npos) {
@@ -78,7 +76,7 @@ Input::Input(const string &input) {
 			}
 		}
 	}
-	if (!afterTrail.empty()) {
+	if (hasTrail) {
 		this->_parameters.push_back(afterTrail);
 	}
 }

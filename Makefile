@@ -75,6 +75,7 @@ SRC			= main.cpp \
 			  commands/names.cpp \
 			  commands/invite.cpp \
 			  commands/cap.cpp \
+				commands/topic.cpp \
 			  commands/Command_utils.cpp
 
 SDIR		= srcs

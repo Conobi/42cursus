@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: conobi                                     +#+  +:+       +#+        */
+/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 17:39:31 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 23:16:03 by abastos          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ Server::Server(const ushort port, const string password)
 	this->_commands["NAMES"] = &Command::names;
 	this->_commands["INVITE"] = &Command::invite;
 	this->_commands["CAP"] = &Command::cap;
+	this->_commands["TOPIC"] = &Command::topic;
 
 	this->_startServer();
 }
