@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 20:51:09 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/24 16:25:29 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ Client &Server::_createNewClient() {
 
 	client_fd =
 		accept(this->_socket.sock_fd(), (struct sockaddr *)&addr, &addr_len);
+	if (fcntl(client_fd, F_SETFL, O_NONBLOCK) < 0)
+		throw runtime_error("fcntl() failed: " +
+							Utils::valToString(strerror(errno)));
 
 	if (client_fd < 0) {
 		throw runtime_error(

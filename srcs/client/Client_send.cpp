@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 14:37:16 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/14 20:13:34 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/24 16:01:12 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void Client::sendMessage(const string &message) const {
 	// Check if client is still connected
-	if (fcntl(this->_fd, F_GETFD) != -1 || errno != EBADF) {
+	if (errno != EBADF) {
 		// Send message to client
 		if (send(this->_fd, message.c_str(), message.size(), 0) == -1) {
 			this->_logger.err("Error while sending message to client " +
