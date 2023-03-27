@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:26:32 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/24 16:25:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 17:18:10 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,7 @@ void Server::closeClient(const Client &client) {
 	fd = client.fd();
 
 	this->_clients.erase(
-		remove(this->_clients.begin(), this->_clients.end(), client),
-		this->_clients.end());
+		find(this->_clients.begin(), this->_clients.end(), client));
 
 	if (close(fd) < -1) {
 		throw runtime_error("Cannot close client fd. close(): " +

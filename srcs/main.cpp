@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 02:53:01 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/27 16:39:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 17:47:32 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void signal_callback_handler(int signum) {
 int main(int ac, char **av) {
 	Logger _logger = Logger("Main");
 	Server *server = NULL;
+	int return_code = 0;
 
 	if (ac != 3) {
 		_logger.err("usage: ./ircserv  <port> <password>");
@@ -61,9 +62,8 @@ int main(int ac, char **av) {
 		server = new Server(port, av[2]);
 	} catch (const exception &e) {
 		_logger.err(e.what());
-		delete server;
-		return (1);
+		return_code = 1;
 	}
 	delete server;
-	return (0);
+	return (return_code);
 }

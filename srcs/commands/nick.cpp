@@ -6,9 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:49:43 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/21 17:37:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:19:16 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <algorithm>
 
 #include "Command.hpp"
 
@@ -22,12 +24,6 @@
  *
  */
 void Command::nick(Server &server, Client &client, const Input &input) {
-	if (input.parameters().size() < 1) {
-		client.sendMessage(
-			Output(server, &client, "431", ":No nickname given"));
-		return;
-	}
-
 	string nick = input.parameters()[0];
 
 	if (!Parser::isNickValid(nick)) {
@@ -36,8 +32,9 @@ void Command::nick(Server &server, Client &client, const Input &input) {
 		return;
 	}
 
-	if (find(server.clients().begin(), server.clients().end(), nick) !=
-		server.clients().end()) {
+	vector<Client>::const_iterator it =
+		find(server.clients().begin(), server.clients().end(), nick);
+	if (it != server.clients().end() && it->fd() != client.fd()) {
 		client.sendMessage(Output(server, &client, "433",
 								  nick + " :Nickname is already in use"));
 		return;

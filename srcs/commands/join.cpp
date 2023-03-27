@@ -6,13 +6,19 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:37:27 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/27 15:00:33 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:18:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Command.hpp"
 
 void Command::join(Server &server, Client &client, const Input &input) {
+	if (client.authStatus() != REGISTERED) {
+		client.sendMessage(Output(server, &client, "451", &client,
+								  ":You have not registered"));
+		return;
+	}
+
 	vector<string> channels;
 	vector<string> keys;
 

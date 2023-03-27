@@ -6,13 +6,20 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:08:55 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/20 15:36:45 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:18:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Client.hpp"
 #include "Command.hpp"
 
 void Command::invite(Server &server, Client &client, const Input &input) {
+	if (client.authStatus() != REGISTERED) {
+		client.sendMessage(Output(server, &client, "451", &client,
+								  ":You have not registered"));
+		return;
+	}
+
 	if (input.parameters().size() < 2) {
 		client.sendMessage(Output(server, &client, "461", &client,
 								  "INVITE :Not enough parameters"));

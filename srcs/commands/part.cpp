@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 03:25:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 18:36:16 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:18:58 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "Output.hpp"
 
 void Command::part(Server &server, Client &client, const Input &input) {
+	if (client.authStatus() != REGISTERED) {
+		client.sendMessage(Output(server, &client, "451", &client,
+								  ":You have not registered"));
+		return;
+	}
+
 	if (input.parameters().size() < 1) {
 		client.sendMessage(Output(server, &client, "461", &client,
 								  input.command() + " :Not enough parameters"));

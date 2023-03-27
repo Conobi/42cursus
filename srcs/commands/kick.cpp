@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 22:23:22 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/20 00:01:23 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:18:34 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "Command.hpp"
 
 void Command::kick(Server &server, Client &client, const Input &input) {
+	if (client.authStatus() != REGISTERED) {
+		client.sendMessage(Output(server, &client, "451", &client,
+								  ":You have not registered"));
+		return;
+	}
+
 	if (input.parameters().size() < 2) {
 		client.sendMessage(Output(server, &client, "461", &client,
 								  input.command() + " :Not enough parameters"));

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 14:23:02 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/15 17:18:02 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:20:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 static void messageTarget(Server &server, Client &client, const string &target,
 						  const string &message) {
+	if (client.authStatus() != REGISTERED) {
+		client.sendMessage(Output(server, &client, "451", &client,
+								  ":You have not registered"));
+		return;
+	}
+
 	if (Parser::isChannelValid(target)) {
 		Channel *chan = server.getChannel(target);
 		if (chan == NULL) {

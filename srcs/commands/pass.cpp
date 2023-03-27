@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:50:47 by abastos           #+#    #+#             */
-/*   Updated: 2023/03/15 14:13:03 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:19:09 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void Command::pass(Server &server, Client &client, const Input &input) {
 	}
 
 	if (server.password() != input.parameters()[0]) {
-		client.sendMessage(Output(server, &client,
-								  "464", input.parameters()[0] + " :Password incorrect"));
+		client.sendMessage(
+			Output(server, &client, "464",
+				   input.parameters()[0] + " :Password incorrect"));
 		client.sendMessage(
 			Output(server, &client, "ERROR",
 				   "Closing Link: " + client.ip() + " (Password incorrect)"));

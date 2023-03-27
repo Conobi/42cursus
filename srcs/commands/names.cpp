@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 00:12:05 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/20 01:42:29 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 18:18:48 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ static void sendAllNames(Server &server, Client &client, Channel *channel) {
 }
 
 void Command::names(Server &server, Client &client, const Input &input) {
+	if (client.authStatus() != REGISTERED) {
+		client.sendMessage(Output(server, &client, "451", &client,
+								  ":You have not registered"));
+		return;
+	}
+
 	if (!input.parameters().size()) {
 		for (vector<Channel>::iterator it = server.channels().begin();
 			 it != server.channels().end(); it++) {
