@@ -6,10 +6,18 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/ircserv",
-			"args": ["4242", "prout"],
+			"args": [
+				"6667",
+				"prout"
+			],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
-			"environment": [{"name": "VERBOSE", "value": "1"}],
+			"cwd": "${workspaceFolder}",
+			"environment": [
+				{
+					"name": "VERBOSE",
+					"value": "1"
+				}
+			],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -27,4 +35,4 @@
 			"preLaunchTask": "Build the project"
 		}
 	]
-  }
+}

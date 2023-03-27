@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 00:35:41 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 18:30:35 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 14:58:19 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@
 Channel::Channel(const string &name, Client &op, const string &key)
 	: _name(name),
 	  _password(key),
+	  _invite_mode(false),
 	  _password_mode(!key.empty()),
+	  _ban_list_mode(false),
+	  _slot_mode(false),
+	  _secret_mode(false),
+	  _protected_topic(false),
+	  _external_message_mode(false),
 	  _logger("Channel") {
 	if (!Parser::isChannelValid(name)) {
 		throw runtime_error(

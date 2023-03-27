@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:52 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 17:39:14 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 15:57:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ class Server {
 	private:
 		Server();
 
-		Logger &_logger;
+		Logger _logger;
 
-		Socket &_socket;
+		Socket _socket;
 		vector<Client> _clients;
 		vector<Channel> _channels;
 

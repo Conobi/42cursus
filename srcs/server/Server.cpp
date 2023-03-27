@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abastos <abastos@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:29:44 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 23:16:03 by abastos          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 15:57:39 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 
 Server::Server(const ushort port, const string password)
-	: _logger(*(new Logger("Server"))),
-	  _socket(*(new Socket(AF_INET, SOCK_STREAM, 0))),
+	: _logger("Server"),
+	  _socket(AF_INET, SOCK_STREAM, 0),
 	  _stop(false),
 	  _port(port),
 	  _password(password),
@@ -56,8 +56,6 @@ Server::Server(const ushort port, const string password)
 Server::~Server() {
 	_logger.log("Stopping the server...", false);
 	Socket::epollDelete(this->_socket.epoll_fd(), this->_socket.sock_fd());
-	delete &(this->_socket);
-	delete &this->_logger;
 }
 
 void Server::_startServer() {

@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:37:27 by conobi            #+#    #+#             */
-/*   Updated: 2023/03/21 17:09:05 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 15:00:33 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ void Command::join(Server &server, Client &client, const Input &input) {
 		// If channel doesn't exist, create it
 		if ((server.channels().size() == 0 || it == server.channels().end()) &&
 			channel_name[0] == '#') {
-			Channel *new_chan = new Channel(channel_name, client, key);
-
-			server.channels().push_back(*new_chan);
+			server.channels().push_back(Channel(channel_name, client, key));
 			chan = &server.channels().back();
 
 			client.sendMessage(Output(server, &client, "JOIN", channel_name));
