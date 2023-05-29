@@ -6,14 +6,17 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:34:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/05/29 02:38:12 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 00:46:21 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include <ctime>
 #include <exception>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -43,12 +46,26 @@
 #define ITALIC "\001\033[3m\002"
 #define UNDERLINE "\001\033[4m\002"
 
+class Utils {
+	public:
+		template <typename T>
+		static std::string valToString(T value) {
+			std::ostringstream ss;
+
+			ss << value;
+			return ss.str();
+		}
+};
+
 class BitcoinExchange {
 	private:
-		std::string _read_file(const std::string &filename);
 		BitcoinExchange();
-		std::string _input_csv;
-		std::string _input_db;
+		std::string _read_file(const std::string &filename);
+		time_t _getTimestamp(int day, int month, int year);
+		void _parse_csv(const std::string &input_csv);
+		void _parse_db(const std::string &input_db);
+		std::map<time_t, float> _csv_data;
+		std::map<time_t, float> _db_data;
 
 	public:
 		BitcoinExchange(const std::string &input_file);
