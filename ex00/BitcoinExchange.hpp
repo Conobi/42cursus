@@ -6,15 +6,17 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:34:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/05/30 00:46:21 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 20:17:08 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <cstring>
 #include <ctime>
 #include <exception>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -63,9 +65,8 @@ class BitcoinExchange {
 		std::string _read_file(const std::string &filename);
 		time_t _getTimestamp(int day, int month, int year);
 		void _parse_csv(const std::string &input_csv);
-		void _parse_db(const std::string &input_db);
+		void _read_db(const std::string &input_db);
 		std::map<time_t, float> _csv_data;
-		std::map<time_t, float> _db_data;
 
 	public:
 		BitcoinExchange(const std::string &input_file);

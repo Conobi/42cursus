@@ -18,5 +18,4 @@ build_docker.sh
 *_bak*
 Example_class.cpp
 test.c
-data.csv
 btc
