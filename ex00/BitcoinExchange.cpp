@@ -6,16 +6,11 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:34:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/05/31 20:28:38 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 15:35:27 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
-
-#include <cstddef>
-#include <sstream>
-#include <stdexcept>
-#include <string>
 
 std::string BitcoinExchange::_read_file(const std::string &filename) {
 	std::ifstream in_file(filename.c_str());
