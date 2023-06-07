@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:38:25 by conobi            #+#    #+#             */
-/*   Updated: 2023/06/01 17:06:24 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 18:46:26 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ void RPN::_evalOperator(const std::string &op) {
 int RPN::_strToInt(const std::string &str) {
 	int number;
 
-	if (str.length() > 1 || !isdigit(str[0]))
+	if (str.length() > 1 || !isdigit(str[0]) || !isdigit(str[0]))
 		throw std::runtime_error("Invalid expression");
-	if (isdigit(str[0]))
-		number = str[0] - '0';
+	number = str[0] - '0';
 	return (number);
 }
 

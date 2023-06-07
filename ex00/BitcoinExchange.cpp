@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:34:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/06/01 15:35:27 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 19:14:17 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ time_t BitcoinExchange::_getTimestamp(int day, int month, int year) {
 	time_t timestamp = mktime(&time_info);
 
 	if (timestamp == -1) {
-		err = "Cannot convert the `" + Utils::valToString(year) + "-" +
+		err = "Cannot convert `" + Utils::valToString(year) + "-" +
 			  Utils::valToString(month) + "-" + Utils::valToString(day) +
 			  "`. Is it a valid date?";
 		throw std::runtime_error(err);
@@ -83,7 +83,7 @@ void BitcoinExchange::_parse_csv(const std::string &input_csv) {
 						&val, remain) != 4)
 			throw std::runtime_error("Invalid entry line " +
 									 Utils::valToString(nb_line) + ": " + line +
-									 " in the CSV.\n");
+									 " in the CSV.");
 		this->_csv_data[this->_getTimestamp(day, month, year)] = val;
 	}
 }
@@ -103,6 +103,9 @@ void BitcoinExchange::_read_db(const std::string &input_db) {
 	std::memset(remain, 0, 80);
 	nb_line = 1;
 
+	if (this->_csv_data.empty()) {
+		throw std::runtime_error("Unable to load data.csv.");
+	}
 	for (; std::getline(ss_db, line); ++nb_line) {
 		try {
 			if (line.empty() || nb_line == 1)
