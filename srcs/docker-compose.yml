@@ -3,7 +3,7 @@ services:
   mariadb-wp:
     container_name: mariadb-wp
     image: mariadb-wp
-    restart: on-failure
+    restart: always
     build:
       context: ./requirements/mariadb
       args:
@@ -19,7 +19,7 @@ services:
   wordpress-wp:
     container_name: wordpress-wp
     image: wordpress-wp
-    restart: on-failure
+    restart: always
     build:
       context: ./requirements/wordpress
       args:
@@ -47,7 +47,7 @@ services:
     image: nginx-wp
     depends_on:
       - wordpress-wp
-    restart: on-failure
+    restart: always
     build:
       context: ./requirements/nginx
       args:
@@ -73,7 +73,7 @@ volumes:
       o: bind
 
   wp-data:
-    name: wp-datadata
+    name: wp-data
     driver: local
     driver_opts:
       type: none
