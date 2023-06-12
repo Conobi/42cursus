@@ -6,7 +6,7 @@
 /*   By: conobi                                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:34:28 by conobi            #+#    #+#             */
-/*   Updated: 2023/06/07 19:14:17 by conobi           ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 01:30:19 by conobi           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange &val) {
 }
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs) {
-	if (this != &rhs) {
+	if (this != &rhs)
 		this->_csv_data = rhs._csv_data;
-	}
 	return (*this);
 }
 
@@ -53,7 +52,16 @@ time_t BitcoinExchange::_getTimestamp(int day, int month, int year) {
 
 	time_t timestamp = mktime(&time_info);
 
-	if (timestamp == -1) {
+	if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1970 ||
+		year > 2100 ||
+		(!(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) &&
+		 month == 2 && day > 28))
+		timestamp = -1;
+	if ((month == 4 && day > 30) || (month == 2 && day > 29) ||
+		(month == 6 && day > 30) || (month == 9 && day > 30) ||
+		(month == 11 && day > 30))
+		timestamp = -1;
+	if (timestamp < 0) {
 		err = "Cannot convert `" + Utils::valToString(year) + "-" +
 			  Utils::valToString(month) + "-" + Utils::valToString(day) +
 			  "`. Is it a valid date?";
@@ -80,7 +88,8 @@ void BitcoinExchange::_parse_csv(const std::string &input_csv) {
 		if (nb_line == 1)
 			continue;
 		if (std::sscanf(line.c_str(), "%d-%d-%d,%f%79s", &year, &month, &day,
-						&val, remain) != 4)
+						&val, remain) != 4 ||
+			this->_getTimestamp(day, month, year) < 0)
 			throw std::runtime_error("Invalid entry line " +
 									 Utils::valToString(nb_line) + ": " + line +
 									 " in the CSV.");
@@ -125,6 +134,8 @@ void BitcoinExchange::_read_db(const std::string &input_db) {
 										 Utils::valToString(nb_line) + ").");
 			time = this->_getTimestamp(day, month, year);
 			needle = this->_csv_data.lower_bound(time);
+			if (needle == this->_csv_data.end())
+				--needle;
 			if (time < this->_csv_data.begin()->first)
 				throw std::runtime_error("No data found for " +
 										 Utils::valToString(day) + "/" +
