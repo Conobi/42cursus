@@ -1,0 +1,13 @@
+.DS_Store
+exec*
+*.dSYM
+a.out
+.*.c.swp
+*.code-workspace
+*.a
+*.o
+README.md
+.vscode
+checker_*
+push_swap
+*test
