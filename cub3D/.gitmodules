@@ -1,6 +1,6 @@
 [submodule "libft"]
 	path = libft
-	url = git@github.com:Conobi/Libft.git
+	url = git@github.com:Donokami/Libft.git
 [submodule "mlx/x11"]
 	path = mlx/x11
 	url = git@github.com:42Paris/minilibx-linux.git
