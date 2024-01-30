@@ -1,0 +1,16 @@
+.DS_Store
+exec*
+*.dSYM
+a.out
+.*.c.swp
+*.code-workspace
+*.a
+*.o
+.vscode
+checker_*
+fractol
+*test
+Makefile.gen
+test.py
+output.png
+README.md
