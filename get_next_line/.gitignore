@@ -1,0 +1,10 @@
+exec*
+*.dSYM
+a.out
+.*.c.swp
+*.code-workspace
+*.a
+*.o
+README.md
+.vscode
+objs/*
