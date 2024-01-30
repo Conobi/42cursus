@@ -1,0 +1,38 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch the project",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/ircserv",
+			"args": [
+				"6667",
+				"prout"
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [
+				{
+					"name": "VERBOSE",
+					"value": "1"
+				}
+			],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Activer l'impression en mode Pretty pour gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				},
+				{
+					"description": "Définir la version désassemblage sur Intel",
+					"text": "-gdb-set disassembly-flavor intel",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "Build the project"
+		}
+	]
+}
